@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/common_header"
+            layout="@layout/common_header_layout" />
+
+        <TextView
+            android:id="@+id/txt_badoli_bal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/common_header"
+            android:background="@color/light_grey"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Total amount to be add"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_badoli_bal"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/txt_saved_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saved Details"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_cvv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="5134 XXXX XXXX 6574"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/txt_saved_detail"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/delete" />
+
+                    <TextView
+                        android:id="@+id/txt_cvv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/radio_cvv1"
+                        android:layout_marginTop="5dp"
+                        android:text="CVV"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/ed_cvv_input1"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/txt_cvv1"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/white"
+                        android:maxLength="3"
+                        android:paddingLeft="10dp"
+                        android:textColorHint="@color/black" />
+
+                    <RadioButton
+                        android:id="@+id/radio_cvv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ed_cvv_input1"
+                        android:layout_marginTop="25dp"
+                        android:text="5134 XXXX XXXX 6574"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@id/ed_cvv_input1"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/delete" />
+
+                    <TextView
+                        android:id="@+id/txt_cvv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/radio_cvv2"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginRight="30dp"
+                        android:text="CVV"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/ed_cvv"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/txt_cvv2"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/white"
+                        android:maxLength="3" />
+
+                </RelativeLayout>
+
+
+                <Button
+                    android:id="@+id/btn_proceed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/rounded_button"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+                    android:text="Proceed"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txt_other_payment_nodes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/radio_cvv2"
+                    android:layout_marginTop="30sp"
+                    android:layout_marginRight="30dp"
+                    android:text="Other payment modes"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_airtel_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Airtel Money"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/darker_gray" />
+            </RadioGroup>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

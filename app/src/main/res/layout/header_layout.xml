@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DP60"
+            android:background="@color/dark_pink">
+
+            <ImageView
+                android:id="@+id/img_back_pay"
+                android:layout_width="@dimen/DP50"
+                android:layout_height="@dimen/DP50"
+                android:src="@drawable/arrow_back"
+                android:padding="@dimen/SP8"
+                android:layout_centerVertical="true"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_title_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/DP10"
+                android:layout_toEndOf="@+id/img_back_pay"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:text="ggg"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="@dimen/SP22"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ln_pay_balance"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@color/dark_pink"
+            android:paddingBottom="@dimen/DP20"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_pay_current_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/current_bal"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/SP28" />
+
+            <TextView
+                android:id="@+id/txt_pay_wallet_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/SP28" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "908920465501",
+    "firebase_url": "https://badoli-pay.firebaseio.com",
+    "project_id": "badoli-pay",
+    "storage_bucket": "badoli-pay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908920465501:android:9b4c96502a71dffc30c5b4",
+        "android_client_info": {
+          "package_name": "com.webmobril.badoli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908920465501-9n3cshtjogil0hhu29j58km2tjmgv0pr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0ejZ_qWulVU_U6BKlwvr2gKgXSCZH0rg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908920465501-9n3cshtjogil0hhu29j58km2tjmgv0pr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

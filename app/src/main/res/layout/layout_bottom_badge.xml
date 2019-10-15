@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/badge_frame_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/badge_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="@dimen/SP6"
+        android:textColor="@color/white"
+        android:layout_gravity="center|top"
+        android:layout_marginBottom="@dimen/DP7"
+        android:gravity="center"
+        android:paddingBottom="@dimen/DP7"
+        tools:text=""/>
+
+</FrameLayout>

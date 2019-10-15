@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.webmobril.badoli.com.webmobril.badoli.activities.NavigationActivities.WalletActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/header_pay"
+                layout="@layout/header_layout" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_payment_status"
+                    android:layout_width="match_parent"
+                    app:tabMode="fixed"
+                    android:layout_below="@+id/common_header"
+                    android:layout_height="?attr/actionBarSize"
+                    app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:tabTextColor="@android:color/black" />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/wallet_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+        </LinearLayout>
+
+</layout>

@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.webmobril.badoli.viewModels.SignUpViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollview_signup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/logo"
+                    android:layout_width="@dimen/DP100"
+                    android:layout_height="@dimen/DP100"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/DP15"
+                    android:src="@mipmap/logo" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/logo"
+                    android:layout_margin="@dimen/DP15"
+                    app:cardCornerRadius="@dimen/DP20"
+                    android:paddingBottom="@dimen/DP8"
+                    app:cardElevation="@dimen/DP8">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/sign_up"
+                            android:layout_marginTop="@dimen/DP8"
+                            android:textColor="@color/text_purple"
+                            android:textSize="@dimen/SP20" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/DP60"
+                            android:layout_marginLeft="@dimen/DP15"
+                            android:layout_marginRight="@dimen/DP15"
+                            android:layout_marginTop="@dimen/DP10"
+                            android:layout_marginBottom="@dimen/DP10"
+                            android:background="@drawable/purple_orange"
+                            android:weightSum="1"
+                            android:padding="@dimen/DP5">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/DP20"
+                                android:layout_margin="@dimen/DP15"
+                                android:layout_weight="0.80"
+                                android:src="@mipmap/user_white" />
+
+                            <EditText
+                                android:id="@+id/ed_full_name"
+                                android:layout_weight="0.20"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/user_full_name"
+                                android:inputType="textPersonName"
+                                android:paddingLeft="@dimen/DP8"
+                                android:paddingRight="@dimen/DP8"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textColorHint="@android:color/white"
+                                bind:ignore="Autofill" />
+
+                            <requestFocus />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/DP60"
+                            android:layout_marginLeft="@dimen/DP15"
+                            android:layout_marginRight="@dimen/DP15"
+                            android:layout_marginTop="@dimen/DP10"
+                            android:layout_marginBottom="@dimen/DP10"
+                            android:weightSum="1"
+                            android:background="@drawable/purple_orange"
+                            android:padding="@dimen/DP5">
+
+
+                            <TextView
+                                android:id="@+id/tvCountryCode"
+                                android:layout_width="match_parent"
+                                android:layout_weight="0.80"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:background="@drawable/rl_back"
+                                android:text="@string/country_code"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/SP18" />
+
+                            <EditText
+                                android:id="@+id/ed_phone_no"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.20"
+                                android:paddingLeft="@dimen/DP8"
+                                android:paddingRight="@dimen/DP8"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/user_phone_no"
+                                android:inputType="phone"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textColorHint="@android:color/white"
+                                bind:ignore="Autofill" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/DP60"
+                            android:layout_marginLeft="@dimen/DP15"
+                            android:layout_marginRight="@dimen/DP15"
+                            android:layout_marginBottom="@dimen/DP10"
+                            android:layout_marginTop="@dimen/DP10"
+                            android:background="@drawable/purple_orange"
+                            android:weightSum="1">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/SP20"
+                                android:layout_weight="0.80"
+                                android:layout_margin="@dimen/DP20"
+                                android:src="@mipmap/mail_white" />
+
+                            <EditText
+                                android:id="@+id/ed_email_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.20"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="@dimen/DP8"
+                                android:paddingRight="@dimen/DP8"
+                                android:background="@android:color/transparent"
+                                android:hint="@string/user_email_id"
+                                android:inputType="textEmailAddress"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textColorHint="@android:color/white"
+                                bind:ignore="Autofill" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/DP60"
+                            android:layout_marginLeft="@dimen/DP15"
+                            android:layout_marginRight="@dimen/DP15"
+                            android:layout_marginTop="@dimen/DP10"
+                            android:layout_marginBottom="@dimen/DP10"
+                            android:weightSum="1"
+                            android:background="@drawable/purple_orange"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/DP20"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/DP15"
+                                android:layout_weight="0.80"
+                                android:src="@mipmap/lock_filled_white" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/DP5"
+                                android:textColorHint="@android:color/white"
+                                app:hintEnabled="false"
+                                android:layout_weight="0.20"
+                                app:passwordToggleEnabled="true"
+                                app:passwordToggleTint="@android:color/white">
+
+                                <EditText
+                                    android:id="@+id/ed_password"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/DP8"
+                                    android:paddingRight="@dimen/DP8"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/password"
+                                    android:inputType="textPassword"
+                                    android:singleLine="true"
+                                    android:textColor="@android:color/white"
+                                    android:textColorHint="@android:color/white"
+                                    bind:ignore="Autofill" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/DP60"
+                            android:layout_marginLeft="@dimen/DP15"
+                            android:layout_marginRight="@dimen/DP15"
+                            android:layout_marginTop="@dimen/DP10"
+                            android:layout_marginBottom="@dimen/DP10"
+                            android:weightSum="1"
+                            android:background="@drawable/purple_orange"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_weight="0.80"
+                                android:layout_height="@dimen/DP20"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/DP15"
+                                android:src="@mipmap/lock_filled_white" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:padding="@dimen/DP5"
+                                android:layout_weight="0.20"
+                                android:textColorHint="@android:color/white"
+                                app:hintEnabled="false"
+                                app:passwordToggleEnabled="true"
+                                app:passwordToggleTint="@android:color/white">
+
+                                <EditText
+                                    android:id="@+id/ed_confirm_password"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/conf_pwd"
+                                    android:inputType="textPassword"
+                                    android:singleLine="true"
+                                    android:textColor="@android:color/white"
+                                    android:textColorHint="@android:color/white"
+                                    bind:ignore="Autofill" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <!-- <androidx.appcompat.widget.LinearLayoutCompat
+                             android:id="@+id/signup_button"
+                             android:layout_width="match_parent"
+                             android:layout_height="60dp"
+                             android:layout_margin="10dp"
+                             android:background="@drawable/rounded_button">
+
+                             <androidx.appcompat.widget.AppCompatTextView
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_gravity="center"
+                                 android:gravity="center"
+                                 android:onClick="@{()-> viewModel.onSignupClicked()}"
+                                 android:text="Sign Up"
+                                 android:textColor="@color/white"
+                                 android:textSize="20sp"
+                                 bind:toastMessage="@{viewModel.toastMessage}" />
+                         </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+                        <Button
+                            android:id="@+id/signup_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/DP60"
+                            android:layout_margin="@dimen/DP15"
+                            android:background="@drawable/rounded_button"
+                            android:text="@string/sign_up"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/SP20" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chec_read_agreements"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/terms_and_cond"
+                            android:layout_marginBottom="@dimen/DP8"
+                            android:textColor="@color/text_purple"
+                            android:textSize="@dimen/SP12" />
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/signup_progressBar"
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="bottom|center"
+                        android:visibility="gone" />
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/rl_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardView_signup"
+                    android:layout_marginBottom="@dimen/DP10"
+                    android:padding="@dimen/DP8"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/acc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/aleardy_account"
+                        android:textColor="@color/text_orange"
+                        android:textSize="@dimen/SP18" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/login_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/acc"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/DP8"
+                        android:paddingRight="@dimen/DP8"
+                        android:text="@string/login"
+                        android:textColor="@color/text_purple"
+                        android:textSize="@dimen/SP18" />
+
+                </RelativeLayout>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/logo"
+                    android:layout_margin="@dimen/DP15"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/DP20"
+                    app:cardElevation="@dimen/DP10">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/DP15">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/enter_otp"
+                            android:textColor="@color/text_purple"
+                            android:textSize="@dimen/SP20" />
+
+                        <LinearLayout
+                            android:id="@+id/ed_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/txt_login"
+                            android:layout_marginTop="20dp"
+                            android:weightSum="6">
+
+                            <EditText
+                                android:id="@+id/ed_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/DP5"
+                                android:layout_weight="1"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:textColor="@android:color/black"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                bind:ignore="Autofill,LabelFor" />
+
+                            <EditText
+                                android:id="@+id/ed_2"
+                                android:layout_width="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/DP5"
+                                android:layout_marginRight="@dimen/DP5"
+                                android:layout_weight="1"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                bind:ignore="Autofill,LabelFor"/>
+
+                            <EditText
+                                android:id="@+id/ed_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/DP5"
+                                android:layout_marginRight="@dimen/DP5"
+                                android:textColor="@android:color/black"
+                                android:layout_weight="1"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                bind:ignore="Autofill,LabelFor"/>
+
+                            <EditText
+                                android:id="@+id/ed_4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/DP5"
+                                android:layout_weight="1"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:textColor="@android:color/black"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                bind:ignore="Autofill,LabelFor"/>
+
+                            <EditText
+                                android:id="@+id/ed_5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:layout_marginStart="@dimen/DP5"
+                                android:layout_weight="1"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                bind:ignore="Autofill,LabelFor"/>
+
+                            <EditText
+                                android:id="@+id/ed_6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:layout_marginStart="@dimen/DP5"
+                                android:layout_weight="1"
+                                android:enabled="false"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                bind:ignore="Autofill,LabelFor"/>
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/next_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ed_layout"
+                            android:layout_marginTop="@dimen/DP50"
+                            android:background="@drawable/rounded_button"
+                            android:padding="@dimen/DP15"
+                            android:text="@string/next"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/SP20" />
+
+                        <ProgressBar
+                            android:id="@+id/otp_progressBar"
+                            style="?android:attr/progressBarStyleLarge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_horizontal"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <include
+            android:id="@+id/included_layout"
+            layout="@layout/layout_hidden_country"/>
+
+    </RelativeLayout>
+
+</layout>

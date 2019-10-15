@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/common_header"
+            layout="@layout/common_header_layout" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/common_header"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/txt_card_holder_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Card holder name"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/ed_card_holder_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txt_card_holder_name"
+                    android:layout_marginTop="8dp"
+                    android:inputType="textPersonName"
+                    android:maxLength="3"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_card_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ed_card_holder_name"
+                    android:text="As displayed on your card"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txt_card_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_card_info"
+                    android:layout_marginTop="30dp"
+                    android:text="Card Number"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/ed_card_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txt_card_number"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/black" />
+
+                <TextView
+                    android:id="@+id/txt_card_no_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ed_card_number"
+                    android:text="The number of the front of your card"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txt_expiry_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_card_no_info"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="Expiry Date"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/ed_expiry_date"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txt_expiry_date"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:hint="MM/YY"
+                    android:maxLength="3"
+                    android:paddingLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/txt_cvv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_card_no_info"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="Expiry Date"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/ed_cvv"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txt_cvv"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@color/white"
+                    android:inputType="number"
+                    android:maxLength="3" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_proceed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/rounded_button"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:text="Add Card"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
