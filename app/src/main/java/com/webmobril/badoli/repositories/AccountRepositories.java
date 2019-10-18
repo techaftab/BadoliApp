@@ -89,7 +89,7 @@ public class AccountRepositories {
 
         call.enqueue(new Callback<VerifyOtpResponse>() {
             @Override
-            public void onResponse(Call<VerifyOtpResponse> call, Response<VerifyOtpResponse> response) {
+            public void onResponse(@NonNull Call<VerifyOtpResponse> call,@NonNull Response<VerifyOtpResponse> response) {
                 Log.e("otp_response", new Gson().toJson(response));
                 mutableOtpLiveData.setValue(response.body());/*
                 if (!response.body().error) {
