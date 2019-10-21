@@ -3,6 +3,7 @@ package com.webmobril.badoli.repositories;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -32,13 +33,13 @@ public class LoginRepository {
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call,@NonNull Response<LoginResponse> response) {
                 Log.e("login_response", new Gson().toJson(response.body()));
                 mutableLiveData.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call,@NonNull Throwable t) {
 
             }
         });
