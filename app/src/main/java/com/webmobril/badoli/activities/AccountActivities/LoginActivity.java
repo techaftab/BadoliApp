@@ -48,6 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        /*Everything is fine*/
+
         loginBinding.loginButton.setOnClickListener(v -> {
             phone = loginBinding.edPhone.getText().toString();
             password = loginBinding.edPassword.getText().toString();
