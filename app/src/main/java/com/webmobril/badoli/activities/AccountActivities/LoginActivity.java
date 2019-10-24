@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
