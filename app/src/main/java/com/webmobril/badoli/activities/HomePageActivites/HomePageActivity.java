@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -42,6 +43,8 @@ import com.webmobril.badoli.viewModels.HomeViewModel;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    @SuppressLint("StaticFieldLeak")
     public static ActivityHomePageBinding homePageBinding;
     boolean openDrawer = false;
     static UserData userData;
@@ -49,12 +52,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     static Fragment currentFragment;
     static FragmentTransaction ft;
     Handler handler;
+    @SuppressLint("StaticFieldLeak")
     static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         homePageBinding = DataBindingUtil.setContentView(HomePageActivity.this, R.layout.activity_home_page);
         homeViewModel= ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getApplication()).create(HomeViewModel.class);
@@ -69,6 +72,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void init() {
+
         homePageBinding.commonHeader.hamburger.setOnClickListener(this);
         homePageBinding.commonHeader.imgBackMain.setOnClickListener(this);
         homePageBinding.drawerMenuItems.openWallet.setOnClickListener(this);
@@ -155,7 +159,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         if (v==homePageBinding.drawerMenuItems.openWallet){
             openDrawer = false;
-            homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
+            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent wallet = new Intent(HomePageActivity.this, WalletActivity.class);
             startActivity(wallet);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
@@ -179,40 +183,38 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v==homePageBinding.drawerMenuItems.about){
             openDrawer = false;
-            homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
+            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent about = new Intent(HomePageActivity.this, AboutUsActivity.class);
             startActivity(about);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.drawerMenuItems.support){
             openDrawer = false;
-            homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
+            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent support = new Intent(HomePageActivity.this, Support_Activity.class);
             startActivity(support);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.drawerMenuItems.changePassword){
             openDrawer = false;
-            homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
+            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent change = new Intent(HomePageActivity.this, ChangePasswordActivity.class);
             startActivity(change);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.drawerMenuItems.layoutLogout){
             openDrawer = false;
-            homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
+            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             logout();
         }
-        switch (v.getId()) {
-            case R.id.hamburger:
-                if (!openDrawer) {
-                    homePageBinding.drawerLayout.openDrawer(Gravity.LEFT);
-                    openDrawer = true;
-                } else {
-                    openDrawer = false;
-                    homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
-                }
-                break;
+        if (v.getId() == R.id.hamburger) {
+            if (!openDrawer) {
+                homePageBinding.drawerLayout.openDrawer(GravityCompat.START);
+                openDrawer = true;
+            } else {
+                openDrawer = false;
+                homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+            }
         }
     }
 
@@ -231,7 +233,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             loadFragment("1");
         } else if (openDrawer) {
             openDrawer = false;
-            homePageBinding.drawerLayout.closeDrawer(Gravity.LEFT);
+            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             new AlertDialog.Builder(HomePageActivity.this)
                     .setTitle("Really Exit?")
@@ -285,5 +287,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         });
         builder.create();
         builder.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void updateHeader() {
+        homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+        homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
+        homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
+
     }
 }

@@ -18,6 +18,8 @@ import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.FragmentPayByidBinding;
 import com.webmobril.badoli.model.UserData;
 
+import java.util.Objects;
+
 public class FragmentPayById extends Fragment implements View.OnClickListener {
     FragmentPayByidBinding fragmentBinding;
     UserData userData;
@@ -38,23 +40,20 @@ public class FragmentPayById extends Fragment implements View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private void listener() {
         fragmentBinding.rlBack.setOnClickListener(this);
-        HomePageActivity.homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
-        HomePageActivity.homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
-        HomePageActivity.homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
-        HomePageActivity.homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
-        HomePageActivity.homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
+        ((HomePageActivity) Objects.requireNonNull(getContext())).updateHeader();
     }
 
     @Override
     public void onClick(View v) {
         if (v==fragmentBinding.rlBack){
-            if (getActivity()!=null)
+            if (getActivity()!=null) {
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-            currentFragment = new FragmentMerchant();
-            ft.replace(R.id.rootLayout, currentFragment);
-            ft.addToBackStack(null);
-            ft.commit();
+                ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+                currentFragment = new FragmentMerchant();
+                ft.replace(R.id.rootLayout, currentFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
         }
     }
 }

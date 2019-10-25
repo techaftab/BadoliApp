@@ -85,4 +85,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="save">Save</string>
+    <string name="scan_code">Scan this Ba doli Code</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="to_pay">To Pay</string>
+    <string name="amt_paid">Amount to be paid:</string>
 </resources>
