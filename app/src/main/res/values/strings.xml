@@ -10,8 +10,6 @@
     <string name="aleardy_account">Already have an account ?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="request_submit">You have requestted to transfer 5 to account Code Banque + Code Guichet + N Compte + CLE</string>
     <string name="loading">Loading.....</string>
 
     <string name="ed_fullName">Enter Full Name</string>
@@ -22,7 +20,6 @@
     <string name="ed_password">Enter Password</string>
     <string name="ed_confirm_password">Enter Confirm Password</string>
     <string name="invalid_password">Password Should have minimum 8 Characters</string>
-    <string name="ed_password_match_eror">Password not match</string>
     <string name="not_match">Password and Confirm Password not match.</string>
     <string name="check_term">Please Agree Terms and Conditions</string>
     <string name="remember_me">Remember Me</string>
@@ -65,7 +62,7 @@
     <string name="enter_amt_gen_code">Please enter the amount and click on Generate Code.</string>
     <string name="amt_fcfa">(Amount) Fcfa</string>
     <string name="gen_code">Generate Code</string>
-    <string name="qr_note">One genertaed code wll expire in 2 minutes</string>
+    <string name="qr_note">One generated code wll expire in 2 minutes</string>
     <string name="merchan_id">Merchad Id</string>
     <string name="star_hint">*</string>
     <string name="mob_number">Mobile  Number</string>
@@ -89,4 +86,17 @@
     <string name="enter_amount">Enter Amount</string>
     <string name="to_pay">To Pay</string>
     <string name="amt_paid">Amount to be paid:</string>
+    <string name="to_phone_number">To Phone Number</string>
+    <string name="to_bank_account">To Bank Account</string>
+    <string name="enter_reciever_mobile_acc">Enter Reciever\'s mobile Account Number</string>
+    <string name="select_gsm_provider">Select a GSM Provider</string>
+    <string name="money_transfer">Money Transfer Agent</string>
+    <string name="select_account">Select a Account</string>
+    <string name="beneficiary">Beneficiary</string>
+    <string name="choose_bank">Choose a Bank</string>
+    <string name="name_beneficiary">Name Of The Benefiicary</string>
+    <string name="branch_code">Branch Code</string>
+    <string name="account_number">Account Number</string>
+    <string name="rib_key">RIB Key</string>
+    <string name="confirm">Confirm</string>
 </resources>

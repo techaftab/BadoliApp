@@ -63,39 +63,7 @@ public abstract class HomeBaseActivity extends AppCompatActivity {
 
     }
 
-    protected void loadFragment(int viewID) {
 
-        switch (viewID) {
-            case R.id.home_view:
-
-                if (!(currentFragment instanceof HomeFragment)) {
-                    homeFragment = new HomeFragment();
-                    pushFragment(homeFragment);
-                }
-                break;
-            case R.id.profile_view:
-
-                if (!(currentFragment instanceof ProfileFragment)) {
-                    ProfileFragment profileFragment = new ProfileFragment();
-                    pushFragment(profileFragment);
-                }
-                break;
-            case R.id.transaction_view:
-
-                if (!(currentFragment instanceof TransactionFragment)) {
-                    TransactionFragment transactionFragment = new TransactionFragment();
-                    pushFragment(transactionFragment);
-                }
-
-                break;
-            case R.id.help_view:
-                if (!(currentFragment instanceof HelpFragment)) {
-                    HelpFragment helpFragment = new HelpFragment();
-                    pushFragment(helpFragment);
-                }
-                break;
-        }
-    }
     /**
      * Method to push any fragment into given id.
      *

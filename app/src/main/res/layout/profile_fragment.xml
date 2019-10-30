@@ -316,7 +316,7 @@
                             android:layout_height="@dimen/DP100"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/DP20"
-                            android:src="@mipmap/ic_launcher_round"
+                            android:src="@drawable/logo"
                             app:civ_border_width="0.5dp" />
 
                         <de.hdodenhof.circleimageview.CircleImageView

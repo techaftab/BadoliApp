@@ -45,14 +45,14 @@
 
             <TextView
                 android:id="@+id/badoli_phone_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:layout_toEndOf="@+id/rl_image_show"
                 android:singleLine="true"
                 android:text=""
-                android:paddingLeft="@dimen/DP15"
+                android:paddingStart="-50dp"
                 android:textColor="@color/white"
                 android:textStyle="normal"
                 android:textSize="@dimen/SP22"

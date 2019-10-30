@@ -12,13 +12,10 @@
     <color name="grey">#dcdcdc</color>
     <color name="light_grey">#F1EEEE</color>
     <color name="white">#FFFFFF</color>
-    <color name="balck_light">#7f7f7f</color>
     <color name="dark_pink">#C62990</color>
     <color name="purple">#6950AC</color>
     <color name="transparent">#00000000</color>
     <color name="highlightTextColor">#3F81C7</color>
-
-    <color name="grey_medium">#979696</color>
 
     <color name="gray">#bebaba</color>
     <color name="rl_back">#B4F8F8F8</color>

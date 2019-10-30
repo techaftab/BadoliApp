@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_6sdp"
+            android:background="@color/orange_yellow"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:textStyle="normal"
+            android:textSize="@dimen/_14ssp"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:text="@string/select_account"
+            android:drawableEnd="@drawable/plus_button"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/purple"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_18ssp"
+            android:textColor="@color/white"
+            android:text="@string/beneficiary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:paddingTop="@dimen/_30sdp"
+            android:paddingBottom="@dimen/_30sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:background="@drawable/box_orange_border">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/box"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:hint="@string/choose_bank"
+                android:singleLine="true"
+                android:inputType="textCapCharacters"
+                android:imeOptions="actionNext"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:drawableEnd="@drawable/up_down"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/box"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:hint="@string/name_beneficiary"
+                android:singleLine="true"
+                android:inputType="textCapCharacters"
+                android:imeOptions="actionNext"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp" />
+
+            <EditText
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/box"
+                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:hint="@string/branch_code"
+                android:singleLine="true"
+                android:inputType="textCapCharacters"
+                android:imeOptions="actionNext"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_weight="0.30"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/box"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    android:hint="@string/account_number"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_weight="0.70"
+                    android:background="@drawable/box"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    android:hint="@string/rib_key"
+                    android:singleLine="true"
+                    android:inputType="textCapCharacters"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_progress_to_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/_18ssp"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button"/>
+
+    </LinearLayout>
+
+</layout>

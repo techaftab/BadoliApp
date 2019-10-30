@@ -205,9 +205,10 @@ public class Configuration {
     }
 
     public static void hideKeyboardFrom(Activity activity) {
+
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        assert imm != null;
         imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     public static boolean isEmailValid(String email) {

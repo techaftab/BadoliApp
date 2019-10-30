@@ -12,38 +12,43 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator">
+        tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator"
+        tools:targetApi="m">
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
         <activity
+            android:name=".activities.HomePageActivites.AgentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadPurple"/>
+
+        <activity
             android:name=".activities.HomePageActivites.MerchantActivity"
-            android:theme="@style/AppTheme.WithHead"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity android:name=".activities.NavigationActivities.Support_Activity"
             android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.NavigationActivities.Support_Activity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity android:name=".activities.NavigationActivities.WalletActivity"
             android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.NavigationActivities.WalletActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity android:name=".activities.NavigationActivities.AboutUsActivity"
             android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.NavigationActivities.AboutUsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity android:name=".activities.NavigationActivities.ChangePasswordActivity"
             android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.NavigationActivities.ChangePasswordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.AccountActivities.SignUpActivity" />
         <activity android:name=".activities.AccountActivities.LoginActivity" />
         <activity
@@ -58,7 +63,6 @@
         <activity
             android:name=".activities.HomePageActivites.EnterAmountActivity"
             android:theme="@style/payuphone" />
-
         <activity
             android:name=".activities.HomePageActivites.RequestPayment"
             android:theme="@style/payuphone" />

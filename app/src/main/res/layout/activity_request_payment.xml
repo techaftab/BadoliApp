@@ -34,7 +34,7 @@
                         android:id="@+id/banner_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:src="@mipmap/banner" />
+                        android:src="@drawable/banner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

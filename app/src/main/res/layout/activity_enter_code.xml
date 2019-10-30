@@ -22,7 +22,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/logo"
+                android:src="@drawable/logo"
                 android:textColor="@color/black" />
         </RelativeLayout>
 

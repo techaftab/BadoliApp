@@ -121,13 +121,13 @@
                             android:layout_height="@dimen/DP180"
                             android:padding="@dimen/DP8"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/banner"
+                            android:src="@drawable/banner"
                             tools:ignore="ContentDescription" />
 
                         <RadioGroup
                             android:id="@+id/radiogroup_merchant"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/DP50"
+                            android:layout_height="@dimen/_35sdp"
                             android:gravity="center_horizontal"
                             android:orientation="horizontal"
                             android:layout_margin="@dimen/DP20"
@@ -139,7 +139,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_weight="0.50"
                                 android:gravity="center"
-                                android:layout_height="@dimen/DP50"
+                                android:layout_height="match_parent"
                                 android:button="@android:color/transparent"
                                 android:checked="true"
                                 android:textSelectHandle="@drawable/radio_flat_text_selector"
@@ -153,7 +153,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_weight="0.50"
                                 android:checked="true"
-                                android:layout_height="@dimen/DP50"
+                                android:layout_height="match_parent"
                                 android:button="@android:color/transparent"
                                 android:text="@string/mobile_id"
                                 android:textSelectHandle="@drawable/radio_flat_text_selector"
@@ -470,7 +470,6 @@
 
                     </LinearLayout>
 
-
                     <ProgressBar
                         android:id="@+id/progressbar_request"
                         android:layout_width="@dimen/DP60"
@@ -486,111 +485,8 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_hidden_layout"
-            android:layout_width="match_parent"
-            android:background="@color/gray"
-            android:visibility="gone"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:id="@+id/rl_toolbar_qrcode"
-                android:layout_width="match_parent"
-                android:background="@color/dark_pink"
-                android:layout_height="@dimen/_50sdp">
-
-                <ImageView
-                    android:id="@+id/img_back_merchant"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:src="@drawable/arrow_back"
-                    android:padding="@dimen/_8sdp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/img_back_merchant"/>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
-
-
-                <TextView
-                    android:id="@+id/txt_name_qrcode"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_20ssp"
-                    android:text="@string/app_name"
-                    android:gravity="center"
-                    android:padding="@dimen/_2sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/dark_pink"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/_18ssp"
-                    android:text="@string/scan_code"
-                    android:gravity="center"
-                    android:textColor="@color/white"/>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/box"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_margin="@dimen/_20sdp">
-
-                    <ImageView
-                        android:id="@+id/img_qrcode"
-                        android:layout_width="@dimen/_200sdp"
-                        android:layout_height="@dimen/_200sdp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/logo"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/txt_merchant_amt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/_16ssp"
-                    android:text="@string/app_name"
-                    android:gravity="center"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/txt_qrcode_timer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/_16ssp"
-                    android:text="@string/app_name"
-                    android:gravity="center"
-                    android:textColor="@color/white"/>
-
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <ProgressBar
-            android:id="@+id/progressbar_merchant"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:visibility="gone"
-            android:background="@color/gray"
-            android:padding="@dimen/_10sdp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+        <include android:id="@+id/hidden_layout"
+            layout="@layout/qrcode_layout"/>
 
     </RelativeLayout>
 
