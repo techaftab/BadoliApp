@@ -281,7 +281,7 @@
                             android:paddingLeft="@dimen/DP50"
                             android:paddingRight="@dimen/DP50"
                             android:layout_marginBottom="@dimen/DP20"
-                            android:background="@drawable/rounded_button">
+                            android:background="@drawable/rounded_button_orange">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"

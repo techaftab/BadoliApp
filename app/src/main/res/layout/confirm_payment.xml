@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl_confirm_payment"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ln_confirm_payment"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_amount_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/hint_amount"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_32ssp"/>
+
+            <TextView
+                android:id="@+id/txt_name_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textStyle="bold"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_22ssp"/>
+
+            <TextView
+                android:id="@+id/txt_date_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textStyle="normal"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_22ssp"/>
+
+            <Button
+                android:id="@+id/btn_confirm_payment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginRight="@dimen/_50sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/_50sdp"
+                android:text="@string/confirm_payment"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18ssp"
+                android:textAllCaps="false"
+                android:background="@drawable/rounded_button_purple"/>
+
+
+            <TextView
+                android:id="@+id/txt_goback_payment"
+                android:background="@drawable/rl_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/go_back"
+                android:textStyle="normal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:padding="@dimen/_15sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18ssp"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_payment_notice"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_payment_status"
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="@dimen/_180sdp"
+                    android:src="@drawable/success_pay"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/txt_payment_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/successful_payment"
+                    android:textStyle="normal"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_22ssp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_done"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:text="@string/done"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                android:textAllCaps="false"
+                android:background="@color/purple"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

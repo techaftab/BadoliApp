@@ -39,13 +39,10 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
             sort_name = itemView.findViewById(R.id.country_sort_name);
             phone_code = itemView.findViewById(R.id.phone_code);
             country_name = itemView.findViewById(R.id.country_name);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // send selected contact in callback
-                    listener.onRecyclerViewClickListenerSelected(loadListFiltered.get(getAdapterPosition()));
-                    listener.onClick(view, getAdapterPosition());
-                }
+            view.setOnClickListener(view1 -> {
+                // send selected contact in callback
+                listener.onRecyclerViewClickListenerSelected(loadListFiltered.get(getAdapterPosition()));
+                listener.onClick(view1, getAdapterPosition());
             });
            /* itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

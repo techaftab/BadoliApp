@@ -266,7 +266,7 @@
                              android:layout_width="match_parent"
                              android:layout_height="60dp"
                              android:layout_margin="10dp"
-                             android:background="@drawable/rounded_button">
+                             android:background="@drawable/rounded_button_orange">
 
                              <androidx.appcompat.widget.AppCompatTextView
                                  android:layout_width="match_parent"
@@ -285,7 +285,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/DP60"
                             android:layout_margin="@dimen/DP15"
-                            android:background="@drawable/rounded_button"
+                            android:background="@drawable/rounded_button_orange"
                             android:text="@string/sign_up"
                             android:textColor="@color/white"
                             android:textSize="@dimen/SP20" />
@@ -473,7 +473,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/ed_layout"
                             android:layout_marginTop="@dimen/DP50"
-                            android:background="@drawable/rounded_button"
+                            android:background="@drawable/rounded_button_orange"
                             android:padding="@dimen/DP15"
                             android:text="@string/next"
                             android:textColor="@color/white"

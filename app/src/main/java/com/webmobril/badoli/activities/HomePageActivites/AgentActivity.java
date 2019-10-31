@@ -1,12 +1,14 @@
 package com.webmobril.badoli.activities.HomePageActivites;
 
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.RadioGroup;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.RadioGroup;
 
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.databinding.ActivityAgentBinding;
@@ -73,4 +75,35 @@ public class AgentActivity extends AppCompatActivity implements RadioGroup.OnChe
         finish();
         overridePendingTransition(R.anim.left_in,R.anim.right_out);
     }
+
+    public void updateView() {
+        Animation bottomUp = AnimationUtils.loadAnimation(AgentActivity.this,
+                R.anim.slide_up_dialog);
+        activityAgentBinding.radiogroupAgent.startAnimation(bottomUp);
+        activityAgentBinding.imgBannerAgent.setVisibility(View.GONE);
+        activityAgentBinding.txtTitleAgent.setText("");
+        activityAgentBinding.radiogroupAgent.setVisibility(View.GONE);
+        activityAgentBinding.rlToolbarAgent.setVisibility(View.VISIBLE);
+    }
+
+    public void updateViewNew() {
+        Animation bottomUp = AnimationUtils.loadAnimation(AgentActivity.this,
+                R.anim.slide_bottom_dialog);
+        activityAgentBinding.radiogroupAgent.startAnimation(bottomUp);
+        activityAgentBinding.rlToolbarAgent.setVisibility(View.VISIBLE);
+        activityAgentBinding.imgBannerAgent.setVisibility(View.VISIBLE);
+        activityAgentBinding.txtTitleAgent.setText(getResources().getString(R.string.money_transfer));
+        activityAgentBinding.radiogroupAgent.setVisibility(View.VISIBLE);
+    }
+
+    public void updateViewStatus() {
+        Animation bottomUp = AnimationUtils.loadAnimation(AgentActivity.this,
+                R.anim.slide_up_dialog);
+        activityAgentBinding.radiogroupAgent.startAnimation(bottomUp);
+        activityAgentBinding.imgBannerAgent.setVisibility(View.GONE);
+        activityAgentBinding.txtTitleAgent.setText("");
+        activityAgentBinding.radiogroupAgent.setVisibility(View.GONE);
+        activityAgentBinding.rlToolbarAgent.setVisibility(View.GONE);
+    }
+
 }

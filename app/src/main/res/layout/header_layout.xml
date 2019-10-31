@@ -9,29 +9,26 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/rl_toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="@dimen/DP60"
             android:background="@color/dark_pink">
 
             <ImageView
                 android:id="@+id/img_back_pay"
-                android:layout_width="@dimen/DP50"
-                android:layout_height="@dimen/DP50"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:src="@drawable/arrow_back"
-                android:padding="@dimen/SP8"
+                android:padding="@dimen/_12sdp"
                 android:layout_centerVertical="true"
                 tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txt_title_pay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/DP10"
-                android:layout_toEndOf="@+id/img_back_pay"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:text="ggg"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:text="ggff"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textStyle="normal"

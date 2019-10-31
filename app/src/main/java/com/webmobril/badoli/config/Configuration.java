@@ -4,14 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -19,10 +15,8 @@ import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,8 +35,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by aftab on 1/10/2018.
  */
@@ -53,7 +45,6 @@ public class Configuration {
         // TODO Auto-generated method stub
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
-        boolean isNetworkAvailable = false;
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
@@ -66,50 +57,9 @@ public class Configuration {
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
-       /* if (cm != null) {
-            NetworkInfo[] info = cm.getAllNetworkInfo();
-            for (NetworkInfo networkInfo : info)
-                if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                    try {
-                        HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
-                        urlc.setRequestProperty("User-Agent", "Test");
-                        urlc.setRequestProperty("Connection", "close");
-                        urlc.setConnectTimeout(500); //choose your own timeframe
-                        urlc.setReadTimeout(500); //choose your own timeframe
-                        urlc.connect();
-                        int networkcode2 = urlc.getResponseCode();
-                        isNetworkAvailable=true;
-                        return (networkcode2 == 200);
-                    } catch (IOException e) {
-                        isNetworkAvailable=false;
-                        return (false);  //connectivity exists, but no internet.
-                    }
-                }
-        }
-        return isNetworkAvailable;*/
-    }
-
-    public static void showDialog(String message, ProgressDialog dialog)
-    {
-        dialog.show();
-        dialog.setMessage(message);
-        dialog.setCancelable(false);
-    }
-
- /*   public static void saveValue(Context context, String key, String value) {
-
-        SharedPreferences.Editor editor = context.getSharedPreferences(Constant.PREFS_NAME, MODE_PRIVATE).edit();
-        editor.putString(key, value);
-        editor.apply();
     }
 
 
-    public static String getValue(Context context, String key)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(Constant.PREFS_NAME, MODE_PRIVATE);
-
-        return prefs.getString(key, "empty");
-    }*/
     public static void showcalendar(final TextView edtDob, Context context)
     {
         int mYear, mMonth, mDay;
@@ -120,23 +70,18 @@ public class Configuration {
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
+        @SuppressLint("SetTextI18n")
         DatePickerDialog datePickerDialog = new DatePickerDialog(context,
-                new DatePickerDialog.OnDateSetListener() {
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        if ((monthOfYear+1)<10){
-                            String mont="0"+ (monthOfYear + 1);
-                            edtDob.setText(dayOfMonth + "-" + mont + "-" + year);
-                        }else {
-                            edtDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                        }
-
-
-
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    if ((monthOfYear+1)<10){
+                        String mont="0"+ (monthOfYear + 1);
+                        edtDob.setText(dayOfMonth + "-" + mont + "-" + year);
+                    }else {
+                        edtDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                     }
+
+
+
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
@@ -167,48 +112,16 @@ public class Configuration {
         return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
-    public static Dialog openDialog(Context context)
-    {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // dialog.setContentView(R.layout.dialog);
-        final Window window = dialog.getWindow();
-        assert window != null;
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
-        return  dialog;
-    }
-
-
-    public static Dialog openBdayDialog(Context context)
-    {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // dialog.setContentView(R.layout.birthday_dialog);
-        final Window window = dialog.getWindow();
-        assert window != null;
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
-        return  dialog;
-    }
-
-
-    public static void closeDialog(Dialog dialog, TextView textView, String bloodGroup)
-    {
-
-        dialog.dismiss();
-        textView.setText(bloodGroup);
-    }
-
     public static void hideKeyboardFrom(Activity activity) {
 
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm!=null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+
     }
 
     public static boolean isEmailValid(String email) {
@@ -243,6 +156,7 @@ public class Configuration {
         }
         return false;
     }
+
     public static void openPopupUpDown(Context context, int animationSource, String error, String message) {
         final Dialog dialg=new Dialog(context);
         dialg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -261,12 +175,7 @@ public class Configuration {
             imageView.setImageResource(R.drawable.success);
         }
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialg.dismiss();
-            }
-        });
+        btnOk.setOnClickListener(v -> dialg.dismiss());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Objects.requireNonNull(dialg.getWindow()).getAttributes().windowAnimations = animationSource;
@@ -293,12 +202,7 @@ public class Configuration {
         imageView.setImageResource(R.drawable.maintenance);
         btnReciept.setVisibility(View.GONE);
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v1) {
-                dialg.dismiss();
-            }
-        });
+        btnOk.setOnClickListener(v1 -> dialg.dismiss());
 
         dialg.show();
         Window window = dialg.getWindow();
@@ -325,19 +229,16 @@ public class Configuration {
             imageView.setImageResource(R.drawable.success);
         }
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialg.dismiss();
-                if (back.equalsIgnoreCase("userList")) {
+        btnOk.setOnClickListener(v -> {
+            dialg.dismiss();
+            if (back.equalsIgnoreCase("userList")) {
 
-                } else if (back.equalsIgnoreCase("transfer")) {
+            } else if (back.equalsIgnoreCase("transfer")) {
 
-                } else if (back.equalsIgnoreCase("main")) {
+            } else if (back.equalsIgnoreCase("main")) {
 
-                } else {
+            } else {
 
-                }
             }
         });
 

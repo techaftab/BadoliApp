@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/rl_toolbar_agent"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:background="@color/purple">
@@ -22,6 +23,7 @@
                 android:src="@drawable/arrow_back"/>
 
             <TextView
+                android:id="@+id/txt_title_agent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -35,10 +37,11 @@
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/scrollview_agent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
-            android:padding="@dimen/_8sdp">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,9 +49,11 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/img_banner_agent"
                     android:layout_width="match_parent"
                     android:scaleType="fitXY"
-                    android:layout_height="@dimen/_150sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:layout_height="@dimen/_100sdp"
                     android:src="@drawable/banner"/>
 
                 <RadioGroup
