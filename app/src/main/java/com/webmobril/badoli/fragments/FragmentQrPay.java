@@ -68,7 +68,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean openActivityOnce = true;
+       // boolean openActivityOnce = true;
         boolean openDialogOnce = true;
         if (requestCode == 11111) {
             for (int i = 0; i < grantResults.length; i++) {
