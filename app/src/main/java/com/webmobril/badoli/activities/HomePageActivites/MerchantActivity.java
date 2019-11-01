@@ -137,13 +137,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             merchantBinding.hiddenLayout.rlHiddenLayout.setVisibility(View.VISIBLE);
             merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
             merchantBinding.rlMainMerchant.setVisibility(View.GONE);
-            try{
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    Configuration.hideKeyboardFrom(MerchantActivity.this);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            Configuration.hideKeyboardFrom(MerchantActivity.this);
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy'T'hhmmss");
             String format = simpleDateFormat.format(new Date());
             new Thread(() -> getQrCode(amount,format,userData.getMobile(),userData.getName())).start();
@@ -153,13 +147,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @SuppressLint("SetTextI18n")
     private void slideClose() {
-        try{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                Configuration.hideKeyboardFrom(MerchantActivity.this);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        Configuration.hideKeyboardFrom(MerchantActivity.this);
         Animation bottomDown = AnimationUtils.loadAnimation(MerchantActivity.this,
                 R.anim.slide_bottom_dialog);
 

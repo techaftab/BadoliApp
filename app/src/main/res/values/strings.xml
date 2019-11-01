@@ -112,4 +112,7 @@
     <string name="about_us">About Us</string>
     <string name="submit_request">Submit Request</string>
     <string name="change_pwd">Change Password</string>
+    <string name="off">Flash Off</string>
+    <string name="on">Flash On</string>
+    <string name="scan_pay">Scan and Payment</string>
 </resources>

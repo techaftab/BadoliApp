@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -91,15 +90,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         ft.replace(R.id.rootLayout, currentFragment);
         ft.commit();
+       homeData();
+        loadData();
+    }
+    public void homeData(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
-        loadData();
+        homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
+        homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
+       // homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
     }
 
     @SuppressLint("SetTextI18n")
-    private void loadData() {
+    public void loadData() {
         showBadge(homePageBinding.bottomNavigation, R.id.navigation_transaction, "2");
         homePageBinding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
@@ -291,11 +296,22 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     @SuppressLint("SetTextI18n")
     public void updateHeader() {
+        homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
-        homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
+        homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
 
+    }
+
+    public void updateToolbar() {
+        homePageBinding.commonHeader.balanceLayout.setVisibility(View.GONE);
+        homePageBinding.commonHeader.badoliPhoneText.setText("");
+        homePageBinding.commonHeader.badoliPhoneText.setText(getResources().getString(R.string.scan_pay));
+        homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+        homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
+        homePageBinding.bottomNavigation.setVisibility(View.GONE);
     }
 }

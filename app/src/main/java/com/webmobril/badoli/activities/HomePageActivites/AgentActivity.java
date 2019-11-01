@@ -50,7 +50,7 @@ public class AgentActivity extends AppCompatActivity implements RadioGroup.OnChe
         }
     }
 
-    private void loadFragment(Fragment fragment, int left_in, int right_out) {
+    public void loadFragment(Fragment fragment, int left_in, int right_out) {
         if (fragment != null) {
           //  checkView(fragment);
             getSupportFragmentManager()

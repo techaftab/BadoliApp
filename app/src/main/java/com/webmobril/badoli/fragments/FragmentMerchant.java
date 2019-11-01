@@ -43,6 +43,7 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
         ((HomePageActivity) Objects.requireNonNull(getContext())).updateHeader();
         fragmentBinding.payById.setOnClickListener(this);
         fragmentBinding.requestPay.setOnClickListener(this);
+        fragmentBinding.payByQr.setOnClickListener(this);
     }
 
     @Override
@@ -61,6 +62,16 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
             Intent intent=new Intent(getActivity(), MerchantActivity.class);
             startActivity(intent);
             Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        }
+        if (v==fragmentBinding.payByQr){
+            if (getActivity()!=null) {
+                ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                currentFragment = new FragmentQrPay();
+                ft.replace(R.id.rootLayout, currentFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
         }
     }
 }

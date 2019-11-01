@@ -97,18 +97,20 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
 
         if (v==fragmentAgentPhoneBinding.layoutConfrim.btnDone) {
             slideCloseConfirm();
+            ((AgentActivity) Objects.requireNonNull(getContext())).loadFragment(new FragmentAgentPhone(),R.anim.left_in,R.anim.right_out);
         }
 
     }
+
 
     private boolean setAccountValidation(String amount, String account) {
         if (TextUtils.isEmpty(amount)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_amount), Toast.LENGTH_LONG).show();
             return false;
-        }else if (Float.valueOf(amount)<=0){
+        } else if (Float.valueOf(amount)<=0){
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_valid_amount), Toast.LENGTH_LONG).show();
             return false;
-        }else if (TextUtils.isEmpty(account)) {
+        } else if (TextUtils.isEmpty(account)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_reciever_acc), Toast.LENGTH_LONG).show();
             return false;
         }
@@ -160,9 +162,11 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     private boolean isPanelShown() {
         return fragmentAgentPhoneBinding.layoutConfrim.rlConfirmPayment.getVisibility() == View.VISIBLE;
     }
+
     private boolean isStatusShown() {
         return fragmentAgentPhoneBinding.layoutConfrim.rlPaymentNotice.getVisibility() == View.VISIBLE;
     }
+
     private void slideUpStatus() {
         if (!isStatusShown()) {
             ((AgentActivity) Objects.requireNonNull(getContext())).updateViewStatus();
