@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/rl_payment_confirmation"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:isScrollContainer="true"
+            android:layout_above="@+id/btn_done_confirm_payment"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/success_pay"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/_8sdp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/_16ssp"
+                    android:text="@string/transaction_successfull"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/reciept_no"/>
+
+                    <TextView
+                        android:id="@+id/txt_reciept_confirm_payment"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="normal"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/reciept_no"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/merchant_name"/>
+
+                    <TextView
+                        android:id="@+id/txt_confirm_merchant_name"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="normal"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/merch_id"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/merchan_id"/>
+
+                    <TextView
+                        android:id="@+id/txt_confirm_merchant_id"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="normal"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/merchan_id"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/date_time"/>
+
+                    <TextView
+                        android:id="@+id/txt_confirm_datetime"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="normal"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:text="@string/date_time"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_16ssp"
+                        android:gravity="center_vertical"
+                        android:text="@string/payment_amount"/>
+
+                    <TextView
+                        android:id="@+id/txt_poyment_amount"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="@dimen/_20ssp"
+                        android:gravity="center_vertical"
+                        android:text="@string/hint_amount"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/orange_yellow"
+                        android:textSize="@dimen/_12ssp"
+                        android:gravity="center_vertical"
+                        android:textAllCaps="true"
+                        android:background="@drawable/rl_back"
+                        android:text="@string/add_to_favourites"/>
+
+                    <TextView
+                        android:id="@+id/txt_makenew_payment"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.50"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/_8sdp"
+                        android:textStyle="normal"
+                        android:textColor="@color/dark_pink"
+                        android:textSize="@dimen/_12ssp"
+                        android:gravity="center_vertical"
+                        android:textAllCaps="true"
+                        android:background="@drawable/rl_back"
+                        android:text="@string/make_new_payment"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_done_confirm_payment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@color/dark_pink"
+            android:layout_alignParentBottom="true"
+            android:text="@string/done"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"/>
+
+    </RelativeLayout>
+</layout>

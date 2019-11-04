@@ -11,6 +11,9 @@ import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
 import com.webmobril.badoli.repositories.AccountRepositories;
 
+import java.io.File;
+
+import okhttp3.MultipartBody;
 
 
 public class SignUpViewModel extends AndroidViewModel {
@@ -36,5 +39,9 @@ public class SignUpViewModel extends AndroidViewModel {
     public LiveData<VerifyOtpResponse> getOTP(int userid, String otp, String access_token) {
 
         return signupRepository.getOtpLiveData(userid, otp, access_token);
+    }
+
+    public LiveData<VerifyOtpResponse> sendQrcode(MultipartBody.Part file, String id) {
+        return signupRepository.sendQrCode(file,id);
     }
 }

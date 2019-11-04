@@ -105,20 +105,19 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @Override
     public void onClick(View v) {
-        if (v==merchantBinding.imgBackMaintMerchant){
+        if (v==merchantBinding.imgBackMaintMerchant) {
             finish();
             overridePendingTransition(R.anim.left_in,R.anim.right_out);
         }
-        if (v==merchantBinding.hiddenLayout.imgBackMerchant){
+        if (v==merchantBinding.hiddenLayout.imgBackMerchant) {
             slideClose();
         }
-        if (v==merchantBinding.btnGenCode){
+        if (v==merchantBinding.btnGenCode) {
             String amount=merchantBinding.edittextAmtFcfa.getText().toString();
-            if(isValidated(amount)){
+            if(isValidated(amount)) {
                 merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
                 genrateQrCode(amount);
             }
-
         }
     }
 

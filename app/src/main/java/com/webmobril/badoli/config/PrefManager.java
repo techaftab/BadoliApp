@@ -21,10 +21,8 @@ public class PrefManager {
     private static final String KEY_EMAIL = "keyemail";
     private static final String KEY_MOBILE = "keymobile";
     private static final String KEY_NAME = "keyname";
-    private static final String KEY_WALLET_BALANCE = "keywallerbalance";
+    private static final String KEY_WALLET_BALANCE = "keywalletbalance";
     private static final String TAG_TOKEN = Constant.TAG_TOKEN;
-
-
 
     private static PrefManager mInstance;
     private static Context mCtx;

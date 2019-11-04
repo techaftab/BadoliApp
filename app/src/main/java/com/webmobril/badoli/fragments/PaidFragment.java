@@ -1,24 +1,22 @@
 package com.webmobril.badoli.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.webmobril.badoli.R;
 import com.webmobril.badoli.adapter.PaidAdapter;
 import com.webmobril.badoli.model.PaidModel;
-import com.webmobril.badoli.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PaidFragment extends Fragment {
     RecyclerView paidrecycler;

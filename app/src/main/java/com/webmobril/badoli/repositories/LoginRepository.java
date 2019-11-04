@@ -25,11 +25,11 @@ public class LoginRepository {
     }
 
     public LiveData<LoginResponse> getMutableLiveData(String mobile, String password, int device_type,
-                                                      String devicetoken, String accesstoken) {
+                                                      String devicetoken) {
 
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
 
-        Call<LoginResponse> call = apiService.getlogin(mobile, password, device_type, devicetoken, accesstoken);
+        Call<LoginResponse> call = apiService.getlogin(mobile, password, device_type, devicetoken);
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override

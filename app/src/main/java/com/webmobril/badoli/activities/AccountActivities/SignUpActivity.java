@@ -3,6 +3,7 @@ package com.webmobril.badoli.activities.AccountActivities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Editable;
@@ -25,6 +26,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
 import com.webmobril.badoli.adapter.Country_Adapter;
@@ -38,10 +44,20 @@ import com.webmobril.badoli.utilities.LoginPre;
 import com.webmobril.badoli.utilities.Validation;
 import com.webmobril.badoli.viewModels.SignUpViewModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener,
@@ -61,7 +77,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private List<CountryResult> country;
     int userId;
     String  access_token, device_token;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +220,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         LoginPre.getActiveInstance(SignUpActivity.this).setAccess_token(token);
 
                         StartActivity();
+                        OTP_Response();
 
                     } else {
                         Toast.makeText(SignUpActivity.this, signupResult.getMessage(), Toast.LENGTH_SHORT).show();
@@ -312,13 +328,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         verifyOtpResponse.result.getWalletBalance());
                 PrefManager.getInstance(SignUpActivity.this).userLogin(userData);
 
-              /*  LoginPre.getActiveInstance(SignUpActivity.this).setMobile(mobile);
+                generateQrCode(verifyOtpResponse.result.getMobile(),id);
+
+              /*LoginPre.getActiveInstance(SignUpActivity.this).setMobile(mobile);
                 LoginPre.getActiveInstance(SignUpActivity.this).setPassword(password);
                 LoginPre.getActiveInstance(SignUpActivity.this).setDevice_token(device_token);
                 LoginPre.getActiveInstance(SignUpActivity.this).setAccess_OTp(access_token);
                 LoginPre.getActiveInstance(SignUpActivity.this).setName(name);
                 LoginPre.getActiveInstance(SignUpActivity.this).setEmail(email_id);*/
-            } else {
+
+            }else if (verifyOtpResponse.getMessage().equals("Mobile Already Registered")){
+               // generateQrCode(verifyOtpResponse.result.getMobile(),id);
+            }else {
                 Toast.makeText(SignUpActivity.this, verifyOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 signUpBinding.otpProgressBar.setVisibility(View.GONE);
             }
@@ -332,8 +353,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
                 countryResults=response.getResult();
                 Log.e("countryResults", "" + countryResults.size());
-
-
                 setAdapter(countryResults);
             } else {
                 signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
@@ -385,19 +404,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
     private void slideUpCountry() {
-
         if (!isPanelShown()) {
             Animation bottomUp = AnimationUtils.loadAnimation(SignUpActivity.this,
                     R.anim.slide_up_dialog);
             signUpBinding.includedLayout.hiddenLayoutCountry.startAnimation(bottomUp);
             signUpBinding.includedLayout.hiddenLayoutCountry.setVisibility(View.VISIBLE);
             signUpBinding.scrollviewSignup.setVisibility(View.GONE);
-
         }
     }
 
     private boolean isPanelShown() {
-        return  signUpBinding.includedLayout.hiddenLayoutCountry.getVisibility() == View.VISIBLE;
+        return signUpBinding.includedLayout.hiddenLayoutCountry.getVisibility() == View.VISIBLE;
     }
 
     public static void slideClose() {
@@ -450,7 +467,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void StartActivity() {
-        OTP_Response();
+
         signUpBinding.cardViewSignup.setVisibility(View.GONE);
         signUpBinding.cardViewOtp.setVisibility(View.VISIBLE);
         signUpBinding.rlLogin.setVisibility(View.GONE);
@@ -491,5 +508,75 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }else {
             finish();
         }
+    }
+    private void generateQrCode(String mobile, String id) {
+
+        int width=500;
+        int height=500 ;
+        BitMatrix bitMatrix = null;
+        try {
+            Map<EncodeHintType, Object> hintMap = new HashMap<>();
+            hintMap.put(EncodeHintType.MARGIN, 1);
+            bitMatrix = new MultiFormatWriter().encode(
+                    new String(mobile.getBytes()),
+                    BarcodeFormat.QR_CODE, width, height, hintMap);
+
+        } catch (IllegalArgumentException Illegalargumentexception) {
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        int bitMatrixWidth = bitMatrix.getWidth();
+
+        int bitMatrixHeight = bitMatrix.getHeight();
+
+        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
+
+        for (int y = 0; y < bitMatrixHeight; y++) {
+
+            int offset = y * bitMatrixWidth;
+
+            for (int x = 0; x < bitMatrixWidth; x++) {
+
+                pixels[offset + x] = bitMatrix.get(x, y) ? getResources().getColor(R.color.bla_trans) : getResources().getColor(R.color.white);
+
+            }
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.RGB_565);
+
+        bitmap.setPixels(pixels, 0, width, 0, 0, bitMatrixWidth, bitMatrixHeight);
+
+       // BitMatrix finalBitMatrix = bitMatrix;
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        //File file = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+        File file  = new File(getCacheDir(), "temporary_file.jpg");
+        try {
+            FileOutputStream fo = new FileOutputStream(file);
+            fo.write(bytes.toByteArray());
+            fo.flush();
+            fo.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        runOnUiThread(() -> sendImage(file,id));
+    }
+
+    private void sendImage(File file, String id) {
+        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+        // Create MultipartBody.Part using file request-body,file name and part name
+        MultipartBody.Part part = MultipartBody.Part.createFormData("upload", file.getName(), fileReqBody);
+        //Create request body with text description and text media type
+       // RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
+        signUpViewModel.sendQrcode(part,id).observe(this, verifyOtpResponse -> {
+            if (!verifyOtpResponse.error) {
+                signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
+            } else {
+                signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
+            }
+        });
     }
 }

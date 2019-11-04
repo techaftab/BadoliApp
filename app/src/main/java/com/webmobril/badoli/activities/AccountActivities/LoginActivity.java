@@ -48,13 +48,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        init();
         /*Everything is fine*/
 
         loginBinding.loginButton.setOnClickListener(v -> {
             phone = loginBinding.edPhone.getText().toString();
             password = loginBinding.edPassword.getText().toString();
             if (setValidation(phone, password)) {
+                loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
                 getLoginResponse(phone, password);
             }
             if (loginBinding.rememberMe.isChecked()) {
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginBinding.edPhone.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_name());
         loginBinding.edPassword.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_passs());
 
-        init();
+
         loginBinding.forgetPassword.setOnClickListener(this);
         loginBinding.txtSignUp.setOnClickListener(this);
     }
@@ -78,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //String uniqueID = UUID.randomUUID().toString();
         Log.e(TAG,"DEVICE_ID--->"+android_id);
         MessageDigest md;
-        device_token=null;
+       // device_token;
         try {
             md = MessageDigest.getInstance("SHA");
             md.update(android_id.getBytes());
@@ -101,13 +102,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
+
     private void getLoginResponse(String phone, String password) {
 
         //String device_token = LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
-        String access_oTp = LoginPre.getActiveInstance(LoginActivity.this).getAccess_OTp();
+      //  String access_oTp = LoginPre.getActiveInstance(LoginActivity.this).getAccess_OTp();
 
         loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
-        loginViewModel.getLogin(phone, password, 1, device_token, access_oTp).observe(this, loginResponse -> {
+        loginViewModel.getLogin(phone, password, 1, device_token).observe(this, loginResponse -> {
             if (!loginResponse.error) {
                 loginBinding.loginProgressBar.setVisibility(View.GONE);
                 UserData userData = new UserData(

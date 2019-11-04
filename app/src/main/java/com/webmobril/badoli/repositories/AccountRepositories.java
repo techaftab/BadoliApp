@@ -14,6 +14,10 @@ import com.webmobril.badoli.model.VerifyOtpResponse;
 import com.webmobril.badoli.retrofit.ApiInterface;
 import com.webmobril.badoli.retrofit.RetrofitConnection;
 
+import java.io.File;
+import java.util.Objects;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +28,7 @@ public class AccountRepositories {
     private MutableLiveData<CountryResponse> mutableCountryLiveData = new MutableLiveData<>();
 
     private MutableLiveData<VerifyOtpResponse> mutableOtpLiveData = new MutableLiveData<>();
+    private MutableLiveData<VerifyOtpResponse> mutableLiveDataQr = new MutableLiveData<>();
     Context context;
 
 
@@ -90,7 +95,7 @@ public class AccountRepositories {
         call.enqueue(new Callback<VerifyOtpResponse>() {
             @Override
             public void onResponse(@NonNull Call<VerifyOtpResponse> call,@NonNull Response<VerifyOtpResponse> response) {
-                Log.e("otp_response", new Gson().toJson(response));
+              //  Log.e("otp_response", new Gson().toJson(response));
                 mutableOtpLiveData.setValue(response.body());/*
                 if (!response.body().error) {
 
@@ -99,10 +104,30 @@ public class AccountRepositories {
             }
 
             @Override
-            public void onFailure(Call<VerifyOtpResponse> call, Throwable t) {
-                Log.e("error", t.getMessage());
+            public void onFailure(@NonNull Call<VerifyOtpResponse> call, @NonNull Throwable t) {
+                Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
         return mutableOtpLiveData;
+    }
+
+    public LiveData<VerifyOtpResponse> sendQrCode(MultipartBody.Part file, String id) {
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+
+        Call<VerifyOtpResponse> call = apiService.sendQrCode(file, id);
+
+        call.enqueue(new Callback<VerifyOtpResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VerifyOtpResponse> call,@NonNull Response<VerifyOtpResponse> response) {
+                mutableOtpLiveData.setValue(response.body());
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<VerifyOtpResponse> call, @NonNull Throwable t) {
+                Log.e("error", Objects.requireNonNull(t.getMessage()));
+            }
+        });
+        return mutableLiveDataQr;
     }
 }

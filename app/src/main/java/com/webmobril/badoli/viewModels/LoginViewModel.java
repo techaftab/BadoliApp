@@ -20,9 +20,9 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public LiveData<LoginResponse> getLogin(String mobile, String password, int device_type,
-                                            String devicetoken, String accesstoken) {
+                                            String devicetoken) {
 
-        return loginRepository.getMutableLiveData(mobile, password, device_type, devicetoken, accesstoken);
+        return loginRepository.getMutableLiveData(mobile, password, device_type, devicetoken);
     }
 
 }

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".activities.PaymentActivities.PaymentActivity">
+
+        <RelativeLayout
+            android:id="@+id/rl_toolbar_payment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@color/dark_pink">
+
+            <ImageView
+                android:id="@+id/img_back_payment"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/arrow_back"
+                android:padding="@dimen/_14sdp"
+                android:layout_centerVertical="true"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_title_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_back_payment"
+                android:layout_centerVertical="true"
+                android:text="@string/app_name"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textSize="@dimen/_18ssp"
+                android:textColor="@color/white"
+                android:padding="@dimen/_8sdp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_toolbar_payment">
+
+            <ScrollView
+                android:id="@+id/scrollview_payment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.20"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txt_name_payment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_18ssp"
+                                android:text="@string/app_name"/>
+
+                            <TextView
+                                android:id="@+id/txt_mobile_payment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_name"
+                                android:textSize="@dimen/_20ssp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:gravity="center"/>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.80"
+                            android:layout_height="@dimen/_100sdp"
+                            android:src="@drawable/logo"
+                            tools:ignore="ContentDescription" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_amount_payment"
+                        android:layout_width="match_parent"
+                        android:visibility="visible"
+                        android:layout_height="match_parent">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/txtinput_amount"
+                            android:layout_width="match_parent"
+                            android:layout_margin="@dimen/_20sdp"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/editttext_amount_payment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:digits="0123456789."
+                                android:singleLine="true"
+                                android:imeOptions="actionDone"
+                                android:hint="@string/enter_amount_hint"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_22ssp"
+                                android:paddingRight="@dimen/_6sdp"
+                                android:paddingLeft="@dimen/_6sdp"
+                                tools:ignore="Autofill" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btn_proceed_payment"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/dark_pink"
+                            android:text="@string/proceed"
+                            android:textSize="@dimen/_20ssp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_pin_payment"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/txt_enter_pin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/enter_pin"
+                            android:textSize="@dimen/_24ssp"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/dark_gray"
+                            android:textStyle="normal"/>
+
+                        <LinearLayout
+                            android:layout_below="@+id/txt_enter_pin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_centerHorizontal="true"
+                            android:weightSum="1">
+
+                            <EditText
+                                android:id="@+id/edittext_pin_one"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_weight="0.25"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:digits="0123456789"
+                                android:inputType="number"
+                                android:hint="@string/pin_hint"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_14ssp"
+                                tools:ignore="Autofill" />
+
+                            <EditText
+                                android:id="@+id/edittext_pin_two"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_weight="0.25"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:digits="0123456789"
+                                android:inputType="number"
+                                android:hint="@string/pin_hint"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_14ssp"
+                                tools:ignore="Autofill" />
+
+                            <EditText
+                                android:id="@+id/edittext_pin_three"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_weight="0.25"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:digits="0123456789"
+                                android:inputType="number"
+                                android:hint="@string/pin_hint"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_14ssp"
+                                tools:ignore="Autofill" />
+
+                            <EditText
+                                android:id="@+id/edittext_pin_four"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_weight="0.25"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:maxLength="1"
+                                android:singleLine="true"
+                                android:imeOptions="actionDone"
+                                android:digits="0123456789"
+                                android:inputType="number"
+                                android:hint="@string/pin_hint"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_14ssp"
+                                tools:ignore="Autofill" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_confirm_payment"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/dark_pink"
+                            android:text="@string/confirm"
+                            android:textSize="@dimen/_20ssp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <include
+                android:id="@+id/layout_detail_payment"
+                layout="@layout/layout_detail_payment"/>
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/layout_payment_confirmation"
+            layout="@layout/layout_payment_confirmation"/>
+
+    </RelativeLayout>
+
+</layout>

@@ -33,7 +33,7 @@ public class WalletActivity extends AppCompatActivity implements TabLayout.BaseO
         walletBinding.commonHeader.badoliPhoneText.setText("Wallet");
         walletBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         walletBinding.commonHeader.balanceLayout.setBackgroundColor(getResources().getColor(R.color.text_orange));*/
-    userData= PrefManager.getInstance(WalletActivity.this).getUserData();
+        userData= PrefManager.getInstance(WalletActivity.this).getUserData();
 
 
         walletBinding.tabPaymentStatus.addOnTabSelectedListener(this);

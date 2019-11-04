@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/imgback_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:src="@drawable/arrow_back"
                 android:paddingStart="@dimen/DP10"
                 android:paddingTop="@dimen/DP10"
@@ -29,7 +29,7 @@
                 tools:ignore="ContentDescription,RtlSymmetry"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="@string/user_profile"

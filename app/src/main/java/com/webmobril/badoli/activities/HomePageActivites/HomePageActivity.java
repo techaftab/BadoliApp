@@ -90,7 +90,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         ft.replace(R.id.rootLayout, currentFragment);
         ft.commit();
-       homeData();
+        homeData();
         loadData();
     }
     public void homeData(){
@@ -129,10 +129,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 currentFragment = new ProfileFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-              //  homePageBinding.commonHeader.mainLayout.setBackground(null);
-              //  homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+              //homePageBinding.commonHeader.mainLayout.setBackground(null);
+              //homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
                 homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
-             //   homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
+              //homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
                 return true;
             case R.id.navigation_transaction:
                 ft = getSupportFragmentManager().beginTransaction();
@@ -272,10 +272,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         if (bottomNavigationView.getChildCount() == 3) {
             bottomNavigationView.removeViewAt(2);
         }
+
     }
 
     public void logout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
         builder.setTitle("Are you sure want to logout?");
         builder.setPositiveButton("No", (dialog, id) -> dialog.cancel());
         builder.setNegativeButton("Yes", (dialog, which) -> {
@@ -303,7 +305,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
         homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
-
     }
 
     public void updateToolbar() {

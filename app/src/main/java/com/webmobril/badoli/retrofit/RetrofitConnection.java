@@ -9,12 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConnection {
 
-    ServiceProgressDialog serviceProgressDialog;
     private static RetrofitConnection connect;
     private ApiInterface clientService;
     private static final String BASE_URL = "https://www.webmobril.org/dev/badolipay/api/";
 
-    public static final int DEFAULT_RETRIES = 0;
 
     public static synchronized RetrofitConnection getInstance() {
         if (connect == null) {
@@ -37,15 +35,10 @@ public class RetrofitConnection {
             // add your other interceptors …
             httpClient.addInterceptor(logging); //  add logging as last interceptor
 
-           /* Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();*/
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
-
                     .build();
 
             clientService = retrofit.create(ApiInterface.class);

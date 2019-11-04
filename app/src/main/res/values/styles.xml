@@ -39,13 +39,6 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="payuphone" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/dark_pink</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <style name="Dialod_UpDown">
         <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
         <item name="android:windowExitAnimation">@anim/slide_bottom_dialog</item>

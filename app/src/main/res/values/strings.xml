@@ -63,7 +63,7 @@
     <string name="amt_fcfa">(Amount) Fcfa</string>
     <string name="gen_code">Generate Code</string>
     <string name="qr_note">One generated code wll expire in 2 minutes</string>
-    <string name="merchan_id">Merchad Id</string>
+    <string name="merchan_id">Merchant Id</string>
     <string name="star_hint">*</string>
     <string name="mob_number">Mobile  Number</string>
     <string name="hint_country_code">+91</string>
@@ -108,11 +108,25 @@
     <string name="confirm_payment">Confirm Payment</string>
     <string name="done">Done</string>
     <string name="successful_payment">Successful Payment</string>
-    <string name="enter_amount_hint">$ 0.00 (Enter Amount)</string>
+    <string name="enter_amount_hint">$ Enter Amount</string>
     <string name="about_us">About Us</string>
     <string name="submit_request">Submit Request</string>
     <string name="change_pwd">Change Password</string>
     <string name="off">Flash Off</string>
     <string name="on">Flash On</string>
     <string name="scan_pay">Scan and Payment</string>
+    <string name="proceed">Proceed</string>
+    <string name="pin_hint">*</string>
+    <string name="enter_pin">Enter Pin</string>
+    <string name="payment_detail">Payment Details</string>
+    <string name="merchant_name">Merchant Name</string>
+    <string name="other_fees">Other Fees</string>
+    <string name="amount">Amount</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="transaction_successfull">Transaction Successful</string>
+    <string name="reciept_no">Reciept No.</string>
+    <string name="date_time">Date/Time</string>
+    <string name="payment_amount">Payment Amount</string>
+    <string name="make_new_payment">Make New Payment</string>
+    <string name="add_to_favourites">Add to Favourites</string>
 </resources>

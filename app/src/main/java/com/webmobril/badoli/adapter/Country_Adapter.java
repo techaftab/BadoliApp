@@ -54,7 +54,6 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
         }
     }
 
-
     public Country_Adapter(Context context, List<CountryResult> rechargeList,
                            DMTPayHistoryAdapterListener listener,GetMyItem getMyItem) {
         this.context = context;
@@ -62,7 +61,6 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
         this.loadList = rechargeList;
         this.loadListFiltered = rechargeList;
         this.getMyItem = getMyItem;
-
     }
 
     @NonNull

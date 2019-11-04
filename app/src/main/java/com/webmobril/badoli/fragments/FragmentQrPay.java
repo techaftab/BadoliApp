@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.Result;
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
+import com.webmobril.badoli.activities.PaymentActivities.PaymentActivity;
 import com.webmobril.badoli.databinding.FragmentQrPayBinding;
 
 import java.util.Objects;
@@ -55,13 +56,14 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
 
     }
     private void checkRunTimePermission() {
+
         String[] permissionArrays = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissionArrays, 11111);
         } else {
-            // if already permition granted
-            // PUT YOUR ACTION (Like Open cemara etc..)
+            //if already permition granted
+            //PUT YOUR ACTION (Like Open cemara etc..)
             Scanqr();
         }
     }
@@ -101,7 +103,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
         dialog.setTitle("Permission Denied")
                 .setInverseBackgroundForced(true)
                 //.setIcon(R.drawable.ic_info_black_24dp)
-                .setMessage("Without those permission the app is unable to scan. App needs external storage and also need to get profile image from camera or external storage.Are you sure you want to deny this permission?")
+                .setMessage("Without those permission the app is unable to scan. App needs external storage and camera.Are you sure you want to deny this permission?")
 
                 .setNegativeButton("I'M SURE", (dialoginterface, i) -> dialoginterface.dismiss())
 
@@ -145,14 +147,17 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     public void handleResult(Result result) {
 
         if (true) {
-            // zXingScannerView.removeAllViews(); //<- here remove all the views, it will make an Activity having no View
+            //zXingScannerView.removeAllViews(); //<- here remove all the views, it will make an Activity having no View
             zXingScannerView.stopCamera();
             Log.d(TAG,"Qrcode data:"+result.toString());
             Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
 
-         //   String walletAddress= String.valueOf(result);
-          /*  String string=walletAddress.replace("bitcoin:","");
+          //String walletAddress= String.valueOf(result);
+          /*String string=walletAddress.replace("bitcoin:","");
             walletAddressVerify(string);*/
+          Intent intent = new Intent(getActivity(), PaymentActivity.class);
+          startActivity(intent);
+          Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_in,R.anim.right_out);
         }
         else {
             Toast.makeText(getActivity(), "Invalide QR_Code", Toast.LENGTH_SHORT).show();

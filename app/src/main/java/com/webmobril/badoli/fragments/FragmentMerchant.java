@@ -58,11 +58,13 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
                 ft.commit();
             }
         }
+
         if (v==fragmentBinding.requestPay){
             Intent intent=new Intent(getActivity(), MerchantActivity.class);
             startActivity(intent);
             Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
+
         if (v==fragmentBinding.payByQr){
             if (getActivity()!=null) {
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -73,5 +75,6 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
                 ft.commit();
             }
         }
+
     }
 }

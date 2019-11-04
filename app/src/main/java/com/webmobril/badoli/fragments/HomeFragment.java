@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +14,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.AgentActivity;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
-import com.webmobril.badoli.activities.HomePageActivites.PayuActivity;
-import com.webmobril.badoli.R;
 import com.webmobril.badoli.databinding.HomeFragmentBinding;
 
 import java.util.Objects;
