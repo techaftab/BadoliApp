@@ -129,4 +129,5 @@
     <string name="payment_amount">Payment Amount</string>
     <string name="make_new_payment">Make New Payment</string>
     <string name="add_to_favourites">Add to Favourites</string>
+    <string name="resend_otp">Resend OTP</string>
 </resources>

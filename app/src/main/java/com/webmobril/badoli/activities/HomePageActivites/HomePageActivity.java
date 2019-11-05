@@ -129,30 +129,27 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 currentFragment = new ProfileFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-              //homePageBinding.commonHeader.mainLayout.setBackground(null);
-              //homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+
                 homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
-              //homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
+
                 return true;
             case R.id.navigation_transaction:
                 ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new TransactionFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-              //  homePageBinding.commonHeader.mainLayout.setBackground(null);
-              //  homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+
                 homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
-              //  homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
+
                 return true;
             case R.id.navigation_help:
                 ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new HelpFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-              //  homePageBinding.commonHeader.mainLayout.setBackground(null);
-               // homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+
                 homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
-               // homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
+
                 return true;
         }
         return false;

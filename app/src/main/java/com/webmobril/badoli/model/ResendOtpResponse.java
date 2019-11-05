@@ -4,23 +4,23 @@ import java.util.List;
 
 public class ResendOtpResponse {
 
-    private String error;
+    public Boolean error;
 
-    private List<String> message;
+    public String message;
 
-    public String getError() {
+    public Boolean getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(Boolean error) {
         this.error = error;
     }
 
-    public List<String> getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(List<String> message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 }

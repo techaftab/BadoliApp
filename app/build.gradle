@@ -9,6 +9,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,7 +25,6 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-
 }
 ext {
     appCompatVersion = '1.0.0'
@@ -48,6 +48,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.hbb20:ccp:2.3.2'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     //retrofit dependancy
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -62,6 +64,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    //Image Compression
+    implementation 'id.zelory:compressor:2.1.0'
 
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'me.dm7.barcodescanner:zxing:1.9'

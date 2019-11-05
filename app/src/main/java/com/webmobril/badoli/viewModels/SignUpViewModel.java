@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.webmobril.badoli.model.CountryResponse;
+import com.webmobril.badoli.model.QRResponse;
+import com.webmobril.badoli.model.ResendOtpResponse;
 import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
 import com.webmobril.badoli.repositories.AccountRepositories;
@@ -41,7 +43,11 @@ public class SignUpViewModel extends AndroidViewModel {
         return signupRepository.getOtpLiveData(userid, otp, access_token);
     }
 
-    public LiveData<VerifyOtpResponse> sendQrcode(MultipartBody.Part file, String id) {
+    public LiveData<QRResponse> sendQrcode(MultipartBody.Part file, int id) {
         return signupRepository.sendQrCode(file,id);
+    }
+
+    public LiveData<ResendOtpResponse> resendOtp(int userId, String access_token) {
+        return signupRepository.resendOtp(userId, access_token);
     }
 }

@@ -9,12 +9,16 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.webmobril.badoli.model.CountryResponse;
+import com.webmobril.badoli.model.ProfileImageResponse;
+import com.webmobril.badoli.model.QRResponse;
+import com.webmobril.badoli.model.ResendOtpResponse;
 import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
 import com.webmobril.badoli.retrofit.ApiInterface;
 import com.webmobril.badoli.retrofit.RetrofitConnection;
 
 import java.io.File;
+import java.net.HttpCookie;
 import java.util.Objects;
 
 import okhttp3.MultipartBody;
@@ -25,11 +29,12 @@ import retrofit2.Response;
 public class AccountRepositories {
 
     private MutableLiveData<SignupResponse> mutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ResendOtpResponse> mutableLiveDataOtp = new MutableLiveData<>();
     private MutableLiveData<CountryResponse> mutableCountryLiveData = new MutableLiveData<>();
 
     private MutableLiveData<VerifyOtpResponse> mutableOtpLiveData = new MutableLiveData<>();
-    private MutableLiveData<VerifyOtpResponse> mutableLiveDataQr = new MutableLiveData<>();
-    Context context;
+    private MutableLiveData<QRResponse> mutableLiveDataQr = new MutableLiveData<>();
+    private MutableLiveData<ProfileImageResponse> mutableLiveDataProfile = new MutableLiveData<>();
 
 
     public AccountRepositories() {
@@ -111,23 +116,68 @@ public class AccountRepositories {
         return mutableOtpLiveData;
     }
 
-    public LiveData<VerifyOtpResponse> sendQrCode(MultipartBody.Part file, String id) {
+    public LiveData<QRResponse> sendQrCode(MultipartBody.Part file, int id) {
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
 
-        Call<VerifyOtpResponse> call = apiService.sendQrCode(file, id);
+        Call<QRResponse> call = apiService.sendQrCode(file, id);
 
-        call.enqueue(new Callback<VerifyOtpResponse>() {
+        call.enqueue(new Callback<QRResponse>() {
             @Override
-            public void onResponse(@NonNull Call<VerifyOtpResponse> call,@NonNull Response<VerifyOtpResponse> response) {
-                mutableOtpLiveData.setValue(response.body());
-
+            public void onResponse(@NonNull Call<QRResponse> call,@NonNull Response<QRResponse> response) {
+                Log.e("signup_response", new Gson().toJson(response.body()));
+                mutableLiveDataQr.setValue(response.body());
             }
 
             @Override
-            public void onFailure(@NonNull Call<VerifyOtpResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<QRResponse> call, @NonNull Throwable t) {
                 Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
         return mutableLiveDataQr;
+    }
+
+    public LiveData<ResendOtpResponse> resendOtp(int userId, String access_token) {
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+
+        Call<ResendOtpResponse> call = apiService.resendMobileOtp(userId, access_token);
+
+        call.enqueue(new Callback<ResendOtpResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ResendOtpResponse> call,@NonNull Response<ResendOtpResponse> response) {
+                Log.e("signup_response", new Gson().toJson(response.message()));
+                mutableLiveDataOtp.setValue(response.body());
+                /*if (!response.body().error) {
+
+                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+                }*/
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResendOtpResponse> call,@NonNull Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+        return mutableLiveDataOtp;
+    }
+
+    public LiveData<ProfileImageResponse> saveProfileImage(MultipartBody.Part file, int id) {
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+
+        Call<ProfileImageResponse> call = apiService.saveProfileImage(file, id);
+
+        call.enqueue(new Callback<ProfileImageResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ProfileImageResponse> call,@NonNull Response<ProfileImageResponse> response) {
+                Log.e("profile_image", new Gson().toJson(response.body()));
+                mutableLiveDataProfile.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProfileImageResponse> call, @NonNull Throwable t) {
+                Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
+            }
+        });
+        return mutableLiveDataProfile;
     }
 }

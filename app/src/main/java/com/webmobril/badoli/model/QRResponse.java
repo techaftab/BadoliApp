@@ -3,8 +3,7 @@ package com.webmobril.badoli.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class VerifyOtpResponse {
-
+public class QRResponse {
     @SerializedName("error")
     @Expose
     public Boolean error;
@@ -15,7 +14,7 @@ public class VerifyOtpResponse {
 
     @SerializedName("result")
     @Expose
-    public VerifyOtpResult result;
+    public VerifyOtpResponse.VerifyOtpResult result;
 
     public Boolean getError() {
         return error;
@@ -33,11 +32,11 @@ public class VerifyOtpResponse {
         this.message = message;
     }
 
-    public VerifyOtpResult getResult() {
+    public VerifyOtpResponse.VerifyOtpResult getResult() {
         return result;
     }
 
-    public void setResult(VerifyOtpResult result) {
+    public void setResult(VerifyOtpResponse.VerifyOtpResult result) {
         this.result = result;
     }
 
@@ -54,13 +53,6 @@ public class VerifyOtpResponse {
         @SerializedName("mobile")
         @Expose
         public String mobile;
-        @SerializedName("user_image")
-        @Expose
-        public String user_image;
-
-        @SerializedName("qrcode_image")
-        @Expose
-        public String qrcode_image;
         @SerializedName("email_verified_at")
         @Expose
         public Object emailVerifiedAt;
@@ -85,7 +77,9 @@ public class VerifyOtpResponse {
         @SerializedName("wallet_balance")
         @Expose
         public String walletBalance;
-
+        @SerializedName("user_image")
+        @Expose
+        public Object userImage;
         @SerializedName("device_type")
         @Expose
         public Integer deviceType;
@@ -234,6 +228,14 @@ public class VerifyOtpResponse {
             this.walletBalance = walletBalance;
         }
 
+        public Object getUserImage() {
+            return userImage;
+        }
+
+        public void setUserImage(Object userImage) {
+            this.userImage = userImage;
+        }
+
         public Integer getDeviceType() {
             return deviceType;
         }
@@ -368,22 +370,6 @@ public class VerifyOtpResponse {
 
         public void setState(Object state) {
             this.state = state;
-        }
-
-        public String getUser_image() {
-            return user_image;
-        }
-
-        public void setUser_image(String user_image) {
-            this.user_image = user_image;
-        }
-
-        public String getQrcode_image() {
-            return qrcode_image;
-        }
-
-        public void setQrcode_image(String qrcode_image) {
-            this.qrcode_image = qrcode_image;
         }
     }
 }

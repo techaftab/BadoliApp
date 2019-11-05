@@ -57,6 +57,29 @@ public class UserData {
     @Expose
     public String device_token;
 
+    @SerializedName("user_image")
+    @Expose
+    public String user_image;
+
+    @SerializedName("qrcode_image")
+    @Expose
+    public String qrcode_image;
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
+
+    public String getQrcode_image() {
+        return qrcode_image;
+    }
+
+    public void setQrcode_image(String qrcode_image) {
+        this.qrcode_image = qrcode_image;
+    }
 
     public String getName() {
         return name;
@@ -115,7 +138,7 @@ public class UserData {
     }
 
     public UserData(String id, String auth_token, String country_code, String country_id,
-                    String device_token, String email, String mobile,String name,String wallet_balance) {
+                    String device_token, String email, String mobile,String name,String wallet_balance,String user_imsage,String qrcode_image) {
         this.id = id;
         this.auth_token = auth_token;
         this.country_code = country_code;
@@ -125,5 +148,7 @@ public class UserData {
         this.email = email;
         this.name = name;
         this.wallet_balance=wallet_balance;
+        this.user_image=user_imsage;
+        this.qrcode_image=qrcode_image;
     }
 }

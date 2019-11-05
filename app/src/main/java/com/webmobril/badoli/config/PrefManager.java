@@ -22,6 +22,8 @@ public class PrefManager {
     private static final String KEY_MOBILE = "keymobile";
     private static final String KEY_NAME = "keyname";
     private static final String KEY_WALLET_BALANCE = "keywalletbalance";
+    private static final String KEY_USER_IMAGE = "keyuserimage";
+    private static final String KEY_QRCODE_IMAGE = "keyqrcodeimage";
     private static final String TAG_TOKEN = Constant.TAG_TOKEN;
 
     private static PrefManager mInstance;
@@ -59,6 +61,8 @@ public class PrefManager {
         editor.putString(KEY_MOBILE, userData.getMobile());
         editor.putString(KEY_NAME, userData.getName());
         editor.putString(KEY_WALLET_BALANCE,userData.getWallet_balance());
+        editor.putString(KEY_USER_IMAGE,userData.getUser_image());
+        editor.putString(KEY_QRCODE_IMAGE,userData.getQrcode_image());
         editor.apply();
     }
 
@@ -74,7 +78,9 @@ public class PrefManager {
                 sharedPreferences.getString(KEY_EMAIL,null),
                 sharedPreferences.getString(KEY_MOBILE,null),
                 sharedPreferences.getString(KEY_NAME,null),
-                sharedPreferences.getString(KEY_WALLET_BALANCE,null));
+                sharedPreferences.getString(KEY_WALLET_BALANCE,null),
+                sharedPreferences.getString(KEY_USER_IMAGE,null),
+                sharedPreferences.getString(KEY_QRCODE_IMAGE,null));
     }
 
 

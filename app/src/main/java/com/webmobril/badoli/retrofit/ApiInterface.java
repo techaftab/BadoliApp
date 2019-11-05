@@ -2,6 +2,8 @@ package com.webmobril.badoli.retrofit;
 
 import com.webmobril.badoli.model.CountryResponse;
 import com.webmobril.badoli.model.LoginResponse;
+import com.webmobril.badoli.model.ProfileImageResponse;
+import com.webmobril.badoli.model.QRResponse;
 import com.webmobril.badoli.model.ResendOtpResponse;
 import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
@@ -13,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -48,7 +51,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("resendMobileOtp")
-    Call<ResendOtpResponse> resendMobileOtp(@Field("userid") String userid,
+    Call<ResendOtpResponse> resendMobileOtp(@Field("userid") int userid,
                                             @Field("access_token") String access_token);
 
     @GET("countryList")
@@ -57,6 +60,11 @@ public interface ApiInterface {
     @GET("currentWalletBalence")
     void getCurrentBalance(@Path("userid") String userid);
 
+    @Multipart
     @POST("saveQrcode")
-    Call<VerifyOtpResponse> sendQrCode(@Part("qrcode_image") MultipartBody.Part file,@Field("userid") String id);
+    Call<QRResponse> sendQrCode(@Part MultipartBody.Part file, @Part("userid") int id);
+
+    @Multipart
+    @POST("updateProfileImage")
+    Call<ProfileImageResponse> saveProfileImage(@Part MultipartBody.Part file,@Part("userid") int id);
 }

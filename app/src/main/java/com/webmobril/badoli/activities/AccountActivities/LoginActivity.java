@@ -29,6 +29,7 @@ import com.webmobril.badoli.viewModels.LoginViewModel;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,8 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         /*Everything is fine*/
 
         loginBinding.loginButton.setOnClickListener(v -> {
-            phone = loginBinding.edPhone.getText().toString();
-            password = loginBinding.edPassword.getText().toString();
+            phone = Objects.requireNonNull(loginBinding.edPhone.getText()).toString();
+            password = Objects.requireNonNull(loginBinding.edPassword.getText()).toString();
             if (setValidation(phone, password)) {
                 loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
                 getLoginResponse(phone, password);
@@ -121,7 +122,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         loginResponse.result.user.getEmail(),
                         loginResponse.result.user.getMobile(),
                         loginResponse.result.user.getName(),
-                        loginResponse.result.user.getWallet_balance());
+                        loginResponse.result.user.getWallet_balance(),
+                        loginResponse.result.user.getUser_image(),
+                        loginResponse.result.user.getQrcode_image());
                 PrefManager.getInstance(LoginActivity.this).userLogin(userData);
                 Toast.makeText(getApplicationContext(), loginResponse.message, Toast.LENGTH_SHORT).show();
                 LoginPre.getActiveInstance(LoginActivity.this).setIsLoggedIn(true);
@@ -136,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void StartActivity() {
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
         startActivity(intent);
+        finishAffinity();
     }
 
     @Override
@@ -153,6 +157,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(context, SignUpActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+            finishAffinity();
         }
     }
 

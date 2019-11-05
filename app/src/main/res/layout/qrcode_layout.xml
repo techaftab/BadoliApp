@@ -7,8 +7,7 @@
         android:layout_width="match_parent"
         android:background="@color/gray"
         android:visibility="gone"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/rl_toolbar_qrcode"
@@ -18,10 +17,13 @@
 
             <ImageView
                 android:id="@+id/img_back_merchant"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/DP40"
+                android:layout_height="@dimen/DP50"
                 android:src="@drawable/arrow_back"
-                android:padding="@dimen/_8sdp"/>
+                android:background="@drawable/rl_back"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/DP8"
+                android:layout_marginStart="@dimen/DP10"/>
 
             <TextView
                 android:layout_width="match_parent"
