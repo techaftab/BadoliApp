@@ -79,7 +79,7 @@
                             android:layout_height="@dimen/_80sdp"
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/logo"
-                            android:padding="@dimen/_3sdp"
+                            app:civ_border_width="@dimen/_1sdp"
                             android:background="@drawable/circle_white_back"/>
 
                         <ImageView
@@ -236,6 +236,9 @@
                                 android:layout_marginEnd="@dimen/DP10"
                                 android:background="@android:color/transparent"
                                 android:gravity="start"
+                                android:inputType="none"
+                                android:focusable="false"
+                                android:editable="false"
                                 android:hint="@string/enter_digit_mobile"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
@@ -269,11 +272,14 @@
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:id="@+id/user_calender"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/DP20"
                                 android:background="@android:color/transparent"
-                                android:gravity="start"
+                                android:gravity="center_vertical"
+                                android:inputType="none"
+                                android:imeOptions="actionDone"
+                                android:focusable="false"
                                 android:hint="@string/dob_hint"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />

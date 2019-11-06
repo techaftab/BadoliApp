@@ -33,10 +33,9 @@
                     android:id="@+id/user_request_ic"
                     android:layout_width="@dimen/DP50"
                     android:layout_height="@dimen/DP50"
-                    android:padding="@dimen/DP8"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/user_request" />
+                    android:src="@drawable/request" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -44,6 +43,7 @@
                     android:orientation="vertical"
                     android:layout_toStartOf="@+id/img_r"
                     android:padding="@dimen/DP8"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/user_request_ic"
                     android:layout_centerVertical="true">
 
@@ -93,9 +93,8 @@
                     android:id="@+id/pay_by_id_ic"
                     android:layout_width="@dimen/DP50"
                     android:layout_height="@dimen/DP50"
-                    android:padding="@dimen/DP8"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/user_request" />
+                    android:src="@drawable/pay_phone" />
 
                 <TextView
                     android:id="@+id/pay_by_id_text"
@@ -103,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/DP8"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/pay_by_id_ic"
                     android:text="@string/pay_phone"
                     android:textColor="@color/dark_gray"
@@ -137,9 +137,8 @@
                     android:id="@+id/pay_by_qr_ic"
                     android:layout_width="@dimen/DP50"
                     android:layout_height="@dimen/DP50"
-                    android:padding="@dimen/DP8"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/scan_qr" />
+                    android:src="@drawable/qr_code" />
 
                 <TextView
                     android:id="@+id/pay_by_qr_text"
@@ -147,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/DP8"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/pay_by_qr_ic"
                     android:text="@string/pay_qr"
                     android:textColor="@color/dark_gray"
@@ -181,9 +181,8 @@
                     android:id="@+id/payment_services"
                     android:layout_width="@dimen/DP50"
                     android:layout_height="@dimen/DP50"
-                    android:padding="@dimen/DP8"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/user_request" />
+                    android:src="@drawable/pay_service" />
 
                 <TextView
                     android:id="@+id/payment_services_text"
@@ -191,6 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/DP8"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/payment_services"
                     android:text="@string/pay_service"
                     android:textColor="@color/dark_gray"

@@ -152,9 +152,6 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             Log.d(TAG,"Qrcode data:"+result.toString());
             Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
 
-          //String walletAddress= String.valueOf(result);
-          /*String string=walletAddress.replace("bitcoin:","");
-            walletAddressVerify(string);*/
           Intent intent = new Intent(getActivity(), PaymentActivity.class);
           startActivity(intent);
           Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_in,R.anim.right_out);
@@ -168,6 +165,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     public void onResume() {
         super.onResume();
         zXingScannerView.getFlash();
+        Scanqr();
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -43,8 +43,7 @@ import com.webmobril.badoli.viewModels.HomeViewModel;
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    @SuppressLint("StaticFieldLeak")
-    public static ActivityHomePageBinding homePageBinding;
+    public  ActivityHomePageBinding homePageBinding;
     boolean openDrawer = false;
     static UserData userData;
     HomeViewModel homeViewModel;
@@ -119,19 +118,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 currentFragment = new HomeFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-                homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
-                homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
-                homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
-                homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
                 return true;
             case R.id.navigation_profile:
                 ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new ProfileFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-
-                homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
-
                 return true;
             case R.id.navigation_transaction:
                 ft = getSupportFragmentManager().beginTransaction();
@@ -139,16 +131,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
 
-                homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
-
                 return true;
             case R.id.navigation_help:
                 ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new HelpFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-
-                homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
 
                 return true;
         }
@@ -168,11 +156,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         if (v==homePageBinding.commonHeader.imgBackMain){
             if (f instanceof FragmentPayById){
-               /* homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
-                homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
-                homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
-                homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);*/
-               // loadData();
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.left_in,R.anim.right_out);
                 currentFragment = new FragmentMerchant();
@@ -312,4 +295,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.GONE);
     }
+
+    public void headerHome(){
+        homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
+        homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
+    }
+
+    public void hideHeader() {
+        homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
+    }
+
 }

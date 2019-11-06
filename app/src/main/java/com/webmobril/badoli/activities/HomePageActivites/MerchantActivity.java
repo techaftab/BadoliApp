@@ -115,6 +115,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         if (v==merchantBinding.btnGenCode) {
             String amount=merchantBinding.edittextAmtFcfa.getText().toString();
             if(isValidated(amount)) {
+                Configuration.hideKeyboardFrom(MerchantActivity.this);
                 merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
                 genrateQrCode(amount);
             }
@@ -128,6 +129,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     public void slideUpDown(String amount) {
         if (!isPanelShown()) {
 
+            Configuration.hideKeyboardFrom(MerchantActivity.this);
             // Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(MerchantActivity.this,
                     R.anim.slide_up_dialog);
@@ -136,7 +138,6 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             merchantBinding.hiddenLayout.rlHiddenLayout.setVisibility(View.VISIBLE);
             merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
             merchantBinding.rlMainMerchant.setVisibility(View.GONE);
-            Configuration.hideKeyboardFrom(MerchantActivity.this);
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy'T'hhmmss");
             String format = simpleDateFormat.format(new Date());
             new Thread(() -> getQrCode(amount,format,userData.getMobile(),userData.getName())).start();

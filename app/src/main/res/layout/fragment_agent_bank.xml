@@ -122,7 +122,7 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_weight="0.30"
+                    android:layout_weight="0.40"
                     android:layout_height="@dimen/_40sdp"
                     android:background="@drawable/box"
                     android:layout_marginEnd="@dimen/_2sdp"
@@ -142,10 +142,10 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:layout_weight="0.70"
+                    android:layout_weight="0.60"
                     android:background="@drawable/box"
                     android:textAllCaps="false"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
                     android:textSize="@dimen/_14ssp"

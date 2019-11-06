@@ -94,7 +94,7 @@
     <string name="select_account">Select a Account</string>
     <string name="beneficiary">Beneficiary</string>
     <string name="choose_bank">Choose a Bank</string>
-    <string name="name_beneficiary">Name Of The Benefiicary</string>
+    <string name="name_beneficiary">Name Of The Beneficiary</string>
     <string name="branch_code">Branch Code</string>
     <string name="account_number">Account Number</string>
     <string name="rib_key">RIB Key</string>

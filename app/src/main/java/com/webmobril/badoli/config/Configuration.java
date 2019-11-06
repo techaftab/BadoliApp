@@ -69,19 +69,15 @@ public class Configuration {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
         @SuppressLint("SetTextI18n")
         DatePickerDialog datePickerDialog = new DatePickerDialog(context,
                 (view, year, monthOfYear, dayOfMonth) -> {
                     if ((monthOfYear+1)<10){
                         String mont="0"+ (monthOfYear + 1);
-                        edtDob.setText(dayOfMonth + "-" + mont + "-" + year);
+                        edtDob.setText(dayOfMonth + "/" + mont + "/" + year);
                     }else {
-                        edtDob.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        edtDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                     }
-
-
-
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }

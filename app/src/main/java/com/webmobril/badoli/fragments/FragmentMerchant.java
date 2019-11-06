@@ -22,9 +22,9 @@ import java.util.Objects;
 
 public class FragmentMerchant extends Fragment implements View.OnClickListener {
 
-    FragmentMerchantBinding fragmentBinding;
-    FragmentTransaction ft;
-    Fragment currentFragment;
+    private FragmentMerchantBinding fragmentBinding;
+    private FragmentTransaction ft;
+    private Fragment currentFragment;
   //  UserData userData;
 
     @Nullable

@@ -8,10 +8,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,23 +31,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.webmobril.badoli.R;
-import com.webmobril.badoli.activities.AccountActivities.SignUpActivity;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
+import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.ProfileFragmentBinding;
 import com.webmobril.badoli.model.UserData;
 import com.webmobril.badoli.viewModels.ProfileViewModel;
-import com.webmobril.badoli.viewModels.SignUpViewModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import id.zelory.compressor.Compressor;
@@ -58,7 +51,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
-import static com.webmobril.badoli.activities.HomePageActivites.HomePageActivity.homePageBinding;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
@@ -70,10 +62,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private ProfileViewModel profileViewModel;
     private ProfileFragmentBinding profileFragmentBinding;
     private FragmentTransaction ft;
-    Fragment currentFragment;
+    private Fragment currentFragment;
     private int RequestPermissionCode=1;
-    File destination;
-    Bitmap bitmap;
+    private File destination;
+    private Bitmap bitmap;
 
     @Nullable
     @Override
@@ -82,9 +74,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         View view = profileFragmentBinding.getRoot();
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
         userData= PrefManager.getInstance(getActivity()).getUserData();
-
-        try { if (getActivity()!=null) { getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN); } }catch (Exception e){e.printStackTrace();}
+        ((HomePageActivity)Objects.requireNonNull(getActivity())).hideHeader();
+        try {
+            if (getActivity()!=null) {
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+            }
+            Objects.requireNonNull(getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         loadData();
 
@@ -92,6 +91,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void loadData() {
+        profileFragmentBinding.userCalender.setOnClickListener(this);
         profileFragmentBinding.imgbackProfile.setOnClickListener(this);
         profileFragmentBinding.imgUploadProfile.setOnClickListener(this);
         profileFragmentBinding.userName.setText(userData.getName());
@@ -99,15 +99,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         profileFragmentBinding.userMobile.setText(userData.getMobile());
         profileFragmentBinding.txtNameProfile.setText(userData.getName());
         if (!TextUtils.isEmpty(userData.getUser_image())){
+
             RequestOptions options = new RequestOptions()
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .placeholder(R.drawable.logo)
                     .error(R.drawable.logo);
 
             Glide.with(Objects.requireNonNull(getActivity()))
                     .load(Constant.IMAGE_URL+userData.getUser_image())
                     .apply(options)
+                    .fitCenter()
                     .into(profileFragmentBinding.profileImage);
+
+            Log.e(TAG,"USER--->"+userData.getUser_image());
+
         }else {
             profileFragmentBinding.profileImage.setImageResource(R.drawable.logo);
         }
@@ -117,22 +124,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         //Fragment f = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         if (v==profileFragmentBinding.imgbackProfile){
-            if (getActivity()!=null)
-            ft = getActivity().getSupportFragmentManager().beginTransaction();
-            currentFragment = new HomeFragment();
+            if (getActivity()!=null) {
+                ft = getActivity().getSupportFragmentManager().beginTransaction();
+                currentFragment = new HomeFragment();
                 ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-            ft.replace(R.id.rootLayout, currentFragment);
-            ft.commit();
-            homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
-            homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
-            homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
-            homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
-            homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
-            loadData();
+                ft.replace(R.id.rootLayout, currentFragment);
+                ft.commit();
+                loadData();
+            }
         }
         if (v==profileFragmentBinding.imgUploadProfile){
             EnableRuntimePermissionToAccessCamera();
             selectImage();
+        }
+        if (v==profileFragmentBinding.userCalender){
+            Configuration.showcalendar(profileFragmentBinding.userCalender,getActivity());
         }
     }
     private void EnableRuntimePermissionToAccessCamera(){
@@ -254,9 +260,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         profileFragmentBinding.progreebarProfile.setVisibility(View.VISIBLE);
 
-        long length = file.length();
-        length = length/1024;
-        System.out.println("File Path : " + file.getPath() + ", File size : " + length +" KB"+"\n"+compressedImgFile.length()/1024);
+//        long length = file.length();
+//        length = length/1024;
+//        System.out.println("File Path : " + file.getPath() + ", File size : " + length +" KB"+"\n"+compressedImgFile.length()/1024);
         MultipartBody.Part partCompress = MultipartBody.Part.createFormData("profile_image", compressedImgFile.getName(), fileReqBody);
 
         profileViewModel.saveProfileImage(partCompress,id).observe(this, profileImageResponse -> {

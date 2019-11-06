@@ -79,7 +79,8 @@
         <activity android:name=".activities.AccountActivities.SignUpActivity" />
         <activity android:name=".activities.AccountActivities.LoginActivity" />
         <activity android:name=".activities.HomePageActivites.HomePageActivity"
-            android:launchMode = "singleTop"/>
+            android:launchMode = "singleTop"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
