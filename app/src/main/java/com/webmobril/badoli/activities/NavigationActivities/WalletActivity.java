@@ -28,7 +28,7 @@ public class WalletActivity extends AppCompatActivity implements TabLayout.BaseO
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         walletBinding = DataBindingUtil.setContentView(this, R.layout.activity_wallet);
-    /*    walletBinding.commonHeader.header.setBackgroundColor(getResources().getColor(R.color.text_orange));
+    /*  walletBinding.commonHeader.header.setBackgroundColor(getResources().getColor(R.color.text_orange));
         walletBinding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
         walletBinding.commonHeader.badoliPhoneText.setText("Wallet");
         walletBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);

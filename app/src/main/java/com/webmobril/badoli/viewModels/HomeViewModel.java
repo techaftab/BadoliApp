@@ -1,10 +1,8 @@
 package com.webmobril.badoli.viewModels;
 
-import android.content.Intent;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 
 import com.webmobril.badoli.R;

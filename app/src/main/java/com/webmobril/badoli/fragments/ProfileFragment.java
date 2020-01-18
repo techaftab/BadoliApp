@@ -211,7 +211,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 destination  = new File(Objects.requireNonNull(getActivity()).getCacheDir(), "profile_image.jpg");
                 FileOutputStream fo;
                 try {
-                   // destination.createNewFile();
                     fo = new FileOutputStream(destination);
                     fo.write(bytes.toByteArray());
                     fo.close();

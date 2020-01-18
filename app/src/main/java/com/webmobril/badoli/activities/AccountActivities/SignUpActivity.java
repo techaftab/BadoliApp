@@ -396,7 +396,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Configuration.hideKeyboardFrom(SignUpActivity.this);
         signUpViewModel.getCountryList().observe(this, response -> {
             if (!response.error) {
-                signUpBinding.includedLayout.editTextSearchLayout.setEnabled(false);
+                signUpBinding.includedLayout.editTextSearchLayout.setEnabled(true);
                 signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
                 countryResults=response.getResult();
                 Log.e("countryResults", "" + countryResults.size());

@@ -56,9 +56,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        homePageBinding = DataBindingUtil.setContentView(HomePageActivity.this, R.layout.activity_home_page);
-        homeViewModel= ViewModelProvider.AndroidViewModelFactory.
-                getInstance(getApplication()).create(HomeViewModel.class);
+        homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
         homePageBinding.setHandler(homeViewModel);
         activity=HomePageActivity.this;
       //setupBottomNavigationListener();
@@ -150,9 +149,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         if (v==homePageBinding.drawerMenuItems.openWallet){
             openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            Intent wallet = new Intent(HomePageActivity.this, WalletActivity.class);
+           /*Intent wallet = new Intent(HomePageActivity.this, WalletActivity.class);
             startActivity(wallet);
-            overridePendingTransition(R.anim.right_in,R.anim.left_out);
+            overridePendingTransition(R.anim.right_in,R.anim.left_out);*/
         }
         if (v==homePageBinding.commonHeader.imgBackMain){
             if (f instanceof FragmentPayById){
