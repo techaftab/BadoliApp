@@ -19,7 +19,6 @@ import retrofit2.Response;
 public class LoginRepository {
 
     private MutableLiveData<LoginResponse> mutableLiveData = new MutableLiveData<>();
-    Context context;
 
     public LoginRepository() {
     }

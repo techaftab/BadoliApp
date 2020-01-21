@@ -106,9 +106,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void getLoginResponse(String phone, String password) {
 
-        //String device_token = LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
-      //  String access_oTp = LoginPre.getActiveInstance(LoginActivity.this).getAccess_OTp();
-
         loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
         loginViewModel.getLogin(phone, password, 1, device_token).observe(this, loginResponse -> {
             if (!loginResponse.error) {

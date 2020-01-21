@@ -1,9 +1,12 @@
 package com.webmobril.badoli.retrofit;
 
+import com.webmobril.badoli.model.AirtelResponse;
+import com.webmobril.badoli.model.BalanceResponse;
 import com.webmobril.badoli.model.CountryResponse;
 import com.webmobril.badoli.model.LoginResponse;
 import com.webmobril.badoli.model.ProfileImageResponse;
 import com.webmobril.badoli.model.QRResponse;
+import com.webmobril.badoli.model.ReferenceResponse;
 import com.webmobril.badoli.model.ResendOtpResponse;
 import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
@@ -13,10 +16,12 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -55,7 +60,7 @@ public interface ApiInterface {
     Call<CountryResponse> getCountryList();
 
     @GET("currentWalletBalence")
-    void getCurrentBalance(@Path("userid") String userid);
+    Call<BalanceResponse> getCurrentBalance(@Query("userid") String userid);
 
     @Multipart
     @POST("saveQrcode")
@@ -64,4 +69,14 @@ public interface ApiInterface {
     @Multipart
     @POST("updateProfileImage")
     Call<ProfileImageResponse> saveProfileImage(@Part MultipartBody.Part file,@Part("userid") int id);
+
+    @FormUrlEncoded
+    @POST("getPaymentRef")
+    Call<ReferenceResponse> getReference(@Field("user_id") String id,@Field("tel_client") String mobile,
+                                         @Field("amount") String amount,@Field("access_token") String auth_token);
+
+    @FormUrlEncoded
+    @POST("mypvitapi.kk")
+    Call<AirtelResponse> goAirtel(@Field("tel_client") String mobile,@Field("montant") String amount,@Field("ref")String referenceNo,
+                                  @Field("tel_marchand") String telMerchand,@Field("token") String token);
 }

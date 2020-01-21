@@ -69,7 +69,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void init() {
-
         homePageBinding.commonHeader.hamburger.setOnClickListener(this);
         homePageBinding.commonHeader.imgBackMain.setOnClickListener(this);
         homePageBinding.drawerMenuItems.openWallet.setOnClickListener(this);
@@ -149,9 +148,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         if (v==homePageBinding.drawerMenuItems.openWallet){
             openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-           /*Intent wallet = new Intent(HomePageActivity.this, WalletActivity.class);
+            Intent wallet = new Intent(HomePageActivity.this, AddMoney.class);
             startActivity(wallet);
-            overridePendingTransition(R.anim.right_in,R.anim.left_out);*/
+            overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.commonHeader.imgBackMain){
             if (f instanceof FragmentPayById){

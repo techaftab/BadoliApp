@@ -34,53 +34,59 @@
             android:required="false" />
 
         <activity
-            android:name=".activities.HomePageActivites.AgentActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadPurple"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleTop"/>
-        <activity
-            android:name=".activities.PaymentActivities.PaymentActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHead"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:launchMode = "singleTop"/>
-
-        <activity
-            android:name=".activities.HomePageActivites.MerchantActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHead"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleTop"/>
-        <activity
-            android:name=".activities.NavigationActivities.Support_Activity"
-            android:screenOrientation="portrait"
+            android:name=".activities.HomePageActivites.AddMoney"
             android:theme="@style/AppTheme.WithHeadOrange"
             android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleTop"/>
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activities.HomePageActivites.AgentActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadPurple"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.PaymentActivities.PaymentActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activities.HomePageActivites.MerchantActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.NavigationActivities.Support_Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadOrange"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.NavigationActivities.WalletActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.WithHead"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleTop"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.NavigationActivities.AboutUsActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.WithHead"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleTop"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.NavigationActivities.ChangePasswordActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.WithHead"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleTop"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.AccountActivities.SignUpActivity" />
         <activity android:name=".activities.AccountActivities.LoginActivity" />
-        <activity android:name=".activities.HomePageActivites.HomePageActivity"
-            android:launchMode = "singleTop"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activities.HomePageActivites.HomePageActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">

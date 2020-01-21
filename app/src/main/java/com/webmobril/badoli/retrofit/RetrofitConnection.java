@@ -1,5 +1,7 @@
 package com.webmobril.badoli.retrofit;
 
+import com.webmobril.badoli.config.Constant;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -13,6 +15,24 @@ public class RetrofitConnection {
     private ApiInterface clientService;
     private static final String BASE_URL = "https://www.webmobril.org/dev/badolipay/api/";
 
+
+    public static ApiInterface getApiAirtel() {
+        Retrofit retrofit = null;
+
+        if (retrofit == null) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            retrofit = new Retrofit
+                    .Builder()
+                    .baseUrl(Constant.MYPVIT_BASE)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+
+        }
+        return retrofit.create(ApiInterface.class);
+    }
 
     public static synchronized RetrofitConnection getInstance() {
         if (connect == null) {

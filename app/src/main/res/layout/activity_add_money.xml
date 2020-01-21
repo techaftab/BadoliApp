@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.webmobril.badoli.com.webmobril.badoli..activities.HomePageActivites.AddMoney">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_addmoney"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/imgback__addmoney"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="match_parent"
+                android:src="@drawable/arrow_back"
+                android:background="@drawable/rl_back"
+                android:onClick="backPressed"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_15sdp"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/add_money_to_badoli"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_14ssp"
+                android:textAllCaps="false"
+                android:typeface="normal"
+                android:layout_toEndOf="@+id/imgback__addmoney"
+                tools:ignore="RelativeOverlap" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_balance_addmoney"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_below="@+id/toolbar_addmoney"
+            android:background="@color/light_grey"
+            android:text="@string/current_bal"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txt_balance_addmoney"
+            android:padding="@dimen/_15sdp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_gabon_mobile"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:textStyle="normal"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:textSize="@dimen/_10ssp" />
+
+                <LinearLayout
+                    android:id="@+id/ln_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DP50"
+                    android:weightSum="1"
+                    android:background="@drawable/ed_background">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_country_phone_addmoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:gravity="center"
+                        android:maxLength="7"
+                        android:background="@null"
+                        android:textSize="@dimen/_12ssp"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        android:text="@string/hint_country_code"
+                        tools:ignore="LabelFor" />
+
+                    <EditText
+                        android:id="@+id/edittext_phone_mobile_addmoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"
+                        android:background="@null"
+                        android:maxLength="15"
+                        android:inputType="phone"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/text_orange"
+                        android:textStyle="bold"
+                        android:digits="1234567890"
+                        android:textColorHint="@color/gray"
+                        android:layout_gravity="center"
+                        android:imeOptions="actionNext"
+                        android:drawableEnd="@drawable/ic_people_black_24dp"
+                        android:paddingLeft="@dimen/DP8"
+                        android:paddingRight="@dimen/DP8"
+                        android:hint="@string/mob_number" />
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/edittext_amount_add_money_addmoney"
+                    android:hint="@string/enter_amount_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:focusableInTouchMode="true"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:inputType="numberDecimal"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:digits="0123456789."
+                    android:textSize="@dimen/_14ssp"
+                    tools:ignore="Autofill"/>
+
+
+                <TextView
+                    android:id="@+id/txt_select_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="@string/select_option_to_add"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/_12ssp"/>
+
+
+                <LinearLayout
+                    android:id="@+id/ln_proceed_airtel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:weightSum="1"
+                    android:onClick="proceedAirtel"
+                    android:background="@drawable/rl_back"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.45"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:checked="true"
+                        style="@style/AppTheme.WithHeadOrange"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.10"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/airtel_money"
+                        android:textSize="@dimen/_16ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.45"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:src="@drawable/forward_black"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_2sdp"
+                    android:background="@color/gray"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progress_addmoney"
+            android:visibility="invisible"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:padding="@dimen/_12sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/light_grey"/>
+
+    </RelativeLayout>
+
+</layout>
