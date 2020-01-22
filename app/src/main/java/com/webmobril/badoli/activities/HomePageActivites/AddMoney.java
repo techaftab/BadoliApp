@@ -86,7 +86,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
             addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
             return false;
         }
-        if (Float.valueOf(amount)<499000){
+        if (Float.valueOf(amount)>499000){
             addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_499));
             addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
             return false;
@@ -97,7 +97,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     }
 
     void showLoading(){
-       addMoney.progressAddmoney.setVisibility(View.VISIBLE);
+        addMoney.progressAddmoney.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
@@ -126,6 +126,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
                 .observe(this, airtelResponse -> {
             if (airtelResponse.response_code==1000) {
                 dismissLoading();
+                SweetToast.error(AddMoney.this,airtelResponse.getMessage());
             } else {
                 dismissLoading();
                 SweetToast.error(AddMoney.this,airtelResponse.getMessage());
