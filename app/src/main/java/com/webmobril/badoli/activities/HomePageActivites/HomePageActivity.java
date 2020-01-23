@@ -27,8 +27,9 @@ import com.webmobril.badoli.activities.AccountActivities.LoginActivity;
 import com.webmobril.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.webmobril.badoli.activities.NavigationActivities.ChangePasswordActivity;
 import com.webmobril.badoli.activities.NavigationActivities.Support_Activity;
-import com.webmobril.badoli.activities.NavigationActivities.WalletActivity;
 import com.webmobril.badoli.config.PrefManager;
+import com.webmobril.badoli.config.WebService;
+import com.webmobril.badoli.config.updateBalance;
 import com.webmobril.badoli.databinding.ActivityHomePageBinding;
 import com.webmobril.badoli.fragments.FragmentMerchant;
 import com.webmobril.badoli.fragments.FragmentPayById;
@@ -40,7 +41,7 @@ import com.webmobril.badoli.model.UserData;
 import com.webmobril.badoli.utilities.LoginPre;
 import com.webmobril.badoli.viewModels.HomeViewModel;
 
-public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
 
 
     public  ActivityHomePageBinding homePageBinding;
@@ -52,6 +53,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     Handler handler;
     @SuppressLint("StaticFieldLeak")
     static Activity activity;
+    WebService webService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,18 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         init();
     }
 
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onUpdateBalance(String balance) {
+        homePageBinding.commonHeader.txtWalletBalance.setText(balance+" ");
+        if (homePageBinding.progressbarMain!=null&&homePageBinding.progressbarMain.isShown()){
+            homePageBinding.progressbarMain.setVisibility(View.GONE);
+        }
+    }
+
     private void init() {
+        webService=new WebService(this);
+        webService.updateBalance(userData.getId(),userData.getAuth_token());
         homePageBinding.commonHeader.hamburger.setOnClickListener(this);
         homePageBinding.commonHeader.imgBackMain.setOnClickListener(this);
         homePageBinding.drawerMenuItems.openWallet.setOnClickListener(this);
@@ -76,7 +89,17 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.drawerMenuItems.support.setOnClickListener(this);
         homePageBinding.drawerMenuItems.changePassword.setOnClickListener(this);
         homePageBinding.drawerMenuItems.layoutLogout.setOnClickListener(this);
+    }
 
+    public void checkBalance(View view) {
+        homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
+        webService.updateBalance(userData.getId(),userData.getAuth_token());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webService.updateBalance(userData.getId(),userData.getAuth_token());
     }
 
     public void loadFragment(String anim) {
@@ -105,7 +128,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         showBadge(homePageBinding.bottomNavigation, R.id.navigation_transaction, "2");
         homePageBinding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
         homePageBinding.drawerMenuItems.userName.setText(userData.getName());
     }
 
@@ -282,7 +305,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
     }
 
     public void updateToolbar() {
@@ -304,5 +327,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void hideHeader() {
         homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
     }
+
 
 }

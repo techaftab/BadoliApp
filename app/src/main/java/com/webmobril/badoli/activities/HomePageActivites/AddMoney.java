@@ -1,5 +1,7 @@
 package com.webmobril.badoli.activities.HomePageActivites;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -11,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.webmobril.badoli.R;
+import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.config.WebService;
@@ -18,6 +21,8 @@ import com.webmobril.badoli.config.updateBalance;
 import com.webmobril.badoli.databinding.ActivityAddMoneyBinding;
 import com.webmobril.badoli.model.UserData;
 import com.webmobril.badoli.viewModels.AddMoneyViewModel;
+
+import java.util.Objects;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
@@ -47,9 +52,10 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
         webService.updateBalance(userData.getId(),userData.getAuth_token());
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
-
+        addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance)+" "+balance+" ");
     }
 
     public void backPressed(View view) {
@@ -74,21 +80,25 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
         if (TextUtils.isEmpty(mobile)){
             addMoney.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_gabon_mobile));
             addMoney.edittextPhoneMobileAddmoney.requestFocus();
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_mobile));
             return false;
         }
         if (TextUtils.isEmpty(amount)){
             addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.enter_amount));
             addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_amount));
             return false;
         }
         if (Float.valueOf(amount)<100){
             addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_100));
             addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
         if (Float.valueOf(amount)>499000){
             addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_499));
             addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.amount_should_499));
             return false;
         }
         addMoney.edittextAmountAddMoneyAddmoney.setError(null);
@@ -127,6 +137,8 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
             if (airtelResponse.response_code==1000) {
                 dismissLoading();
                 SweetToast.error(AddMoney.this,airtelResponse.getMessage());
+                Configuration.openPopupUpDownBack(AddMoney.this,R.style.Dialod_UpDown,
+                "main","",airtelResponse.getMessage());
             } else {
                 dismissLoading();
                 SweetToast.error(AddMoney.this,airtelResponse.getMessage());

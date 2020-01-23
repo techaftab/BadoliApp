@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.webmobril.badoli.R;
+import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -227,7 +229,12 @@ public class Configuration {
 
         btnOk.setOnClickListener(v -> {
             dialg.dismiss();
-            if (back.equalsIgnoreCase("userList")) {
+            if (back.equals("main")){
+                Intent intent=new Intent(context, HomePageActivity.class);
+                context.startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            }
+           /* if (back.equalsIgnoreCase("userList")) {
 
             } else if (back.equalsIgnoreCase("transfer")) {
 
@@ -235,7 +242,7 @@ public class Configuration {
 
             } else {
 
-            }
+            }*/
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

@@ -45,9 +45,26 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         fragmentAgentPhoneBinding.layoutConfrim.btnDone.setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View v) {
         if (v==fragmentAgentPhoneBinding.btnContinueProgress) {
+            String amount=fragmentAgentPhoneBinding.edittextAmount.getText().toString().trim();
+          //  String countryCode=fragmentAgentPhoneBinding.autoCountryPhone.getText().toString();
+            String phone=fragmentAgentPhoneBinding.edittextPhoneMobile.getText().toString();
+           // String gsmProvider=fragmentAgentPhoneBinding.autoGsmProvider.getText().toString();
+            if (setValidation(amount,phone)) {
+                View view = Objects.requireNonNull(getActivity()).getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm!=null) {
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+                continueDetail(amount,phone);
+            }
+        }
+       /* if (v==fragmentAgentPhoneBinding.btnContinueProgress) {
             String amount=fragmentAgentPhoneBinding.edittextAmount.getText().toString().trim();
             String countryCode=fragmentAgentPhoneBinding.autoCountryPhone.getText().toString();
             String phone=fragmentAgentPhoneBinding.edittextPhoneMobile.getText().toString();
@@ -98,7 +115,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         if (v==fragmentAgentPhoneBinding.layoutConfrim.btnDone) {
             slideCloseConfirm();
             ((AgentActivity) Objects.requireNonNull(getContext())).loadFragment(new FragmentAgentPhone(),R.anim.left_in,R.anim.right_out);
-        }
+        }*/
 
     }
 
@@ -117,15 +134,12 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         return true;
     }
 
-    private boolean setValidation(String amount, String countryCode, String phone, String gsmProvider) {
+    private boolean setValidation(String amount, String phone) {
         if (TextUtils.isEmpty(amount)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_amount), Toast.LENGTH_LONG).show();
             return false;
         }else if (Float.valueOf(amount)<=0){
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_valid_amount), Toast.LENGTH_LONG).show();
-            return false;
-        }else if (TextUtils.isEmpty(countryCode)){
-            Toast.makeText(getActivity(), getResources().getString(R.string.select_country_code), Toast.LENGTH_LONG).show();
             return false;
         }else if (TextUtils.isEmpty(phone)){
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_phone), Toast.LENGTH_LONG).show();
@@ -140,7 +154,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         return true;
     }
 
-    private void continueDetail(String amount, String countryCode, String phone, String gsmProvider) {
+    private void continueDetail(String amount, String phone) {
         Animation bottomUp = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slide_up_dialog);
         fragmentAgentPhoneBinding.lnPhoneDetails.setVisibility(View.GONE);

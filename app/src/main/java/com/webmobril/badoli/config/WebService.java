@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.webmobril.badoli.activities.SplashActivity;
 import com.webmobril.badoli.model.BalanceResponse;
 import com.webmobril.badoli.retrofit.ApiInterface;
 import com.webmobril.badoli.retrofit.RetrofitConnection;
@@ -35,6 +36,13 @@ public class WebService {
             @Override
             public void onResponse(@NonNull Call<BalanceResponse> call, @NonNull Response<BalanceResponse> response) {
                 Log.e(TAG, new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    Balance.onUpdateBalance(response.body().getResult());
+                    SplashActivity.savePreferences(Constant.BALANCE,response.body().getResult());
+                }
+               /* if (response.body() != null&&!response.body().error) {
+                    Balance.onUpdateBalance(response.body().getResult());
+                }*/
             }
             @Override
             public void onFailure(@NonNull Call<BalanceResponse> call,@NonNull Throwable t) {

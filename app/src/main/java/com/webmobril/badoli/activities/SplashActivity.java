@@ -2,7 +2,9 @@ package com.webmobril.badoli.activities;
 
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,12 +17,14 @@ public class SplashActivity extends AppCompatActivity {
 
     int SPLASH_SCREEN_TIME_IN_MILLIS = 3000;
     Thread thread;
+    static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
        // if (Build.VERSION.SDK_INT >= M) {
             makesplash();
     //    }
@@ -52,5 +56,15 @@ public class SplashActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    public static void savePreferences(String key, String value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public static String getPreferences(String key, String val) {
+        return sharedPreferences.getString(key, val);
     }
 }

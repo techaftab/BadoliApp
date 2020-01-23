@@ -136,4 +136,6 @@
     <string name="airtel_money">Airtel Money</string>
     <string name="amount_should_100">The amount must be at least 100.</string>
     <string name="amount_should_499">The amount must be smaller than 49900</string>
+    <string name="enter_mobile">Enter Mobile No.</string>
+    <string name="badoli_balance">Badoli Balance</string>
 </resources>
