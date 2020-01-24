@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -16,23 +17,36 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.AgentActivity;
+import com.webmobril.badoli.activities.SplashActivity;
 import com.webmobril.badoli.config.Configuration;
+import com.webmobril.badoli.config.Constant;
+import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.FragmentAgentPhoneBinding;
+import com.webmobril.badoli.model.UserData;
+import com.webmobril.badoli.viewModels.TranferViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import xyz.hasnat.sweettoast.SweetToast;
+
 public class FragmentAgentPhone extends Fragment implements View.OnClickListener {
     private FragmentAgentPhoneBinding fragmentAgentPhoneBinding;
+    private UserData userData;
+
+    private TranferViewModel tranferViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentAgentPhoneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_agent_phone, container, false);
         View view = fragmentAgentPhoneBinding.getRoot();
+        userData= PrefManager.getInstance(getActivity()).getUserData();
+        tranferViewModel = ViewModelProviders.of(this).get(TranferViewModel.class);
         init();
         return view;
     }
@@ -50,18 +64,10 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         if (v==fragmentAgentPhoneBinding.btnContinueProgress) {
             String amount=fragmentAgentPhoneBinding.edittextAmount.getText().toString().trim();
-          //  String countryCode=fragmentAgentPhoneBinding.autoCountryPhone.getText().toString();
             String phone=fragmentAgentPhoneBinding.edittextPhoneMobile.getText().toString();
-           // String gsmProvider=fragmentAgentPhoneBinding.autoGsmProvider.getText().toString();
             if (setValidation(amount,phone)) {
-                View view = Objects.requireNonNull(getActivity()).getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm!=null) {
-                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    }
-                }
-                continueDetail(amount,phone);
+                Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+                transferMobile(amount,phone,userData.getMobile());
             }
         }
        /* if (v==fragmentAgentPhoneBinding.btnContinueProgress) {
@@ -119,7 +125,6 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
 
     }
 
-
     private boolean setAccountValidation(String amount, String account) {
         if (TextUtils.isEmpty(amount)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_amount), Toast.LENGTH_LONG).show();
@@ -135,23 +140,64 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     }
 
     private boolean setValidation(String amount, String phone) {
+        Float balance=Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""));
         if (TextUtils.isEmpty(amount)) {
-            Toast.makeText(getActivity(), getResources().getString(R.string.enter_amount), Toast.LENGTH_LONG).show();
+            fragmentAgentPhoneBinding.edittextAmount.requestFocus();
+            SweetToast.error(getActivity(),getResources().getString(R.string.enter_amount));
+            fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.enter_amount));
             return false;
         }else if (Float.valueOf(amount)<=0){
-            Toast.makeText(getActivity(), getResources().getString(R.string.enter_valid_amount), Toast.LENGTH_LONG).show();
+            fragmentAgentPhoneBinding.edittextAmount.requestFocus();
+            SweetToast.error(getActivity(),getResources().getString(R.string.enter_valid_amount));
+            fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.enter_valid_amount));
+            return false;
+        }/*else if (Float.valueOf(amount)<10){
+            fragmentAgentPhoneBinding.edittextAmount.requestFocus();
+            SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_100));
+            fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.amount_should_100));
+            return false;
+        }*/else if (Float.valueOf(amount)>balance){
+            fragmentAgentPhoneBinding.edittextAmount.requestFocus();
+            SweetToast.error(getActivity(),getResources().getString(R.string.wallet_balance_low));
+            fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.wallet_balance_low));
             return false;
         }else if (TextUtils.isEmpty(phone)){
-            Toast.makeText(getActivity(), getResources().getString(R.string.enter_phone), Toast.LENGTH_LONG).show();
+            fragmentAgentPhoneBinding.edittextPhoneMobile.requestFocus();
+            SweetToast.error(getActivity(),getResources().getString(R.string.enter_phone));
+            fragmentAgentPhoneBinding.edittextPhoneMobile.setError(getResources().getString(R.string.enter_phone));
             return false;
-        }else if (phone.length()<10||phone.length()>15){
-            Toast.makeText(getActivity(), getResources().getString(R.string.enter_valid_phone), Toast.LENGTH_LONG).show();
+        }else if (phone.length()<7||phone.length()>15){
+            fragmentAgentPhoneBinding.edittextPhoneMobile.requestFocus();
+            SweetToast.error(getActivity(),getResources().getString(R.string.enter_valid_phone));
+            fragmentAgentPhoneBinding.edittextPhoneMobile.setError(getResources().getString(R.string.enter_valid_phone));
             return false;
-        }/*else if (TextUtils.isEmpty(gsmProvider)){
-            Toast.makeText(getActivity(), getResources().getString(R.string.select_gsm_provider), Toast.LENGTH_LONG).show();
-            return false;
-        }*/
+        }
         return true;
+    }
+
+    private void showLoading(){
+        fragmentAgentPhoneBinding.progressWalletTransfer.setVisibility(View.VISIBLE);
+        if (getActivity()!=null) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+    private void dismissLoading(){
+        fragmentAgentPhoneBinding.progressWalletTransfer.setVisibility(View.INVISIBLE);
+        if (getActivity()!=null) {
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+    private void transferMobile(String amount, String phone, String mobile) {
+        showLoading();
+        tranferViewModel.transferMobile(amount, phone, mobile).observe(this, walletTransfer -> {
+            dismissLoading();
+            if (!walletTransfer.error) {
+
+            } else {
+                SweetToast.error(getActivity(),walletTransfer.getMessage());
+            }
+        });
     }
 
     private void continueDetail(String amount, String phone) {
@@ -206,7 +252,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
-            // Show the panel0
+            // Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(getActivity(),
                     R.anim.slide_up_dialog);
             fragmentAgentPhoneBinding.lnPhoneAgent.setVisibility(View.GONE);

@@ -86,10 +86,11 @@
                         android:id="@+id/txt_wallet_balancet_merchant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:layout_gravity="center"
                         android:text=""
                         android:textStyle="bold"
+                        android:drawableEnd="@drawable/ic_refresh_black_24dp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/SP20" />
 
@@ -202,7 +203,9 @@
                                         android:layout_gravity="center"
                                         android:gravity="center"
                                         android:textStyle="bold"
-                                        android:inputType="number"
+                                        android:singleLine="true"
+                                        android:maxLength="5"
+                                        android:inputType="numberDecimal"
                                         android:digits="0123456789."
                                         android:textColor="@color/text_orange"
                                         android:textSize="@dimen/SP18"
@@ -255,6 +258,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:text="@string/merchan_id"
+                                android:visibility="gone"
                                 android:padding="@dimen/DP10"
                                 android:textSize="@dimen/SP20" />
 
@@ -264,6 +268,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/txt_merchant_id"
                                 android:padding="@dimen/DP10"
+                                android:visibility="gone"
                                 android:gravity="center">
 
                                 <EditText
@@ -338,6 +343,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/edtext_layout"
                                 android:layout_centerInParent="true"
+                                android:visibility="gone"
                                 android:src="@drawable/or"
                                 tools:ignore="ContentDescription" />
 
@@ -365,24 +371,28 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.70"
+                                    android:layout_weight="0.80"
                                     android:gravity="center"
                                     android:maxLength="7"
-                                    android:textSize="@dimen/SP12"
+                                    android:textSize="@dimen/_12ssp"
                                     android:text="@string/hint_country_code"/>
 
                                 <EditText
                                     android:id="@+id/edittext_idmobile_number"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.30"
+                                    android:layout_weight="0.20"
                                     android:background="@null"
                                     android:maxLength="15"
                                     android:textSize="@dimen/SP18"
                                     android:textColor="@color/text_orange"
                                     android:textStyle="bold"
+                                    android:imeOptions="actionNext"
+                                    android:singleLine="true"
+                                    android:inputType="phone"
+                                    android:digits="0123456789"
                                     android:layout_gravity="center"
-                                    android:drawableEnd="@drawable/profile"
+                                    android:drawableEnd="@drawable/ic_person_black"
                                     android:paddingLeft="@dimen/DP8"
                                     android:paddingRight="@dimen/DP8"
                                     android:hint="@string/mob_number"
@@ -393,7 +403,10 @@
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/DP50"
-                                android:layout_margin="@dimen/DP30"
+                                android:layout_marginStart="@dimen/DP30"
+                                android:layout_marginEnd="@dimen/_30sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginBottom="@dimen/_8sdp"
                                 android:orientation="vertical"
                                 android:layout_below="@+id/ln_mobile"
                                 android:id="@+id/btn_amount_idmobile"
@@ -408,6 +421,11 @@
                                     android:textAllCaps="false"
                                     android:layout_gravity="center"
                                     android:gravity="center"
+                                    android:imeOptions="actionDone"
+                                    android:singleLine="true"
+                                    android:inputType="numberDecimal"
+                                    android:digits=".0123456789"
+                                    android:maxLength="5"
                                     android:textStyle="bold"
                                     android:textColor="@color/text_orange"
                                     android:textSize="@dimen/SP18"
@@ -419,7 +437,8 @@
                                 android:id="@+id/rl_remarks_idmobile"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/DP50"
-                                android:layout_margin="@dimen/DP15"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_10sdp"
                                 android:layout_below="@+id/btn_amount_idmobile">
 
                                 <EditText
@@ -432,6 +451,9 @@
                                     android:layout_gravity="center"
                                     android:gravity="center_vertical"
                                     android:textStyle="bold"
+                                    android:imeOptions="actionDone"
+                                    android:singleLine="true"
+                                    android:maxLength="50"
                                     android:paddingStart="@dimen/DP30"
                                     android:paddingEnd="@dimen/DP8"
                                     android:textColor="@color/dark_gray"
@@ -472,14 +494,15 @@
 
                     <ProgressBar
                         android:id="@+id/progressbar_request"
-                        android:layout_width="@dimen/DP60"
-                        android:layout_height="@dimen/DP60"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:background="@color/colorLightGray"
+                        android:padding="@dimen/_12sdp"
                         android:visibility="gone"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"/>
 
                 </RelativeLayout>
-
 
             </ScrollView>
 

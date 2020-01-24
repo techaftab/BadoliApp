@@ -24,6 +24,9 @@ import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
 import com.webmobril.badoli.activities.PaymentActivities.PaymentActivity;
 import com.webmobril.badoli.databinding.FragmentQrPayBinding;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -145,19 +148,24 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     }
     @Override
     public void handleResult(Result result) {
+        zXingScannerView.stopCamera();
+        Log.d(TAG,"Qrcode data:"+result.toString());
+        Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
 
-        if (true) {
-            //zXingScannerView.removeAllViews(); //<- here remove all the views, it will make an Activity having no View
-            zXingScannerView.stopCamera();
-            Log.d(TAG,"Qrcode data:"+result.toString());
-            Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
+        getResponse(result.toString());
+       /* Intent intent = new Intent(getActivity(), PaymentActivity.class);
+        startActivity(intent);
+        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_in,R.anim.right_out);*/
+    }
 
-          Intent intent = new Intent(getActivity(), PaymentActivity.class);
-          startActivity(intent);
-          Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_in,R.anim.right_out);
-        }
-        else {
-            Toast.makeText(getActivity(), "Invalide QR_Code", Toast.LENGTH_SHORT).show();
+    private void getResponse(String response) {
+        try {
+            JSONObject jsonObject=new JSONObject(response);
+            Log.e(TAG,"USERID--->"+jsonObject.getString("userId"));
+            Log.e(TAG,"MOBILE--->"+jsonObject.getString("mobile"));
+            Log.e(TAG,"AMOUNT--->"+jsonObject.getString("amount"));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

@@ -28,16 +28,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
     private Fragment currentFragment;
     private FragmentTransaction ft;
-
-    boolean openDrawer = false;
     private HomeFragmentBinding homeFragmentBinding;
-    AlertDialog alertDialog;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
         View view = homeFragmentBinding.getRoot();
-        ((HomePageActivity) Objects.requireNonNull(getActivity())).headerHome();
+        //((HomePageActivity) Objects.requireNonNull(getActivity())).headerHome();
         try {
             Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -47,8 +45,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setUpListener() {
-        //homeFragmentBinding.homeMain.hamburger.setOnClickListener(this);
-       // homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         ((HomePageActivity) Objects.requireNonNull(getContext())).homeData();
         homeFragmentBinding.payuMerchant.setOnClickListener(this);
         homeFragmentBinding.transferAgent.setOnClickListener(this);
@@ -61,10 +57,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.payu_merchant:
-                /*Intent intent = new Intent(getActivity(), PayuActivity.class);
-                startActivity(intent);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
-
                 if (getActivity()!=null) {
                     ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.anim.right_in, R.anim.left_out);
@@ -79,14 +71,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), AgentActivity.class);
                 startActivity(intent);
                 Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
-                /*if (getActivity()!=null) {
-                    ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-                    currentFragment = new FragmentAgent();
-                    ft.replace(R.id.rootLayout, currentFragment);
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }*/
                 break;
 
             case R.id.recharge_comte:

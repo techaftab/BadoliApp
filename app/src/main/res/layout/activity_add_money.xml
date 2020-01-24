@@ -132,6 +132,7 @@
                     android:textStyle="bold"
                     android:focusable="true"
                     android:clickable="true"
+                    android:maxLength="5"
                     android:focusableInTouchMode="true"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"

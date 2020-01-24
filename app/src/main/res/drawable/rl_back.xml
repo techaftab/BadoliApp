@@ -6,7 +6,7 @@
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <solid android:color="@color/colorPrimary" />
-            <corners android:radius="@dimen/DP4" />
+            <corners android:radius="@dimen/_180sdp" />
         </shape>
     </item>
 
@@ -17,7 +17,7 @@
                 android:endColor="@color/transparent"
                 android:startColor="@color/transparent"
                 android:type="linear" />
-            <corners android:radius="@dimen/DP4" />
+            <corners android:radius="@dimen/_180sdp" />
         </shape>
     </item>
 

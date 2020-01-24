@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
@@ -75,7 +76,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void onUpdateBalance(String balance) {
         homePageBinding.commonHeader.txtWalletBalance.setText(balance+" ");
         if (homePageBinding.progressbarMain!=null&&homePageBinding.progressbarMain.isShown()){
-            homePageBinding.progressbarMain.setVisibility(View.GONE);
+            dismissLoading();
         }
     }
 
@@ -92,7 +93,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void checkBalance(View view) {
-        homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
+        showLoading();
         webService.updateBalance(userData.getId(),userData.getAuth_token());
     }
 
@@ -122,6 +123,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
        // homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
     }
+    void showLoading(){
+        homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+    void dismissLoading(){
+        homePageBinding.progressbarMain.setVisibility(View.INVISIBLE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
 
     @SuppressLint("SetTextI18n")
     public void loadData() {
@@ -282,9 +293,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         builder.setTitle("Are you sure want to logout?");
         builder.setPositiveButton("No", (dialog, id) -> dialog.cancel());
         builder.setNegativeButton("Yes", (dialog, which) -> {
-            homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
+            showLoading();
             handler.postDelayed(() -> {
-                homePageBinding.progressbarMain.setVisibility(View.GONE);
+                dismissLoading();
                 PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
                 PrefManager.getInstance(HomePageActivity.this).logout();
                 LoginPre.getActiveInstance(HomePageActivity.this).setIsLoggedIn(false);

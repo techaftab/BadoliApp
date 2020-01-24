@@ -10,6 +10,7 @@ import com.webmobril.badoli.model.ReferenceResponse;
 import com.webmobril.badoli.model.ResendOtpResponse;
 import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
+import com.webmobril.badoli.model.WalletTransfer;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -79,4 +80,9 @@ public interface ApiInterface {
     @POST("mypvitapi.kk")
     Call<AirtelResponse> goAirtel(@Field("tel_client") String mobile,@Field("montant") String amount,@Field("ref")String referenceNo,
                                   @Field("tel_marchand") String telMerchand,@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("payByWallet")
+    Call<WalletTransfer> transferMobile(@Field("amount") String amount,@Field("tel_client") String receiver_id,
+                                        @Field("sender_id") String senderId);
 }

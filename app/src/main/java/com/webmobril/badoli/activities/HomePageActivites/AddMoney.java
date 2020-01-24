@@ -1,7 +1,6 @@
 package com.webmobril.badoli.activities.HomePageActivites;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -21,8 +20,6 @@ import com.webmobril.badoli.config.updateBalance;
 import com.webmobril.badoli.databinding.ActivityAddMoneyBinding;
 import com.webmobril.badoli.model.UserData;
 import com.webmobril.badoli.viewModels.AddMoneyViewModel;
-
-import java.util.Objects;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
@@ -81,6 +78,12 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
             addMoney.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_gabon_mobile));
             addMoney.edittextPhoneMobileAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_mobile));
+            return false;
+        }
+        if (mobile.length()>15||mobile.length()<7){
+            addMoney.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_valide_mobile));
+            addMoney.edittextPhoneMobileAddmoney.requestFocus();
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_valide_mobile));
             return false;
         }
         if (TextUtils.isEmpty(amount)){
