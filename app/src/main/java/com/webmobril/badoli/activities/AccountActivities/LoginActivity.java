@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
+import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.ActivityLoginBinding;
 import com.webmobril.badoli.fragments.FragmentFgtPwd;
@@ -51,12 +53,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         init();
         /*Everything is fine*/
+        if (!TextUtils.isEmpty(LoginPre.getActiveInstance(LoginActivity.this).getRemember_name())) {
+            loginBinding.edPhone.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_name());
+            loginBinding.edPassword.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_passs());
+        }
 
         loginBinding.loginButton.setOnClickListener(v -> {
             phone = Objects.requireNonNull(loginBinding.edPhone.getText()).toString();
             password = Objects.requireNonNull(loginBinding.edPassword.getText()).toString();
             if (setValidation(phone, password)) {
-                loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
                 getLoginResponse(phone, password);
             }
             if (loginBinding.rememberMe.isChecked()) {
@@ -67,12 +72,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 LoginPre.getActiveInstance(LoginActivity.this).setRemember_passs("");
             }
         });
-        loginBinding.edPhone.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_name());
-        loginBinding.edPassword.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_passs());
+
 
 
         loginBinding.forgetPassword.setOnClickListener(this);
         loginBinding.txtSignUp.setOnClickListener(this);
+    }
+
+    void showLoading(){
+        Configuration.hideKeyboardFrom(LoginActivity.this);
+        loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+    void dismissLoading(){
+        loginBinding.loginProgressBar.setVisibility(View.INVISIBLE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     private void init() {
@@ -105,11 +120,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void getLoginResponse(String phone, String password) {
-
-        loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
+        showLoading();
         loginViewModel.getLogin(phone, password, 1, device_token).observe(this, loginResponse -> {
+            dismissLoading();
             if (!loginResponse.error) {
-                loginBinding.loginProgressBar.setVisibility(View.GONE);
                 UserData userData = new UserData(
                         loginResponse.result.user.getId(),
                         loginResponse.result.user.getAuth_token(),
@@ -123,11 +137,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         loginResponse.result.user.getUser_image(),
                         loginResponse.result.user.getQrcode_image());
                 PrefManager.getInstance(LoginActivity.this).userLogin(userData);
+               // PrefManager.getInstance(LoginActivity.this).setLogin(true);
                 Toast.makeText(getApplicationContext(), loginResponse.message, Toast.LENGTH_SHORT).show();
                 LoginPre.getActiveInstance(LoginActivity.this).setIsLoggedIn(true);
                 StartActivity();
             } else {
-                loginBinding.loginProgressBar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

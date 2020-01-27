@@ -25,22 +25,18 @@ public class TranferRepositories {
     public LiveData<WalletTransfer> transferMobile(String amount, String recieverId, String senderId) {
         MutableLiveData<WalletTransfer> mutableLiveData = new MutableLiveData<>();
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
-
         Call<WalletTransfer> call = apiService.transferMobile(amount, recieverId, senderId);
-
         call.enqueue(new Callback<WalletTransfer>() {
             @Override
             public void onResponse(@NonNull Call<WalletTransfer> call, @NonNull Response<WalletTransfer> response) {
                 Log.e(TAG, new Gson().toJson(response.body()));
                 mutableLiveData.setValue(response.body());
             }
-
             @Override
             public void onFailure(@NonNull Call<WalletTransfer> call,@NonNull Throwable t) {
 
             }
         });
         return mutableLiveData;
-
     }
 }

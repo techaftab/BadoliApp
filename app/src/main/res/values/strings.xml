@@ -137,7 +137,11 @@
     <string name="amount_should_100">The amount must be at least 100.</string>
     <string name="amount_should_499">The amount must be smaller than 49900</string>
     <string name="enter_mobile">Enter Mobile No.</string>
-    <string name="badoli_balance">Badoli Balance</string>
+    <string name="badoli_balance">Badoli Balance:</string>
     <string name="enter_valide_mobile">Enter valid mobile no.</string>
     <string name="wallet_balance_low">Your wallet balance is low</string>
+    <string name="amount_should_10">The amount must be 10.</string>
+    <string name="merchant">Merchant</string>
+    <string name="user">User</string>
+    <string name="select_usertype">Select User Type</string>
 </resources>

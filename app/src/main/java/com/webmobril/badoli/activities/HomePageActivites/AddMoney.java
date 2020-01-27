@@ -53,6 +53,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     @Override
     public void onUpdateBalance(String balance) {
         addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance)+" "+balance+" ");
+        userData.setWallet_balance(balance);
     }
 
     public void backPressed(View view) {
@@ -98,7 +99,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
             SweetToast.error(AddMoney.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
-        if (Float.valueOf(amount)>499000){
+        if (Float.valueOf(amount)>49900){
             addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_499));
             addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.amount_should_499));

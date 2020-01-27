@@ -71,6 +71,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     @Override
     public void onUpdateBalance(String balance) {
         merchantBinding.txtWalletBalancetMerchant.setText(balance+" ");
+        userData.setWallet_balance(balance);
         if (merchantBinding.progressbarRequest!=null&&merchantBinding.progressbarRequest.isShown()){
             dismissLoading();
         }
@@ -180,7 +181,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
-        if (Float.valueOf(amount)>499000){
+        if (Float.valueOf(amount)>49900){
             merchantBinding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_499));
             merchantBinding.edittextAmtFcfa.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_499));
@@ -215,7 +216,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
-        if (Float.valueOf(amount)>499000){
+        if (Float.valueOf(amount)>49900){
             merchantBinding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_499));
             merchantBinding.edittextAmtFcfaIdmobile.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_499));
@@ -292,11 +293,10 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         Configuration.hideKeyboardFrom(MerchantActivity.this);
         Animation bottomDown = AnimationUtils.loadAnimation(MerchantActivity.this,
                 R.anim.slide_bottom_dialog);
-
         merchantBinding.hiddenLayout.rlHiddenLayout.startAnimation(bottomDown);
         merchantBinding.hiddenLayout.rlHiddenLayout.setVisibility(View.GONE);
         merchantBinding.rlMainMerchant.setVisibility(View.VISIBLE);
-        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.GONE);
+        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
         merchantBinding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
         merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + "");
         merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(null);
@@ -305,13 +305,14 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @SuppressLint("SetTextI18n")
     private void genrateQrCode(String amount) {
+        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
         slideUpDown(amount);
         merchantBinding.edittextAmtFcfa.setText("");
     }
 
     @SuppressLint("SetTextI18n")
     private void getQrCode(String amount, String format, String mobile, String name) {
-       // String value="Amount: "+amount+"\n"+"UserMobile: "+mobile+"\n"+"Name: "+name+"\n"+format;
+       //String value="Amount: "+amount+"\n"+"UserMobile: "+mobile+"\n"+"Name: "+name+"\n"+format;
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("mobile",mobile);
@@ -364,7 +365,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @SuppressLint("SetTextI18n")
     private void showImage(String amount, Bitmap bitmap, BitMatrix bitMatrix) {
-        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.GONE);
+        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
         merchantBinding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
         merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + amount);
         merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(bitmap);

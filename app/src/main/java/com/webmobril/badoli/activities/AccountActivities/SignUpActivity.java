@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private List<CountryResult> country;
     int userId=-1;
     String  access_token, device_token;
+    private String roleId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         init();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    void showLoading(){
+        Configuration.hideKeyboardFrom(SignUpActivity.this);
+        signUpBinding.signupProgressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+    void dismissLoading(){
+        signUpBinding.signupProgressBar.setVisibility(View.INVISIBLE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
     @Override
     public void onClick(View v) {
@@ -162,6 +175,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void init() {
+        signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
+            if (signUpBinding.rbUser.isChecked()){
+                roleId="3";
+            }
+            if (signUpBinding.rbMerchant.isChecked()){
+                roleId="4";
+            }
+        });
         @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
      //   String uniqueID = UUID.randomUUID().toString();
         Log.e(TAG,"DEVICE_ID--->"+android_id);
@@ -255,18 +276,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void resendOtp(int userId, String access_token) {
-        signUpBinding.signupProgressBar.setVisibility(View.VISIBLE);
+        showLoading();
         signUpViewModel.resendOtp(userId,access_token).observe(this,
                 resendOtpResponse -> {
                     Log.e("responsee", new Gson().toJson(resendOtpResponse.message));
+                    dismissLoading();
                     if (!resendOtpResponse.error) {
-                        signUpBinding.signupProgressBar.setVisibility(View.GONE);
-
                         Toast.makeText(SignUpActivity.this, resendOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
-
                     } else {
                         Toast.makeText(SignUpActivity.this, resendOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        signUpBinding.signupProgressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -274,15 +292,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void getSignupResponse() {
         Log.e("Signup", "onclickdata" + name + "\n " + email + "\n " + phone + "\n" + password + "\n" + confirm_password);
 
-        signUpBinding.signupProgressBar.setVisibility(View.VISIBLE);
+        showLoading();
 
         signUpViewModel.getSignUp(name, email, phone, password, 1, device_token, confirm_password,
-                LoginPre.getActiveInstance(SignUpActivity.this).getCountry_id(), 1).observe(this,
+                LoginPre.getActiveInstance(SignUpActivity.this).getCountry_id(), 1,roleId).observe(this,
                 signupResult -> {
                     Log.e("responsee", new Gson().toJson(signupResult.message));
+                    dismissLoading();
                     if (!signupResult.error) {
-
-                        signUpBinding.signupProgressBar.setVisibility(View.GONE);
 
                         Toast.makeText(SignUpActivity.this, signupResult.getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -296,13 +313,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                         LoginPre.getActiveInstance(SignUpActivity.this).setSignup_id(id);
                         LoginPre.getActiveInstance(SignUpActivity.this).setAccess_token(token);
-
                         fillOtp(otp);
-
-
                     } else {
                         Toast.makeText(SignUpActivity.this, signupResult.getMessage(), Toast.LENGTH_SHORT).show();
-                        signUpBinding.signupProgressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -499,6 +512,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return false;
         } else if (!password.equals(confirm_password)) {
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.not_match), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (signUpBinding.radiogroupUsertype.getCheckedRadioButtonId()==-1){
+            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.select_usertype), Toast.LENGTH_LONG).show();
             return false;
         } else if (!checked) {
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.check_term), Toast.LENGTH_LONG).show();

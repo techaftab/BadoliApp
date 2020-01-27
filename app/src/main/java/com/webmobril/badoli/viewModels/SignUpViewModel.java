@@ -28,10 +28,10 @@ public class SignUpViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignupResponse> getSignUp(String name, String email, String phone, String password, int device_type,
-                                              String deviceToken, String confirm_password, int country_id, int agreeterms) {
+                                              String deviceToken, String confirm_password, int country_id, int agreeterms, String roleId) {
 
         return signupRepository.getMutableLiveData(name, email, phone, password, device_type, deviceToken,
-                confirm_password, country_id, agreeterms);
+                confirm_password, country_id, agreeterms,roleId);
     }
 
     public LiveData<CountryResponse> getCountryList() {

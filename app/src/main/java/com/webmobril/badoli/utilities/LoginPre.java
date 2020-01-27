@@ -61,7 +61,7 @@ public class LoginPre {
     public void setOtp(String otp) {
         editor = mPreferences.edit();
         editor.putString(this.otp, otp);
-        editor.commit();
+        editor.apply();
     }
 
     public String getDevice_token() {
@@ -71,7 +71,7 @@ public class LoginPre {
     public void setDevice_token(String device_token) {
         editor = mPreferences.edit();
         editor.putString(this.device_token, device_token);
-        editor.commit();
+        editor.apply();
     }
 
     public String getMobile() {
@@ -81,7 +81,7 @@ public class LoginPre {
     public void setMobile(String mobile) {
         editor = mPreferences.edit();
         editor.putString(this.mobile, mobile);
-        editor.commit();
+        editor.apply();
     }
 
     public String getPassword() {
@@ -91,7 +91,7 @@ public class LoginPre {
     public void setPassword(String password) {
         editor = mPreferences.edit();
         editor.putString(this.password, password);
-        editor.commit();
+        editor.apply();
     }
 
     public String getAccess_OTp() {
@@ -101,7 +101,7 @@ public class LoginPre {
     public void setAccess_OTp(String access_OTp) {
         editor = mPreferences.edit();
         editor.putString(this.access_OTp, access_OTp);
-        editor.commit();
+        editor.apply();
     }
     public String getAccess_token() {
         return mPreferences.getString(this.access_token, "");
@@ -110,7 +110,7 @@ public class LoginPre {
     public void setAccess_token(String access_token) {
         editor = mPreferences.edit();
         editor.putString(this.access_token, access_token);
-        editor.commit();
+        editor.apply();
     }
 
     public int getSignup_id() {
@@ -120,7 +120,7 @@ public class LoginPre {
     public void setSignup_id(int signup_id) {
         editor = mPreferences.edit();
         editor.putInt(this.signup_id, signup_id);
-        editor.commit();
+        editor.apply();
     }
 
     public int getCountry_id() {

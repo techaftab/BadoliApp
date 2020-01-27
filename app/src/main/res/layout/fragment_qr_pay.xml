@@ -44,6 +44,16 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
+        <ProgressBar
+            android:id="@+id/progressbar_scanqr"
+            android:visibility="invisible"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:padding="@dimen/_12sdp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorLightGray"/>
+
     </RelativeLayout>
 
 </layout>

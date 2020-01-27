@@ -36,7 +36,8 @@ public interface ApiInterface {
                                    @Field("device_token") String device_token,
                                    @Field("confirm_password") String confirm_password,
                                    @Field("country_id") int country_id,
-                                   @Field("agree_terms") int agree_terms);
+                                   @Field("agree_terms") int agree_terms,
+                                   @Field("roles_id") String roleId);
 
 
     @FormUrlEncoded
@@ -83,6 +84,6 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("payByWallet")
-    Call<WalletTransfer> transferMobile(@Field("amount") String amount,@Field("tel_client") String receiver_id,
+    Call<WalletTransfer> transferMobile(@Field("amount") String amount,@Field("receiver_id") String receiver_id,
                                         @Field("sender_id") String senderId);
 }

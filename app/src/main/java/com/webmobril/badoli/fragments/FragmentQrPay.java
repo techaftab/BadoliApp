@@ -7,22 +7,31 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.zxing.Result;
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
 import com.webmobril.badoli.activities.PaymentActivities.PaymentActivity;
+import com.webmobril.badoli.activities.SplashActivity;
+import com.webmobril.badoli.config.Configuration;
+import com.webmobril.badoli.config.Constant;
+import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.FragmentQrPayBinding;
+import com.webmobril.badoli.model.UserData;
+import com.webmobril.badoli.viewModels.TranferViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +39,7 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import xyz.hasnat.sweettoast.SweetToast;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -41,10 +51,16 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     private ZXingScannerView zXingScannerView;
     private boolean isPermitted;
 
+    private TranferViewModel tranferViewModel;
+
+    private UserData userData;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_qr_pay,container,false);
+        tranferViewModel = ViewModelProviders.of(this).get(TranferViewModel.class);
+        userData= PrefManager.getInstance(getActivity()).getUserData();
         View view   = fragmentBinding.getRoot();
         checkRunTimePermission();
         listener();
@@ -161,12 +177,44 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     private void getResponse(String response) {
         try {
             JSONObject jsonObject=new JSONObject(response);
+            String userId = jsonObject.getString("userId");
+            String mobile = jsonObject.getString("mobile");
+            String amount = jsonObject.getString("amount");
             Log.e(TAG,"USERID--->"+jsonObject.getString("userId"));
             Log.e(TAG,"MOBILE--->"+jsonObject.getString("mobile"));
             Log.e(TAG,"AMOUNT--->"+jsonObject.getString("amount"));
+            if (setValidation(amount,mobile)) {
+                Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+                transferMobile(amount,mobile,userData.getId());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    private void showLoading(){
+        fragmentBinding.progressbarScanqr.setVisibility(View.VISIBLE);
+        if (getActivity()!=null) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+    private void dismissLoading(){
+        fragmentBinding.progressbarScanqr.setVisibility(View.INVISIBLE);
+        if (getActivity()!=null) {
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
+    }
+
+    private void transferMobile(String amount, String recieverId, String senderid) {
+        showLoading();
+        tranferViewModel.transferMobile(amount, recieverId, senderid).observe(this, walletTransfer -> {
+            dismissLoading();
+            if (!walletTransfer.error) {
+               // Scanqr();
+            } else {
+                SweetToast.error(getActivity(),walletTransfer.getMessage());
+            }
+        });
     }
 
     @Override
@@ -182,4 +230,30 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             Scanqr();
         }
     }
+
+    private boolean setValidation(String amount, String phone) {
+        Float balance=Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""));
+        if (TextUtils.isEmpty(amount)) {
+            SweetToast.error(getActivity(),getResources().getString(R.string.enter_amount));
+            return false;
+        }
+        if (Float.valueOf(amount)<=0){
+            SweetToast.error(getActivity(),getResources().getString(R.string.enter_valid_amount));
+            return false;
+        }
+        if (Float.valueOf(amount)<100){
+            SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_100));
+            return false;
+        }
+        if (Float.valueOf(amount)>49900){
+            SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_499));
+            return false;
+        }
+        if (Float.valueOf(amount)>balance){
+            SweetToast.error(getActivity(),getResources().getString(R.string.wallet_balance_low));
+            return false;
+        }
+        return true;
+    }
+
 }

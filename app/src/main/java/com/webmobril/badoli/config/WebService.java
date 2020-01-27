@@ -39,6 +39,7 @@ public class WebService {
                 if (response.body() != null) {
                     Balance.onUpdateBalance(response.body().getResult());
                     SplashActivity.savePreferences(Constant.BALANCE,response.body().getResult());
+
                 }
                /* if (response.body() != null&&!response.body().error) {
                     Balance.onUpdateBalance(response.body().getResult());

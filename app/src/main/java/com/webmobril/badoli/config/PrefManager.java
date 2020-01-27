@@ -34,11 +34,24 @@ public class PrefManager {
     SharedPreferences pref;
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     SharedPreferences.Editor editor;
+    private String KEY_IS_LOGGEDIN="isLoggedIn";
 
 
     public PrefManager(Context context) {
         mCtx = context;
       //  prefs = context.getSharedPreferences(FIREBASE_CLOUD_MESSAGING, Context.MODE_PRIVATE);
+    }
+
+    public void setLogin(boolean isLoggedIn) {
+
+        editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
+
+        // commit changes
+        editor.commit();
+    }
+
+    public boolean isLoggedIn(){
+        return pref.getBoolean(KEY_IS_LOGGEDIN, false);
     }
 
 

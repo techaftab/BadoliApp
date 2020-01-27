@@ -354,7 +354,7 @@
                                 android:layout_below="@+id/or"
                                 android:layout_centerHorizontal="true"
                                 android:padding="@dimen/DP15"
-                                android:text="@string/mob_number"
+                                android:text="@string/enter_gabon_mobile"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/SP18" />
 

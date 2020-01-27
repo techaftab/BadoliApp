@@ -67,7 +67,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
             String phone=fragmentAgentPhoneBinding.edittextPhoneMobile.getText().toString();
             if (setValidation(amount,phone)) {
                 Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
-                transferMobile(amount,phone,userData.getMobile());
+                transferMobile(amount,phone,userData.getId());
             }
         }
        /* if (v==fragmentAgentPhoneBinding.btnContinueProgress) {
@@ -151,12 +151,12 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
             SweetToast.error(getActivity(),getResources().getString(R.string.enter_valid_amount));
             fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.enter_valid_amount));
             return false;
-        }/*else if (Float.valueOf(amount)<10){
+        }else if (Float.valueOf(amount)<10){
             fragmentAgentPhoneBinding.edittextAmount.requestFocus();
-            SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_100));
-            fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.amount_should_100));
+            SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_10));
+            fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.amount_should_10));
             return false;
-        }*/else if (Float.valueOf(amount)>balance){
+        }else if (Float.valueOf(amount)>balance){
             fragmentAgentPhoneBinding.edittextAmount.requestFocus();
             SweetToast.error(getActivity(),getResources().getString(R.string.wallet_balance_low));
             fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.wallet_balance_low));
@@ -188,9 +188,9 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
-    private void transferMobile(String amount, String phone, String mobile) {
+    private void transferMobile(String amount, String phone, String userId) {
         showLoading();
-        tranferViewModel.transferMobile(amount, phone, mobile).observe(this, walletTransfer -> {
+        tranferViewModel.transferMobile(amount, phone, userId).observe(this, walletTransfer -> {
             dismissLoading();
             if (!walletTransfer.error) {
 
@@ -252,7 +252,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
             }
-            // Show the panel
+            //Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(getActivity(),
                     R.anim.slide_up_dialog);
             fragmentAgentPhoneBinding.lnPhoneAgent.setVisibility(View.GONE);

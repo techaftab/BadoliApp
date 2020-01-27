@@ -41,12 +41,12 @@ public class AccountRepositories {
     }
 
     public LiveData<SignupResponse> getMutableLiveData(String name, String email, String mobile, String password, int deviceType,
-                                                       String deviceToken, String confirmPassword, int countryId, int agreeterms) {
+                                                       String deviceToken, String confirmPassword, int countryId, int agreeterms, String roleId) {
 
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
 
         Call<SignupResponse> call = apiService.getSignup(name, email, mobile, password, deviceType,
-                deviceToken, confirmPassword, countryId, agreeterms);
+                deviceToken, confirmPassword, countryId, agreeterms,roleId);
 
         call.enqueue(new Callback<SignupResponse>() {
             @Override

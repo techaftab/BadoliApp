@@ -75,6 +75,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onUpdateBalance(String balance) {
         homePageBinding.commonHeader.txtWalletBalance.setText(balance+" ");
+        userData.setWallet_balance(balance);
         if (homePageBinding.progressbarMain!=null&&homePageBinding.progressbarMain.isShown()){
             dismissLoading();
         }
@@ -296,7 +297,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             showLoading();
             handler.postDelayed(() -> {
                 dismissLoading();
-                PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
+               // PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
                 PrefManager.getInstance(HomePageActivity.this).logout();
                 LoginPre.getActiveInstance(HomePageActivity.this).setIsLoggedIn(false);
                 Intent intent1 = new Intent(HomePageActivity.this, LoginActivity.class);
@@ -338,6 +339,4 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void hideHeader() {
         homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
     }
-
-
 }

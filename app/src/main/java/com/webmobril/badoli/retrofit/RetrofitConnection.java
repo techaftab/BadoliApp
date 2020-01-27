@@ -13,7 +13,7 @@ public class RetrofitConnection {
 
     private static RetrofitConnection connect;
     private ApiInterface clientService;
-    private static final String BASE_URL = "https://www.webmobril.org/dev/badolipay/api/";
+    //private static final String BASE_URL = "";
 
 
     public static ApiInterface getApiAirtel() {
@@ -44,7 +44,23 @@ public class RetrofitConnection {
     // service interface instance to call api
 
     public ApiInterface createService() {
-        if (clientService == null) {
+
+        Retrofit retrofit = null;
+
+        if (retrofit == null) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+            retrofit = new Retrofit
+                    .Builder()
+                    .baseUrl(Constant.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+
+        }
+        return retrofit.create(ApiInterface.class);
+       /* if (clientService == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();//    logs HTTP request and response data.
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);//  set your desired log level
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -63,6 +79,6 @@ public class RetrofitConnection {
 
             clientService = retrofit.create(ApiInterface.class);
         }
-        return clientService;
+        return clientService;*/
     }
 }
