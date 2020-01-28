@@ -1,16 +1,22 @@
 package com.webmobril.badoli.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -182,23 +188,31 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
+
     private void dismissLoading(){
         fragmentAgentPhoneBinding.progressWalletTransfer.setVisibility(View.INVISIBLE);
         if (getActivity()!=null) {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
+
     private void transferMobile(String amount, String phone, String userId) {
         showLoading();
         tranferViewModel.transferMobile(amount, phone, userId).observe(this, walletTransfer -> {
             dismissLoading();
             if (!walletTransfer.error) {
-
+                fragmentAgentPhoneBinding.edittextPhoneAccount.setText("");
+                fragmentAgentPhoneBinding.edittextPhoneMobile.setText("");
+                fragmentAgentPhoneBinding.edittextAmount.setText("");
+                SweetToast.success(getActivity(),walletTransfer.getMessage());
+                Configuration.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,phone);
             } else {
                 SweetToast.error(getActivity(),walletTransfer.getMessage());
+                Configuration.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,phone);
             }
         });
     }
+
 
     private void continueDetail(String amount, String phone) {
         Animation bottomUp = AnimationUtils.loadAnimation(getActivity(),

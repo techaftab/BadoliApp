@@ -154,6 +154,37 @@ public class Configuration {
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
+    public static void openPopupPaymentStatus(Context context, boolean status, String message, String amount, String phone) {
+
+        final Dialog dialg=new Dialog(context);
+        dialg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialg.setContentView(R.layout.popup_status);
+        dialg.setCanceledOnTouchOutside(false);
+        dialg.setCancelable(false);
+
+        TextView txtTitle=dialg.findViewById(R.id.txt_title_popup);
+        TextView txtMessage=dialg.findViewById(R.id.txt_message);
+        ImageView imgStatus=dialg.findViewById(R.id.img_status_recharge);
+        Button btnOkay=dialg.findViewById(R.id.btn_okay);
+        if (status){
+            imgStatus.setImageResource(R.drawable.success_pay);
+            txtMessage.setText("The amount of "+amount+" successfully transferred to "+phone);
+        } else {
+            imgStatus.setImageResource(R.drawable.failed_transaction);
+            txtMessage.setText("The amount of "+amount+" does not transferred");
+        }
+        txtTitle.setText(message);
+
+        btnOkay.setOnClickListener(v -> dialg.dismiss());
+
+        dialg.show();
+        Window window = dialg.getWindow();
+        assert window != null;
+        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+    }
+
     public static void openPopupUpDown(Context context, int animationSource, String error, String message) {
         final Dialog dialg=new Dialog(context);
         dialg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -190,14 +221,14 @@ public class Configuration {
         dialg.setCanceledOnTouchOutside(false);
         dialg.setCancelable(false);
         ImageView imageView =  dialg.findViewById(R.id.img_status_recharge);
-        TextView txtStatus=dialg.findViewById(R.id.txt_status);
+      //  TextView txtStatus=dialg.findViewById(R.id.txt_status);
         TextView txtTitle=dialg.findViewById(R.id.txt_title_popup);
-        Button btnReciept=dialg.findViewById(R.id.btn_recipt);
+      //  Button btnReciept=dialg.findViewById(R.id.btn_recipt);
         Button btnOk= dialg.findViewById(R.id.btn_okay);
         txtTitle.setVisibility(View.GONE);
-        txtStatus.setText("Service Under Maintenance!!!\nComing Soon...");
+      //  txtStatus.setText("Service Under Maintenance!!!\nComing Soon...");
         imageView.setImageResource(R.drawable.maintenance);
-        btnReciept.setVisibility(View.GONE);
+       // btnReciept.setVisibility(View.GONE);
 
         btnOk.setOnClickListener(v1 -> dialg.dismiss());
 
@@ -223,7 +254,7 @@ public class Configuration {
         }else if (error.equalsIgnoreCase("internetError")){
             imageView.setImageResource(R.drawable.nointernet);
         }else {
-            imageView.setImageResource(R.drawable.success);
+            imageView.setImageResource(R.drawable.success_pay);
         }
 
         btnOk.setOnClickListener(v -> {

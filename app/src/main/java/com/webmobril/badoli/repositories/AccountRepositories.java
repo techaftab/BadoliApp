@@ -62,7 +62,7 @@ public class AccountRepositories {
             }
             @Override
             public void onFailure(@NonNull Call<SignupResponse> call,@NonNull Throwable t) {
-                Log.e("error", t.getMessage());
+                Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
         return mutableLiveData;
@@ -83,7 +83,7 @@ public class AccountRepositories {
 
             @Override
             public void onFailure(@NonNull Call<CountryResponse> call,@NonNull Throwable t) {
-                Log.e("Country_resonse", t.getMessage());
+                Log.e("Country_resonse", Objects.requireNonNull(t.getMessage()));
             }
         });
 

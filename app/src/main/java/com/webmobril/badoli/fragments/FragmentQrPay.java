@@ -33,9 +33,12 @@ import com.webmobril.badoli.databinding.FragmentQrPayBinding;
 import com.webmobril.badoli.model.UserData;
 import com.webmobril.badoli.viewModels.TranferViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -166,12 +169,53 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     public void handleResult(Result result) {
         zXingScannerView.stopCamera();
         Log.d(TAG,"Qrcode data:"+result.toString());
-        Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), result.toString(), Toast.LENGTH_SHORT).show();
+        if (isJson(result.toString())) {
+            try {
+                if (validateResponse(result.toString())) {
+                    getResponse(result.toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else {
+            SweetToast.error(getActivity(),getResources().getString(R.string.invalid_code));
+            Scanqr();
+        }
+        /*try {
 
-        getResponse(result.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
        /* Intent intent = new Intent(getActivity(), PaymentActivity.class);
         startActivity(intent);
         Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_in,R.anim.right_out);*/
+    }
+
+    public static boolean isJson(String Json) {
+        try {
+            new JSONObject(Json);
+        } catch (JSONException ex) {
+            try {
+                new JSONArray(Json);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validateResponse(String string) throws JSONException {
+        JSONObject jsonObject=new JSONObject(string);
+        if (jsonObject.length()>3||jsonObject.length()<3){
+            SweetToast.error(getActivity(),getResources().getString(R.string.invalid_code));
+            return false;
+        }
+        if (!jsonObject.has("userId")||!jsonObject.has("mobile")||!jsonObject.has("amount")){
+            SweetToast.error(getActivity(),getResources().getString(R.string.invalid_code));
+            return false;
+        }
+        return true;
     }
 
     private void getResponse(String response) {
@@ -180,9 +224,9 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             String userId = jsonObject.getString("userId");
             String mobile = jsonObject.getString("mobile");
             String amount = jsonObject.getString("amount");
-            Log.e(TAG,"USERID--->"+jsonObject.getString("userId"));
-            Log.e(TAG,"MOBILE--->"+jsonObject.getString("mobile"));
-            Log.e(TAG,"AMOUNT--->"+jsonObject.getString("amount"));
+            Log.e(TAG,"USERID--->"+userId);
+            Log.e(TAG,"MOBILE--->"+mobile);
+            Log.e(TAG,"AMOUNT--->"+amount);
             if (setValidation(amount,mobile)) {
                 Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
                 transferMobile(amount,mobile,userData.getId());
@@ -209,10 +253,16 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
         showLoading();
         tranferViewModel.transferMobile(amount, recieverId, senderid).observe(this, walletTransfer -> {
             dismissLoading();
+            Scanqr();
             if (!walletTransfer.error) {
                // Scanqr();
+                SweetToast.success(getActivity(),walletTransfer.getMessage());
+                Configuration.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,recieverId);
+                onResume();
             } else {
                 SweetToast.error(getActivity(),walletTransfer.getMessage());
+                Configuration.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,recieverId);
+                onResume();
             }
         });
     }
@@ -238,11 +288,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             return false;
         }
         if (Float.valueOf(amount)<=0){
-            SweetToast.error(getActivity(),getResources().getString(R.string.enter_valid_amount));
-            return false;
-        }
-        if (Float.valueOf(amount)<100){
-            SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_100));
+            SweetToast.error(getActivity(),getResources().getString(R.string.invalid_amount));
             return false;
         }
         if (Float.valueOf(amount)>49900){

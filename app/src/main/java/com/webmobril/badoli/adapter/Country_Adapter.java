@@ -80,12 +80,9 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
         holder.phone_code.setText(String.valueOf(country.getPhonecode()));
         holder.country_name.setText(country.getName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               getMyItem.GetClickedItem(country.getId(), country.getPhonecode());
-               SignUpActivity.slideClose();
-            }
+        holder.itemView.setOnClickListener(view -> {
+           getMyItem.GetClickedItem(country.getId(), country.getPhonecode());
+           SignUpActivity.slideClose();
         });
     }
 

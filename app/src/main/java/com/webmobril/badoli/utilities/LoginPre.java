@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.webmobril.badoli.config.Constant;
+
 public class LoginPre {
+    private static final String SHARED_PREF_NAME = Constant.PREFS_NAME;
     private static LoginPre preferences = null;
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor editor;
@@ -26,7 +29,9 @@ public class LoginPre {
 
     private LoginPre(Context context) {
         this.context = context;
-        setmPreferences(PreferenceManager.getDefaultSharedPreferences(context));
+        mPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        //setmPreferences(PreferenceManager.SHAr(context));
+       // setmPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public SharedPreferences getPreferences() {
@@ -51,7 +56,7 @@ public class LoginPre {
     public void setIsLoggedIn(boolean isLoggedin) {
         editor = mPreferences.edit();
         editor.putBoolean(this.isLoggedIn, isLoggedin);
-        editor.commit();
+        editor.apply();
     }
 
     public String getOtp() {
@@ -130,7 +135,7 @@ public class LoginPre {
     public void setCountry_id(int country_id) {
         editor = mPreferences.edit();
         editor.putInt(this.country_id, country_id);
-        editor.commit();
+        editor.apply();
     }
     public int getCountryCode() {
         return mPreferences.getInt(this.country_code, 1);
@@ -139,7 +144,7 @@ public class LoginPre {
     public void setCountry_code(int country_code) {
         editor = mPreferences.edit();
         editor.putInt(this.country_code, country_code);
-        editor.commit();
+        editor.apply();
     }
 
     public String getName() {
@@ -149,7 +154,7 @@ public class LoginPre {
     public void setName(String name) {
         editor = mPreferences.edit();
         editor.putString(this.name, name);
-        editor.commit();
+        editor.apply();
     }
 
     public String getEmail() {
@@ -159,7 +164,7 @@ public class LoginPre {
     public void setEmail(String email) {
         editor = mPreferences.edit();
         editor.putString(this.email, email);
-        editor.commit();
+        editor.apply();
     }
 
     public String getRemember_name() {
@@ -169,7 +174,7 @@ public class LoginPre {
     public void setRemember_name(String remember_name) {
         editor = mPreferences.edit();
         editor.putString(this.remember_name, remember_name);
-        editor.commit();
+        editor.apply();
     }
 
     public String getRemember_passs() {
@@ -179,7 +184,7 @@ public class LoginPre {
     public void setRemember_passs(String remember_passs) {
         editor = mPreferences.edit();
         editor.putString(this.remember_passs, remember_passs);
-        editor.commit();
+        editor.apply();
     }
 
 }

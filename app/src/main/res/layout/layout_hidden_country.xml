@@ -23,17 +23,18 @@
             <LinearLayout
                 android:id="@+id/ln_country"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/DP40"
+                android:layout_height="@dimen/_45sdp"
                 android:orientation="horizontal"
-                android:background="@color/colorPrimary">
+                android:background="@color/text_purple">
 
                 <ImageView
                     android:id="@+id/img_close_hidden"
-                    android:layout_width="@dimen/DP35"
-                    android:layout_height="@dimen/DP35"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
                     android:src="@drawable/close_white"
                     android:layout_gravity="center_vertical"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_12sdp"
+                    android:background="@drawable/rl_back"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -43,17 +44,21 @@
                     android:gravity="center"
                     android:text="@string/select_country"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/SP16"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_marginEnd="@dimen/_50sdp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/country_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_65sdp"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/rounded_button_orange"
                 android:layout_centerInParent="true"
-                android:visibility="gone" />
+                android:visibility="invisible"
+                android:indeterminateDrawable="@drawable/progress"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,14 +70,14 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:visibility="visible"
-                    android:background="@color/colorPrimary"
-                    android:layout_height="@dimen/DP70">
+                    android:background="@color/app_purple"
+                    android:layout_height="@dimen/_50sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/DP50"
-                        android:layout_marginRight="@dimen/DP15"
-                        android:layout_marginLeft="@dimen/DP15"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginLeft="@dimen/_15sdp"
                         android:background="@drawable/search_box"
                         android:layout_centerVertical="true">
 
@@ -87,7 +92,9 @@
                             android:hint="@string/search_hint"
                             android:paddingLeft="@dimen/DP8"
                             android:paddingRight="@dimen/DP8"
-                            android:textSize="@dimen/SP14"
+                            android:textSize="@dimen/_12ssp"
+                            android:lines="1"
+                            android:imeOptions="actionDone"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             tools:ignore="Autofill" />
@@ -100,7 +107,7 @@
                     android:id="@+id/country_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/DP25" />
+                    android:layout_marginTop="@dimen/_10sdp" />
 
             </LinearLayout>
 

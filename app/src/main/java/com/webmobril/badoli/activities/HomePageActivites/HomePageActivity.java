@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +42,6 @@ import com.webmobril.badoli.utilities.LoginPre;
 import com.webmobril.badoli.viewModels.HomeViewModel;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
-
 
     public  ActivityHomePageBinding homePageBinding;
     boolean openDrawer = false;
@@ -140,7 +138,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         showBadge(homePageBinding.bottomNavigation, R.id.navigation_transaction, "2");
         homePageBinding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" ");
         homePageBinding.drawerMenuItems.userName.setText(userData.getName());
     }
 
@@ -317,7 +315,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" ");
     }
 
     public void updateToolbar() {

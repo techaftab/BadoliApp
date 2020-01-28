@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -34,8 +32,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
+import com.webmobril.badoli.activities.SplashActivity;
 import com.webmobril.badoli.adapter.Country_Adapter;
 import com.webmobril.badoli.config.Configuration;
+import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.ActivitySignUpBinding;
 import com.webmobril.badoli.model.CountryResult;
@@ -59,6 +59,7 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import xyz.hasnat.sweettoast.SweetToast;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener,
@@ -87,17 +88,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
 
-        if (!TextUtils.isEmpty(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode()))) {
-
-            Log.e("ksjd", "-" + LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode());
-            signUpBinding.tvCountryCode.setText("+".concat(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode())));
+        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {
+            Log.e("ksjd", "-" + SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""));
+            signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }
 
-
-        if (!TextUtils.isEmpty(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode()))) {
-            Log.e("ksjd", "" + LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode());
-            signUpBinding.tvCountryCode.setText("+".concat(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode())));
-        }
         init();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
@@ -143,7 +138,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         if (v==signUpBinding.tvCountryCode){
             if (Configuration.hasNetworkConnection(SignUpActivity.this)){
-                call();
                 slideUpCountry();
             }else {
                 Configuration.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
@@ -167,9 +161,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         if (v==signUpBinding.rlLogin){
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finishAffinity();
+            overridePendingTransition(R.anim.left_in,R.anim.right_out);
+            finish();
         }
     }
 
@@ -295,7 +289,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         showLoading();
 
         signUpViewModel.getSignUp(name, email, phone, password, 1, device_token, confirm_password,
-                LoginPre.getActiveInstance(SignUpActivity.this).getCountry_id(), 1,roleId).observe(this,
+                Integer.valueOf(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")), 1,roleId).observe(this,
                 signupResult -> {
                     Log.e("responsee", new Gson().toJson(signupResult.message));
                     dismissLoading();
@@ -384,8 +378,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode()))) {
-            signUpBinding.tvCountryCode.setText("+".concat(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode())));
+        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {
+            signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }
     }
 
@@ -408,6 +402,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpBinding.includedLayout.editTextSearchLayout.setEnabled(false);
         Configuration.hideKeyboardFrom(SignUpActivity.this);
         signUpViewModel.getCountryList().observe(this, response -> {
+            signUpBinding.includedLayout.countryProgress.setVisibility(View.INVISIBLE);
             if (!response.error) {
                 signUpBinding.includedLayout.editTextSearchLayout.setEnabled(true);
                 signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
@@ -415,22 +410,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Log.e("countryResults", "" + countryResults.size());
                 setAdapter(countryResults);
             } else {
-                signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
+                SweetToast.error(SignUpActivity.this,getResources().getString(R.string.something_wrong));
             }
         });
     }
 
     private void setAdapter(final List<CountryResult> countryResults) {
-        String array=new Gson().toJson(countryResults.toArray());
-
-        Log.e(TAG,"ARRAY--->"+array);
-
-        List<CountryResult> items = new Gson().fromJson(array,
-                new TypeToken<List<CountryResult>>() {
-                }.getType());
 
         country.clear();
-        country.addAll(items);
+        country.addAll(countryResults);
         adapter.notifyDataSetChanged();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
@@ -459,6 +447,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void slideUpCountry() {
         if (!isPanelShown()) {
+            call();
             Animation bottomUp = AnimationUtils.loadAnimation(SignUpActivity.this,
                     R.anim.slide_up_dialog);
             signUpBinding.includedLayout.hiddenLayoutCountry.startAnimation(bottomUp);
@@ -528,9 +517,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Log.e(TAG, "GetClickedItem position id : " + id);
         Log.e(TAG, "GetClickedItem position code : " + code);
 
-        LoginPre.getActiveInstance(SignUpActivity.this).setCountry_code(code);
-        LoginPre.getActiveInstance(SignUpActivity.this).setCountry_id(id);
-        signUpBinding.tvCountryCode.setText("+".concat(String.valueOf(LoginPre.getActiveInstance(SignUpActivity.this).getCountryCode())));
+        SplashActivity.savePreferences(Constant.REMEMER_COUNTRY_CODE, String.valueOf(code));
+        SplashActivity.savePreferences(Constant.REMEMER_COUNTRY_ID, String.valueOf(id));
+
+       // LoginPre.getActiveInstance(SignUpActivity.this).setCountry_code(code);
+       // LoginPre.getActiveInstance(SignUpActivity.this).setCountry_id(id);
+        signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
     }
 
     @Override
@@ -553,9 +545,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             signUpBinding.rlLogin.setVisibility(View.VISIBLE);
         }else {
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finishAffinity();
+            overridePendingTransition(R.anim.left_in,R.anim.right_out);
+            finish();
         }
     }
     private void generateQrCode(String mobile, int id, Thread thread) {
@@ -618,10 +610,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         runOnUiThread(() -> sendImage(file,id));
         stopThread(thread);
     }
-    private synchronized void stopThread(Thread theThread)
-    {
-        if (theThread != null)
-        {
+    private synchronized void stopThread(Thread theThread) {
+        if (theThread != null) {
            // theThread = null;
             theThread.interrupt();
         }

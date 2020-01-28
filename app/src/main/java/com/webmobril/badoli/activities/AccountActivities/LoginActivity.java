@@ -21,7 +21,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.webmobril.badoli.R;
 import com.webmobril.badoli.activities.HomePageActivites.HomePageActivity;
+import com.webmobril.badoli.activities.SplashActivity;
 import com.webmobril.badoli.config.Configuration;
+import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.databinding.ActivityLoginBinding;
 import com.webmobril.badoli.fragments.FragmentFgtPwd;
@@ -53,9 +55,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         init();
         /*Everything is fine*/
-        if (!TextUtils.isEmpty(LoginPre.getActiveInstance(LoginActivity.this).getRemember_name())) {
-            loginBinding.edPhone.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_name());
-            loginBinding.edPassword.setText(LoginPre.getActiveInstance(LoginActivity.this).getRemember_passs());
+        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""))) {
+            loginBinding.edPhone.setText(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""));
+            loginBinding.edPassword.setText(SplashActivity.getPreferences(Constant.REMEMBER_PASSWORD,""));
+            loginBinding.rememberMe.setChecked(true);
         }
 
         loginBinding.loginButton.setOnClickListener(v -> {
@@ -65,11 +68,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 getLoginResponse(phone, password);
             }
             if (loginBinding.rememberMe.isChecked()) {
-                LoginPre.getActiveInstance(LoginActivity.this).setRemember_name(phone);
-                LoginPre.getActiveInstance(LoginActivity.this).setRemember_passs(password);
+                SplashActivity.savePreferences(Constant.REMEMBER_PHONE,phone);
+                SplashActivity.savePreferences(Constant.REMEMBER_PASSWORD,password);
             } else {
-                LoginPre.getActiveInstance(LoginActivity.this).setRemember_name("");
-                LoginPre.getActiveInstance(LoginActivity.this).setRemember_passs("");
+                SplashActivity.savePreferences(Constant.REMEMBER_PHONE,"");
+                SplashActivity.savePreferences(Constant.REMEMBER_PASSWORD,"");
             }
         });
 
@@ -77,6 +80,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginBinding.forgetPassword.setOnClickListener(this);
         loginBinding.txtSignUp.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""))) {
+            loginBinding.edPhone.setText(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""));
+            loginBinding.edPassword.setText(SplashActivity.getPreferences(Constant.REMEMBER_PASSWORD,""));
+            loginBinding.rememberMe.setChecked(true);
+        }
     }
 
     void showLoading(){
@@ -150,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void StartActivity() {
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
         startActivity(intent);
-        finishAffinity();
+        finish();
     }
 
     @Override
@@ -166,9 +179,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (v==loginBinding.txtSignUp){
             Context context = getApplicationContext();
             Intent intent = new Intent(context, SignUpActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-            finishAffinity();
+            startActivity(intent);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            finish();
         }
     }
 

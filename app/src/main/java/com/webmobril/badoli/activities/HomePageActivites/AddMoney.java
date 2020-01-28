@@ -1,9 +1,11 @@
 package com.webmobril.badoli.activities.HomePageActivites;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -12,7 +14,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.webmobril.badoli.R;
-import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.config.WebService;
@@ -25,6 +26,7 @@ import xyz.hasnat.sweettoast.SweetToast;
 
 public class AddMoney extends AppCompatActivity implements updateBalance {
 
+    private static final String TAG = AddMoney.class.getSimpleName();
     public ActivityAddMoneyBinding addMoney;
     AddMoneyViewModel addMoneyViewModel;
     UserData userData;
@@ -47,13 +49,49 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     private void init() {
         webService=new WebService(this);
         webService.updateBalance(userData.getId(),userData.getAuth_token());
+        handler.postDelayed(() -> webService.updateBalance(userData.getId(),userData.getAuth_token()),10000);
+    }
+
+    public void checkBalanceAdd(View view) {
+        showLoading();
+        webService.updateBalance(userData.getId(),userData.getAuth_token());
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
-        addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance)+" "+balance+" ");
-        userData.setWallet_balance(balance);
+        if (addMoney.progressAddmoney!=null&&addMoney.progressAddmoney.isShown()){
+            dismissLoading();
+        }
+        if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {
+            Float bal = Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
+                    .replace(getResources().getString(R.string.badoli_balance), "").replace(" ", ""));
+            Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
+
+            /*if (Float.valueOf(balance) > bal) {
+                SweetToast.success(AddMoney.this, getResources().getString(R.string.successful_added_money));
+                Intent intent = new Intent(AddMoney.this, HomePageActivity.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            }*/
+        } else {
+            addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " ");
+            userData.setWallet_balance(balance);
+        }
+
+       /* if (Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""))
+                >Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
+                .replace(getResources().getString(R.string.badoli_balance),"").replace(" ",""))){
+
+            Intent intent=new Intent(AddMoney.this, HomePageActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        }else {
+            addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance)+" "+balance+" ");
+            userData.setWallet_balance(balance);
+        }*/
     }
 
     public void backPressed(View view) {
@@ -134,19 +172,24 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
         });
     }
 
-    private void goAirtel(String mobile, String amount,String referenceNo) {
+    private void goAirtel(String mobile, String amount,String reference) {
         showLoading();
-        addMoneyViewModel.goAirtel(mobile,amount,referenceNo,Constant.TEL_MERCHAND,Constant.TOKEN)
+        addMoneyViewModel.goAirtel(mobile,amount,reference,Constant.TEL_MERCHAND,Constant.TOKEN)
                 .observe(this, airtelResponse -> {
-            if (airtelResponse.response_code==1000) {
-                dismissLoading();
-                SweetToast.error(AddMoney.this,airtelResponse.getMessage());
-                Configuration.openPopupUpDownBack(AddMoney.this,R.style.Dialod_UpDown,
-                "main","",airtelResponse.getMessage());
-            } else {
-                dismissLoading();
-                SweetToast.error(AddMoney.this,airtelResponse.getMessage());
-            }
-        });
+                    dismissLoading();
+                    webService.updateBalance(userData.getId(),userData.getAuth_token());
+                    if (airtelResponse.response_code==1000) {
+                        SweetToast.error(AddMoney.this,airtelResponse.getMessage());
+                        addMoney.edittextPhoneMobileAddmoney.setText("");
+                        addMoney.edittextAmountAddMoneyAddmoney.setText("");
+                        referenceNo="";
+                        Intent intent = new Intent(AddMoney.this, HomePageActivity.class);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                    } else {
+                        SweetToast.error(AddMoney.this,airtelResponse.getMessage());
+                    }
+                });
     }
 }

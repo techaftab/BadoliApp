@@ -81,8 +81,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.WithHead"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.AccountActivities.SignUpActivity" />
-        <activity android:name=".activities.AccountActivities.LoginActivity" />
+        <activity android:name=".activities.AccountActivities.SignUpActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".activities.AccountActivities.LoginActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activities.HomePageActivites.HomePageActivity"
             android:launchMode="singleTop"

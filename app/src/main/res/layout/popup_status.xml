@@ -12,60 +12,62 @@
         android:id="@+id/txt_title_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/SP18"
+        android:textSize="@dimen/_10ssp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:padding="@dimen/DP8"
-        android:text="Payment Confirmed"
+        android:padding="@dimen/_5sdp"
+        android:text=""
         android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="@color/green"/>
+        android:textAllCaps="false"
+        android:textColor="@color/purple"/>
 
     <ImageView
         android:id="@+id/img_status_recharge"
-        android:layout_width="@dimen/DP90"
+        android:layout_width="@dimen/_60sdp"
+        android:src="@drawable/success_pay"
         android:layout_gravity="center_horizontal"
-        android:layout_height="@dimen/DP90" />
+        android:padding="@dimen/_6sdp"
+        android:layout_height="@dimen/_60sdp" />
 
     <TextView
-        android:id="@+id/txt_status"
+        android:id="@+id/txt_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:textColor="@color/bla_trans"
-        android:textSize="@dimen/SP14"
-        android:padding="@dimen/DP6"/>
+        android:textSize="@dimen/_10ssp"
+        android:padding="@dimen/_5sdp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textColor="@color/blue"
+        android:textColor="@color/text_purple"
         android:text="@string/free_to_contact"
-        android:textSize="@dimen/SP10"
-        android:padding="@dimen/DP6"/>
+        android:textSize="@dimen/_10ssp"
+        android:padding="@dimen/_4sdp"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="0.50">
 
         <Button
             android:id="@+id/btn_okay"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_weight="0.50"
             android:layout_height="wrap_content"
             android:text="@string/close"
             android:textColor="@color/white"
-            android:background="@color/colorPrimary"
-            android:layout_margin="@dimen/DP10"
+            android:background="@drawable/rounded_button_orange"
+            android:layout_margin="@dimen/_5sdp"
             tools:ignore="ButtonStyle" />
 
-        <Button
+     <!--   <Button
             android:id="@+id/btn_recipt"
             android:layout_width="match_parent"
             android:layout_weight="0.50"
@@ -74,7 +76,7 @@
             android:textColor="@color/white"
             android:background="@color/green"
             android:layout_margin="@dimen/DP10"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle" />-->
 
     </LinearLayout>
 

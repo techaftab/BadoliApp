@@ -30,9 +30,9 @@
     <string name="conf_pwd">Confirm Password</string>
     <string name="country_code">+91</string>
     <string name="country_list">Country List</string>
-    <string name="free_to_contact">feel free to contact</string>
+    <string name="free_to_contact">If facing any problem, feel free to contact us</string>
     <string name="close">Close</string>
-    <string name="reciept">Reciept</string>
+    <string name="reciept">Receipt</string>
     <string name="enter_otp">Enter OTP Number</string>
     <string name="next">Next</string>
     <string name="payez_merchant">Payez un Merchant</string>
@@ -144,4 +144,8 @@
     <string name="merchant">Merchant</string>
     <string name="user">User</string>
     <string name="select_usertype">Select User Type</string>
+    <string name="something_wrong">Something went wrong. Try after sometime</string>
+    <string name="invalid_code">Invalid code</string>
+    <string name="invalid_amount">Invalid Amount</string>
+    <string name="successful_added_money">Successfully added money</string>
 </resources>

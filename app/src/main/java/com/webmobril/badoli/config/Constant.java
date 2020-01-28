@@ -9,4 +9,8 @@ public interface Constant {
     String TEL_MERCHAND="074125368";
     String BALANCE = "balance_user";
     String BASE_URL = "https://www.webmobril.org/dev/badolipay/api/";
+    String REMEMBER_PASSWORD = "remember_password";
+    String REMEMBER_PHONE = "remember_phone";
+    String REMEMER_COUNTRY_CODE = "remember_countrycode";
+    String REMEMER_COUNTRY_ID = "remember_countryid";
 }
