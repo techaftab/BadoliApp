@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "908920465501",
-    "firebase_url": "https://badoli-pay.firebaseio.com",
-    "project_id": "badoli-pay",
-    "storage_bucket": "badoli-pay.appspot.com"
+    "project_number": "591822440343",
+    "firebase_url": "https://badoli.firebaseio.com",
+    "project_id": "badoli",
+    "storage_bucket": "badoli.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:908920465501:android:9b4c96502a71dffc30c5b4",
+        "mobilesdk_app_id": "1:591822440343:android:5a019b52abf131dafee6d2",
         "android_client_info": {
           "package_name": "com.webmobril.badoli"
         }
       },
       "oauth_client": [
         {
-          "client_id": "908920465501-9n3cshtjogil0hhu29j58km2tjmgv0pr.apps.googleusercontent.com",
+          "client_id": "591822440343-d0bpee02p6ri3enf8306gadh18ld3lts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webmobril.badoli",
+            "certificate_hash": "6e58feffd69f3ab6828caaac3e21f702768eebe6"
+          }
+        },
+        {
+          "client_id": "591822440343-s8ddvf2a85lpk4hhqjjk1ckjiumdcu8j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA0ejZ_qWulVU_U6BKlwvr2gKgXSCZH0rg"
+          "current_key": "AIzaSyD3XHJ2xPUiEMPNFGrVUTf14zjehzhwZn8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "908920465501-9n3cshtjogil0hhu29j58km2tjmgv0pr.apps.googleusercontent.com",
+              "client_id": "591822440343-s8ddvf2a85lpk4hhqjjk1ckjiumdcu8j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

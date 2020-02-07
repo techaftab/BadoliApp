@@ -148,4 +148,7 @@
     <string name="invalid_code">Invalid code</string>
     <string name="invalid_amount">Invalid Amount</string>
     <string name="successful_added_money">Successfully added money</string>
+    <string name="enter_company_name">Company Name</string>
+    <string name="enter_company_address">Company Address</string>
+    <string name="enter_company_number">Company Registration Number</string>
 </resources>

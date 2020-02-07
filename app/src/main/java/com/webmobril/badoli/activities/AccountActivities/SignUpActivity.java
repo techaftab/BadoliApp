@@ -68,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private static final String TAG = SignUpActivity.class.getSimpleName();
     @SuppressLint("StaticFieldLeak")
     static ActivitySignUpBinding signUpBinding;
-    String name, phone, password, confirm_password, email;
+    String name, phone, password, confirm_password, email,companyName,companyAddress,companyNumber;
     SignUpViewModel signUpViewModel;
     String otp;
     boolean checked;
@@ -150,10 +150,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             phone = signUpBinding.edPhoneNo.getText().toString();
             email = signUpBinding.edEmailId.getText().toString();
             password = signUpBinding.edPassword.getText().toString();
+            companyName = signUpBinding.edittextCompanyName.getText().toString();
+            companyAddress = signUpBinding.edittextCompanyAddress.getText().toString();
+            companyNumber = signUpBinding.edittextCompanyNumber.getText().toString();
             confirm_password = signUpBinding.edConfirmPassword.getText().toString();
             checked = signUpBinding.checReadAgreements.isChecked();
 
-            if (setValidation(name, phone, email, password, confirm_password, checked)) {
+            if (setValidation(name, phone, email, password, confirm_password, checked,companyName,companyAddress,companyNumber)) {
                 Configuration.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
@@ -172,8 +175,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
             if (signUpBinding.rbUser.isChecked()){
                 roleId="3";
+                signUpBinding.lnMerchantDetails.setVisibility(View.GONE);
             }
             if (signUpBinding.rbMerchant.isChecked()){
+                signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
                 roleId="4";
             }
         });
@@ -474,7 +479,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpBinding.scrollviewSignup.setVisibility(View.VISIBLE);
     }
 
-    private boolean setValidation(String name, String phone, String email, String password, String confirm_password, boolean checked) {
+    private boolean setValidation(String name, String phone, String email, String password, String confirm_password, boolean checked,
+                                  String companyName, String companyAddress, String companyNumber) {
         if (name.isEmpty()) {
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.ed_fullName), Toast.LENGTH_LONG).show();
             return false;
@@ -504,6 +510,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return false;
         } else if (signUpBinding.radiogroupUsertype.getCheckedRadioButtonId()==-1){
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.select_usertype), Toast.LENGTH_LONG).show();
+            return false;
+        }  else if (signUpBinding.lnMerchantDetails.isShown()){
+            if (TextUtils.isEmpty(companyName)){
+                Toast.makeText(this, getResources().getString(R.string.enter_company_name), Toast.LENGTH_SHORT).show();
+            }
+            if (TextUtils.isEmpty(companyAddress)){
+                Toast.makeText(this, getResources().getString(R.string.enter_company_address), Toast.LENGTH_SHORT).show();
+            }
+            if (TextUtils.isEmpty(companyNumber)){
+                Toast.makeText(this, getResources().getString(R.string.enter_company_number), Toast.LENGTH_SHORT).show();
+            }
             return false;
         } else if (!checked) {
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.check_term), Toast.LENGTH_LONG).show();

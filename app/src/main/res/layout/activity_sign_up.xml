@@ -305,8 +305,130 @@
                                 android:layout_weight="0.50"
                                 android:text="@string/merchant"/>
 
-
                         </RadioGroup>
+
+                        <LinearLayout
+                            android:id="@+id/ln_merchant_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginLeft="@dimen/DP15"
+                                android:layout_marginRight="@dimen/DP15"
+                                android:layout_marginTop="@dimen/DP10"
+                                android:layout_marginBottom="@dimen/DP10"
+                                android:background="@drawable/purple_orange"
+                                android:weightSum="1">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="@dimen/_10sdp"
+                                    android:layout_weight="0.85"
+                                    android:src="@drawable/company_icon" />
+
+                                <EditText
+                                    android:id="@+id/edittext_company_name"
+                                    android:layout_weight="0.15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/enter_company_name"
+                                    android:inputType="textPersonName"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:paddingLeft="@dimen/DP8"
+                                    android:paddingRight="@dimen/DP8"
+                                    android:imeOptions="actionNext"
+                                    android:maxLength="30"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@android:color/white"
+                                    bind:ignore="Autofill" />
+                                <requestFocus />
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginLeft="@dimen/DP15"
+                                android:layout_marginRight="@dimen/DP15"
+                                android:layout_marginTop="@dimen/DP10"
+                                android:layout_marginBottom="@dimen/DP10"
+                                android:background="@drawable/purple_orange"
+                                android:weightSum="1">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="@dimen/_10sdp"
+                                    android:layout_weight="0.85"
+                                    android:src="@drawable/company_location" />
+
+                                <EditText
+                                    android:id="@+id/edittext_company_address"
+                                    android:layout_weight="0.15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/enter_company_address"
+                                    android:inputType="textPersonName"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:paddingLeft="@dimen/DP8"
+                                    android:paddingRight="@dimen/DP8"
+                                    android:imeOptions="actionNext"
+                                    android:maxLength="30"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@android:color/white"
+                                    bind:ignore="Autofill" />
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginLeft="@dimen/DP15"
+                                android:layout_marginRight="@dimen/DP15"
+                                android:layout_marginTop="@dimen/DP10"
+                                android:layout_marginBottom="@dimen/DP10"
+                                android:background="@drawable/purple_orange"
+                                android:weightSum="1">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="@dimen/_10sdp"
+                                    android:layout_weight="0.85"
+                                    android:src="@drawable/company_registration" />
+
+                                <EditText
+                                    android:id="@+id/edittext_company_number"
+                                    android:layout_weight="0.15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:hint="@string/enter_company_number"
+                                    android:inputType="textPersonName"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:paddingLeft="@dimen/DP8"
+                                    android:paddingRight="@dimen/DP8"
+                                    android:imeOptions="actionNext"
+                                    android:maxLength="30"
+                                    android:singleLine="true"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@android:color/white"
+                                    bind:ignore="Autofill" />
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                        </LinearLayout>
 
                         <!-- <androidx.appcompat.widget.LinearLayoutCompat
                              android:id="@+id/signup_button"
