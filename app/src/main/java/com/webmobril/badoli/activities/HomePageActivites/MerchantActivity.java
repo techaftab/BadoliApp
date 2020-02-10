@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -61,7 +61,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding = DataBindingUtil.setContentView(MerchantActivity.this, R.layout.activity_merchant);
         userData= PrefManager.getInstance(MerchantActivity.this).getUserData();
 
-        addMoneyViewModel = ViewModelProviders.of(this).get(AddMoneyViewModel.class);
+        addMoneyViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
 
         loadData();
         merchantBinding.txtWalletBalancetMerchant.setOnClickListener(this);
@@ -86,8 +86,6 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding.progressbarRequest.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
-
-
 
     @SuppressLint("SetTextI18n")
     private void loadData() {

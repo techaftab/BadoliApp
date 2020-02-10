@@ -1,58 +1,48 @@
 package com.webmobril.badoli.fragments;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.webmobril.badoli.R;
-import com.webmobril.badoli.activities.HomePageActivites.AgentActivity;
 import com.webmobril.badoli.activities.SplashActivity;
 import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
+import com.webmobril.badoli.config.WebService;
+import com.webmobril.badoli.config.updateBalance;
 import com.webmobril.badoli.databinding.FragmentAgentPhoneBinding;
 import com.webmobril.badoli.model.UserData;
 import com.webmobril.badoli.viewModels.TranferViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
-public class FragmentAgentPhone extends Fragment implements View.OnClickListener {
+public class FragmentAgentPhone extends Fragment implements View.OnClickListener, updateBalance {
     private FragmentAgentPhoneBinding fragmentAgentPhoneBinding;
     private UserData userData;
 
     private TranferViewModel tranferViewModel;
 
+    private WebService webService;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentAgentPhoneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_agent_phone, container, false);
         View view = fragmentAgentPhoneBinding.getRoot();
+        webService=new WebService(this);
         userData= PrefManager.getInstance(getActivity()).getUserData();
-        tranferViewModel = ViewModelProviders.of(this).get(TranferViewModel.class);
+        tranferViewModel = new ViewModelProvider(this).get(TranferViewModel.class);
         init();
         return view;
     }
@@ -131,7 +121,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
 
     }
 
-    private boolean setAccountValidation(String amount, String account) {
+  /*  private boolean setAccountValidation(String amount, String account) {
         if (TextUtils.isEmpty(amount)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_amount), Toast.LENGTH_LONG).show();
             return false;
@@ -143,7 +133,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
             return false;
         }
         return true;
-    }
+    }*/
 
     private boolean setValidation(String amount, String phone) {
         Float balance=Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""));
@@ -182,6 +172,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     }
 
     private void showLoading(){
+        Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
         fragmentAgentPhoneBinding.progressWalletTransfer.setVisibility(View.VISIBLE);
         if (getActivity()!=null) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -200,6 +191,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         showLoading();
         tranferViewModel.transferMobile(amount, phone, userId).observe(this, walletTransfer -> {
             dismissLoading();
+            webService.updateBalance(userId,userData.getAuth_token());
             if (!walletTransfer.error) {
                 fragmentAgentPhoneBinding.edittextPhoneAccount.setText("");
                 fragmentAgentPhoneBinding.edittextPhoneMobile.setText("");
@@ -214,15 +206,15 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     }
 
 
-    private void continueDetail(String amount, String phone) {
+ /*   private void continueDetail(String amount, String phone) {
         Animation bottomUp = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slide_up_dialog);
         fragmentAgentPhoneBinding.lnPhoneDetails.setVisibility(View.GONE);
         fragmentAgentPhoneBinding.lnPhoneAccount.startAnimation(bottomUp);
         fragmentAgentPhoneBinding.lnPhoneAccount.setVisibility(View.VISIBLE);
-    }
+    }*/
 
-    @SuppressLint("SetTextI18n")
+   /* @SuppressLint("SetTextI18n")
     private void progressPayment(String amount, String account) {
         ((AgentActivity) Objects.requireNonNull(getContext())).updateView();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd, yyyy");
@@ -231,17 +223,17 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         fragmentAgentPhoneBinding.layoutConfrim.txtAmountPayment.setText("$ "+amount);
         fragmentAgentPhoneBinding.layoutConfrim.txtDatePayment.setText("on "+format);
         slideUpConfirm();
-    }
+    }*/
 
-    private boolean isPanelShown() {
+   /* private boolean isPanelShown() {
         return fragmentAgentPhoneBinding.layoutConfrim.rlConfirmPayment.getVisibility() == View.VISIBLE;
     }
 
     private boolean isStatusShown() {
         return fragmentAgentPhoneBinding.layoutConfrim.rlPaymentNotice.getVisibility() == View.VISIBLE;
-    }
+    }*/
 
-    private void slideUpStatus() {
+   /* private void slideUpStatus() {
         if (!isStatusShown()) {
             ((AgentActivity) Objects.requireNonNull(getContext())).updateViewStatus();
 
@@ -286,5 +278,10 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         fragmentAgentPhoneBinding.layoutConfrim.lnConfirmPayment.setVisibility(View.GONE);
         fragmentAgentPhoneBinding.layoutConfrim.rlPaymentNotice.setVisibility(View.GONE);
         fragmentAgentPhoneBinding.lnPhoneAgent.setVisibility(View.VISIBLE);
+    }*/
+
+    @Override
+    public void onUpdateBalance(String balance) {
+       // ((HomePageActivity) Objects.requireNonNull(getActivity())).updateBalance(balance);
     }
 }

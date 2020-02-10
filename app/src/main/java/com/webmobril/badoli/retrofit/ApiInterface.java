@@ -11,17 +11,16 @@ import com.webmobril.badoli.model.ResendOtpResponse;
 import com.webmobril.badoli.model.SignupResponse;
 import com.webmobril.badoli.model.VerifyOtpResponse;
 import com.webmobril.badoli.model.WalletTransfer;
+import com.webmobril.badoli.model.ChangePasswordModel;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -86,4 +85,10 @@ public interface ApiInterface {
     @POST("payByWallet")
     Call<WalletTransfer> transferMobile(@Field("amount") String amount,@Field("receiver_id") String receiver_id,
                                         @Field("sender_id") String senderId);
+
+
+    @FormUrlEncoded
+    @POST("api_forgot_password")
+    Call<ChangePasswordModel> changePassword(@Field("mobile") String mobile,@Field("new_password") String newPassword,
+                                             @Field("confirm_password") String confirmPassword,@Field("roles_id") String roleId);
 }

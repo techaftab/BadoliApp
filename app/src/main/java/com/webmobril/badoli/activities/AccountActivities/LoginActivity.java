@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.webmobril.badoli.R;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         init();
@@ -203,5 +204,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         finish();
                     }).create().show();
         }
+    }
+
+    public void updateView() {
+        loginBinding.framelayoutLogin.setVisibility(View.GONE);
+        loginBinding.scrollviewLogin.setVisibility(View.VISIBLE);
     }
 }

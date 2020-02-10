@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.webmobril.badoli.model.ChangePasswordModel;
 import com.webmobril.badoli.model.LoginResponse;
 import com.webmobril.badoli.repositories.LoginRepository;
 
@@ -25,4 +26,7 @@ public class LoginViewModel extends AndroidViewModel {
         return loginRepository.getMutableLiveData(mobile, password, device_type, devicetoken);
     }
 
+    public LiveData<ChangePasswordModel> changePassword(String mobile, String confirmPassword, String roleId) {
+        return loginRepository.changePassword(mobile, confirmPassword, roleId);
+    }
 }

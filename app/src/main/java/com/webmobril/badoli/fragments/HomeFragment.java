@@ -1,6 +1,5 @@
 package com.webmobril.badoli.fragments;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,7 +49,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeFragmentBinding.transferAgent.setOnClickListener(this);
         homeFragmentBinding.rechargeComte.setOnClickListener(this);
         homeFragmentBinding.lnCorporate.setOnClickListener(this);
-
     }
 
     @Override

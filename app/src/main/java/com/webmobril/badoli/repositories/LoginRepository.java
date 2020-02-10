@@ -1,6 +1,5 @@
 package com.webmobril.badoli.repositories;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +10,7 @@ import com.google.gson.Gson;
 import com.webmobril.badoli.model.LoginResponse;
 import com.webmobril.badoli.retrofit.ApiInterface;
 import com.webmobril.badoli.retrofit.RetrofitConnection;
+import com.webmobril.badoli.model.ChangePasswordModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +18,7 @@ import retrofit2.Response;
 
 public class LoginRepository {
 
+    private static final String TAG = LoginRepository.class.getSimpleName();
     private MutableLiveData<LoginResponse> mutableLiveData = new MutableLiveData<>();
 
     public LoginRepository() {
@@ -33,7 +34,7 @@ public class LoginRepository {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call,@NonNull Response<LoginResponse> response) {
-                Log.e("login_response", new Gson().toJson(response.body()));
+                Log.e(TAG, new Gson().toJson(response.body()));
                 mutableLiveData.setValue(response.body());
             }
 
@@ -45,4 +46,24 @@ public class LoginRepository {
         return mutableLiveData;
     }
 
+    public LiveData<ChangePasswordModel> changePassword(String mobile, String confirmPassword, String roleId) {
+        MutableLiveData<ChangePasswordModel> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+
+        Call<ChangePasswordModel> call = apiService.changePassword(mobile,confirmPassword,confirmPassword,roleId);
+
+        call.enqueue(new Callback<ChangePasswordModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ChangePasswordModel> call,@NonNull Response<ChangePasswordModel> response) {
+                Log.e(TAG, new Gson().toJson(response.body()));
+                mutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ChangePasswordModel> call,@NonNull Throwable t) {
+
+            }
+        });
+        return mutableLiveData;
+    }
 }

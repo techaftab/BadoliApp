@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
-        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
+        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
 
         if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {

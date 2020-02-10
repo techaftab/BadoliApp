@@ -11,9 +11,10 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.webmobril.badoli.R;
+import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.Constant;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.config.WebService;
@@ -42,7 +43,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
         super.onCreate(savedInstanceState);
         addMoney = DataBindingUtil.setContentView(this, R.layout.activity_add_money);
         userData= PrefManager.getInstance(AddMoney.this).getUserData();
-        addMoneyViewModel = ViewModelProviders.of(this).get(AddMoneyViewModel.class);
+        addMoneyViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
         init();
     }
 
@@ -149,10 +150,12 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     }
 
     void showLoading(){
+        Configuration.hideKeyboardFrom(AddMoney.this);
         addMoney.progressAddmoney.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
+
     void dismissLoading(){
         addMoney.progressAddmoney.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

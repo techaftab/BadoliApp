@@ -27,6 +27,7 @@ import com.webmobril.badoli.activities.AccountActivities.LoginActivity;
 import com.webmobril.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.webmobril.badoli.activities.NavigationActivities.ChangePasswordActivity;
 import com.webmobril.badoli.activities.NavigationActivities.Support_Activity;
+import com.webmobril.badoli.config.Configuration;
 import com.webmobril.badoli.config.PrefManager;
 import com.webmobril.badoli.config.WebService;
 import com.webmobril.badoli.config.updateBalance;
@@ -54,6 +55,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     static Activity activity;
     WebService webService;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             dismissLoading();
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    public void updateBalance(String balance) {
+        homePageBinding.commonHeader.txtWalletBalance.setText(balance+" ");
+        userData.setWallet_balance(balance);
+    }
+
 
     private void init() {
         webService=new WebService(this);
@@ -113,6 +122,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homeData();
         loadData();
     }
+    @SuppressLint("SetTextI18n")
     public void homeData(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
@@ -120,9 +130,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
-       // homePageBinding.commonHeader.txtWalletBalance.setText("$ "+userData.getWallet_balance());
+        homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
     }
     void showLoading(){
+        Configuration.hideKeyboardFrom(HomePageActivity.this);
         homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
