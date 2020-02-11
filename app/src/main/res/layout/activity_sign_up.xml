@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.webmobril.badoli.viewModels.SignUpViewModel" />
+            type="com.app.badoli.viewModels.SignUpViewModel" />
     </data>
 
     <RelativeLayout

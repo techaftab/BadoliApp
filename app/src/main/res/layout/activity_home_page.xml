@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.webmobril.badoli.com.webmobril.badoli.activities.HomePage">
+    tools:context="com.app.badoli.com.webmobril.badoli.activities.HomePage">
 
 
     <data>
         <variable
             name="handler"
-            type="com.webmobril.badoli.viewModels.HomeViewModel" />
+            type="com.app.badoli.viewModels.HomeViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
