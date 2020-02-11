@@ -6,7 +6,6 @@
     <dimen name="DP3">3dp</dimen>
     <dimen name="DP4">4dp</dimen>
     <dimen name="DP5">5dp</dimen>
-    <dimen name="DP6">6dp</dimen>
     <dimen name="DP7">7dp</dimen>
     <dimen name="DP8">8dp</dimen>
     <dimen name="DP10">10dp</dimen>
@@ -20,8 +19,6 @@
     <dimen name="DP45">45dp</dimen>
     <dimen name="DP50">50dp</dimen>
     <dimen name="DP60">60dp</dimen>
-    <dimen name="DP70">70dp</dimen>
-    <dimen name="DP90">90dp</dimen>
     <dimen name="DP100">100dp</dimen>
     <dimen name="DP150">150dp</dimen>
     <dimen name="DP180">180dp</dimen>
@@ -29,7 +26,6 @@
 
 
     <dimen name="SP6">9sp</dimen>
-    <dimen name="SP10">15sp</dimen>
     <dimen name="SP12">18sp</dimen>
     <dimen name="SP14">21sp</dimen>
     <dimen name="SP16">24sp</dimen>

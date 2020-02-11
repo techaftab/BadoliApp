@@ -2,7 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.app.badoli.com.webmobril.badoli..activities.HomePageActivites.AddMoney">
+    tools:context="com.app.badoli.activities.HomePageActivites.AddMoney">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -11,9 +11,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.app.badoli.R;
-import com.app.badoli.databinding.ActivityAgentBinding;
 import com.app.badoli.fragments.FragmentAgentBank;
 import com.app.badoli.fragments.FragmentAgentPhone;
+import com.app.badoli.databinding.ActivityAgentBinding;
 
 public class AgentActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
     ActivityAgentBinding activityAgentBinding;
@@ -23,7 +23,6 @@ public class AgentActivity extends AppCompatActivity implements RadioGroup.OnChe
         super.onCreate(savedInstanceState);
         activityAgentBinding = DataBindingUtil.setContentView(AgentActivity.this, R.layout.activity_agent);
         loadData();
-        // ft.setCustomAnimations(R.anim.right_in, R.anim.left_out);
     }
 
     private void loadData() {
@@ -105,5 +104,4 @@ public class AgentActivity extends AppCompatActivity implements RadioGroup.OnChe
         activityAgentBinding.radiogroupAgent.setVisibility(View.GONE);
         activityAgentBinding.rlToolbarAgent.setVisibility(View.GONE);
     }
-
 }

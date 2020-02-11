@@ -66,33 +66,13 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
         }
         if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {
             Float bal = Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
-                    .replace(getResources().getString(R.string.badoli_balance), "").replace(" ", ""));
+                    .replace(getResources().getString(R.string.badoli_balance), "")
+                    .replace(" ", ""));
             Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
-
-            /*if (Float.valueOf(balance) > bal) {
-                SweetToast.success(AddMoney.this, getResources().getString(R.string.successful_added_money));
-                Intent intent = new Intent(AddMoney.this, HomePageActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
-            }*/
         } else {
             addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " ");
             userData.setWallet_balance(balance);
         }
-
-       /* if (Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""))
-                >Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
-                .replace(getResources().getString(R.string.badoli_balance),"").replace(" ",""))){
-
-            Intent intent=new Intent(AddMoney.this, HomePageActivity.class);
-            startActivity(intent);
-            finish();
-            overridePendingTransition(R.anim.left_in, R.anim.right_out);
-        }else {
-            addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance)+" "+balance+" ");
-            userData.setWallet_balance(balance);
-        }*/
     }
 
     public void backPressed(View view) {
