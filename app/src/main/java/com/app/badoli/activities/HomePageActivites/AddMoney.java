@@ -49,13 +49,13 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
 
     private void init() {
         webService=new WebService(this);
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
-        handler.postDelayed(() -> webService.updateBalance(userData.getId(),userData.getAuth_token()),10000);
+        webService.updateBalance(userData.getId());
+        handler.postDelayed(() -> webService.updateBalance(userData.getId()),10000);
     }
 
     public void checkBalanceAdd(View view) {
         showLoading();
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
+        webService.updateBalance(userData.getId());
     }
 
     @SuppressLint("SetTextI18n")
@@ -160,7 +160,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
         addMoneyViewModel.goAirtel(mobile,amount,reference,Constant.TEL_MERCHAND,Constant.TOKEN)
                 .observe(this, airtelResponse -> {
                     dismissLoading();
-                    webService.updateBalance(userData.getId(),userData.getAuth_token());
+                    webService.updateBalance(userData.getId());
                     if (airtelResponse.response_code==1000) {
                         SweetToast.error(AddMoney.this,airtelResponse.getMessage());
                         addMoney.edittextPhoneMobileAddmoney.setText("");

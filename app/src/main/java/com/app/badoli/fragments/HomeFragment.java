@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.HomePageActivites.AddMoney;
 import com.app.badoli.activities.HomePageActivites.AgentActivity;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.databinding.HomeFragmentBinding;
@@ -72,14 +73,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.recharge_comte:
-
+                Intent wallet = new Intent(getActivity(), AddMoney.class);
+                startActivity(wallet);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
                 break;
+
             case R.id.ln_corporate:
 
                 break;
 
         }
-
     }
-
 }

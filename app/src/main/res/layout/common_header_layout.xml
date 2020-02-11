@@ -29,7 +29,8 @@
                     android:background="@drawable/rl_back"
                     android:src="@drawable/hamburger"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/_5sdp" />
+                    android:padding="@dimen/_8sdp"
+                    android:visibility="visible"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_back_main"
@@ -38,7 +39,7 @@
                     android:src="@drawable/arrow_back"
                     android:background="@drawable/rl_back"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/_5sdp"
+                    android:padding="@dimen/_9sdp"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -88,6 +89,7 @@
                 android:layout_gravity="center"
                 android:text=""
                 android:onClick="checkBalance"
+                android:padding="@dimen/_5sdp"
                 android:includeFontPadding="false"
                 android:drawableEnd="@drawable/ic_refresh_black_24dp"
                 android:textStyle="bold"

@@ -51,7 +51,7 @@ public class AgentActivity extends AppCompatActivity implements RadioGroup.OnChe
 
     public void loadFragment(Fragment fragment, int left_in, int right_out) {
         if (fragment != null) {
-          //  checkView(fragment);
+            //checkView(fragment);
             getSupportFragmentManager()
                     .beginTransaction()
                     .setCustomAnimations(left_in,right_out)

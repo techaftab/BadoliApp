@@ -1,15 +1,14 @@
 package com.app.badoli.config;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.Gson;
 import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.model.BalanceResponse;
 import com.app.badoli.retrofit.ApiInterface;
 import com.app.badoli.retrofit.RetrofitConnection;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +18,6 @@ public class WebService {
 
     private String TAG=WebService.class.getSimpleName();
 
-    private Context mContext;
 
     private updateBalance Balance;
 
@@ -27,7 +25,7 @@ public class WebService {
         Balance = callback;
     }
 
-    public void updateBalance(String id, String auth_token) {
+    public void updateBalance(String id) {
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
 
         Call<BalanceResponse> call = apiService.getCurrentBalance(id);

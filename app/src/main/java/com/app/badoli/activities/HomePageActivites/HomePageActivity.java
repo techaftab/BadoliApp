@@ -87,10 +87,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         userData.setWallet_balance(balance);
     }
 
-
     private void init() {
         webService=new WebService(this);
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
+        webService.updateBalance(userData.getId());
         homePageBinding.commonHeader.hamburger.setOnClickListener(this);
         homePageBinding.commonHeader.imgBackMain.setOnClickListener(this);
         homePageBinding.drawerMenuItems.openWallet.setOnClickListener(this);
@@ -102,13 +101,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     public void checkBalance(View view) {
         showLoading();
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
+        webService.updateBalance(userData.getId());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
+        webService.updateBalance(userData.getId());
     }
 
     public void loadFragment(String anim) {
@@ -122,6 +121,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homeData();
         loadData();
     }
+
     @SuppressLint("SetTextI18n")
     public void homeData(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
@@ -133,12 +133,14 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
     }
+
     void showLoading(){
         Configuration.hideKeyboardFrom(HomePageActivity.this);
         homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
+
     void dismissLoading(){
         homePageBinding.progressbarMain.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -173,14 +175,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 currentFragment = new TransactionFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-
                 return true;
             case R.id.navigation_help:
                 ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new HelpFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
-
                 return true;
         }
         return false;
@@ -291,11 +291,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public static void removeBadge(BottomNavigationView bottomNavigationView, @IdRes int itemId) {
-        //  BottomNavigationItemView itemView = bottomNavigationView.findViewById(R.id.bottom_navigation);
+        //BottomNavigationItemView itemView = bottomNavigationView.findViewById(R.id.bottom_navigation);
         if (bottomNavigationView.getChildCount() == 3) {
             bottomNavigationView.removeViewAt(2);
         }
-
     }
 
     public void logout() {

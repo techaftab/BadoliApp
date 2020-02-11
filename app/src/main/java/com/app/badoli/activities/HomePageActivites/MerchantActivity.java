@@ -67,6 +67,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding.txtWalletBalancetMerchant.setOnClickListener(this);
         merchantBinding.btnProgress.setOnClickListener(this);
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
@@ -76,12 +77,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             dismissLoading();
         }
     }
+
     void showLoading(){
         Configuration.hideKeyboardFrom(MerchantActivity.this);
         merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
+
     void dismissLoading(){
         merchantBinding.progressbarRequest.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -90,7 +92,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     @SuppressLint("SetTextI18n")
     private void loadData() {
         webService=new WebService(this);
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
+        webService.updateBalance(userData.getId());
         merchantBinding.btnGenCode.setOnClickListener(this);
         merchantBinding.hiddenLayout.imgBackMerchant.setOnClickListener(this);
         merchantBinding.imgBackMaintMerchant.setOnClickListener(this);
@@ -101,31 +103,29 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     }
 
     @Override
-
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        Handler handler=new Handler();
         if (merchantBinding.rbQrcode.isChecked()){
             merchantBinding.rbQrcode.setBackground(getResources().getDrawable(R.drawable.purple_round_left_layout));
             merchantBinding.rbMobileId.setBackground(null);
-           // merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
+            //merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
             merchantBinding.rbMobileId.setTextColor(getResources().getColor(R.color.text_orange));
             merchantBinding.rbQrcode.setTextColor(getResources().getColor(R.color.white));
             handler.postDelayed(() -> {
                 merchantBinding.lnQrCode.setVisibility(View.VISIBLE);
                 merchantBinding.rlMobileid.setVisibility(View.GONE);
-             //   merchantBinding.progressbarRequest.setVisibility(View.GONE);
+                //merchantBinding.progressbarRequest.setVisibility(View.GONE);
             },0);
         }
         if (merchantBinding.rbMobileId.isChecked()){
             merchantBinding.rbMobileId.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
             merchantBinding.rbQrcode.setBackground(null);
-          //  merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
+            //merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
             merchantBinding.rbQrcode.setTextColor(getResources().getColor(R.color.text_orange));
             merchantBinding.rbMobileId.setTextColor(getResources().getColor(R.color.white));
             handler.postDelayed(() -> {
                 merchantBinding.lnQrCode.setVisibility(View.GONE);
                 merchantBinding.rlMobileid.setVisibility(View.VISIBLE);
-               // merchantBinding.progressbarRequest.setVisibility(View.GONE);
+                //merchantBinding.progressbarRequest.setVisibility(View.GONE);
             },0);
         }
     }
@@ -155,7 +155,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         }
         if (v==merchantBinding.txtWalletBalancetMerchant){
             showLoading();
-            webService.updateBalance(userData.getId(),userData.getAuth_token());
+            webService.updateBalance(userData.getId());
         }
         if (v==merchantBinding.btnProgress){
             String mobile=merchantBinding.edittextIdmobileNumber.getText().toString().trim();
@@ -257,7 +257,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     }
 
     private void updateValue() {
-        webService.updateBalance(userData.getId(),userData.getAuth_token());
+        webService.updateBalance(userData.getId());
         referenceNo="";
         merchantBinding.edittextIdmobileNumber.setText("");
         merchantBinding.edittextAmtFcfaIdmobile.setText("");
@@ -270,7 +270,6 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     public void slideUpDown(String amount) {
         if (!isPanelShown()) {
-
             Configuration.hideKeyboardFrom(MerchantActivity.this);
             // Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(MerchantActivity.this,
@@ -296,13 +295,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding.rlMainMerchant.setVisibility(View.VISIBLE);
         merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
         merchantBinding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
-        merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + "");
+        merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " ");
         merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(null);
         merchantBinding.hiddenLayout.imgQrcode.setImageResource(R.drawable.logo);
     }
 
     @SuppressLint("SetTextI18n")
-    private void genrateQrCode(String amount) {
+     private void genrateQrCode(String amount) {
         merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
         slideUpDown(amount);
         merchantBinding.edittextAmtFcfa.setText("");
@@ -333,10 +332,10 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
                         BarcodeFormat.QR_CODE, width, height, hintMap);
 
             } catch (IllegalArgumentException ignored) {
-
             } catch (WriterException e) {
                 e.printStackTrace();
             }
+
             int bitMatrixWidth = bitMatrix.getWidth();
 
             int bitMatrixHeight = bitMatrix.getHeight();
@@ -344,14 +343,12 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
 
             for (int y = 0; y < bitMatrixHeight; y++) {
-
                 int offset = y * bitMatrixWidth;
-
                 for (int x = 0; x < bitMatrixWidth; x++) {
-
                     pixels[offset + x] = bitMatrix.get(x, y) ? getResources().getColor(R.color.bla_trans) : getResources().getColor(R.color.white);
                 }
             }
+
             Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.RGB_565);
 
             bitmap.setPixels(pixels, 0, width, 0, 0, bitMatrixWidth, bitMatrixHeight);
@@ -370,30 +367,22 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         startTimer(120,bitMatrix);
     }
 
-
     private void startTimer(int sec, BitMatrix bitMatrix) {
-
         CountDownTimer downTimer= new CountDownTimer(1000 * sec, 1000) {
-
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             public void onTick(long millisUntilFinished) {
-
-
                 @SuppressLint("DefaultLocale") String v = String.format("%02d", millisUntilFinished / 60000);
                 int va = (int) ((millisUntilFinished % 60000) / 1000);
                 merchantBinding.hiddenLayout.txtQrcodeTimer.setText("This code will expire in: "+v + ":" + String.format("%02d", va)+" minutes");
             }
-
             @SuppressLint("SetTextI18n")
             public void onFinish() {
                 merchantBinding.hiddenLayout.txtQrcodeTimer.setText("This code is expired");
-                slideClose();
                 merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(null);
                 bitMatrix.clear();
+                handler.postDelayed(() -> slideClose(),1000);
             }
         };
         downTimer.start();
     }
-
-
 }

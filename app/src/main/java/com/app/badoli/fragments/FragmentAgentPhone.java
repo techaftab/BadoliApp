@@ -40,8 +40,8 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentAgentPhoneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_agent_phone, container, false);
         View view = fragmentAgentPhoneBinding.getRoot();
-        webService=new WebService(this);
-        userData= PrefManager.getInstance(getActivity()).getUserData();
+        webService = new WebService(this);
+        userData = PrefManager.getInstance(getActivity()).getUserData();
         tranferViewModel = new ViewModelProvider(this).get(TranferViewModel.class);
         init();
         return view;
@@ -118,10 +118,9 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
             slideCloseConfirm();
             ((AgentActivity) Objects.requireNonNull(getContext())).loadFragment(new FragmentAgentPhone(),R.anim.left_in,R.anim.right_out);
         }*/
-
     }
 
-  /*  private boolean setAccountValidation(String amount, String account) {
+  /*private boolean setAccountValidation(String amount, String account) {
         if (TextUtils.isEmpty(amount)) {
             Toast.makeText(getActivity(), getResources().getString(R.string.enter_amount), Toast.LENGTH_LONG).show();
             return false;
@@ -191,7 +190,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
         showLoading();
         tranferViewModel.transferMobile(amount, phone, userId).observe(this, walletTransfer -> {
             dismissLoading();
-            webService.updateBalance(userId,userData.getAuth_token());
+            webService.updateBalance(userId);
             if (!walletTransfer.error) {
                 fragmentAgentPhoneBinding.edittextPhoneAccount.setText("");
                 fragmentAgentPhoneBinding.edittextPhoneMobile.setText("");
