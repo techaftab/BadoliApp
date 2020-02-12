@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //String uniqueID = UUID.randomUUID().toString();
         Log.e(TAG,"DEVICE_ID--->"+android_id);
         MessageDigest md;
-       // device_token;
+       //device_token;
         try {
             md = MessageDigest.getInstance("SHA");
             md.update(android_id.getBytes());
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void getLoginResponse(String phone, String password) {
         showLoading();
-        loginViewModel.getLogin(phone, password, 1, device_token).observe(this, loginResponse -> {
+        loginViewModel.getLogin(phone,password,1,device_token).observe(this, loginResponse -> {
             dismissLoading();
             if (!loginResponse.error) {
                 UserData userData = new UserData(
@@ -168,7 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v==loginBinding.forgetPassword){
+        if (v==loginBinding.forgetPassword) {
             loginBinding.framelayoutLogin.setVisibility(View.VISIBLE);
             loginBinding.scrollviewLogin.setVisibility(View.GONE);
             ft = getSupportFragmentManager().beginTransaction();
@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             ft.replace(R.id.framelayout_login, currentFragment);
             ft.commit();
         }
-        if (v==loginBinding.txtSignUp){
+        if (v==loginBinding.txtSignUp) {
             Context context = getApplicationContext();
             Intent intent = new Intent(context, SignUpActivity.class);
             startActivity(intent);
