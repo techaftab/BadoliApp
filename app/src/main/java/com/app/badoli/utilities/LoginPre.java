@@ -15,7 +15,7 @@ public class LoginPre {
     private String otp = "otp";
     private String signup_id = "id";
     private String access_token = "access_token";
-    private String device_token= "device_token";
+    private String device_token= "device_token_firebase";
     private String mobile= "mobile";
     private String password= "password";
     private String access_OTp= "access_OTp";

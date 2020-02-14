@@ -1,13 +1,9 @@
 package com.app.badoli.activities.AccountActivities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -30,14 +26,13 @@ import com.app.badoli.fragments.FragmentFgtPwd;
 import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.LoginViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+  //  private static final String TAG = LoginActivity.class.getSimpleName();
     LoginViewModel loginViewModel;
     ActivityLoginBinding loginBinding;
     String phone, password,device_token;
@@ -104,7 +99,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
-        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String deviceToken = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
+            device_token= LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
+        });
+        /*@SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
         //String uniqueID = UUID.randomUUID().toString();
         Log.e(TAG,"DEVICE_ID--->"+android_id);
         MessageDigest md;
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.e("Key Hash=", device_token);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private boolean setValidation(String phone, String password) {

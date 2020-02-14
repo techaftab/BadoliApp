@@ -5,11 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,12 +22,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.SplashActivity;
@@ -44,13 +36,18 @@ import com.app.badoli.utilities.GetMyItem;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.utilities.Validation;
 import com.app.badoli.viewModels.SignUpViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,7 +179,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 roleId="4";
             }
         });
-        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String deviceToken = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(SignUpActivity.this).setDevice_token(deviceToken);
+            device_token= LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
+        });
+        /*@SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
      //   String uniqueID = UUID.randomUUID().toString();
         Log.e(TAG,"DEVICE_ID--->"+android_id);
         MessageDigest md;
@@ -196,7 +199,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Log.e("Key Hash=", device_token);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
+        }*/
         signUpBinding.tvCountryCode.setOnClickListener(this);
         signUpBinding.signupButton.setOnClickListener(this);
         signUpBinding.rlLogin.setOnClickListener(this);
@@ -291,6 +294,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void getSignupResponse() {
         Log.e("Signup", "onclickdata" + name + "\n " + email + "\n " + phone + "\n" + password + "\n" + confirm_password);
 
+        device_token=LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
         showLoading();
 
         signUpViewModel.getSignUp(name, email, phone, password, 1, device_token, confirm_password,
