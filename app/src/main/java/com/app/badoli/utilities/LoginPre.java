@@ -1,5 +1,6 @@
 package com.app.badoli.utilities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -7,6 +8,7 @@ import com.app.badoli.config.Constant;
 
 public class LoginPre {
     private static final String SHARED_PREF_NAME = Constant.PREFS_NAME;
+    @SuppressLint("StaticFieldLeak")
     private static LoginPre preferences = null;
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor editor;

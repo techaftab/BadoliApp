@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
+
     void dismissLoading(){
         loginBinding.loginProgressBar.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -131,7 +132,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-
     private void getLoginResponse(String phone, String password) {
         showLoading();
         loginViewModel.getLogin(phone,password,1,device_token).observe(this, loginResponse -> {
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         loginResponse.result.user.getUser_image(),
                         loginResponse.result.user.getQrcode_image());
                 PrefManager.getInstance(LoginActivity.this).userLogin(userData);
-               // PrefManager.getInstance(LoginActivity.this).setLogin(true);
+                //PrefManager.getInstance(LoginActivity.this).setLogin(true);
                 Toast.makeText(getApplicationContext(), loginResponse.message, Toast.LENGTH_SHORT).show();
                 LoginPre.getActiveInstance(LoginActivity.this).setIsLoggedIn(true);
                 StartActivity();
