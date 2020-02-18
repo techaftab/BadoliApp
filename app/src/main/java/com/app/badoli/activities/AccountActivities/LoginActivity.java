@@ -71,8 +71,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-
-
         loginBinding.forgetPassword.setOnClickListener(this);
         loginBinding.txtSignUp.setOnClickListener(this);
     }
