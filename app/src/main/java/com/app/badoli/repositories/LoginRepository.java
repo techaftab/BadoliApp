@@ -34,7 +34,7 @@ public class LoginRepository {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call,@NonNull Response<LoginResponse> response) {
-                Log.e(TAG, new Gson().toJson(response.body()));
+               // Log.e(TAG, new Gson().toJson(response.body()));
                 mutableLiveData.setValue(response.body());
             }
 
@@ -55,7 +55,7 @@ public class LoginRepository {
         call.enqueue(new Callback<ChangePasswordModel>() {
             @Override
             public void onResponse(@NonNull Call<ChangePasswordModel> call,@NonNull Response<ChangePasswordModel> response) {
-                Log.e(TAG, new Gson().toJson(response.body()));
+              //  Log.e(TAG, new Gson().toJson(response.body()));
                 mutableLiveData.setValue(response.body());
             }
 

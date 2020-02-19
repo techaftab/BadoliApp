@@ -90,7 +90,6 @@
                         android:layout_gravity="center"
                         android:text=""
                         android:textStyle="bold"
-                        android:drawableEnd="@drawable/ic_refresh_black_24dp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/SP20" />
 

@@ -20,16 +20,16 @@
                 android:layout_weight="1"
                 android:background="@drawable/orange_layout"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/DP15"
-                android:paddingRight="@dimen/DP15">
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/acc_ic"
-                    android:layout_width="@dimen/DP50"
-                    android:layout_height="@dimen/DP50"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_4sdp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/DP15"
                     android:src="@mipmap/nav_user_icon" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -38,33 +38,33 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:paddingLeft="@dimen/DP15"
-                    android:paddingRight="@dimen/DP15"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/acc_ic"
-                    android:text=""
-                    android:textStyle="normal"
+                    android:text="@string/app_name"
+                    android:textStyle="bold"
+                    android:singleLine="true"
                     android:textColor="@color/white"
                     android:layout_toStartOf="@+id/img_fwd"
-                    android:textSize="@dimen/SP20"
-                    android:padding="@dimen/DP8"
+                    android:textSize="@dimen/_14ssp"
+                    android:padding="@dimen/_3sdp"
                     tools:ignore="RelativeOverlap" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_fwd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_5sdp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/arrow_forward" />
-
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/DP5"
+                android:layout_height="@dimen/_4sdp"
                 android:background="@color/purple" />
 
             <RelativeLayout
@@ -74,15 +74,15 @@
                 android:layout_weight="1"
                 android:background="@drawable/rl_back"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/DP20"
-                android:paddingRight="@dimen/DP20">
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/wallet_ic"
-                    android:layout_width="@dimen/DP50"
-                    android:layout_height="@dimen/DP50"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_4sdp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/DP15"
                     android:layout_alignParentStart="true"
                     android:src="@mipmap/wallet_black" />
 
@@ -90,25 +90,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/DP15"
-                    android:paddingRight="@dimen/DP15"
-                    android:layout_marginStart="@dimen/DP10"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/wallet_ic"
                     android:layout_toStartOf="@+id/img_w"
                     android:text="@string/wallet"
                     android:onClick="onClick"
                     android:id="@+id/wallet_text"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/SP16" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_w"
-                    android:layout_width="@dimen/DP35"
-                    android:layout_height="@dimen/DP35"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_5sdp"
                     android:src="@mipmap/right_arrow_black" />
 
 
@@ -126,14 +125,14 @@
                 android:layout_weight="1"
                 android:background="@drawable/rl_back"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/DP20"
-                android:paddingRight="@dimen/DP20">
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/info_ic"
-                    android:layout_width="@dimen/DP50"
-                    android:layout_height="@dimen/DP50"
-                    android:layout_marginStart="@dimen/DP15"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_4sdp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:src="@mipmap/info_black" />
@@ -142,25 +141,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/DP15"
-                    android:paddingRight="@dimen/DP15"
-                    android:layout_marginStart="@dimen/DP10"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/info_ic"
                     android:layout_toStartOf="@+id/img_ic"
                     android:text="@string/about"
                     android:id="@+id/about_text"
                     android:onClick="onClick"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/SP16" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_ic"
-                    android:layout_width="@dimen/DP35"
-                    android:layout_height="@dimen/DP35"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_5sdp"
                     android:src="@mipmap/right_arrow_black" />
 
 
@@ -178,14 +176,14 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:background="@drawable/rl_back"
-                android:paddingRight="@dimen/DP20"
-                android:paddingLeft="@dimen/DP20">
+                android:paddingRight="@dimen/_8sdp"
+                android:paddingLeft="@dimen/_8sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/support_ic"
-                    android:layout_width="@dimen/DP50"
-                    android:layout_height="@dimen/DP50"
-                    android:layout_marginStart="@dimen/DP15"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_4sdp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:src="@mipmap/support" />
@@ -194,22 +192,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/DP15"
-                    android:paddingRight="@dimen/DP15"
-                    android:layout_marginStart="@dimen/DP10"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/support_ic"
                     android:layout_toStartOf="@+id/img_s"
                     android:text="@string/support"
                     android:id="@+id/support_text"
                     android:onClick="onClick"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/SP16" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_s"
-                    android:layout_width="@dimen/DP35"
-                    android:layout_height="@dimen/DP35"
-                    android:padding="@dimen/DP8"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:padding="@dimen/_5sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -228,16 +225,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/DP20"
+                android:paddingLeft="@dimen/_8sdp"
                 android:background="@drawable/rl_back"
-                android:paddingRight="@dimen/DP20">
+                android:paddingRight="@dimen/_8sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/_change_pass_ic"
-                    android:layout_width="@dimen/DP50"
-                    android:layout_height="@dimen/DP50"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/DP15"
+                    android:layout_margin="@dimen/_4sdp"
                     android:src="@mipmap/change_password" />
 
                 <TextView
@@ -245,22 +242,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="0dp"
                     android:layout_toStartOf="@+id/img_c"
                     android:layout_toEndOf="@+id/_change_pass_ic"
-                    android:paddingLeft="@dimen/DP15"
+                    android:paddingLeft="@dimen/_5sdp"
                     android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/DP15"
-                    android:text="@string/chng_pwd"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:text="@string/chng_pwd_or_language"
+                    android:gravity="center_vertical"
+                    android:lines="2"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/SP16" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_c"
-                    android:layout_width="@dimen/DP35"
-                    android:layout_height="@dimen/DP35"
-                    android:padding="@dimen/DP8"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:padding="@dimen/_5sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -280,15 +277,15 @@
                 android:layout_weight="1"
                 android:background="@drawable/rl_back"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/DP20"
-                android:paddingRight="@dimen/DP20">
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/_logout_ic"
-                    android:layout_width="@dimen/DP50"
-                    android:layout_height="@dimen/DP50"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/DP15"
+                    android:layout_margin="@dimen/_4sdp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/sign_out" />
 
@@ -297,21 +294,20 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/DP15"
-                    android:paddingRight="@dimen/DP15"
-                    android:layout_marginStart="@dimen/DP10"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/_logout_ic"
                     android:text="@string/logout"
                     android:onClick="onClick"
                     android:id="@+id/logout_text"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/SP16" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/DP35"
-                    android:layout_height="@dimen/DP35"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:layout_alignParentEnd="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_5sdp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/right_arrow_black" />

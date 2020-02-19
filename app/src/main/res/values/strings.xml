@@ -8,9 +8,6 @@
     <string name="user_email_id">Email ID</string>
     <string name="terms_and_cond">I Read and agree to Terms and Conditions</string>
     <string name="aleardy_account">Already have an account ?</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-
     <string name="ed_fullName">Enter Full Name</string>
     <string name="ed_phone">Enter Phone No</string>
     <string name="phone_lenght">Phone Number should be between 7 to 15 digits</string>
@@ -32,9 +29,9 @@
     <string name="close">Close</string>
     <string name="enter_otp">Enter OTP Number</string>
     <string name="next">Next</string>
-    <string name="payez_merchant">Payez un Merchant</string>
+    <string name="payez_merchant">Pay a Merchant</string>
     <string name="transfer_agent">Transfer Agent</string>
-    <string name="recharge_com">Recharge Comte</string>
+    <string name="recharge_com">Count Refill</string>
     <string name="wallet">Wallet</string>
     <string name="about">About</string>
     <string name="support">Support</string>
@@ -53,7 +50,7 @@
     <string name="merch_id">Merchant ID</string>
     <string name="merch_mob">Merchant Mobile No</string>
     <string name="go_back">Go Back</string>
-    <string name="favories">Favories</string>
+    <string name="favories">Favorits</string>
     <string name="qr_code">QR Code</string>
     <string name="mobile_id">Mobile/ID</string>
     <string name="enter_amt_gen_code">Please enter the amount and click on Generate Code.</string>
@@ -100,11 +97,11 @@
     <string name="enter_valid_amount">Enter Valid Amount</string>
     <string name="enter_phone">Enter Mobile Number</string>
     <string name="enter_valid_phone">Enter Valid Mobile No</string>
-    <string name="hint_amount">$ 2500</string>
+    <string name="hint_amount">00</string>
     <string name="confirm_payment">Confirm Payment</string>
     <string name="done">Done</string>
     <string name="successful_payment">Successful Payment</string>
-    <string name="enter_amount_hint">$ Enter Amount</string>
+    <string name="enter_amount_hint">Enter Amount</string>
     <string name="about_us">About Us</string>
     <string name="submit_request">Submit Request</string>
     <string name="change_pwd">Change Password</string>
@@ -140,7 +137,7 @@
     <string name="merchant">Merchant</string>
     <string name="user">User</string>
     <string name="select_usertype">Select User Type</string>
-    <string name="something_wrong">Something went wrong. Try after sometime</string>
+    <string name="something_wrong">Something went wrong!! Try after sometime</string>
     <string name="invalid_code">Invalid code</string>
     <string name="invalid_amount">Invalid Amount</string>
     <string name="enter_company_name">Company Name</string>
@@ -150,4 +147,46 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="password_does_not_match">Password does not match</string>
     <string name="login_now">Go Back for Login</string>
+    <string name="really_exit">Really Exit?</string>
+    <string name="are_sure_exit">Are you sure you want to exit?</string>
+    <string name="enter_otp_sent_mobile">Please enter otp sent to your mobile no.</string>
+    <string name="no_internet">No Internet Connectivity</string>
+    <string name="your_sector">Your Activity Sector</string>
+    <string name="select_your_sector">Select your sector</string>
+    <string name="perm_denied">Permission Denied</string>
+    <string name="without_perm_not_allowed">Without those permission the app is unable to scan. App needs external storage and camera.Are you sure you want to deny this permission?</string>
+    <string name="m_sure">I\'M SURE</string>
+    <string name="retry">RE-TRY</string>
+    <string name="new_request">New request</string>
+    <string name="want_logout">Are you sure want to logout?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="code_expires_in">This code will expire in:</string>
+    <string name="minutes">minutes</string>
+    <string name="code_expired">This code is expired</string>
+    <string name="camera_perm_allow">CAMERA permission allows us to Access CAMERA app</string>
+    <string name="perm_cacelled">Permission Cancelled,allow to upload receipt</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="select_gallery">Select From Gallery</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_option">Select Option!</string>
+    <string name="select_image">Select Image</string>
+    <string name="camera_perm_error">Camera Permission error</string>
+    <string name="paid">Paid</string>
+    <string name="recieve">Receive</string>
+    <string name="chng_pwd_or_language">Change Password, Language</string>
+    <string name="enter_old_password">Enter Old Password</string>
+    <string name="submit">Submit</string>
+    <string name="contact_us_number">In case of problems, you can contact us at 123456789 or by email at contact@badolipay.com.</string>
+    <string name="change_language">Change Language</string>
+    <string name="english">English(en)</string>
+    <string name="french" translatable="false">French(fr)</string>
+    <string name="select_language">Select Language</string>
+    <string name="en">English</string>
+
+    <string-array name="select_lang">
+        <item>@string/select_language</item>
+        <item>@string/english</item>
+        <item>@string/french</item>
+    </string-array>
 </resources>

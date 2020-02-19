@@ -71,7 +71,8 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
-        merchantBinding.txtWalletBalancetMerchant.setText(balance+" ");
+        PrefManager.getInstance(MerchantActivity.this).setWalletBalance(balance);
+        merchantBinding.txtWalletBalancetMerchant.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
         if (merchantBinding.progressbarRequest!=null&&merchantBinding.progressbarRequest.isShown()){
             dismissLoading();
@@ -97,7 +98,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding.hiddenLayout.imgBackMerchant.setOnClickListener(this);
         merchantBinding.imgBackMaintMerchant.setOnClickListener(this);
         merchantBinding.badoliPhoneTextMerchant.setText("Badolipay ("+userData.getMobile()+")");
-        merchantBinding.txtWalletBalancetMerchant.setText(userData.getWallet_balance()+" ");
+        merchantBinding.txtWalletBalancetMerchant.setText(userData.getWallet_balance()+" FCFA");
         merchantBinding.radiogroupMerchant.setOnCheckedChangeListener(this);
         merchantBinding.rbQrcode.setChecked(true);
     }
@@ -362,7 +363,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     private void showImage(String amount, Bitmap bitmap, BitMatrix bitMatrix) {
         merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
         merchantBinding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
-        merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + amount);
+        merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + amount+" FCFA");
         merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(bitmap);
         startTimer(120,bitMatrix);
     }
@@ -373,11 +374,11 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             public void onTick(long millisUntilFinished) {
                 @SuppressLint("DefaultLocale") String v = String.format("%02d", millisUntilFinished / 60000);
                 int va = (int) ((millisUntilFinished % 60000) / 1000);
-                merchantBinding.hiddenLayout.txtQrcodeTimer.setText("This code will expire in: "+v + ":" + String.format("%02d", va)+" minutes");
+                merchantBinding.hiddenLayout.txtQrcodeTimer.setText(getResources().getString(R.string.code_expires_in)+" "+v + ":" + String.format("%02d", va)+" "+getResources().getString(R.string.minutes));
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
-                merchantBinding.hiddenLayout.txtQrcodeTimer.setText("This code is expired");
+                merchantBinding.hiddenLayout.txtQrcodeTimer.setText(getResources().getString(R.string.code_expired));
                 merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(null);
                 bitMatrix.clear();
                 handler.postDelayed(() -> slideClose(),1000);

@@ -200,7 +200,7 @@ public class Configuration {
         }else if (error.equalsIgnoreCase("internetError")){
             imageView.setImageResource(R.drawable.nointernet);
         }else {
-            imageView.setImageResource(R.drawable.success);
+            imageView.setImageResource(R.drawable.success_pay);
         }
 
         btnOk.setOnClickListener(v -> dialg.dismiss());

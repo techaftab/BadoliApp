@@ -28,6 +28,8 @@ public class LoginPre {
     private String remember_name= "rememberName";
     private String remember_passs= "rememberPass";
 
+    private String LocaleLangua = "locale_language_badoli";
+
     private LoginPre(Context context) {
         this.context = context;
         mPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -68,6 +70,16 @@ public class LoginPre {
         editor = mPreferences.edit();
         editor.putString(this.otp, otp);
         editor.apply();
+    }
+
+    public String getLocaleLangua() {
+        return mPreferences.getString(this.LocaleLangua, "");
+    }
+
+    public void setLocaleLangua(String localeLangua) {
+        editor = mPreferences.edit();
+        editor.putString(this.LocaleLangua, localeLangua);
+        editor.commit();
     }
 
     public String getDevice_token() {

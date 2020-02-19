@@ -2,10 +2,14 @@ package com.app.badoli.activities.AccountActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,9 +32,10 @@ import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.LoginViewModel;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.Locale;
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
   //  private static final String TAG = LoginActivity.class.getSimpleName();
     LoginViewModel loginViewModel;
@@ -38,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String phone, password,device_token;
     Fragment currentFragment;
     FragmentTransaction ft;
+    private String[] language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +104,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
+     /*   if (LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua().equals("fr")){
+            loginBinding.spinnerLanguageSignup.setSelection(2);
+        }else {
+            loginBinding.spinnerLanguageSignup.setSelection(1);
+        }*/
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
             String deviceToken = instanceIdResult.getToken();
             LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
             device_token= LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
         });
+        loginBinding.spinnerLanguageSignup.setOnItemSelectedListener(this);
+        language=getResources().getStringArray(R.array.select_lang);
+        ArrayAdapter aa = new ArrayAdapter<>(this, R.layout.spinner_item, language);
+        aa.setDropDownViewResource(R.layout.spinner_item);
+        loginBinding.spinnerLanguageSignup.setAdapter(aa);
+
+        if (LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua().equals("fr")){
+            loginBinding.spinnerLanguageSignup.setSelection(2);
+        }else {
+            loginBinding.spinnerLanguageSignup.setSelection(1);
+        }
+
         /*@SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
         //String uniqueID = UUID.randomUUID().toString();
         Log.e(TAG,"DEVICE_ID--->"+android_id);
@@ -117,6 +140,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }*/
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (language[position].equals("French(fr)")) {
+            LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua("fr");
+            setLocale("fr");
+        }else {
+            LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua("en");
+            setLocale("en");
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    private void setLocale(String lang) {
+        LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua(lang);
+        Locale myLocale = new Locale(lang);
+        // Locale.setDefault(myLocale);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
+        startActivity(refresh);
     }
 
     private boolean setValidation(String phone, String password) {
@@ -190,8 +241,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginBinding.scrollviewLogin.setVisibility(View.VISIBLE);
         }else {
             new AlertDialog.Builder(LoginActivity.this)
-                    .setTitle("Really Exit?")
-                    .setMessage("Are you sure you want to exit?")
+                    .setTitle(getResources().getString(R.string.really_exit))
+                    .setMessage(getResources().getString(R.string.are_sure_exit))
                     .setNegativeButton(android.R.string.no, null)
                     .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
                         Intent launchNextActivity = new Intent(Intent.ACTION_MAIN);

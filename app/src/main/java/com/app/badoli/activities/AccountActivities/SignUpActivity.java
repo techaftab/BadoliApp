@@ -3,16 +3,20 @@ package com.app.badoli.activities.AccountActivities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
 import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.adapter.Country_Adapter;
 import com.app.badoli.config.Configuration;
@@ -51,6 +56,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -61,11 +67,11 @@ import xyz.hasnat.sweettoast.SweetToast;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener,
         GetMyItem,
-        Country_Adapter.DMTPayHistoryAdapterListener {
+        Country_Adapter.DMTPayHistoryAdapterListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = SignUpActivity.class.getSimpleName();
     @SuppressLint("StaticFieldLeak")
     static ActivitySignUpBinding signUpBinding;
-    String name, phone, password, confirm_password, email,companyName,companyAddress,companyNumber;
+    String name, phone, password, confirm_password, email,companyName,companyAddress, activitySector;
     SignUpViewModel signUpViewModel;
     String otp;
     boolean checked;
@@ -77,6 +83,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     int userId=-1;
     String  access_token, device_token;
     private String roleId="";
+
+    String[] language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             userId = LoginPre.getActiveInstance(SignUpActivity.this).getSignup_id();
             access_token = LoginPre.getActiveInstance(SignUpActivity.this).getAccess_token();
             if (userId==-1||TextUtils.isEmpty(access_token)){
-                Toast.makeText(activity, "Someting went wrong\nTry after sometime", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, getResources().getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
             }else {
                 resendOtp(userId,access_token);
             }
@@ -138,8 +146,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 slideUpCountry();
             }else {
                 Configuration.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
-                        "No Internet Connectivity" +
-                                ", Thanks");
+                        getResources().getString(R.string.no_internet));
             }
         }
         if (v==signUpBinding.signupButton){
@@ -149,11 +156,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             password = signUpBinding.edPassword.getText().toString();
             companyName = signUpBinding.edittextCompanyName.getText().toString();
             companyAddress = signUpBinding.edittextCompanyAddress.getText().toString();
-            companyNumber = signUpBinding.edittextCompanyNumber.getText().toString();
+            activitySector = signUpBinding.autocompActivitySctor.getText().toString();
             confirm_password = signUpBinding.edConfirmPassword.getText().toString();
             checked = signUpBinding.checReadAgreements.isChecked();
 
-            if (setValidation(name, phone, email, password, confirm_password, checked,companyName,companyAddress,companyNumber)) {
+            if (setValidation(name, phone, email, password, confirm_password, checked,companyName,companyAddress, activitySector)) {
                 Configuration.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
@@ -169,6 +176,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void init() {
+        /*if (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua().equals("fr")){
+            signUpBinding.spinnerLanguageSignup.setSelection(2);
+        }else {
+            signUpBinding.spinnerLanguageSignup.setSelection(1);
+        }*/
         signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
             if (signUpBinding.rbUser.isChecked()){
                 roleId="3";
@@ -179,6 +191,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 roleId="4";
             }
         });
+        signUpBinding.spinnerLanguageSignup.setOnItemSelectedListener(this);
+        language=getResources().getStringArray(R.array.select_lang);
+        ArrayAdapter aa = new ArrayAdapter<>(this, R.layout.spinner_item, language);
+        aa.setDropDownViewResource(R.layout.spinner_item);
+        signUpBinding.spinnerLanguageSignup.setAdapter(aa);
+
+        if (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua().equals("fr")){
+            signUpBinding.spinnerLanguageSignup.setSelection(2);
+        }else {
+            signUpBinding.spinnerLanguageSignup.setSelection(1);
+        }
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
             String deviceToken = instanceIdResult.getToken();
@@ -215,6 +238,35 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         countryResults=new ArrayList<>();
         country=new ArrayList<>();
         adapter = new Country_Adapter(this, country, this,SignUpActivity.this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (language[position].equals("French(fr)")) {
+            LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua("fr");
+            setLocale("fr");
+        }else {
+            LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua("en");
+            setLocale("en");
+        }
+    }
+
+    private void setLocale(String lang) {
+        LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
+        Locale myLocale = new Locale(lang);
+        // Locale.setDefault(myLocale);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+//        Intent refresh = new Intent(SignUpActivity.this, SignUpActivity.class);
+//        startActivity(refresh);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     public class GenericTextWatcher implements TextWatcher {
@@ -400,7 +452,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         ||TextUtils.isEmpty(signUpBinding.ed4.getText().toString())
         ||TextUtils.isEmpty(signUpBinding.ed4.getText().toString())
         ||TextUtils.isEmpty(signUpBinding.ed6.getText().toString())){
-            Toast.makeText(activity, "Please enter otp sent to your mobile no.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, getResources().getString(R.string.enter_otp_sent_mobile), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -523,7 +575,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, getResources().getString(R.string.enter_company_address), Toast.LENGTH_SHORT).show();
             }
             if (TextUtils.isEmpty(companyNumber)){
-                Toast.makeText(this, getResources().getString(R.string.enter_company_number), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.select_your_sector), Toast.LENGTH_SHORT).show();
             }
             return false;
         } else if (!checked) {

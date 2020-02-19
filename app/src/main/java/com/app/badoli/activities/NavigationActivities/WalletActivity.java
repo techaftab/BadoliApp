@@ -16,7 +16,7 @@ import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityWalletBinding;
 import com.app.badoli.model.UserData;
 
-public class WalletActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, View.OnClickListener {
+public class WalletActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, View.OnClickListener {
     ActivityWalletBinding walletBinding;
     ViewPagerAdapter viewPagerAdapter;
     TabLayout tabLayout;
@@ -38,8 +38,8 @@ public class WalletActivity extends AppCompatActivity implements TabLayout.BaseO
 
         walletBinding.tabPaymentStatus.addOnTabSelectedListener(this);
 
-        walletBinding.tabPaymentStatus.addTab(walletBinding.tabPaymentStatus.newTab().setText("Paid"));
-        walletBinding.tabPaymentStatus.addTab(walletBinding.tabPaymentStatus.newTab().setText("Receive"));
+        walletBinding.tabPaymentStatus.addTab(walletBinding.tabPaymentStatus.newTab().setText(getResources().getString(R.string.paid)));
+        walletBinding.tabPaymentStatus.addTab(walletBinding.tabPaymentStatus.newTab().setText(getResources().getString(R.string.recieve)));
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), walletBinding.tabPaymentStatus.getTabCount());
         walletBinding.walletViewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.notifyDataSetChanged();
@@ -50,14 +50,16 @@ public class WalletActivity extends AppCompatActivity implements TabLayout.BaseO
 
     @SuppressLint("SetTextI18n")
     private void loadView() {
-            walletBinding.headerPay.imgBackPay.setOnClickListener(this);
-            walletBinding.headerPay.txtTitlePay.setVisibility(View.GONE);
-            walletBinding.headerPay.txtPayWalletBalance.setText("$ "+userData.getWallet_balance());
+        walletBinding.headerPay.imgBackPay.setOnClickListener(this);
+        walletBinding.headerPay.txtTitlePay.setVisibility(View.GONE);
+        walletBinding.headerPay.txtPayWalletBalance.setText("$ "+userData.getWallet_balance());
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        position = tab.parent.getSelectedTabPosition();
+        if (tab.parent != null) {
+            position = tab.parent.getSelectedTabPosition();
+        }
         walletBinding.walletViewPager.setCurrentItem(position);
         Log.e("position", "" + position);
     }

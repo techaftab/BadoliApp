@@ -47,7 +47,6 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_below="@+id/toolbar_addmoney"
             android:background="@color/light_grey"
-            android:drawableEnd="@drawable/ic_refresh_black_24dp"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/_15sdp"
             android:onClick="checkBalanceAdd"

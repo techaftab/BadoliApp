@@ -20,16 +20,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.config.Configuration;
@@ -38,6 +35,10 @@ import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ProfileFragmentBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.viewModels.ProfileViewModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,15 +65,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private FragmentTransaction ft;
     private Fragment currentFragment;
     private int RequestPermissionCode=1;
-    private File destination;
-    private Bitmap bitmap;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         profileFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment,container,false);
         View view = profileFragmentBinding.getRoot();
-        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+        profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
         userData= PrefManager.getInstance(getActivity()).getUserData();
         ((HomePageActivity)Objects.requireNonNull(getActivity())).hideHeader();
         try {
@@ -91,8 +90,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void loadData() {
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(profileFragmentBinding.toolbarProfile);
+        Objects.requireNonNull(Objects.requireNonNull((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(null);
+       // Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setHomeButtonEnabled(true);
+//        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+//        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        profileFragmentBinding.toolbarProfile.setTitle("");
+        profileFragmentBinding.toolbarProfile.setNavigationOnClickListener(v -> {
+            Log.d("tag", "onClick : navigating back to back activity ");
+            //finish();
+            if (getActivity()!=null) {
+                ft = getActivity().getSupportFragmentManager().beginTransaction();
+                currentFragment = new HomeFragment();
+                ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+                ft.replace(R.id.rootLayout, currentFragment);
+                ft.commit();
+                loadData();
+            }
+        });
         profileFragmentBinding.userCalender.setOnClickListener(this);
-        profileFragmentBinding.imgbackProfile.setOnClickListener(this);
+       // profileFragmentBinding.imgbackProfile.setOnClickListener(this);
         profileFragmentBinding.imgUploadProfile.setOnClickListener(this);
         profileFragmentBinding.userName.setText(userData.getName());
         profileFragmentBinding.userEmail.setText(userData.getEmail());
@@ -123,7 +140,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         //Fragment f = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.rootLayout);
-        if (v==profileFragmentBinding.imgbackProfile){
+      /*  if (v==profileFragmentBinding.imgbackProfile){
             if (getActivity()!=null) {
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 currentFragment = new HomeFragment();
@@ -132,7 +149,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 ft.commit();
                 loadData();
             }
-        }
+        }*/
         if (v==profileFragmentBinding.imgUploadProfile){
             EnableRuntimePermissionToAccessCamera();
             selectImage();
@@ -145,7 +162,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()),
                 Manifest.permission.CAMERA)) {
             // Printing toast message after enabling runtime permission.
-            Toast.makeText(getActivity(),"CAMERA permission allows us to Access CAMERA app",
+            Toast.makeText(getActivity(),getResources().getString(R.string.camera_perm_allow),
                     Toast.LENGTH_LONG).show();
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{
@@ -160,7 +177,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 selectImage();
                 //  Toast.makeText(UploadImage.this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getActivity(), "Permission Cancelled,allow to upload reciept", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.perm_cacelled), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -169,27 +186,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             PackageManager pm = Objects.requireNonNull(getActivity()).getPackageManager();
             int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, getActivity().getPackageName());
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
-                final CharSequence[] options = {"Take Photo", "Choose From Gallery", "Cancel"};
+                String take_photo=getResources().getString(R.string.take_photo);
+                String select_gallery=getResources().getString(R.string.select_gallery);
+                String cancel=getResources().getString(R.string.cancel);
+
+                final CharSequence[] options = {take_photo,select_gallery, cancel};
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Select Option");
+                builder.setTitle(getResources().getString(R.string.select_option));
                 builder.setItems(options, (dialog, item) -> {
-                    if (options[item].equals("Take Photo")) {
+                    if (options[item].equals(getResources().getString(R.string.take_photo))) {
                         dialog.dismiss();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, PICK_IMAGE_CAMERA);
-                    } else if (options[item].equals("Choose From Gallery")) {
+                    } else if (options[item].equals(getResources().getString(R.string.select_gallery))) {
                         dialog.dismiss();
                         Intent pickPhoto = new Intent();
                         pickPhoto.setType("image/*");
                         pickPhoto.setAction(Intent.ACTION_PICK);
-                        startActivityForResult(Intent.createChooser(pickPhoto, "Select Image"), PICK_IMAGE_GALLERY);
-                    } else if (options[item].equals("Cancel")) {
+                        startActivityForResult(Intent.createChooser(pickPhoto, getResources().getString(R.string.select_image)), PICK_IMAGE_GALLERY);
+                    } else if (options[item].equals(getResources().getString(R.string.cancel))) {
                         dialog.dismiss();
                     }
                 });
                 builder.show();
             } else
-                Toast.makeText(getActivity(), "Camera Permission error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.camera_perm_error), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,16 +220,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String imgPath;
+        File destination;
+        Bitmap bitmap;
         if (requestCode == PICK_IMAGE_CAMERA && resultCode == RESULT_OK && data!=null) {
             try {
                 bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                if (bitmap != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                }
 
                 Log.e("Activity", "Pick from Camera::>>> ");
 
                // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                destination  = new File(Objects.requireNonNull(getActivity()).getCacheDir(), "profile_image.jpg");
+                destination = new File(Objects.requireNonNull(getActivity()).getCacheDir(), "profile_image.jpg");
                 FileOutputStream fo;
                 try {
                     fo = new FileOutputStream(destination);
@@ -219,8 +244,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 }
                 profileFragmentBinding.profileImage.setImageBitmap(bitmap);
                 imgPath = destination.getAbsolutePath();
-                destination=new File(imgPath);
-                sendImage(Integer.valueOf(userData.getId()),destination);
+                destination =new File(imgPath);
+                sendImage(Integer.valueOf(userData.getId()), destination);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -236,7 +261,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 profileFragmentBinding.profileImage.setImageBitmap(bitmap);
 
                 destination = new File(imgPath);
-                sendImage(Integer.valueOf(userData.getId()),destination);
+                sendImage(Integer.valueOf(userData.getId()), destination);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -255,14 +280,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
         //RequestBody fileReq = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(id));
 
-        MultipartBody.Part part = MultipartBody.Part.createFormData("profile_image", file.getName(), fileReqBody);
+      //  MultipartBody.Part part = MultipartBody.Part.createFormData("profile_image", file.getName(), fileReqBody);
 
         profileFragmentBinding.progreebarProfile.setVisibility(View.VISIBLE);
 
 //        long length = file.length();
 //        length = length/1024;
 //        System.out.println("File Path : " + file.getPath() + ", File size : " + length +" KB"+"\n"+compressedImgFile.length()/1024);
-        MultipartBody.Part partCompress = MultipartBody.Part.createFormData("profile_image", compressedImgFile.getName(), fileReqBody);
+        MultipartBody.Part partCompress = null;
+
+
+        if (compressedImgFile != null) {
+            partCompress = MultipartBody.Part.createFormData("profile_image", compressedImgFile.getName(), fileReqBody);
+        }
 
         profileViewModel.saveProfileImage(partCompress,id).observe(this, profileImageResponse -> {
             if (!profileImageResponse.error) {

@@ -118,14 +118,14 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     private void alertView() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
-        dialog.setTitle("Permission Denied")
+        dialog.setTitle(getResources().getString(R.string.perm_denied))
                 .setInverseBackgroundForced(true)
                 //.setIcon(R.drawable.ic_info_black_24dp)
-                .setMessage("Without those permission the app is unable to scan. App needs external storage and camera.Are you sure you want to deny this permission?")
+                .setMessage(getResources().getString(R.string.without_perm_not_allowed))
 
-                .setNegativeButton("I'M SURE", (dialoginterface, i) -> dialoginterface.dismiss())
+                .setNegativeButton(getResources().getString(R.string.m_sure), (dialoginterface, i) -> dialoginterface.dismiss())
 
-                .setPositiveButton("RE-TRY", (dialoginterface, i) -> {
+                .setPositiveButton(getResources().getString(R.string.retry), (dialoginterface, i) -> {
                     dialoginterface.dismiss();
                     checkRunTimePermission();
                 }).show();

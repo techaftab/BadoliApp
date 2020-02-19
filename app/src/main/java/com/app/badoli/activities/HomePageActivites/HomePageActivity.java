@@ -74,7 +74,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
-        homePageBinding.commonHeader.txtWalletBalance.setText(balance+" ");
+        PrefManager.getInstance(HomePageActivity.this).setWalletBalance(balance);
+        homePageBinding.commonHeader.txtWalletBalance.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
         if (homePageBinding.progressbarMain!=null&&homePageBinding.progressbarMain.isShown()){
             dismissLoading();
@@ -83,8 +84,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     @SuppressLint("SetTextI18n")
     public void updateBalance(String balance) {
-        homePageBinding.commonHeader.txtWalletBalance.setText(balance+" ");
+        homePageBinding.commonHeader.txtWalletBalance.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
+        PrefManager.getInstance(HomePageActivity.this).setWalletBalance(balance);
     }
 
     private void init() {
@@ -124,6 +126,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     @SuppressLint("SetTextI18n")
     public void homeData(){
+        homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
@@ -131,7 +134,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance());
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }
 
     void showLoading(){
@@ -152,7 +155,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         showBadge(homePageBinding.bottomNavigation, R.id.navigation_transaction, "2");
         homePageBinding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" ");
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
         homePageBinding.drawerMenuItems.userName.setText(userData.getName());
     }
 
@@ -264,8 +267,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             new AlertDialog.Builder(HomePageActivity.this)
-                    .setTitle("Really Exit?")
-                    .setMessage("Are you sure you want to exit?")
+                    .setTitle(getResources().getString(R.string.really_exit))
+                    .setMessage(getResources().getString(R.string.are_sure_exit))
                     .setNegativeButton(android.R.string.no, null)
                     .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
                         Intent launchNextActivity = new Intent(Intent.ACTION_MAIN);
@@ -284,7 +287,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         BottomNavigationItemView itemView = (BottomNavigationItemView) v;
         View badge = LayoutInflater.from(HomePageActivity.this).inflate(R.layout.layout_bottom_badge, bottomNavigationView, false);
         TextView text = badge.findViewById(R.id.badge_text_view);
-        text.setText(Html.fromHtml("<font color='#FFFFFF'>"+"New request["+"</font>"
+        text.setText(Html.fromHtml("<font color='#FFFFFF'>"+getResources().getString(R.string.new_request)+"["+"</font>"
                 +"<font color='#FF6700'>"+value+"</font>"
                 +"<font color='#FFFFFF'>"+"]"+"</font>"));
         itemView.addView(badge);
@@ -300,13 +303,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void logout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setTitle("Are you sure want to logout?");
-        builder.setPositiveButton("No", (dialog, id) -> dialog.cancel());
-        builder.setNegativeButton("Yes", (dialog, which) -> {
+        builder.setTitle(getResources().getString(R.string.want_logout));
+        builder.setPositiveButton(getResources().getString(R.string.no), (dialog, id) -> dialog.cancel());
+        builder.setNegativeButton(getResources().getString(R.string.yes), (dialog, which) -> {
             showLoading();
             handler.postDelayed(() -> {
                 dismissLoading();
-               // PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
+                //PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
                 PrefManager.getInstance(HomePageActivity.this).logout();
                 LoginPre.getActiveInstance(HomePageActivity.this).setIsLoggedIn(false);
                 Intent intent1 = new Intent(HomePageActivity.this, LoginActivity.class);
@@ -326,7 +329,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" ");
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }
 
     public void updateToolbar() {

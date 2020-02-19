@@ -9,7 +9,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_profile"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            app:navigationIcon="@drawable/back_arrow_white"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_profile"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="@dimen/_14ssp"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+      <!--  <RelativeLayout
             android:id="@+id/toolbar_profile"
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/DP5"
@@ -42,7 +63,7 @@
                 android:layout_toEndOf="@+id/imgback_profile"
                 tools:ignore="RelativeOverlap" />
 
-        </RelativeLayout>
+        </RelativeLayout>-->
 
         <ScrollView
             android:layout_width="match_parent"
@@ -235,11 +256,11 @@
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/DP10"
                                 android:background="@android:color/transparent"
-                                android:gravity="start"
-                                android:inputType="none"
-                                android:focusable="false"
                                 android:editable="false"
+                                android:focusable="false"
+                                android:gravity="start"
                                 android:hint="@string/enter_digit_mobile"
+                                android:inputType="none"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
 
@@ -276,11 +297,11 @@
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/DP20"
                                 android:background="@android:color/transparent"
-                                android:gravity="center_vertical"
-                                android:inputType="none"
-                                android:imeOptions="actionDone"
                                 android:focusable="false"
+                                android:gravity="center_vertical"
                                 android:hint="@string/dob_hint"
+                                android:imeOptions="actionDone"
+                                android:inputType="none"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
 
@@ -328,12 +349,12 @@
                             android:id="@+id/confirm_button"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/DP50"
-                            android:layout_marginTop="@dimen/DP50"
                             android:layout_gravity="center_horizontal"
-                            android:paddingLeft="@dimen/DP50"
-                            android:paddingRight="@dimen/DP50"
+                            android:layout_marginTop="@dimen/DP50"
                             android:layout_marginBottom="@dimen/_10sdp"
-                            android:background="@drawable/rounded_button_orange">
+                            android:background="@drawable/rounded_button_orange"
+                            android:paddingLeft="@dimen/DP50"
+                            android:paddingRight="@dimen/DP50">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"

@@ -78,6 +78,12 @@ public class PrefManager {
         editor.putString(KEY_QRCODE_IMAGE,userData.getQrcode_image());
         editor.apply();
     }
+    public void setWalletBalance(String balance){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_WALLET_BALANCE,balance);
+        editor.apply();
+    }
 
 
     public UserData getUserData() {

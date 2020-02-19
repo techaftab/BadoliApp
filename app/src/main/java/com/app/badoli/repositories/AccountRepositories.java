@@ -25,6 +25,8 @@ import retrofit2.Response;
 
 public class AccountRepositories {
 
+    private String TAG=AccountRepositories.class.getSimpleName();
+
     private MutableLiveData<SignupResponse> mutableLiveData = new MutableLiveData<>();
     private MutableLiveData<ResendOtpResponse> mutableLiveDataOtp = new MutableLiveData<>();
     private MutableLiveData<CountryResponse> mutableCountryLiveData = new MutableLiveData<>();
@@ -48,7 +50,7 @@ public class AccountRepositories {
         call.enqueue(new Callback<SignupResponse>() {
             @Override
             public void onResponse(@NonNull Call<SignupResponse> call,@NonNull Response<SignupResponse> response) {
-                Log.e("signup_response", new Gson().toJson(response.message()));
+                Log.e(TAG, new Gson().toJson(response.message()));
                 mutableLiveData.setValue(response.body());
                 /*if (!response.body().error) {
 

@@ -50,6 +50,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     private void init() {
         webService=new WebService(this);
         webService.updateBalance(userData.getId());
+        showLoading();
         handler.postDelayed(() -> webService.updateBalance(userData.getId()),10000);
     }
 
@@ -61,16 +62,19 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
+        userData.setWallet_balance(balance);
+        PrefManager.getInstance(AddMoney.this).setWalletBalance(balance);
         if (addMoney.progressAddmoney!=null&&addMoney.progressAddmoney.isShown()){
             dismissLoading();
         }
         if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {
             Float bal = Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
                     .replace(getResources().getString(R.string.badoli_balance), "")
-                    .replace(" ", ""));
+                    .replace(" ", "")
+                    .replace("FCFA",""));
             Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
         } else {
-            addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " ");
+            addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " FCFA");
             userData.setWallet_balance(balance);
         }
     }
