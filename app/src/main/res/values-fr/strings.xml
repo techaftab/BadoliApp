@@ -30,9 +30,9 @@
     <string name="close">Fermer</string>
     <string name="enter_otp">Entrez le numéro OTP</string>
     <string name="next">Prochain</string>
-    <string name="payez_merchant">Payez un marchand</string>
-    <string name="transfer_agent">Transfer Agent</string>
-    <string name="recharge_com">Recharge de compte</string>
+    <string name="payez_merchant">Paiement</string>
+    <string name="transfer_agent">Transfert d\'argent</string>
+    <string name="recharge_com">Recharger mon compte</string>
     <string name="wallet">Portefeuille</string>
     <string name="about">Sur</string>
     <string name="support">Soutien</string>
@@ -43,10 +43,10 @@
     <string name="profile">Profil</string>
     <string name="transaction">Transactions</string>
     <string name="help">Aidez-moi</string>
-    <string name="request">Demande</string>
+    <string name="request">Demander de l\'argent</string>
     <string name="by_qr">Par QR Code, ID et numéro de téléphone</string>
     <string name="pay_phone">Payer par téléphone, pièce d\'identité</string>
-    <string name="pay_qr">Payer par QR Code</string>
+    <string name="pay_qr">Encaisser un paiement</string>
     <string name="pay_service">Payer un Service</string>
     <string name="merch_id">ID marchand</string>
     <string name="merch_mob">Merchant Mobile No</string>
@@ -126,7 +126,7 @@
     <string name="resend_otp">Renvoyer OTP</string>
     <string name="add_money_to_badoli">Ajouter de l\'argent à BadoliPay</string>
     <string name="select_option_to_add">Sélectionnez une option pour ajouter de l\'argent</string>
-    <string name="enter_gabon_mobile">Enter Gabon airtel money mobile no.</string>
+    <string name="enter_gabon_mobile">Entrez le numéro de téléphone portable de Gabon airtel money.</string>
     <string name="airtel_money">Airtel Money</string>
     <string name="amount_should_100">Le montant doit être d\'au moins 100.</string>
     <string name="amount_should_499">Le montant doit être inférieur à 49900</string>
@@ -166,7 +166,7 @@
     <string name="minutes">minutes</string>
     <string name="code_expired">Ce code a expiré</string>
     <string name="camera_perm_allow">L\'autorisation CAMERA nous permet d\'accéder à l\'application CAMERA</string>
-    <string name="perm_cacelled">Autorisation annulée, autoriser le téléchargement du reçu</string>
+    <string name="perm_cacelled">Autorisation annulée</string>
     <string name="take_photo">Prendre une photo</string>
     <string name="select_gallery">Sélectionner dans la galerie</string>
     <string name="cancel">Annuler</string>
@@ -180,8 +180,9 @@
     <string name="enter_old_password">Entrez l\'ancien mot de passe</string>
     <string name="contact_us_number">En cas de problème, vous pouvez nous contacter au 123456789 ou par mail a contact@badolipay.com.</string>
     <string name="change_language">Changer de langue</string>
-    <string name="english">English</string>
-    <string name="en">English</string>
+    <string name="french">Française(fr)</string>
+    <string name="english">Anglaise(en)</string>
+    <string name="en">Anglaise</string>
     <string name="select_language">Choisir la langue</string>
 
     <string-array name="select_lang">
@@ -189,5 +190,6 @@
         <item>@string/english</item>
         <item>@string/french</item>
     </string-array>
+    <string name="enable_perm">Veuillez activer la permission!</string>
 
 </resources>

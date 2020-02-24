@@ -55,7 +55,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     static Activity activity;
     WebService webService;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +62,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
         homePageBinding.setHandler(homeViewModel);
         activity=HomePageActivity.this;
-      //setupBottomNavigationListener();
+        //setupBottomNavigationListener();
         userData= PrefManager.getInstance(HomePageActivity.this).getUserData();
         handler=new Handler();
         loadData();
@@ -82,12 +81,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    /*@SuppressLint("SetTextI18n")
     public void updateBalance(String balance) {
         homePageBinding.commonHeader.txtWalletBalance.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
         PrefManager.getInstance(HomePageActivity.this).setWalletBalance(balance);
-    }
+    }*/
 
     private void init() {
         webService=new WebService(this);
@@ -348,7 +347,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
     }
 
-    public void hideHeader() {
+    public void hideHeader(){
         homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
     }
 }

@@ -29,7 +29,7 @@
     <string name="close">Close</string>
     <string name="enter_otp">Enter OTP Number</string>
     <string name="next">Next</string>
-    <string name="payez_merchant">Pay a Merchant</string>
+    <string name="payez_merchant">Payment</string>
     <string name="transfer_agent">Transfer Agent</string>
     <string name="recharge_com">Count Refill</string>
     <string name="wallet">Wallet</string>
@@ -165,7 +165,7 @@
     <string name="minutes">minutes</string>
     <string name="code_expired">This code is expired</string>
     <string name="camera_perm_allow">CAMERA permission allows us to Access CAMERA app</string>
-    <string name="perm_cacelled">Permission Cancelled,allow to upload receipt</string>
+    <string name="perm_cacelled">Permission Cancelled</string>
     <string name="take_photo">Take Photo</string>
     <string name="select_gallery">Select From Gallery</string>
     <string name="cancel">Cancel</string>
@@ -180,9 +180,10 @@
     <string name="contact_us_number">In case of problems, you can contact us at 123456789 or by email at contact@badolipay.com.</string>
     <string name="change_language">Change Language</string>
     <string name="english">English(en)</string>
-    <string name="french" translatable="false">French(fr)</string>
+    <string name="french">French(fr)</string>
     <string name="select_language">Select Language</string>
     <string name="en">English</string>
+    <string name="enable_perm">Please enable permission!</string>
 
     <string-array name="select_lang">
         <item>@string/select_language</item>

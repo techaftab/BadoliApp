@@ -3,8 +3,13 @@ package com.app.badoli.activities;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,11 +18,14 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.utilities.LoginPre;
 
+import java.util.Locale;
+
 public class SplashActivity extends AppCompatActivity {
 
     int SPLASH_SCREEN_TIME_IN_MILLIS = 3000;
     Thread thread;
     static SharedPreferences sharedPreferences;
+    Locale myLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +33,22 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
+        if (!TextUtils.isEmpty(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua())) {
+            setLocale(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());
+            Log.e("language11", LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());
+        }
        // if (Build.VERSION.SDK_INT >= M) {
             makesplash();
     //    }
+
+    }
+    public void setLocale(String lang) {
+        myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 
     private void makesplash() {

@@ -1,5 +1,6 @@
 package com.app.badoli.config;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -26,14 +27,16 @@ public class PrefManager {
     private static final String KEY_QRCODE_IMAGE = "keyqrcodeimage";
     private static final String TAG_TOKEN = Constant.TAG_TOKEN;
 
+    @SuppressLint("StaticFieldLeak")
     private static PrefManager mInstance;
+    @SuppressLint("StaticFieldLeak")
     private static Context mCtx;
     private SharedPreferences prefs;
-    public static final String FIREBASE_CLOUD_MESSAGING = "fcm";
-    public static final String SET_NOTIFY = "set_notify";
-    SharedPreferences pref;
+   // public static final String FIREBASE_CLOUD_MESSAGING = "fcm";
+    private static final String SET_NOTIFY = "set_notify";
+    private SharedPreferences pref;
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
     private String KEY_IS_LOGGEDIN="isLoggedIn";
 
 
@@ -78,6 +81,7 @@ public class PrefManager {
         editor.putString(KEY_QRCODE_IMAGE,userData.getQrcode_image());
         editor.apply();
     }
+
     public void setWalletBalance(String balance){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -108,7 +112,7 @@ public class PrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        // mCtx.startActivity(new Intent(mCtx, SplashMainActivity.class));
+        //mCtx.startActivity(new Intent(mCtx, SplashMainActivity.class));
     }
     public void saveNotificationSubscription(boolean value){
         SharedPreferences.Editor edits = prefs.edit();

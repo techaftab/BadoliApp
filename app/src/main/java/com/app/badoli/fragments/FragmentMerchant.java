@@ -23,9 +23,7 @@ import java.util.Objects;
 public class FragmentMerchant extends Fragment implements View.OnClickListener {
 
     private FragmentMerchantBinding fragmentBinding;
-    private FragmentTransaction ft;
-    private Fragment currentFragment;
-  //  UserData userData;
+    //  UserData userData;
 
     @Nullable
     @Override
@@ -48,6 +46,9 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        FragmentTransaction ft;
+        Fragment currentFragment;
+
         if (v==fragmentBinding.payById){
             if (getActivity()!=null) {
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -75,6 +76,5 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
                 ft.commit();
             }
         }
-
     }
 }

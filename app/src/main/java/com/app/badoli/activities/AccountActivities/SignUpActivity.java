@@ -242,7 +242,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (language[position].equals("French(fr)")) {
+        if (language[position].equals(signUpBinding)) {
             LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua("fr");
             setLocale("fr");
         }else {

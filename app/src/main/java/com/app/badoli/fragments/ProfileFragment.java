@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,6 +45,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import id.zelory.compressor.Compressor;
@@ -151,13 +154,41 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         }*/
         if (v==profileFragmentBinding.imgUploadProfile){
-            EnableRuntimePermissionToAccessCamera();
-            selectImage();
+         //   EnableRuntimePermissionToAccessCamera();
+            if (checkAndRequestPermissions()) {
+                selectImage();
+            }else {
+                Toast.makeText(getActivity(),getResources().getString(R.string.enable_perm),Toast.LENGTH_SHORT).show();
+            }
         }
         if (v==profileFragmentBinding.userCalender){
             Configuration.showcalendar(profileFragmentBinding.userCalender,getActivity());
         }
     }
+
+    private boolean checkAndRequestPermissions() {
+        int WRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int READ_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int CAMERA = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        if (WRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (READ_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        if (CAMERA != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA);
+        }
+
+        if (!listPermissionsNeeded.isEmpty()) {
+            requestPermissions(listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), RequestPermissionCode);
+            return false;
+        }
+        return true;
+    }
+
     private void EnableRuntimePermissionToAccessCamera(){
         if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()),
                 Manifest.permission.CAMERA)) {
@@ -165,22 +196,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             Toast.makeText(getActivity(),getResources().getString(R.string.camera_perm_allow),
                     Toast.LENGTH_LONG).show();
         } else {
-            ActivityCompat.requestPermissions(getActivity(),new String[]{
-                    Manifest.permission.CAMERA}, RequestPermissionCode);
+            requestPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,},RequestPermissionCode);
         }
     }
     @Override
     public void onRequestPermissionsResult(int RC, @NonNull String[] per, @NonNull int[] PResult) {
-
         if (RC == RequestPermissionCode) {
             if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
                 selectImage();
-                //  Toast.makeText(UploadImage.this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(UploadImage.this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
             } else {
+                EnableRuntimePermissionToAccessCamera();
                 Toast.makeText(getActivity(), getResources().getString(R.string.perm_cacelled), Toast.LENGTH_LONG).show();
             }
         }
     }
+
     private void selectImage() {
         try {
             PackageManager pm = Objects.requireNonNull(getActivity()).getPackageManager();
@@ -326,6 +358,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             cursor.moveToFirst();
         }
       //  assert cursor != null;
+        assert cursor != null;
         return cursor.getString(column_index);
     }
 }
