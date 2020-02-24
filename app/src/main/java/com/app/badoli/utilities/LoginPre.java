@@ -79,7 +79,7 @@ public class LoginPre {
     public void setLocaleLangua(String localeLangua) {
         editor = mPreferences.edit();
         editor.putString(this.LocaleLangua, localeLangua);
-        editor.commit();
+        editor.apply();
     }
 
     public String getDevice_token() {
