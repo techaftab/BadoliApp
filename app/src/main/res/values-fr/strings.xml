@@ -102,7 +102,7 @@
     <string name="confirm_payment">Confirmer le paiement</string>
     <string name="done">Terminé</string>
     <string name="successful_payment">Paiement réussi</string>
-    <string name="enter_amount_hint">Entrer le montant</string>
+    <string name="enter_amount_hint">Montant a créditer (FCFA)</string>
     <string name="about_us">À propos de nous</string>
     <string name="submit_request">Envoyer la demande</string>
     <string name="change_pwd">Changer le mot de passe</string>
@@ -126,7 +126,7 @@
     <string name="resend_otp">Renvoyer OTP</string>
     <string name="add_money_to_badoli">Ajouter de l\'argent à BadoliPay</string>
     <string name="select_option_to_add">Sélectionnez une option pour ajouter de l\'argent</string>
-    <string name="enter_gabon_mobile">Entrez le numéro de téléphone portable de Gabon airtel money.</string>
+    <string name="enter_gabon_mobile">Enterer le numero de téléphone a débiter</string>
     <string name="airtel_money">Airtel Money</string>
     <string name="amount_should_100">Le montant doit être d\'au moins 100.</string>
     <string name="amount_should_499">Le montant doit être inférieur à 49900</string>

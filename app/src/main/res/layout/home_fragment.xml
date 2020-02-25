@@ -11,7 +11,8 @@
             android:layout_height="match_parent"
             android:background="@color/dark_pink"
             android:orientation="vertical"
-            android:weightSum="3">
+            android:weightSum="3"
+            tools:ignore="UselessParent">
 
             <RelativeLayout
                 android:layout_width="match_parent"

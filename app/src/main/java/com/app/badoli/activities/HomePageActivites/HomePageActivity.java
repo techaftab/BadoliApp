@@ -340,12 +340,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.bottomNavigation.setVisibility(View.GONE);
     }
 
-    public void headerHome(){
+   /* public void headerHome(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
-    }
+    }*/
 
     public void hideHeader(){
         homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
