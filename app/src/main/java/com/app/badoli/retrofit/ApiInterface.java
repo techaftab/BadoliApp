@@ -38,7 +38,6 @@ public interface ApiInterface {
                                    @Field("agree_terms") int agree_terms,
                                    @Field("roles_id") String roleId);
 
-
     @FormUrlEncoded
     @POST("verifyMobileOtp")
     Call<VerifyOtpResponse> verifyOtp(@Field("userid") int userid,

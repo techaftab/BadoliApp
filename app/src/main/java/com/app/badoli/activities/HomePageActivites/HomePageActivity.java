@@ -76,7 +76,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         PrefManager.getInstance(HomePageActivity.this).setWalletBalance(balance);
         homePageBinding.commonHeader.txtWalletBalance.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
-        if (homePageBinding.progressbarMain!=null&&homePageBinding.progressbarMain.isShown()){
+        if (homePageBinding.progressbarMain.isShown()){
             dismissLoading();
         }
     }
@@ -340,7 +340,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.bottomNavigation.setVisibility(View.GONE);
     }
 
-   /* public void headerHome(){
+    /*public void headerHome(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);

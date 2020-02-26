@@ -64,7 +64,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance {
     public void onUpdateBalance(String balance) {
         userData.setWallet_balance(balance);
         PrefManager.getInstance(AddMoney.this).setWalletBalance(balance);
-        if (addMoney.progressAddmoney!=null&&addMoney.progressAddmoney.isShown()){
+        if (addMoney.progressAddmoney.isShown()){
             dismissLoading();
         }
         if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {

@@ -27,7 +27,6 @@ public class RetrofitConnection {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
-
         }
         return retrofit.create(ApiInterface.class);
     }

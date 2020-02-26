@@ -23,7 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/question"
                     android:layout_width="@dimen/DP25"
