@@ -1,7 +1,6 @@
 package com.app.badoli.activities.HomePageActivites;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,8 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.app.badoli.R;
 import com.app.badoli.activities.AccountActivities.LoginActivity;
 import com.app.badoli.activities.NavigationActivities.AboutUsActivity;
@@ -41,6 +38,8 @@ import com.app.badoli.fragments.TransactionFragment;
 import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.HomeViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
 
@@ -48,11 +47,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     boolean openDrawer = false;
     static UserData userData;
     HomeViewModel homeViewModel;
-    static Fragment currentFragment;
-    static FragmentTransaction ft;
+    Fragment currentFragment;
+    FragmentTransaction ft;
     Handler handler;
-    @SuppressLint("StaticFieldLeak")
-    static Activity activity;
+   // @SuppressLint("StaticFieldLeak")
+    //Activity activity;
     WebService webService;
 
     @Override
@@ -61,7 +60,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
         homePageBinding.setHandler(homeViewModel);
-        activity=HomePageActivity.this;
+       // activity=HomePageActivity.this;
         //setupBottomNavigationListener();
         userData= PrefManager.getInstance(HomePageActivity.this).getUserData();
         handler=new Handler();
@@ -76,7 +75,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         PrefManager.getInstance(HomePageActivity.this).setWalletBalance(balance);
         homePageBinding.commonHeader.txtWalletBalance.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
-        if (homePageBinding.progressbarMain.isShown()){
+        if (homePageBinding.progressbarMain.isShown()) {
             dismissLoading();
         }
     }
@@ -303,7 +302,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setTitle(getResources().getString(R.string.want_logout));
-        builder.setPositiveButton(getResources().getString(R.string.no), (dialog, id) -> dialog.cancel());
+        builder.setPositiveButton(getResources().getString(R.string.no), (dialog, id) ->dialog.cancel());
         builder.setNegativeButton(getResources().getString(R.string.yes), (dialog, which) -> {
             showLoading();
             handler.postDelayed(() -> {

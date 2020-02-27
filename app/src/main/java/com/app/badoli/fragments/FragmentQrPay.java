@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.zxing.Result;
 import com.app.badoli.R;
@@ -58,7 +58,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_qr_pay,container,false);
-        tranferViewModel = ViewModelProviders.of(this).get(TranferViewModel.class);
+        tranferViewModel =new ViewModelProvider(this).get(TranferViewModel.class);
         userData= PrefManager.getInstance(getActivity()).getUserData();
         View view   = fragmentBinding.getRoot();
         checkRunTimePermission();
@@ -188,7 +188,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
         Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.left_in,R.anim.right_out);*/
     }
 
-    public static boolean isJson(String Json) {
+    private static boolean isJson(String Json) {
         try {
             new JSONObject(Json);
         } catch (JSONException ex) {

@@ -12,7 +12,7 @@ public class LoginPre {
     private static LoginPre preferences = null;
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor editor;
-    private Context context;
+ //   private Context context;
     private String isLoggedIn = "isLoggedIn";
     private String otp = "otp";
     private String signup_id = "id";
@@ -31,7 +31,7 @@ public class LoginPre {
     private String LocaleLangua = "locale_language_badoli";
 
     private LoginPre(Context context) {
-        this.context = context;
+      //  this.context = context;
         mPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         //setmPreferences(PreferenceManager.SHAr(context));
        // setmPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

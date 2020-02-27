@@ -17,8 +17,6 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         aboutUsBinding = DataBindingUtil.setContentView(this, R.layout.activity_about_us);
         initView();
-
-
     }
 
     private void initView() {
@@ -37,7 +35,6 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-
     public void onBackPressed() {
         finish();
     }

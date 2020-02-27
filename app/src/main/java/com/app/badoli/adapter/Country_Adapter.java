@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.AccountActivities.SignUpActivity;
 import com.app.badoli.model.CountryResult;
 import com.app.badoli.utilities.GetMyItem;
 
@@ -25,11 +24,11 @@ import java.util.List;
 public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyViewHolder> implements Filterable {
 
 
-    private Context context;
+  //  private Context context;
     private List<CountryResult> loadList;
     private List<CountryResult> loadListFiltered;
     private DMTPayHistoryAdapterListener  listener;
-    GetMyItem getMyItem;
+    private GetMyItem getMyItem;
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +55,7 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
 
     public Country_Adapter(Context context, List<CountryResult> rechargeList,
                            DMTPayHistoryAdapterListener listener,GetMyItem getMyItem) {
-        this.context = context;
+       // this.context = context;
         this.listener = listener;
         this.loadList = rechargeList;
         this.loadListFiltered = rechargeList;
@@ -80,10 +79,7 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
         holder.phone_code.setText(String.valueOf(country.getPhonecode()));
         holder.country_name.setText(country.getName());
 
-        holder.itemView.setOnClickListener(view -> {
-           getMyItem.GetClickedItem(country.getId(), country.getPhonecode());
-           SignUpActivity.slideClose();
-        });
+        holder.itemView.setOnClickListener(view -> getMyItem.GetClickedItem(country.getId(), country.getPhonecode()));
     }
 
     @Override
@@ -102,7 +98,7 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
                 } else {
                     List<CountryResult> filteredList = new ArrayList<>();
                     Log.e("WORD","WORD--->"+charString);
-                    final String filterPattern = charSequence.toString().toLowerCase().trim();
+               //     final String filterPattern = charSequence.toString().toLowerCase().trim();
                     for (CountryResult row : loadList) {
 
                         if (row.getName().toLowerCase().contains(charString.toLowerCase())

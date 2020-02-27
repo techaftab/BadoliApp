@@ -65,7 +65,6 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         activityPaymentBinding.rlPinPayment.setVisibility(View.GONE);
         activityPaymentBinding.rlAmountPayment.setVisibility(View.VISIBLE);
         activityPaymentBinding.lnUserDetails.setVisibility(View.VISIBLE);
-
     }
 
     @Override

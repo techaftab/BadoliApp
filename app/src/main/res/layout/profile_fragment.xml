@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_profile"
                 android:textColor="@color/white"
+                android:gravity="center"
                 android:textStyle="normal"
                 android:textSize="@dimen/_14ssp"
                 android:layout_gravity="center"
@@ -100,18 +101,19 @@
                             android:layout_height="@dimen/_80sdp"
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/logo"
-                            app:civ_border_width="@dimen/_1sdp"
+                            app:civ_border_width="0.5dp"
+                            app:civ_border_color="@color/bla_trans"
                             android:background="@drawable/circle_white_back"/>
 
                         <ImageView
                             android:id="@+id/img_upload_profile"
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_marginStart="-30dp"
-                            android:src="@drawable/user"
                             android:background="@drawable/circle_white_back"
                             android:padding="@dimen/_8sdp"
+                            android:src="@drawable/user"
                             tools:ignore="ContentDescription" />
 
                     </RelativeLayout>
@@ -150,14 +152,14 @@
                             android:gravity="center"
                             android:text="@string/user_profile"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_14ssp" />
+                            android:textSize="@dimen/_12ssp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/user_name"
                             android:textColor="@color/dark_pink"
-                            android:textSize="@dimen/SP16" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/layout_user_name"
@@ -195,7 +197,7 @@
                             android:layout_marginTop="@dimen/DP10"
                             android:text="@string/email_id"
                             android:textColor="@color/dark_pink"
-                            android:textSize="@dimen/SP16" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/layout_email"
@@ -232,7 +234,7 @@
                             android:layout_marginTop="@dimen/DP10"
                             android:text="@string/mob_number"
                             android:textColor="@color/dark_pink"
-                            android:textSize="@dimen/SP16" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/layout_mobile"
@@ -273,7 +275,7 @@
                             android:layout_marginTop="@dimen/DP10"
                             android:text="@string/dob"
                             android:textColor="@color/dark_pink"
-                            android:textSize="@dimen/SP16" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/layout_calender"
@@ -313,7 +315,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/sex"
                             android:textColor="@color/dark_pink"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/layout_gender"

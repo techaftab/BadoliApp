@@ -95,9 +95,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private void loadData() {
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(profileFragmentBinding.toolbarProfile);
         Objects.requireNonNull(Objects.requireNonNull((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(null);
-       // Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setHomeButtonEnabled(true);
-//        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-//        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        //Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setHomeButtonEnabled(true);
+        //Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        //Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayShowHomeEnabled(true);
         profileFragmentBinding.toolbarProfile.setTitle("");
         profileFragmentBinding.toolbarProfile.setNavigationOnClickListener(v -> {
             Log.d("tag", "onClick : navigating back to back activity ");

@@ -18,7 +18,6 @@ public class WebService {
 
     private String TAG=WebService.class.getSimpleName();
 
-
     private updateBalance Balance;
 
     public WebService(updateBalance callback) {
@@ -35,12 +34,9 @@ public class WebService {
             public void onResponse(@NonNull Call<BalanceResponse> call, @NonNull Response<BalanceResponse> response) {
                 Log.e(TAG, new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    Balance.onUpdateBalance(response.body().getResult());
-                    SplashActivity.savePreferences(Constant.BALANCE,response.body().getResult());
+                    Balance.onUpdateBalance(response.body().getResult().replace(",",""));
+                    SplashActivity.savePreferences(Constant.BALANCE,response.body().getResult().replace(",",""));
                 }
-               /* if (response.body() != null&&!response.body().error) {
-                    Balance.onUpdateBalance(response.body().getResult());
-                }*/
             }
             @Override
             public void onFailure(@NonNull Call<BalanceResponse> call,@NonNull Throwable t) {

@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
-import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
 import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.adapter.Country_Adapter;
 import com.app.badoli.config.Configuration;
@@ -70,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Country_Adapter.DMTPayHistoryAdapterListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = SignUpActivity.class.getSimpleName();
     @SuppressLint("StaticFieldLeak")
-    static ActivitySignUpBinding signUpBinding;
+    ActivitySignUpBinding signUpBinding;
     String name, phone, password, confirm_password, email,companyName,companyAddress, activitySector;
     SignUpViewModel signUpViewModel;
     String otp;
@@ -242,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (language[position].equals(signUpBinding)) {
+        if (language[position].equals(signUpBinding.spinnerLanguageSignup.getSelectedItem().toString())) {
             LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua("fr");
             setLocale("fr");
         }else {
@@ -350,7 +349,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         showLoading();
 
         signUpViewModel.getSignUp(name, email, phone, password, 1, device_token, confirm_password,
-                Integer.valueOf(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")), 1,roleId).observe(this,
+                Integer.parseInt(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")), 1,roleId).observe(this,
                 signupResult -> {
                     Log.e("responsee", new Gson().toJson(signupResult.message));
                     dismissLoading();
@@ -521,7 +520,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return signUpBinding.includedLayout.hiddenLayoutCountry.getVisibility() == View.VISIBLE;
     }
 
-    public static void slideClose() {
+    public void slideClose() {
         try{
             Configuration.hideKeyboardFrom(activity);
         }catch (Exception e){
@@ -592,10 +591,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         SplashActivity.savePreferences(Constant.REMEMER_COUNTRY_CODE, String.valueOf(code));
         SplashActivity.savePreferences(Constant.REMEMER_COUNTRY_ID, String.valueOf(id));
-
        // LoginPre.getActiveInstance(SignUpActivity.this).setCountry_code(code);
        // LoginPre.getActiveInstance(SignUpActivity.this).setCountry_id(id);
         signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
+        slideClose();
     }
 
     @Override

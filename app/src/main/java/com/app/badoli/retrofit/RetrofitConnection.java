@@ -13,7 +13,6 @@ public class RetrofitConnection {
     private ApiInterface clientService;
     //private static final String BASE_URL = "";
 
-
     public static ApiInterface getApiAirtel() {
         Retrofit retrofit = null;
 
