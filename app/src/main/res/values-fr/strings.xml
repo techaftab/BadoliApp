@@ -46,7 +46,7 @@
     <string name="request">Demander de l\'argent</string>
     <string name="by_qr">Par QR Code, ID et numéro de téléphone</string>
     <string name="pay_phone">Payer par téléphone, pièce d\'identité</string>
-    <string name="pay_qr">Encaisser un paiement</string>
+    <string name="pay_qr">Payer par QR Codet</string>
     <string name="pay_service">Payer un Service</string>
     <string name="merch_id">ID marchand</string>
     <string name="merch_mob">Merchant Mobile No</string>
