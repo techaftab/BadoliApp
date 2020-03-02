@@ -5,18 +5,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ import com.app.badoli.utilities.GetMyItem;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.utilities.Validation;
 import com.app.badoli.viewModels.SignUpViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
@@ -66,7 +68,7 @@ import xyz.hasnat.sweettoast.SweetToast;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener,
         GetMyItem,
-        Country_Adapter.DMTPayHistoryAdapterListener, AdapterView.OnItemSelectedListener {
+        Country_Adapter.DMTPayHistoryAdapterListener{
     private static final String TAG = SignUpActivity.class.getSimpleName();
     @SuppressLint("StaticFieldLeak")
     ActivitySignUpBinding signUpBinding;
@@ -83,7 +85,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String  access_token, device_token;
     private String roleId="";
 
-    String[] language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,36 +172,73 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             overridePendingTransition(R.anim.left_in,R.anim.right_out);
             finish();
         }
+        if (v==signUpBinding.txtChangeLang){
+            final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(SignUpActivity.this);
+            @SuppressLint("InflateParams") View sheetView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.language_row, null);
+            mBottomSheetDialog.setContentView(sheetView);
+            mBottomSheetDialog.show();
+
+            TextView txtEnglish = sheetView.findViewById(R.id.text);
+            TextView txtFrench = sheetView.findViewById(R.id.text1);
+
+            String selectedLan = LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua();
+            if ("fr".equals(selectedLan)) {
+                txtFrench.setTextColor(Color.GREEN);
+            } else {
+                txtEnglish.setTextColor(Color.GREEN);
+            }
+
+            txtEnglish.setOnClickListener(v1 -> {
+                setLocale("en");
+                mBottomSheetDialog.dismiss();
+            });
+
+            txtFrench.setOnClickListener(v12 -> {
+                setLocale("fr");
+                mBottomSheetDialog.dismiss();
+            });
+        }
     }
 
+    private void setLocale(String lang) {
+        LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
+        Locale myLocale = new Locale(lang);
+        // Locale.setDefault(myLocale);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        restartActivity();
+    }
+
+    private void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(intent);
+    }
 
     private void init() {
-        /*if (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua().equals("fr")){
-            signUpBinding.spinnerLanguageSignup.setSelection(2);
-        }else {
-            signUpBinding.spinnerLanguageSignup.setSelection(1);
-        }*/
+        switch (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua()) {
+            case "en":
+                setLocale("en");
+                break;
+            case "fr":
+                setLocale("fr");
+                break;
+        }
         signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
             if (signUpBinding.rbUser.isChecked()){
                 roleId="3";
                 signUpBinding.lnMerchantDetails.setVisibility(View.GONE);
             }
             if (signUpBinding.rbMerchant.isChecked()){
-                signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
+                showLoading();
+                getBussinessList();
                 roleId="4";
             }
         });
-        signUpBinding.spinnerLanguageSignup.setOnItemSelectedListener(this);
-        language=getResources().getStringArray(R.array.select_lang);
-        ArrayAdapter aa = new ArrayAdapter<>(this, R.layout.spinner_item, language);
-        aa.setDropDownViewResource(R.layout.spinner_item);
-        signUpBinding.spinnerLanguageSignup.setAdapter(aa);
-
-        if (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua().equals("fr")){
-            signUpBinding.spinnerLanguageSignup.setSelection(2);
-        }else {
-            signUpBinding.spinnerLanguageSignup.setSelection(1);
-        }
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
             String deviceToken = instanceIdResult.getToken();
@@ -227,6 +265,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpBinding.rlLogin.setOnClickListener(this);
         signUpBinding.nextButton.setOnClickListener(this);
         signUpBinding.txtResendOtp.setOnClickListener(this);
+        signUpBinding.txtChangeLang.setOnClickListener(this);
         signUpBinding.includedLayout.imgCloseHidden.setOnClickListener(this);
         signUpBinding.ed1.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed1));
         signUpBinding.ed2.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed2));
@@ -237,35 +276,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         countryResults=new ArrayList<>();
         country=new ArrayList<>();
         adapter = new Country_Adapter(this, country, this,SignUpActivity.this);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (language[position].equals(signUpBinding.spinnerLanguageSignup.getSelectedItem().toString())) {
-            LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua("fr");
-            setLocale("fr");
-        }else {
-            LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua("en");
-            setLocale("en");
-        }
-    }
-
-    private void setLocale(String lang) {
-        LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
-        Locale myLocale = new Locale(lang);
-        // Locale.setDefault(myLocale);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        android.content.res.Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-//        Intent refresh = new Intent(SignUpActivity.this, SignUpActivity.class);
-//        startActivity(refresh);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     public class GenericTextWatcher implements TextWatcher {
@@ -338,6 +348,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         Toast.makeText(SignUpActivity.this, resendOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(SignUpActivity.this, resendOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getBussinessList() {
+        signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
+        signUpViewModel.getBussinessList().observe(this,
+                bussinessList -> {
+                    dismissLoading();
+                    if (!bussinessList.error) {
+                        Log.e(TAG,"BussinessList--->"+ new Gson().toJson(bussinessList.getResult()));
+                    } else {
+                        Toast.makeText(SignUpActivity.this, bussinessList.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -438,6 +461,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
+       /* if (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua().equals("fr")){
+            setLocale("fr");
+        }else {
+            setLocale("en");
+        }*/
         if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {
             signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }

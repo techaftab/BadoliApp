@@ -12,6 +12,7 @@ import com.app.badoli.model.ResendOtpResponse;
 import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.repositories.AccountRepositories;
+import com.webmobril.badoli.model.BussinessList;
 
 import okhttp3.MultipartBody;
 
@@ -47,5 +48,9 @@ public class SignUpViewModel extends AndroidViewModel {
 
     public LiveData<ResendOtpResponse> resendOtp(int userId, String access_token) {
         return signupRepository.resendOtp(userId, access_token);
+    }
+
+    public LiveData<BussinessList> getBussinessList() {
+        return signupRepository.getBussinessList();
     }
 }

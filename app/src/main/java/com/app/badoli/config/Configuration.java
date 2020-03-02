@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,7 +14,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.badoli.utilities.LoginPre;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
@@ -33,6 +38,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -283,6 +289,7 @@ public class Configuration {
         assert window != null;
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
+
 
 
     public static void showSnackbar(String message, View v) {

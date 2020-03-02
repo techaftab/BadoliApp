@@ -19,6 +19,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
+        FontsOverride.setDefaultFont(this, "DEFAULT", "font/segoe_print.ttf");
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "font/segoe_print.ttf");
+        FontsOverride.setDefaultFont(this, "SERIF", "font/segoe_print.ttf");
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "font/segoe_print.ttf");
         setlocale();
     }
 

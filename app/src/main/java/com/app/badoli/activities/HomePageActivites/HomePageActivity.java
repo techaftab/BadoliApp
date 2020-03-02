@@ -131,7 +131,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
-        homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
+        String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
+        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }
 
@@ -152,7 +153,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void loadData() {
         showBadge(homePageBinding.bottomNavigation, R.id.navigation_transaction, "2");
         homePageBinding.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        homePageBinding.commonHeader.badoliPhoneText.setText("Badolipay ("+userData.getMobile()+")");
+        String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
+        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
         homePageBinding.drawerMenuItems.userName.setText(userData.getName());
     }
@@ -326,7 +328,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.dark_pink));
-        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+userData.getMobile()+")");
+        String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
+        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }
 

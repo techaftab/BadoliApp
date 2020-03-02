@@ -15,6 +15,7 @@ import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.retrofit.ApiInterface;
 import com.app.badoli.retrofit.RetrofitConnection;
+import com.webmobril.badoli.model.BussinessList;
 
 import java.util.Objects;
 
@@ -174,6 +175,24 @@ public class AccountRepositories {
 
             @Override
             public void onFailure(@NonNull Call<ProfileImageResponse> call, @NonNull Throwable t) {
+                Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
+            }
+        });
+        return mutableLiveDataProfile;
+    }
+
+    public LiveData<BussinessList> getBussinessList() {
+        MutableLiveData<BussinessList> mutableLiveDataProfile = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<BussinessList> call = apiService.getBussinessList();
+        call.enqueue(new Callback<BussinessList>() {
+            @Override
+            public void onResponse(@NonNull Call<BussinessList> call,@NonNull Response<BussinessList> response) {
+                Log.e("profile_image", new Gson().toJson(response.body()));
+                mutableLiveDataProfile.setValue(response.body());
+            }
+            @Override
+            public void onFailure(@NonNull Call<BussinessList> call, @NonNull Throwable t) {
                 Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
             }
         });

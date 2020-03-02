@@ -12,6 +12,7 @@ import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.model.WalletTransfer;
 import com.app.badoli.model.ChangePasswordModel;
+import com.webmobril.badoli.model.BussinessList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -90,4 +91,7 @@ public interface ApiInterface {
     @POST("api_forgot_password")
     Call<ChangePasswordModel> changePassword(@Field("mobile") String mobile,@Field("new_password") String newPassword,
                                              @Field("confirm_password") String confirmPassword,@Field("roles_id") String roleId);
+
+    @GET("activityList")
+    Call<BussinessList> getBussinessList();
 }

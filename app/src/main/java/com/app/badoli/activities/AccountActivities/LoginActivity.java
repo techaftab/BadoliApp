@@ -1,15 +1,19 @@
 package com.app.badoli.activities.AccountActivities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,12 +34,13 @@ import com.app.badoli.fragments.FragmentFgtPwd;
 import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.LoginViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Locale;
 import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
   //  private static final String TAG = LoginActivity.class.getSimpleName();
     LoginViewModel loginViewModel;
@@ -48,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
@@ -79,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         loginBinding.forgetPassword.setOnClickListener(this);
         loginBinding.txtSignUp.setOnClickListener(this);
+        loginBinding.txtChangeLang.setOnClickListener(this);
     }
 
     @Override
@@ -104,27 +109,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
-     /*   if (LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua().equals("fr")){
-            loginBinding.spinnerLanguageSignup.setSelection(2);
-        }else {
-            loginBinding.spinnerLanguageSignup.setSelection(1);
-        }*/
+        switch (LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua()) {
+            case "en":
+                setLocale("en");
+                break;
+            case "fr":
+                setLocale("fr");
+                break;
+        }
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
             String deviceToken = instanceIdResult.getToken();
             LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
             device_token= LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
         });
-        loginBinding.spinnerLanguageSignup.setOnItemSelectedListener(this);
-        language=getResources().getStringArray(R.array.select_lang);
-        ArrayAdapter aa = new ArrayAdapter<>(this, R.layout.spinner_item, language);
-        aa.setDropDownViewResource(R.layout.spinner_item);
-        loginBinding.spinnerLanguageSignup.setAdapter(aa);
 
-        if (LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua().equals("fr")){
-            loginBinding.spinnerLanguageSignup.setSelection(2);
-        }else {
-            loginBinding.spinnerLanguageSignup.setSelection(1);
-        }
 
         /*@SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
         //String uniqueID = UUID.randomUUID().toString();
@@ -141,21 +140,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }*/
     }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (language[position].equals("French(fr)")) {
-            LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua("fr");
-            setLocale("fr");
-        }else {
-            LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua("en");
-            setLocale("en");
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     private void setLocale(String lang) {
         LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua(lang);
@@ -166,8 +150,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         android.content.res.Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
-        startActivity(refresh);
+        restartActivity();
+    }
+
+    private void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
     private boolean setValidation(String phone, String password) {
@@ -231,6 +221,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             finish();
+        }
+        if (v==loginBinding.txtChangeLang){
+            BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(LoginActivity.this);
+            View sheetView = LayoutInflater.from(LoginActivity.this).inflate(R.layout.language_row, null);
+            mBottomSheetDialog.setContentView(sheetView);
+            mBottomSheetDialog.show();
+
+            TextView txtEnglish = sheetView.findViewById(R.id.text);
+            TextView txtFrench = sheetView.findViewById(R.id.text1);
+
+            String selectedLan = LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua();
+            if ("fr".equals(selectedLan)) {
+                txtFrench.setTextColor(Color.GREEN);
+            } else {
+                txtEnglish.setTextColor(Color.GREEN);
+            }
+
+            txtEnglish.setOnClickListener(v1 -> {
+                setLocale("en");
+                mBottomSheetDialog.dismiss();
+            });
+
+            txtFrench.setOnClickListener(v12 -> {
+                setLocale("fr");
+                mBottomSheetDialog.dismiss();
+            });
         }
     }
 

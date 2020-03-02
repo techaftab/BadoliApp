@@ -97,7 +97,8 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding.btnGenCode.setOnClickListener(this);
         merchantBinding.hiddenLayout.imgBackMerchant.setOnClickListener(this);
         merchantBinding.imgBackMaintMerchant.setOnClickListener(this);
-        merchantBinding.badoliPhoneTextMerchant.setText("Badolipay ("+userData.getMobile()+")");
+        String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
+        merchantBinding.badoliPhoneTextMerchant.setText(userData.getName()+" ("+mobile+")");
         merchantBinding.txtWalletBalancetMerchant.setText(userData.getWallet_balance()+" FCFA");
         merchantBinding.radiogroupMerchant.setOnCheckedChangeListener(this);
         merchantBinding.rbQrcode.setChecked(true);
@@ -174,13 +175,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.enter_amount));
             return false;
         }
-        if (Float.valueOf(amount)<100){
+        if (Float.parseFloat(amount)<100){
             merchantBinding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_100));
             merchantBinding.edittextAmtFcfa.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
-        if (Float.valueOf(amount)>49900){
+        if (Float.parseFloat(amount)>49900){
             merchantBinding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_499));
             merchantBinding.edittextAmtFcfa.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_499));
@@ -209,13 +210,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.enter_amount));
             return false;
         }
-        if (Float.valueOf(amount)<100){
+        if (Float.parseFloat(amount)<100){
             merchantBinding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_100));
             merchantBinding.edittextAmtFcfaIdmobile.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
-        if (Float.valueOf(amount)>49900){
+        if (Float.parseFloat(amount)>49900){
             merchantBinding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_499));
             merchantBinding.edittextAmtFcfaIdmobile.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_499));

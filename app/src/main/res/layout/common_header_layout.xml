@@ -55,7 +55,7 @@
                 android:textColor="@color/white"
                 android:layout_marginEnd="@dimen/_45sdp"
                 android:textStyle="normal"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_12ssp"
                 android:visibility="visible"
                 tools:ignore="RtlSymmetry" />
 
@@ -79,7 +79,7 @@
                 android:text="@string/current_bal"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="@dimen/_17ssp" />
+                android:textSize="@dimen/_15ssp" />
 
             <TextView
                 android:id="@+id/txt_wallet_balance"
@@ -93,7 +93,7 @@
                 android:includeFontPadding="false"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp" />
+                android:textSize="@dimen/_13ssp" />
 
         </LinearLayout>
 
