@@ -502,21 +502,21 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rl_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cardView_signup"
                     android:layout_marginBottom="@dimen/DP10"
                     android:padding="@dimen/DP8"
+                    android:orientation="vertical"
                     android:gravity="center">
 
                     <TextView
                         android:id="@+id/acc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
+                        android:gravity="center"
                         android:text="@string/aleardy_account"
                         android:textColor="@color/text_orange"
                         android:textSize="@dimen/SP18" />
@@ -525,7 +525,6 @@
                         android:id="@+id/login_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/acc"
                         android:gravity="center"
                         android:paddingLeft="@dimen/DP8"
                         android:paddingRight="@dimen/DP8"
@@ -533,7 +532,7 @@
                         android:textColor="@color/text_purple"
                         android:textSize="@dimen/SP18" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView_otp"

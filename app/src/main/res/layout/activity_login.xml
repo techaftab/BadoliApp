@@ -237,10 +237,11 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cardView"
+                    android:orientation="vertical"
                     android:layout_marginBottom="@dimen/DP30"
                     android:padding="@dimen/DP8"
                     android:gravity="center">
@@ -249,9 +250,8 @@
                         android:id="@+id/acc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
                         android:text="@string/dont_have_account"
+                        android:gravity="center"
                         android:textColor="@color/text_orange"
                         android:textSize="@dimen/SP18" />
 
@@ -259,15 +259,14 @@
                         android:id="@+id/txt_sign_up"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:paddingLeft="@dimen/DP8"
+                        android:gravity="center"
                         android:paddingRight="@dimen/DP8"
-                        android:layout_toEndOf="@id/acc"
                         android:text="@string/sign_up"
                         android:textColor="@color/text_purple"
                         android:textSize="18sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 
