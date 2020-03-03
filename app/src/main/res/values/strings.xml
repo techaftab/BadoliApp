@@ -173,7 +173,7 @@
     <string name="select_image">Select Image</string>
     <string name="camera_perm_error">Camera Permission error</string>
     <string name="paid">Paid</string>
-    <string name="recieve">Receive</string>
+    <string name="recieve">Received</string>
     <string name="chng_pwd_or_language">Change Password, Language</string>
     <string name="enter_old_password">Enter Old Password</string>
     <string name="submit">Submit</string>
@@ -184,6 +184,7 @@
     <string name="select_language">Select Language</string>
     <string name="en">English</string>
     <string name="enable_perm">Please enable permission!</string>
+    <string name="select_activity_sector">Select your activity sector</string>
 
     <string-array name="select_lang">
         <item>@string/select_language</item>

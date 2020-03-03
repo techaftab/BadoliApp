@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.app.badoli.fragments.PaidFragment;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private int numOfTabs;
@@ -16,6 +18,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
 //        PaidFragment paidFragment = new PaidFragment();

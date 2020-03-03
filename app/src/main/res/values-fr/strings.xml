@@ -184,12 +184,15 @@
     <string name="english">Anglaise(en)</string>
     <string name="en">Anglaise</string>
     <string name="select_language">Choisir la langue</string>
+    <string name="enable_perm">Veuillez activer la permission!</string>
+    <string name="select_activity_sector">Sélectionnez votre secteur d\'activité</string>
 
     <string-array name="select_lang">
         <item>@string/select_language</item>
         <item>@string/english</item>
         <item>@string/french</item>
     </string-array>
-    <string name="enable_perm">Veuillez activer la permission!</string>
+
+
 
 </resources>

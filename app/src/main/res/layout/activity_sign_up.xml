@@ -317,7 +317,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.50"
-                                android:text="@string/merchant"/>
+                                android:text="@string/merchant" />
 
                         </RadioGroup>
 
@@ -422,26 +422,15 @@
                                     android:layout_weight="0.85"
                                     android:src="@drawable/company_registration" />
 
-                                <AutoCompleteTextView
+                                <Spinner
                                     android:id="@+id/autocomp_activity_sctor"
                                     android:layout_weight="0.15"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@android:color/transparent"
                                     android:hint="@string/your_sector"
-                                    android:inputType="none"
-                                    android:focusable="false"
-                                    android:editable="false"
-                                    android:drawableEnd="@drawable/ccp_ic_arrow_drop_down"
                                     android:textSize="@dimen/_12ssp"
-                                    android:paddingLeft="@dimen/DP8"
-                                    android:paddingRight="@dimen/DP8"
                                     android:imeOptions="actionNext"
-                                    android:maxLength="30"
-                                    android:singleLine="true"
-                                    android:textColor="@color/white"
-                                    android:textColorHint="@android:color/white"
-                                    bind:ignore="Autofill"/>
+                                    android:textColor="@color/white"/>
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -497,7 +486,7 @@
                         android:padding="@dimen/_10sdp"
                         android:layout_centerInParent="true"
                         android:layout_marginBottom="@dimen/_50sdp"
-                        android:background="@drawable/rounded_button_orange"
+                        android:background="@color/white"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:visibility="invisible"
                         android:indeterminateDrawable="@drawable/progress"/>

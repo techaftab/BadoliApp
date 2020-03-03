@@ -12,7 +12,7 @@ import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.model.WalletTransfer;
 import com.app.badoli.model.ChangePasswordModel;
-import com.webmobril.badoli.model.BussinessList;
+import com.app.badoli.model.BussinessList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;

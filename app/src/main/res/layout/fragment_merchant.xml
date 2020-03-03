@@ -62,6 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_8sdp"
+                        android:textStyle="normal"
                         android:paddingRight="@dimen/_8sdp"
                         android:text="@string/by_qr" />
 

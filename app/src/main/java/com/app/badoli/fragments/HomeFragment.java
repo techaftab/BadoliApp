@@ -24,8 +24,8 @@ import java.util.Objects;
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public HomeFragment() {
-
     }
+
     private Fragment currentFragment;
     private FragmentTransaction ft;
     private HomeFragmentBinding homeFragmentBinding;

@@ -15,7 +15,7 @@ import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.retrofit.ApiInterface;
 import com.app.badoli.retrofit.RetrofitConnection;
-import com.webmobril.badoli.model.BussinessList;
+import com.app.badoli.model.BussinessList;
 
 import java.util.Objects;
 

@@ -122,20 +122,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         loadData();
     }
 
-    @SuppressLint("SetTextI18n")
-    public void homeData(){
-        homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
-        homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
-        homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
-        homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
-        homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
-        homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
-        homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
-        String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
-        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
-        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
-    }
-
     void showLoading(){
         Configuration.hideKeyboardFrom(HomePageActivity.this);
         homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
@@ -322,7 +308,23 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @SuppressLint("SetTextI18n")
+    public void homeData(){
+        homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
+        homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
+        homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
+        homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
+        homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
+        homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
+        String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
+        homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
+    }
+
+    @SuppressLint("SetTextI18n")
     public void updateHeader() {
+        homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
@@ -334,6 +336,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void updateToolbar() {
+        homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.GONE);
         homePageBinding.commonHeader.badoliPhoneText.setText("");
         homePageBinding.commonHeader.badoliPhoneText.setText(getResources().getString(R.string.scan_pay));
@@ -342,13 +345,23 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.bottomNavigation.setVisibility(View.GONE);
     }
 
+    @SuppressLint("SetTextI18n")
+    public void transactionHeader() {
+        homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
+        homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.hamburger.setVisibility(View.GONE);
+        homePageBinding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
+        homePageBinding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.GONE);
+        homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
+    }
     /*public void headerHome(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
     }*/
-
     public void hideHeader(){
         homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
     }

@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +86,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     int userId=-1;
     String  access_token, device_token;
     private String roleId="";
+
+    ArrayList<String> typeListBuss = new ArrayList<>();
+    ArrayList<Integer> idListBuss = new ArrayList<>();
+    private Integer bussinessCode;
 
 
     @Override
@@ -156,7 +162,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             password = signUpBinding.edPassword.getText().toString();
             companyName = signUpBinding.edittextCompanyName.getText().toString();
             companyAddress = signUpBinding.edittextCompanyAddress.getText().toString();
-            activitySector = signUpBinding.autocompActivitySctor.getText().toString();
+            activitySector = signUpBinding.autocompActivitySctor.getSelectedItem().toString();
             confirm_password = signUpBinding.edConfirmPassword.getText().toString();
             checked = signUpBinding.checReadAgreements.isChecked();
 
@@ -182,7 +188,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             TextView txtFrench = sheetView.findViewById(R.id.text1);
 
             String selectedLan = LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua();
-            if ("fr".equals(selectedLan)) {
+            if (selectedLan.equals("fr")) {
                 txtFrench.setTextColor(Color.GREEN);
             } else {
                 txtEnglish.setTextColor(Color.GREEN);
@@ -219,7 +225,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         startActivity(intent);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init() {
+        getBussinessList();
         switch (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua()) {
             case "en":
                 setLocale("en");
@@ -234,11 +242,43 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 signUpBinding.lnMerchantDetails.setVisibility(View.GONE);
             }
             if (signUpBinding.rbMerchant.isChecked()){
-                showLoading();
-                getBussinessList();
+                signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
                 roleId="4";
             }
         });
+
+        signUpBinding.autocompActivitySctor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String bussType =parent.getItemAtPosition(position).toString();
+                for (int i = 0; i < typeListBuss.size(); i++) {
+                    if (typeListBuss.get(i).equals(bussType)) {
+                        bussinessCode = idListBuss.get(i);
+                        // signUpBinding.autocompActivitySctor.setText(typeListBuss.get(i));
+                    }
+                }
+                System.out.println("bussType code-->" + bussType+"  code buss-->"+bussinessCode);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        /*signUpBinding.autocompActivitySctor.setOnTouchListener((paramView, paramMotionEvent) -> {
+            // TODO Auto-generated method stub
+            signUpBinding.autocompActivitySctor.showDropDown();
+            signUpBinding.autocompActivitySctor.requestFocus();
+            return false;
+        });
+        signUpBinding.autocompActivitySctor.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                signUpBinding.autocompActivitySctor.showDropDown();
+                signUpBinding.autocompActivitySctor.requestFocus();
+            }
+        });*/
+      //  signUpBinding.autocompActivitySctor.setOnClickListener(v12 ->  signUpBinding.autocompActivitySctor.setText(""));
+
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
             String deviceToken = instanceIdResult.getToken();
@@ -353,12 +393,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void getBussinessList() {
-        signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
+        showLoading();
         signUpViewModel.getBussinessList().observe(this,
                 bussinessList -> {
                     dismissLoading();
                     if (!bussinessList.error) {
                         Log.e(TAG,"BussinessList--->"+ new Gson().toJson(bussinessList.getResult()));
+                        typeListBuss.add(0,getResources().getString(R.string.select_activity_sector));
+                        idListBuss.add(0,0);
+                        for (int i =0;i<bussinessList.getResult().size();i++) {
+                            typeListBuss.add(bussinessList.getResult().get(i).getName());
+                            idListBuss.add(bussinessList.getResult().get(i).getId());
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_text, typeListBuss);
+                        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                        signUpBinding.autocompActivitySctor.setAdapter(adapter);
                     } else {
                         Toast.makeText(SignUpActivity.this, bussinessList.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -461,11 +510,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-       /* if (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua().equals("fr")){
-            setLocale("fr");
-        }else {
-            setLocale("en");
-        }*/
         if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {
             signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }

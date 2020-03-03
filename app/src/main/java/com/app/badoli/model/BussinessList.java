@@ -1,4 +1,4 @@
-package com.webmobril.badoli.model;
+package com.app.badoli.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

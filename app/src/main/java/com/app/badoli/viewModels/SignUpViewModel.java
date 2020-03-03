@@ -12,7 +12,7 @@ import com.app.badoli.model.ResendOtpResponse;
 import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.repositories.AccountRepositories;
-import com.webmobril.badoli.model.BussinessList;
+import com.app.badoli.model.BussinessList;
 
 import okhttp3.MultipartBody;
 
