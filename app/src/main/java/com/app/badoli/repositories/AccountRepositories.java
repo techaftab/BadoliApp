@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.app.badoli.model.ResetPassword;
 import com.google.gson.Gson;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.ProfileImageResponse;
@@ -155,7 +156,7 @@ public class AccountRepositories {
             }
             @Override
             public void onFailure(@NonNull Call<ResendOtpResponse> call,@NonNull Throwable t) {
-                Log.e("error", t.getMessage());
+                Log.e("error", Objects.requireNonNull(t.getMessage()));
             }
         });
         return mutableLiveDataOtp;
@@ -194,6 +195,24 @@ public class AccountRepositories {
             @Override
             public void onFailure(@NonNull Call<BussinessList> call, @NonNull Throwable t) {
                 Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
+            }
+        });
+        return mutableLiveDataProfile;
+    }
+
+    public LiveData<ResetPassword> resetPassword(String userId, String oldPwd, String newPassword, String confirmPwd) {
+        MutableLiveData<ResetPassword> mutableLiveDataProfile = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<ResetPassword> call = apiService.resetPassword(userId,oldPwd,newPassword,confirmPwd);
+        call.enqueue(new Callback<ResetPassword>() {
+            @Override
+            public void onResponse(@NonNull Call<ResetPassword> call,@NonNull Response<ResetPassword> response) {
+                Log.e(TAG, new Gson().toJson(response.body()));
+                mutableLiveDataProfile.setValue(response.body());
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResetPassword> call, @NonNull Throwable t) {
+                Log.e(TAG, "error--->"+ Objects.requireNonNull(t.getMessage()));
             }
         });
         return mutableLiveDataProfile;

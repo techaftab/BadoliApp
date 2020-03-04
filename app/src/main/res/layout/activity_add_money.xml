@@ -156,11 +156,69 @@
                     android:textColor="@color/dark_gray"
                     android:textSize="@dimen/_12ssp"/>
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/radiogrou_addmoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_airtel_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:drawableEnd="@drawable/forward_black"
+                        android:text="@string/airtel_money"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/dark_gray"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/gray"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_paypal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:drawableEnd="@drawable/forward_black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/dark_gray"
+                        android:text="@string/paypal"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/gray"/>
+
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/btn_add_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingLeft="@dimen/_50sdp"
+                    android:paddingRight="@dimen/_50sdp"
+                    android:text="@string/next"
+                    android:onClick="addBalanceMoney"
+                    android:background="@drawable/rounded_button_orange"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16ssp"
+                    android:textAllCaps="false"
+                    android:layout_margin="@dimen/_15sdp"/>
+<!--
+               <LinearLayout
                     android:id="@+id/ln_proceed_airtel"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
                     android:weightSum="1"
+                    android:visibility="gone"
                     android:onClick="proceedAirtel"
                     android:background="@drawable/rl_back"
                     android:orientation="horizontal">
@@ -192,11 +250,12 @@
                         tools:ignore="ContentDescription" />
 
                 </LinearLayout>
+-->
 
-                <View
+                <!--<View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_2sdp"
-                    android:background="@color/gray"/>
+                    android:background="@color/gray"/>-->
 
             </LinearLayout>
 

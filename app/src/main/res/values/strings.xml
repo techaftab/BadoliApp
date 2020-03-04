@@ -185,6 +185,7 @@
     <string name="en">English</string>
     <string name="enable_perm">Please enable permission!</string>
     <string name="select_activity_sector">Select your activity sector</string>
+    <string name="paypal">PayPal</string>
 
     <string-array name="select_lang">
         <item>@string/select_language</item>

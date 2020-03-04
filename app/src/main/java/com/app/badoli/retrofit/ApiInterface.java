@@ -8,6 +8,7 @@ import com.app.badoli.model.ProfileImageResponse;
 import com.app.badoli.model.QRResponse;
 import com.app.badoli.model.ReferenceResponse;
 import com.app.badoli.model.ResendOtpResponse;
+import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.model.WalletTransfer;
@@ -94,4 +95,9 @@ public interface ApiInterface {
 
     @GET("activityList")
     Call<BussinessList> getBussinessList();
+
+    @FormUrlEncoded
+    @POST("api_change_password")
+    Call<ResetPassword> resetPassword(@Field("user_id") String userId,@Field("old_password") String oldPwd,
+                                      @Field("new_password") String newPassword,@Field("confirm_password") String confirmPwd);
 }

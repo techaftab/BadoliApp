@@ -50,7 +50,7 @@ public class TransactionFragment extends Fragment implements TabLayout.OnTabSele
         fragmentBinding.viewpagerTransaction.setAdapter(mTabsPagerAdapter);
 
         fragmentBinding.tablayoutTransaction.addOnTabSelectedListener(this);
-        fragmentBinding.tablayoutTransaction.setupWithViewPager(fragmentBinding.viewpagerTransaction);
+     //   fragmentBinding.tablayoutTransaction.setupWithViewPager(fragmentBinding.viewpagerTransaction);
         fragmentBinding.tablayoutTransaction.getTabAt(0);
 
     }
