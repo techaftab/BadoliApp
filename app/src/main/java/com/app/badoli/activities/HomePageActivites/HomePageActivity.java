@@ -299,6 +299,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 PrefManager.getInstance(HomePageActivity.this).logout();
                 LoginPre.getActiveInstance(HomePageActivity.this).setIsLoggedIn(false);
                 Intent intent1 = new Intent(HomePageActivity.this, LoginActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent1);
                 finish();
             },300);
@@ -308,7 +311,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @SuppressLint("SetTextI18n")
-    public void homeData(){
+    public void homeData() {
         homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
@@ -356,13 +359,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.GONE);
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }
+
     /*public void headerHome(){
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
         homePageBinding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.imgBackMain.setVisibility(View.GONE);
     }*/
+
     public void hideHeader(){
         homePageBinding.commonHeader.mainLayout.setVisibility(View.GONE);
     }
+
 }

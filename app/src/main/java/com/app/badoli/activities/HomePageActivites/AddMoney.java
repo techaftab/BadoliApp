@@ -67,7 +67,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     public void onUpdateBalance(String balance) {
         userData.setWallet_balance(balance);
         PrefManager.getInstance(AddMoney.this).setWalletBalance(balance);
-        if (addMoney.progressAddmoney.isShown()){
+        if (addMoney.progressAddmoney.isShown()) {
             dismissLoading();
         }
         if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {
@@ -93,10 +93,10 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (addMoney.rbAirtelMoney.isChecked()){
+        if (addMoney.rbAirtelMoney.isChecked()) {
            addMoneyFrom="AIRTEL";
         }
-        if (addMoney.rbPaypal.isChecked()){
+        if (addMoney.rbPaypal.isChecked()) {
             addMoneyFrom="PAYPAL";
         }
     }
@@ -105,7 +105,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
         amount=addMoney.edittextAmountAddMoneyAddmoney.getText().toString();
         mobile=addMoney.edittextPhoneMobileAddmoney.getText().toString();
         if (isValidated(amount,mobile)){
-            if (addMoney.rbAirtelMoney.isChecked()){
+            if (addMoney.rbAirtelMoney.isChecked()) {
                 proceedAirtel();
             } else {
                 SweetToast.error(AddMoney.this,"Available soon");

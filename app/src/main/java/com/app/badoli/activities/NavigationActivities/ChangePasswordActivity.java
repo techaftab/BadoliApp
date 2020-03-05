@@ -55,9 +55,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
             changePasswordBinding.rbEnglish.setChecked(true);
         }
         setSupportActionBar(changePasswordBinding.toolbarChangePassword);
-      //  Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
-       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
+        //Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+       /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         getSupportActionBar().setDisplayShowHomeEnabled(true);*/
         Objects.requireNonNull(getSupportActionBar()).setTitle(null);
         changePasswordBinding.toolbarChangePassword.setTitle("");
         changePasswordBinding.toolbarChangePassword.setNavigationOnClickListener(v -> {
@@ -88,9 +88,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     void showLoading(){
         com.app.badoli.config.Configuration.hideKeyboardFrom(ChangePasswordActivity.this);
         changePasswordBinding.progressbarChangepwd.setVisibility(View.VISIBLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
+
     void dismissLoading(){
         changePasswordBinding.progressbarChangepwd.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -149,20 +149,25 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         showLoading();
         profileViewModel.resetPassword(userId,oldPwd,confirmPwd,confirmPwd).observe(this, resetPassword -> {
             dismissLoading();
-            if (!resetPassword.error) {
-                Log.e(TAG, new Gson().toJson(resetPassword));
-                Toast.makeText(this, resetPassword.getMessage(), Toast.LENGTH_SHORT).show();
-                handler.postDelayed(() -> {
-                    dismissLoading();
-                    //PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
-                    PrefManager.getInstance(ChangePasswordActivity.this).logout();
-                    LoginPre.getActiveInstance(ChangePasswordActivity.this).setIsLoggedIn(false);
-                    Intent intent1 = new Intent(ChangePasswordActivity.this, LoginActivity.class);
-                    startActivity(intent1);
-                    finish();
-                },300);
-            } else {
-                Toast.makeText(this, resetPassword.getMessage(), Toast.LENGTH_SHORT).show();
+            if (resetPassword!=null) {
+                if (!resetPassword.error) {
+                    Log.e(TAG, new Gson().toJson(resetPassword));
+                    Toast.makeText(this, resetPassword.getMessage(), Toast.LENGTH_SHORT).show();
+                    handler.postDelayed(() -> {
+                        dismissLoading();
+                        //PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();
+                        PrefManager.getInstance(ChangePasswordActivity.this).logout();
+                        LoginPre.getActiveInstance(ChangePasswordActivity.this).setIsLoggedIn(false);
+                        Intent intent1 = new Intent(ChangePasswordActivity.this, LoginActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent1);
+                        finish();
+                    }, 300);
+                } else {
+                    Toast.makeText(this, resetPassword.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

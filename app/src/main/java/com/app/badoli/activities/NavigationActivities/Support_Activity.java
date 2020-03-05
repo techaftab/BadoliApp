@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.app.badoli.R;
 import com.app.badoli.databinding.ActivitySupportBinding;
+
+import java.util.Objects;
 
 public class Support_Activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,18 +25,18 @@ public class Support_Activity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        supportBinding.commonHeader.rlToolbarHome.setBackgroundColor(getResources().getColor(R.color.text_orange));
-        supportBinding.commonHeader.lnPayBalance.setVisibility(View.GONE);
-        supportBinding.commonHeader.txtTitlePay.setVisibility(View.VISIBLE);
-        supportBinding.commonHeader.txtTitlePay.setText(getResources().getString(R.string.submit_request));
-        supportBinding.commonHeader.imgBackPay.setOnClickListener(this);
+        setSupportActionBar(supportBinding.toolbarChangePassword);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(null);
+        supportBinding.toolbarChangePassword.setTitle("");
+        supportBinding.toolbarChangePassword.setNavigationOnClickListener(v -> {
+            Log.d("tag", "onClick : navigating back to back activity ");
+            finish();
+        });
     }
 
     @Override
     public void onClick(View v) {
-        if (v==supportBinding.commonHeader.imgBackPay){
-            finish();
-        }
+
     }
 
     @Override
