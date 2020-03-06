@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
-public class TransactionFragment extends Fragment implements TabLayout.OnTabSelectedListener{
+public class TransactionFragment extends Fragment {
 
     private TransactionFragmentBinding fragmentBinding;
 
@@ -44,20 +44,20 @@ public class TransactionFragment extends Fragment implements TabLayout.OnTabSele
     }
 
     private void init() {
-        fragmentBinding.tablayoutTransaction.setTabGravity(TabLayout.GRAVITY_FILL);
-
+        //fragmentBinding.tablayoutTransaction.setTabGravity(TabLayout.GRAVITY_FILL);
+        fragmentBinding.tablayoutTransaction.addTab(fragmentBinding.tablayoutTransaction.newTab().setText(getResources().getString(R.string.paid)));
+        fragmentBinding.tablayoutTransaction.addTab(fragmentBinding.tablayoutTransaction.newTab().setText(getResources().getString(R.string.recieve)));
         TransactionPagerAdapter mTabsPagerAdapter = new TransactionPagerAdapter(getChildFragmentManager(), getActivity());
         fragmentBinding.viewpagerTransaction.setAdapter(mTabsPagerAdapter);
 
-        fragmentBinding.tablayoutTransaction.addOnTabSelectedListener(this);
-     //   fragmentBinding.tablayoutTransaction.setupWithViewPager(fragmentBinding.viewpagerTransaction);
+        //fragmentBinding.tablayoutTransaction.addOnTabSelectedListener(this);
+      //  fragmentBinding.tablayoutTransaction.setupWithViewPager(fragmentBinding.viewpagerTransaction);
         fragmentBinding.tablayoutTransaction.getTabAt(0);
-
     }
 
-    @Override
+    /*@Override
     public void onTabSelected(TabLayout.Tab tab) {
-        fragmentBinding.viewpagerTransaction.setCurrentItem(tab.getPosition());
+       // fragmentBinding.viewpagerTransaction.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -68,5 +68,5 @@ public class TransactionFragment extends Fragment implements TabLayout.OnTabSele
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
-    }
+    }*/
 }

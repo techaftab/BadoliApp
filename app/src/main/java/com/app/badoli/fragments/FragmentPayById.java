@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.config.Configuration;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentPayByidBinding;
 import com.app.badoli.model.UserData;
@@ -47,6 +48,7 @@ public class FragmentPayById extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v==fragmentBinding.rlBack){
             if (getActivity()!=null) {
+                Configuration.hideKeyboardFrom(getActivity());
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
                 currentFragment = new FragmentMerchant();

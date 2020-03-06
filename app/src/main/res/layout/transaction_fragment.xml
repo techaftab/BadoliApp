@@ -13,7 +13,7 @@
             app:tabMode="fixed"
             app:tabGravity="fill"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_45sdp"
             app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/black"
             android:scrollbarSize="@dimen/_2sdp"

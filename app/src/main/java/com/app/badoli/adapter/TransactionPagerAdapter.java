@@ -25,10 +25,14 @@ public class TransactionPagerAdapter extends FragmentPagerAdapter {
     @NotNull
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return new PaidTransactionFragment();
+        switch (position){
+            case 0:
+                return new PaidTransactionFragment();
+            case 1:
+                return new RecievedTransactionFragment();
+            default:
+                return new PaidTransactionFragment();
         }
-        return new RecievedTransactionFragment();
     }
 
     @Override
@@ -47,6 +51,5 @@ public class TransactionPagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
-        //return super.getPageTitle(position);
     }
 }
