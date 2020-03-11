@@ -1,11 +1,37 @@
 package com.app.badoli.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class CountryResult  {
 
+    @SerializedName("id")
+    @Expose
+    private Integer id;
 
-    private Integer id,phonecode,status;
+    @SerializedName("phonecode")
+    @Expose
+    private Integer phonecode;
 
-    private String sortname,name,createdAt,updatedAt;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+
+    @SerializedName("status")
+    @Expose
+    private String sortname;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+
+    @SerializedName("updatedAt")
+    @Expose
+    private String updatedAt;
 
     public Integer getId() {
         return id;

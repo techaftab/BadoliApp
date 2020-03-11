@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.badoli.R;
-import com.app.badoli.adapter.ReceivedListAdapter;
+import com.app.badoli.adapter.PaidListAdapter;
 import com.app.badoli.config.Configuration;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.WalletHistoryBinding;
@@ -28,32 +28,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RecievedTransactionFragment extends Fragment implements ReceivedListAdapter.ReceivedListClickListner {
+public class PaidWalletFragment extends Fragment implements PaidListAdapter.PaidListClickListner {
 
+   // private static final String TAG = PaidWalletFragment.class.getSimpleName();
     private WalletHistoryBinding fragmentBinding;
     private UserData userData;
-
     private TransactionViewModel transactionViewModel;
 
-    private final List<TransactionHistory.WalletHistory> receivedList = new ArrayList<>();
+    private final List<TransactionHistory.WalletHistory> paidList = new ArrayList<>();
     @SuppressLint("StaticFieldLeak")
-    private static ReceivedListAdapter receivedListAdapter;
+    private static PaidListAdapter paidListAdapter;
 
-    public RecievedTransactionFragment(){}
+    public PaidWalletFragment(){}
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentBinding = DataBindingUtil.inflate(inflater, R.layout.wallet_history,container,false);
-        View view = fragmentBinding.getRoot();
         transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
         userData= PrefManager.getInstance(getActivity()).getUserData();
+        View view = fragmentBinding.getRoot();
+
         init();
 
         return  view;
     }
+
     private void init() {
-        receivedListAdapter = new ReceivedListAdapter(getActivity(), receivedList, this);
+        paidListAdapter = new PaidListAdapter(getActivity(), paidList, this);
         if (Configuration.hasNetworkConnection(Objects.requireNonNull(getActivity()))){
             getHistory(userData.getId());
         }
@@ -61,39 +63,38 @@ public class RecievedTransactionFragment extends Fragment implements ReceivedLis
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         fragmentBinding.recyclerviewPaid.setLayoutManager(linearLayoutManager);
         // request_list.setHasFixedSize(true);
-        fragmentBinding.recyclerviewPaid.setAdapter(receivedListAdapter);
-        receivedListAdapter.notifyDataSetChanged();
+        fragmentBinding.recyclerviewPaid.setAdapter(paidListAdapter);
+        paidListAdapter.notifyDataSetChanged();
     }
+
     private void showLoading(){
         Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
         fragmentBinding.progressbarHistory.setVisibility(View.VISIBLE);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
+
     private void dismissLoading(){
         fragmentBinding.progressbarHistory.setVisibility(View.INVISIBLE);
         Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
-
 
     private void getHistory(String id) {
         showLoading();
         transactionViewModel.getHistory(id).observe(getViewLifecycleOwner(), transactionHistory -> {
             dismissLoading();
             if (!transactionHistory.error) {
-               /* for (int j=0;j<transactionHistory.wallethistory.get(i).getWallethistoryinner().size();j++) {
+               /*for (int j=0;j<transactionHistory.wallethistory.get(i).getWallethistoryinner().size();j++) {
                        if (transactionHistory.wallethistory.get(i).getWallethistoryinner().get(j).type.equals("Debit")){
-
                        }
                    }*/
-                receivedList.clear();
-                receivedList.addAll(transactionHistory.wallethistory);
-                receivedListAdapter.notifyDataSetChanged();
+                paidList.clear();
+                paidList.addAll(transactionHistory.wallethistory);
+                paidListAdapter.notifyDataSetChanged();
 
             } else {
                 Toast.makeText(getActivity(), transactionHistory.message, Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

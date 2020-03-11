@@ -186,6 +186,7 @@
     <string name="select_language">Choisir la langue</string>
     <string name="enable_perm">Veuillez activer la permission!</string>
     <string name="select_activity_sector">Sélectionnez votre secteur d\'activité</string>
+    <string name="paypal">PayPal</string>
 
     <string-array name="select_lang">
         <item>@string/select_language</item>

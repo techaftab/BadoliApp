@@ -14,6 +14,7 @@ import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.model.WalletTransfer;
 import com.app.badoli.model.ChangePasswordModel;
 import com.app.badoli.model.BussinessList;
+import com.app.badoli.repositories.TransactionHistory;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -100,4 +101,7 @@ public interface ApiInterface {
     @POST("api_change_password")
     Call<ResetPassword> resetPassword(@Field("user_id") String userId,@Field("old_password") String oldPwd,
                                       @Field("new_password") String newPassword,@Field("confirm_password") String confirmPwd);
+
+    @GET("transactionHistory")
+    Call<TransactionHistory> getHistory(@Query("userid") String id);
 }

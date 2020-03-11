@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.app.badoli.R;
-import com.app.badoli.fragments.PaidTransactionFragment;
+import com.app.badoli.fragments.PaidWalletFragment;
 import com.app.badoli.fragments.RecievedTransactionFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,11 +27,11 @@ public class TransactionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new PaidTransactionFragment();
+                return new PaidWalletFragment();
             case 1:
                 return new RecievedTransactionFragment();
             default:
-                return new PaidTransactionFragment();
+                return new PaidWalletFragment();
         }
     }
 

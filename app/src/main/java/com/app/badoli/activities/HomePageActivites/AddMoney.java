@@ -75,7 +75,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
                     .replace(getResources().getString(R.string.badoli_balance), "")
                     .replace(" ", "")
                     .replace("FCFA",""));
-            Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
+           // Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
         } else {
             addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " FCFA");
             userData.setWallet_balance(balance);
