@@ -49,6 +49,7 @@ public class TransactionFragment extends Fragment {
         init();
         return  view;
     }
+    //WebMob@Up63N0I
 
     private void init() {
         //fragmentBinding.tablayoutTransaction.setTabGravity(TabLayout.GRAVITY_FILL);

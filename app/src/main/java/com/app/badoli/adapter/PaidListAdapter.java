@@ -10,23 +10,32 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.badoli.R;
 import com.app.badoli.repositories.TransactionHistory;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
-public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidListAdapterHolder> implements Filterable {
+public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidListAdapterHolder> implements Filterable,
+        TransItemAdapter.TransItemAdapterClickListner {
 
     private String TAG=PaidListAdapter.class.getSimpleName();
     private List<TransactionHistory.WalletHistory> loadList;
     private List<TransactionHistory.WalletHistory> loadListFiltered;
+    private List<TransactionHistory.WalletHistory.WalletHistoryInner> listItem=new ArrayList<>();
     private Context context;
     private PaidListClickListner paidListClickListner;
+
+    private static TransItemAdapter transItemAdapter;
 
 
     public PaidListAdapter(Context context, List<TransactionHistory.WalletHistory> paidList,PaidListClickListner paidListClickListner) {
@@ -51,8 +60,12 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
     public void onBindViewHolder(@NonNull final PaidListAdapterHolder holder, int position) {
 
         final TransactionHistory.WalletHistory paidList = loadListFiltered.get(position);
-
-        holder.bindMessage(paidList);
+        transItemAdapter = new TransItemAdapter(context, listItem, this);
+        try {
+            holder.bindMessage(paidList);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -101,13 +114,26 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
             recyclerViewPaidList=view.findViewById(R.id.recycler_paidlist);
         }
 
-        void bindMessage(TransactionHistory.WalletHistory paidList) {
+        void bindMessage(TransactionHistory.WalletHistory paidList) throws ParseException {
+            SimpleDateFormat previousFormat=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat newFormat=new SimpleDateFormat("MMM, yyyy", Locale.getDefault());
+            Date previousDate=previousFormat.parse(paidList.transction_date);
+            String newDate=newFormat.format(previousDate);
             for (int j=0;j<paidList.wallethistory.size();j++) {
                 if (paidList.wallethistory.get(j).type.equals("Debit")) {
-                    txtDate.setText(paidList.transction_date);
+                    txtDate.setText(newDate);
+                    listItem.clear();
+                    listItem.add(paidList.wallethistory.get(j));
+                    transItemAdapter.notifyDataSetChanged();
                     Log.e(TAG,"PAID WALLET HISTORY--->"+new Gson().toJson(paidList.wallethistory.get(j)));
                 }
             }
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            recyclerViewPaidList.setLayoutManager(linearLayoutManager);
+            // request_list.setHasFixedSize(true);
+            recyclerViewPaidList.setAdapter(transItemAdapter);
+            transItemAdapter.notifyDataSetChanged();
+
         }
     }
 }
