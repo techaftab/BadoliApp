@@ -19,28 +19,27 @@ import retrofit2.Response;
 public class AddMoneyRepositories {
     private String TAG=AddMoneyRepositories.class.getSimpleName();
 
-    public AddMoneyRepositories() {
-    }
+    public AddMoneyRepositories() {}
 
     public LiveData<ReferenceResponse> getReference(String id, String mobile, String amount, String auth_token) {
         MutableLiveData<ReferenceResponse> mutableLiveData = new MutableLiveData<>();
-            ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
 
-            Call<ReferenceResponse> call = apiService.getReference(id, mobile, amount, auth_token);
+        Call<ReferenceResponse> call = apiService.getReference(id, mobile, amount, auth_token);
 
-            call.enqueue(new Callback<ReferenceResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<ReferenceResponse> call, @NonNull Response<ReferenceResponse> response) {
-                    Log.e(TAG, new Gson().toJson(response.body()));
-                    mutableLiveData.setValue(response.body());
-                }
+        call.enqueue(new Callback<ReferenceResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ReferenceResponse> call, @NonNull Response<ReferenceResponse> response) {
+                Log.e(TAG, new Gson().toJson(response.body()));
+                mutableLiveData.setValue(response.body());
+            }
 
-                @Override
-                public void onFailure(@NonNull Call<ReferenceResponse> call,@NonNull Throwable t) {
+            @Override
+            public void onFailure(@NonNull Call<ReferenceResponse> call,@NonNull Throwable t) {
 
-                }
-            });
-            return mutableLiveData;
+            }
+        });
+        return mutableLiveData;
     }
 
     public LiveData<AirtelResponse> goAirtel(String mobile, String amount,
