@@ -3,6 +3,7 @@ package com.app.badoli.activities.AccountActivities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,11 +35,10 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.adapter.Country_Adapter;
-import com.app.badoli.config.Configuration;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivitySignUpBinding;
-import com.app.badoli.model.CountryResult;
+import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.GetMyItem;
 import com.app.badoli.utilities.LoginPre;
@@ -81,8 +82,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @SuppressLint("StaticFieldLeak")
     static Activity activity;
     Country_Adapter adapter;
-    List<CountryResult> countryResults;
-    private List<CountryResult> country;
+    List<CountryResponse.CountryResult> countryResults;
+   // private List<CountryResult> country;
     int userId=-1;
     String  access_token, device_token;
     private String roleId="";
@@ -96,6 +97,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+
+        viewUpdate();
+        init();
+    }
+
+    private void viewUpdate() {
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
 
@@ -104,12 +111,66 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }
 
-        init();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getBussinessList();
+
+        signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
+            if (signUpBinding.rbUser.isChecked()){
+                roleId="3";
+                signUpBinding.lnMerchantDetails.setVisibility(View.GONE);
+            }
+            if (signUpBinding.rbMerchant.isChecked()){
+                signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
+                roleId="4";
+            }
+        });
+
+        signUpBinding.autocompActivitySctor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String bussType =parent.getItemAtPosition(position).toString();
+                for (int i = 0; i < typeListBuss.size(); i++) {
+                    if (typeListBuss.get(i).equals(bussType)) {
+                        bussinessCode = idListBuss.get(i);
+                        // signUpBinding.autocompActivitySctor.setText(typeListBuss.get(i));
+                    }
+                }
+                System.out.println("bussType code-->" + bussType+"  code buss-->"+bussinessCode);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String deviceToken = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(SignUpActivity.this).setDevice_token(deviceToken);
+            device_token= LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
+        });
+
+        signUpBinding.tvCountryCode.setOnClickListener(this);
+        signUpBinding.signupButton.setOnClickListener(this);
+        signUpBinding.rlLogin.setOnClickListener(this);
+        signUpBinding.nextButton.setOnClickListener(this);
+        signUpBinding.txtResendOtp.setOnClickListener(this);
+        signUpBinding.txtChangeLang.setOnClickListener(this);
+        signUpBinding.includedLayout.imgCloseHidden.setOnClickListener(this);
+        signUpBinding.ed1.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed1));
+        signUpBinding.ed2.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed2));
+        signUpBinding.ed3.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed3));
+        signUpBinding.ed4.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed4));
+        signUpBinding.ed5.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed5));
+        signUpBinding.ed6.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed6));
+        countryResults=new ArrayList<>();
+       // country=new ArrayList<>();
+        adapter = new Country_Adapter(this, countryResults, this,SignUpActivity.this);
     }
 
     void showLoading(){
-        Configuration.hideKeyboardFrom(SignUpActivity.this);
+        com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
         signUpBinding.signupProgressBar.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -139,7 +200,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     +signUpBinding.ed5.getText().toString()
                     +signUpBinding.ed6.getText().toString();
             if (validateOtp()){
-                Configuration.hideKeyboardFrom(SignUpActivity.this);
+                com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
                 verifyOtp(otp,userId,access_token);
             }
         }
@@ -148,10 +209,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             signUpBinding.includedLayout.editTextSearchLayout.setText("");
         }
         if (v==signUpBinding.tvCountryCode){
-            if (Configuration.hasNetworkConnection(SignUpActivity.this)){
+            if (com.app.badoli.config.Configuration.hasNetworkConnection(SignUpActivity.this)){
                 slideUpCountry();
             }else {
-                Configuration.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
+                com.app.badoli.config.Configuration.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
                         getResources().getString(R.string.no_internet));
             }
         }
@@ -167,7 +228,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             checked = signUpBinding.checReadAgreements.isChecked();
 
             if (setValidation(name, phone, email, password, confirm_password, checked,companyName,companyAddress, activitySector)) {
-                Configuration.hideKeyboardFrom(SignUpActivity.this);
+                com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
 
@@ -212,22 +273,35 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         // Locale.setDefault(myLocale);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
-        android.content.res.Configuration conf = res.getConfiguration();
+        Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        restartActivity();
+        onConfigurationChanged(conf);
+      //  restartActivity();
     }
 
-    private void restartActivity() {
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+        signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        viewUpdate();
+        super.onConfigurationChanged(newConfig);
+      /*  if (newConfig.locale == Locale.ENGLISH) {
+            Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.locale == Locale.FRENCH){
+            Toast.makeText(this, "French", Toast.LENGTH_SHORT).show();
+        }*/
+    }
+
+  /*  private void restartActivity() {
         Intent intent = getIntent();
         finish();
-        overridePendingTransition(0,0);
         startActivity(intent);
-    }
+    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-        getBussinessList();
+
         switch (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua()) {
             case "en":
                 setLocale("en");
@@ -236,86 +310,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 setLocale("fr");
                 break;
         }
-        signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
-            if (signUpBinding.rbUser.isChecked()){
-                roleId="3";
-                signUpBinding.lnMerchantDetails.setVisibility(View.GONE);
-            }
-            if (signUpBinding.rbMerchant.isChecked()){
-                signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
-                roleId="4";
-            }
-        });
-
-        signUpBinding.autocompActivitySctor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String bussType =parent.getItemAtPosition(position).toString();
-                for (int i = 0; i < typeListBuss.size(); i++) {
-                    if (typeListBuss.get(i).equals(bussType)) {
-                        bussinessCode = idListBuss.get(i);
-                        // signUpBinding.autocompActivitySctor.setText(typeListBuss.get(i));
-                    }
-                }
-                System.out.println("bussType code-->" + bussType+"  code buss-->"+bussinessCode);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        /*signUpBinding.autocompActivitySctor.setOnTouchListener((paramView, paramMotionEvent) -> {
-            // TODO Auto-generated method stub
-            signUpBinding.autocompActivitySctor.showDropDown();
-            signUpBinding.autocompActivitySctor.requestFocus();
-            return false;
-        });
-        signUpBinding.autocompActivitySctor.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                signUpBinding.autocompActivitySctor.showDropDown();
-                signUpBinding.autocompActivitySctor.requestFocus();
-            }
-        });*/
-      //  signUpBinding.autocompActivitySctor.setOnClickListener(v12 ->  signUpBinding.autocompActivitySctor.setText(""));
-
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
-            String deviceToken = instanceIdResult.getToken();
-            LoginPre.getActiveInstance(SignUpActivity.this).setDevice_token(deviceToken);
-            device_token= LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
-        });
-        /*@SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
-     //   String uniqueID = UUID.randomUUID().toString();
-        Log.e(TAG,"DEVICE_ID--->"+android_id);
-        MessageDigest md;
-        device_token=null;
-        try {
-            md = MessageDigest.getInstance("SHA");
-            md.update(android_id.getBytes());
-            device_token = new String(Base64.encode(md.digest(), 0));
-
-            // String key = new String(Base64.encodeBytes(md.digest()));
-            Log.e("Key Hash=", device_token);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }*/
-        signUpBinding.tvCountryCode.setOnClickListener(this);
-        signUpBinding.signupButton.setOnClickListener(this);
-        signUpBinding.rlLogin.setOnClickListener(this);
-        signUpBinding.nextButton.setOnClickListener(this);
-        signUpBinding.txtResendOtp.setOnClickListener(this);
-        signUpBinding.txtChangeLang.setOnClickListener(this);
-        signUpBinding.includedLayout.imgCloseHidden.setOnClickListener(this);
-        signUpBinding.ed1.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed1));
-        signUpBinding.ed2.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed2));
-        signUpBinding.ed3.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed3));
-        signUpBinding.ed4.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed4));
-        signUpBinding.ed5.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed5));
-        signUpBinding.ed6.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed6));
-        countryResults=new ArrayList<>();
-        country=new ArrayList<>();
-        adapter = new Country_Adapter(this, country, this,SignUpActivity.this);
     }
 
     public class GenericTextWatcher implements TextWatcher {
@@ -532,25 +526,33 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void call() {
         signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
         signUpBinding.includedLayout.editTextSearchLayout.setEnabled(false);
-        Configuration.hideKeyboardFrom(SignUpActivity.this);
+        com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
         signUpViewModel.getCountryList().observe(this, response -> {
+            dismissLoading();
             signUpBinding.includedLayout.countryProgress.setVisibility(View.INVISIBLE);
-            if (!response.error) {
+            if (response!=null&&!response.error) {
                 signUpBinding.includedLayout.editTextSearchLayout.setEnabled(true);
                 signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
-                countryResults=response.getResult();
+                countryResults.addAll(response.result);
                 Log.e("countryResults", "" + countryResults.size());
-                setAdapter(countryResults);
+                setAdapter();
+                if (!isPanelShown()) {
+                    Animation bottomUp = AnimationUtils.loadAnimation(SignUpActivity.this,
+                            R.anim.slide_up_dialog);
+                    signUpBinding.includedLayout.hiddenLayoutCountry.startAnimation(bottomUp);
+                    signUpBinding.includedLayout.hiddenLayoutCountry.setVisibility(View.VISIBLE);
+                    signUpBinding.scrollviewSignup.setVisibility(View.GONE);
+                }
             } else {
                 SweetToast.error(SignUpActivity.this,getResources().getString(R.string.something_wrong));
             }
         });
     }
 
-    private void setAdapter(final List<CountryResult> countryResults) {
+    private void setAdapter() {
 
-        country.clear();
-        country.addAll(countryResults);
+     /*   country.clear();
+        country.addAll(countryResults);*/
         adapter.notifyDataSetChanged();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
@@ -578,14 +580,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
     private void slideUpCountry() {
-        if (!isPanelShown()) {
-            call();
-            Animation bottomUp = AnimationUtils.loadAnimation(SignUpActivity.this,
-                    R.anim.slide_up_dialog);
-            signUpBinding.includedLayout.hiddenLayoutCountry.startAnimation(bottomUp);
-            signUpBinding.includedLayout.hiddenLayoutCountry.setVisibility(View.VISIBLE);
-            signUpBinding.scrollviewSignup.setVisibility(View.GONE);
-        }
+        showLoading();
+        call();
     }
 
     private boolean isPanelShown() {
@@ -594,7 +590,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     public void slideClose() {
         try{
-            Configuration.hideKeyboardFrom(activity);
+            com.app.badoli.config.Configuration.hideKeyboardFrom(activity);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -670,7 +666,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onRecyclerViewClickListenerSelected(CountryResult countryResult) {
+    public void onRecyclerViewClickListenerSelected(CountryResponse.CountryResult countryResult) {
 
     }
 

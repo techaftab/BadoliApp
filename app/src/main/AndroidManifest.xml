@@ -96,12 +96,15 @@
             android:theme="@style/AppTheme.WithHead"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name="com.app.badoli.activities.AccountActivities.SignUpActivity"
+            android:configChanges="locale"
             android:launchMode="singleTop"/>
         <activity android:name="com.app.badoli.activities.AccountActivities.LoginActivity"
+            android:configChanges="locale"
             android:launchMode="singleTop"/>
         <activity
             android:name="com.app.badoli.activities.HomePageActivites.HomePageActivity"
             android:launchMode="singleTop"
+            android:configChanges="locale"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.app.badoli.activities.SplashActivity"

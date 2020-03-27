@@ -7,40 +7,31 @@ import java.util.List;
 
 public class CountryResponse {
 
-    @SerializedName("error")
-    @Expose
-    public Boolean error;
+    public boolean error;
 
-    @SerializedName("message")
-    @Expose
     public String message;
 
-    @SerializedName("result")
-    @Expose
-    private List<CountryResult> result = null;
+    public List<CountryResult> result;
 
-    public Boolean getError() {
-        return error;
-    }
 
-    public void setError(Boolean error) {
-        this.error = error;
-    }
 
-    public String getMessage() {
-        return message;
-    }
+    public class CountryResult {
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+        public int id;
 
-    public List<CountryResult> getResult() {
-        return result;
-    }
+        public String sortname;
 
-    public void setResult(List<CountryResult> result) {
-        this.result = result;
+        public String name;
+
+        public int phonecode;
+
+
+        public int status;
+
+        public String created_at;
+
+        public String updated_at;
+
     }
 
 }

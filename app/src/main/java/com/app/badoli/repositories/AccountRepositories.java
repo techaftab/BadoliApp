@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.app.badoli.model.AirtelResponse;
 import com.app.badoli.model.ResetPassword;
 import com.google.gson.Gson;
 import com.app.badoli.model.CountryResponse;
@@ -71,9 +72,27 @@ public class AccountRepositories {
 
 
     public LiveData<CountryResponse> getCountryList() {
+      //  ApiInterface apiService = RetrofitConnection.getInstance().createService();
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        MutableLiveData<CountryResponse> mutableLiveData = new MutableLiveData<>();
 
         Call<CountryResponse> call = apiService.getCountryList();
+
+        call.enqueue(new Callback<CountryResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<CountryResponse> call, @NonNull Response<CountryResponse> response) {
+                Log.e(TAG, new Gson().toJson(response.body()));
+                mutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CountryResponse> call,@NonNull Throwable t) {
+
+            }
+        });
+        return mutableLiveData;
+
+      /*  Call<CountryResponse> call = apiService.getCountryList();
 
         call.enqueue(new Callback<CountryResponse>() {
             @Override
@@ -88,7 +107,7 @@ public class AccountRepositories {
             }
         });
 
-        return mutableCountryLiveData;
+        return mutableCountryLiveData;*/
     }
 
 

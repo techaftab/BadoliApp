@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class CountryResult  {
 
+    public CountryResult(){}
+
     @SerializedName("id")
     @Expose
     private Integer id;

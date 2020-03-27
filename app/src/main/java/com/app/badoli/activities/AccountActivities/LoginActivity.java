@@ -1,8 +1,8 @@
 package com.app.badoli.activities.AccountActivities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,11 +11,10 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -26,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.SplashActivity;
-import com.app.badoli.config.Configuration;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityLoginBinding;
@@ -55,10 +53,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
+        viewUpdate();
+        init();
+    }
+
+    private void viewUpdate() {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        init();
+
         /*Everything is fine*/
         if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""))) {
             loginBinding.edPhone.setText(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""));
@@ -84,6 +87,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginBinding.forgetPassword.setOnClickListener(this);
         loginBinding.txtSignUp.setOnClickListener(this);
         loginBinding.txtChangeLang.setOnClickListener(this);
+        loginBinding.lnSignup.setOnClickListener(this);
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String deviceToken = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
+            device_token= LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
+        });
     }
 
     @Override
@@ -97,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void showLoading(){
-        Configuration.hideKeyboardFrom(LoginActivity.this);
+        com.app.badoli.config.Configuration.hideKeyboardFrom(LoginActivity.this);
         loginBinding.loginProgressBar.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -118,27 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
-            String deviceToken = instanceIdResult.getToken();
-            LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
-            device_token= LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
-        });
 
 
-        /*@SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
-        //String uniqueID = UUID.randomUUID().toString();
-        Log.e(TAG,"DEVICE_ID--->"+android_id);
-        MessageDigest md;
-       //device_token;
-        try {
-            md = MessageDigest.getInstance("SHA");
-            md.update(android_id.getBytes());
-            device_token = new String(Base64.encode(md.digest(), 0));
-            // String key = new String(Base64.encodeBytes(md.digest()));
-            Log.e("Key Hash=", device_token);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void setLocale(String lang) {
@@ -147,16 +138,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Locale.setDefault(myLocale);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
-        android.content.res.Configuration conf = res.getConfiguration();
+        Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        restartActivity();
+        onConfigurationChanged(conf);
+      //  restartActivity();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+        loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        viewUpdate();
+        super.onConfigurationChanged(newConfig);
+
+       // setContentView(R.layout.activity_login);
+      /*  if (newConfig.locale == Locale.ENGLISH) {
+            Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.locale == Locale.FRENCH){
+            Toast.makeText(this, "French", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     private void restartActivity() {
         Intent intent = getIntent();
         finish();
-        overridePendingTransition(0,0);
         startActivity(intent);
     }
 
@@ -201,6 +207,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void StartActivity() {
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -215,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             ft.replace(R.id.framelayout_login, currentFragment);
             ft.commit();
         }
-        if (v==loginBinding.txtSignUp) {
+        if (v==loginBinding.lnSignup) {
             Context context = getApplicationContext();
             Intent intent = new Intent(context, SignUpActivity.class);
             startActivity(intent);

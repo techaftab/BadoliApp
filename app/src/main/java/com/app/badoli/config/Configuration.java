@@ -50,7 +50,6 @@ import java.util.regex.Pattern;
 public class Configuration {
 
     public static boolean hasNetworkConnection(Context context) {
-        // TODO Auto-generated method stub
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);

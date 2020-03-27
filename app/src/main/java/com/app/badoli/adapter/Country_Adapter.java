@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.badoli.R;
+import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.CountryResult;
 import com.app.badoli.utilities.GetMyItem;
 
@@ -25,8 +26,8 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
 
 
   //  private Context context;
-    private List<CountryResult> loadList;
-    private List<CountryResult> loadListFiltered;
+    private List<CountryResponse.CountryResult> loadList;
+    private List<CountryResponse.CountryResult> loadListFiltered;
     private DMTPayHistoryAdapterListener  listener;
     private GetMyItem getMyItem;
 
@@ -53,7 +54,7 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
         }
     }
 
-    public Country_Adapter(Context context, List<CountryResult> rechargeList,
+    public Country_Adapter(Context context, List<CountryResponse.CountryResult> rechargeList,
                            DMTPayHistoryAdapterListener listener,GetMyItem getMyItem) {
        // this.context = context;
         this.listener = listener;
@@ -74,12 +75,12 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        final CountryResult country = loadListFiltered.get(position);
-        holder.sort_name.setText(country.getSortname());
-        holder.phone_code.setText(String.valueOf(country.getPhonecode()));
-        holder.country_name.setText(country.getName());
+        final CountryResponse.CountryResult country = loadListFiltered.get(position);
+        holder.sort_name.setText(country.sortname);
+        holder.phone_code.setText(String.valueOf(country.phonecode));
+        holder.country_name.setText(country.name);
 
-        holder.itemView.setOnClickListener(view -> getMyItem.GetClickedItem(country.getId(), country.getPhonecode()));
+        holder.itemView.setOnClickListener(view -> getMyItem.GetClickedItem(country.id, country.phonecode));
     }
 
     @Override
@@ -96,13 +97,13 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
                 if (charString.isEmpty()) {
                     loadListFiltered = loadList;
                 } else {
-                    List<CountryResult> filteredList = new ArrayList<>();
+                    List<CountryResponse.CountryResult> filteredList = new ArrayList<>();
                     Log.e("WORD","WORD--->"+charString);
                //     final String filterPattern = charSequence.toString().toLowerCase().trim();
-                    for (CountryResult row : loadList) {
-
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())
-                           ||row.getPhonecode().toString().toLowerCase().contains(charString.toLowerCase())) {
+                    for (CountryResponse.CountryResult row : loadList) {
+                        String phone= String.valueOf(row.phonecode);
+                        if (row.name.toLowerCase().contains(charString.toLowerCase())
+                           ||phone.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
@@ -118,13 +119,13 @@ public class Country_Adapter extends RecyclerView.Adapter<Country_Adapter.MyView
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                loadListFiltered = (ArrayList<CountryResult>) filterResults.values;
+                loadListFiltered = (ArrayList<CountryResponse.CountryResult>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
     }
     public interface DMTPayHistoryAdapterListener {
-        void onRecyclerViewClickListenerSelected(CountryResult countryResult);
+        void onRecyclerViewClickListenerSelected(CountryResponse.CountryResult countryResult);
 
         void onClick(View v, int pos);
     }

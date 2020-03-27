@@ -2,15 +2,19 @@ package com.app.badoli.activities.HomePageActivites;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -41,6 +45,8 @@ import com.app.badoli.viewModels.HomeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Locale;
+
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
 
     public  ActivityHomePageBinding homePageBinding;
@@ -57,16 +63,44 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        viewUpdate();
+
+        updateLanguage();
+
+    }
+
+    private void viewUpdate() {
         homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
         homePageBinding.setHandler(homeViewModel);
-       // activity=HomePageActivity.this;
+        // activity=HomePageActivity.this;
         //setupBottomNavigationListener();
         userData= PrefManager.getInstance(HomePageActivity.this).getUserData();
         handler=new Handler();
         loadData();
         loadFragment("0");
         init();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull android.content.res.Configuration newConfig) {
+        getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+        homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        super.onConfigurationChanged(newConfig);
+    }
+
+    private void updateLanguage() {
+        if (!TextUtils.isEmpty(LoginPre.getActiveInstance(HomePageActivity.this).getLocaleLangua())) {
+            Locale myLocale = new Locale(LoginPre.getActiveInstance(HomePageActivity.this).getLocaleLangua());
+            // Locale.setDefault(myLocale);
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            android.content.res.Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+           // onConfigurationChanged(conf);
+        }
     }
 
     @SuppressLint("SetTextI18n")
