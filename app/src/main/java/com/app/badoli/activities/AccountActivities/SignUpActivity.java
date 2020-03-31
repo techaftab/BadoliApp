@@ -634,18 +634,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } else if (signUpBinding.radiogroupUsertype.getCheckedRadioButtonId()==-1){
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.select_usertype), Toast.LENGTH_LONG).show();
             return false;
-        }  else if (signUpBinding.lnMerchantDetails.isShown()){
-            if (TextUtils.isEmpty(companyName)){
+        } else if (signUpBinding.lnMerchantDetails.isShown()&&TextUtils.isEmpty(companyName)) {
                 Toast.makeText(this, getResources().getString(R.string.enter_company_name), Toast.LENGTH_SHORT).show();
-            }
-            if (TextUtils.isEmpty(companyAddress)){
+                return false;
+        } else if (signUpBinding.lnMerchantDetails.isShown()&&TextUtils.isEmpty(companyAddress)){
                 Toast.makeText(this, getResources().getString(R.string.enter_company_address), Toast.LENGTH_SHORT).show();
-            }
-            if (TextUtils.isEmpty(companyNumber)){
+                return false;
+        } else if (signUpBinding.lnMerchantDetails.isShown()&&TextUtils.isEmpty(companyNumber)){
                 Toast.makeText(this, getResources().getString(R.string.select_your_sector), Toast.LENGTH_SHORT).show();
-            }
+                return false;
+        } else if (signUpBinding.lnMerchantDetails.isShown()&&companyNumber.equals("Select your activity sector")){
+            Toast.makeText(this, getResources().getString(R.string.select_your_sector), Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!checked) {
+        } else if (!signUpBinding.checReadAgreements.isChecked()) {
             Toast.makeText(SignUpActivity.this, getResources().getString(R.string.check_term), Toast.LENGTH_LONG).show();
             return false;
         }
