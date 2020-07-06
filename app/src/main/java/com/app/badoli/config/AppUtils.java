@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -26,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.app.badoli.utilities.LoginPre;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -47,7 +50,7 @@ import java.util.regex.Pattern;
  * Created by aftab on 1/10/2018.
  */
 
-public class Configuration {
+public class AppUtils {
 
     public static boolean hasNetworkConnection(Context context) {
         boolean haveConnectedWifi = false;
@@ -189,35 +192,54 @@ public class Configuration {
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
     }
-
-    public static void openPopupUpDown(Context context, int animationSource, String error, String message) {
+    public static void openPopup(Context context, int animationSource, String error, String message) {
         final Dialog dialg=new Dialog(context);
         dialg.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialg.setContentView(R.layout.notice_info);
+        Objects.requireNonNull(dialg.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialg.setCanceledOnTouchOutside(false);
         dialg.setCancelable(false);
-        ImageView imageView =  dialg.findViewById(R.id.img_notice_info);
-        TextView txtMessage=dialg.findViewById(R.id.txt_notice_info);
-        Button btnOk=dialg.findViewById(R.id.btn_notice_info);
+        ImageView imageView =  dialg.findViewById(R.id.imgStatus);
+        TextView txtMessage=dialg.findViewById(R.id.txtMessage);
+        Button btnOk=dialg.findViewById(R.id.btnOkay);
         txtMessage.setText(message);
         if (error.equalsIgnoreCase("error")){
-            imageView.setImageResource(R.drawable.warning);
+            imageView.setImageResource(R.drawable.ic_error);
         }else if (error.equalsIgnoreCase("internetError")){
             imageView.setImageResource(R.drawable.nointernet);
+        }else if (error.equalsIgnoreCase("back")){
+            imageView.setImageResource(R.drawable.ic_success);
+            try {
+                if (((FragmentActivity) context).getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    ((FragmentActivity) context).getSupportFragmentManager().popBackStack();
+                }
+            }catch (Exception e){e.printStackTrace();}
+        }else if (error.equalsIgnoreCase("underdevelop")){
+            imageView.setImageResource(R.drawable.maintenance);
         }else {
-            imageView.setImageResource(R.drawable.success_pay);
+            imageView.setImageResource(R.drawable.ic_success);
         }
 
-        btnOk.setOnClickListener(v -> dialg.dismiss());
+        btnOk.setOnClickListener(v ->{
+            if (error.equalsIgnoreCase("express")){
+                dialg.dismiss();
+                try {
+                    if (((FragmentActivity) context).getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                        ((FragmentActivity) context).getSupportFragmentManager().popBackStack();
+                    }
+                }catch (Exception e){e.printStackTrace();}
+            }else {
+                dialg.dismiss();
+            }
+        });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Objects.requireNonNull(dialg.getWindow()).getAttributes().windowAnimations = animationSource;
-        }
+        Objects.requireNonNull(dialg.getWindow()).getAttributes().windowAnimations = animationSource;
         dialg.show();
         Window window = dialg.getWindow();
         assert window != null;
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
+
 
     public static void openDialogUnderMaintenace(Context context){
         final Dialog dialg=new Dialog(context);
@@ -242,54 +264,6 @@ public class Configuration {
         assert window != null;
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
     }
-
-    public static void openPopupUpDownBack(final Context context, int animationSource,
-                                           final String back, String error, String message) {
-        final Dialog dialg=new Dialog(context);
-        dialg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialg.setContentView(R.layout.notice_info);
-        dialg.setCanceledOnTouchOutside(false);
-        dialg.setCancelable(false);
-        ImageView imageView =  dialg.findViewById(R.id.img_notice_info);
-        TextView txtMessage=dialg.findViewById(R.id.txt_notice_info);
-        Button btnOk=dialg.findViewById(R.id.btn_notice_info);
-        txtMessage.setText(message);
-        if (error.equalsIgnoreCase("error")){
-            imageView.setImageResource(R.drawable.warning);
-        }else if (error.equalsIgnoreCase("internetError")){
-            imageView.setImageResource(R.drawable.nointernet);
-        }else {
-            imageView.setImageResource(R.drawable.success_pay);
-        }
-
-        btnOk.setOnClickListener(v -> {
-            dialg.dismiss();
-            if (back.equals("main")){
-                Intent intent=new Intent(context, HomePageActivity.class);
-                context.startActivity(intent);
-                ((Activity)context).overridePendingTransition(R.anim.left_in, R.anim.right_out);
-            }
-           /* if (back.equalsIgnoreCase("userList")) {
-
-            } else if (back.equalsIgnoreCase("transfer")) {
-
-            } else if (back.equalsIgnoreCase("main")) {
-
-            } else {
-
-            }*/
-        });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Objects.requireNonNull(dialg.getWindow()).getAttributes().windowAnimations = animationSource;
-        }
-        dialg.show();
-        Window window = dialg.getWindow();
-        assert window != null;
-        window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-    }
-
-
 
     public static void showSnackbar(String message, View v) {
         Snackbar mSnackBar = Snackbar.make(v, message, Snackbar.LENGTH_LONG);

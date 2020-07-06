@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.SplashActivity;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
@@ -23,8 +23,6 @@ import com.app.badoli.config.updateBalance;
 import com.app.badoli.databinding.FragmentAgentPhoneBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.viewModels.TranferViewModel;
-
-import java.util.Objects;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
@@ -62,7 +60,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
             String amount=fragmentAgentPhoneBinding.edittextAmount.getText().toString().trim();
             String phone=fragmentAgentPhoneBinding.edittextPhoneMobile.getText().toString();
             if (setValidation(amount,phone)) {
-                Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+                AppUtils.hideKeyboardFrom(requireActivity());
                 transferMobile(amount,phone,userData.getId());
             }
         }
@@ -171,7 +169,7 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     }
 
     private void showLoading(){
-        Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+        AppUtils.hideKeyboardFrom(requireActivity());
         fragmentAgentPhoneBinding.progressWalletTransfer.setVisibility(View.VISIBLE);
         if (getActivity()!=null) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -196,10 +194,10 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
                 fragmentAgentPhoneBinding.edittextPhoneMobile.setText("");
                 fragmentAgentPhoneBinding.edittextAmount.setText("");
                 SweetToast.success(getActivity(),walletTransfer.getMessage());
-                Configuration.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,phone);
+                AppUtils.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,phone);
             } else {
                 SweetToast.error(getActivity(),walletTransfer.getMessage());
-                Configuration.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,phone);
+                AppUtils.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,phone);
             }
         });
     }

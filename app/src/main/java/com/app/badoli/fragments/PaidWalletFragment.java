@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.badoli.R;
 import com.app.badoli.adapter.PaidListAdapter;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.WalletHistoryBinding;
 import com.app.badoli.model.UserData;
@@ -56,7 +56,7 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
 
     private void init() {
         paidListAdapter = new PaidListAdapter(getActivity(), paidList, this);
-        if (Configuration.hasNetworkConnection(Objects.requireNonNull(getActivity()))){
+        if (AppUtils.hasNetworkConnection(Objects.requireNonNull(getActivity()))){
             getHistory(userData.getId());
         }
 
@@ -68,7 +68,7 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
     }
 
     private void showLoading(){
-        Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+        AppUtils.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
         fragmentBinding.progressbarHistory.setVisibility(View.VISIBLE);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

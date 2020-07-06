@@ -24,11 +24,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.AccountActivities.LoginActivity;
+import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
 import com.app.badoli.activities.NavigationActivities.Support_Activity;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
 import com.app.badoli.config.updateBalance;
@@ -157,7 +157,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     void showLoading(){
-        Configuration.hideKeyboardFrom(HomePageActivity.this);
+        AppUtils.hideKeyboardFrom(HomePageActivity.this);
         homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

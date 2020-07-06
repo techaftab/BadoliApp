@@ -1,4 +1,4 @@
-package com.app.badoli.activities.AccountActivities;
+package com.app.badoli.auth.signup;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -6,21 +6,18 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +32,8 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.adapter.Country_Adapter;
+import com.app.badoli.auth.login.LoginActivity;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivitySignUpBinding;
@@ -44,7 +43,6 @@ import com.app.badoli.utilities.GetMyItem;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.utilities.Validation;
 import com.app.badoli.viewModels.SignUpViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
@@ -102,6 +100,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         init();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void viewUpdate() {
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
@@ -156,7 +155,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpBinding.rlLogin.setOnClickListener(this);
         signUpBinding.nextButton.setOnClickListener(this);
         signUpBinding.txtResendOtp.setOnClickListener(this);
-        signUpBinding.txtChangeLang.setOnClickListener(this);
+        //signUpBinding.txtChangeLang.setOnClickListener(this);
         signUpBinding.includedLayout.imgCloseHidden.setOnClickListener(this);
         signUpBinding.ed1.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed1));
         signUpBinding.ed2.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed2));
@@ -167,10 +166,41 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         countryResults=new ArrayList<>();
        // country=new ArrayList<>();
         adapter = new Country_Adapter(this, countryResults, this,SignUpActivity.this);
+
+        String selectedLan = LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua();
+        if (selectedLan.equalsIgnoreCase("Fr (French)")) {
+            signUpBinding.autoLang.setText("Fr");
+        } else {
+            signUpBinding.autoLang.setText("En");
+        }
+        String[] height=getResources().getStringArray(R.array.select_lang);
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(SignUpActivity.this,R.layout.spinner_layout,R.id.spinner_text, height);
+        signUpBinding.autoLang.setAdapter(adapter);
+        signUpBinding.autoLang.setThreshold(1);
+        signUpBinding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
+            if (hasFocus) {
+                signUpBinding.autoLang.showDropDown();
+            }
+        });
+        signUpBinding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
+            // TODO Auto-generated method stub
+            signUpBinding.autoLang.showDropDown();
+            signUpBinding.autoLang.requestFocus();
+            return false;
+        });
+        signUpBinding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
+            String lang =parent.getItemAtPosition(position).toString();
+            LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
+            if (lang.equalsIgnoreCase("Fr (French)")){
+                setLocale("fr");
+            }else {
+                setLocale("en");
+            }
+        });
     }
 
     void showLoading(){
-        com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
+        AppUtils.hideKeyboardFrom(SignUpActivity.this);
         signUpBinding.signupProgressBar.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -200,7 +230,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     +signUpBinding.ed5.getText().toString()
                     +signUpBinding.ed6.getText().toString();
             if (validateOtp()){
-                com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
+                AppUtils.hideKeyboardFrom(SignUpActivity.this);
                 verifyOtp(otp,userId,access_token);
             }
         }
@@ -209,10 +239,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             signUpBinding.includedLayout.editTextSearchLayout.setText("");
         }
         if (v==signUpBinding.tvCountryCode){
-            if (com.app.badoli.config.Configuration.hasNetworkConnection(SignUpActivity.this)){
+            if (AppUtils.hasNetworkConnection(SignUpActivity.this)){
                 slideUpCountry();
             }else {
-                com.app.badoli.config.Configuration.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
+                AppUtils.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
                         getResources().getString(R.string.no_internet));
             }
         }
@@ -228,7 +258,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             checked = signUpBinding.checReadAgreements.isChecked();
 
             if (setValidation(name, phone, email, password, confirm_password, checked,companyName,companyAddress, activitySector)) {
-                com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
+                AppUtils.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
 
@@ -239,7 +269,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             overridePendingTransition(R.anim.left_in,R.anim.right_out);
             finish();
         }
-        if (v==signUpBinding.txtChangeLang){
+        /*if (v==signUpBinding.txtChangeLang){
             final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(SignUpActivity.this);
             @SuppressLint("InflateParams") View sheetView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.language_row, null);
             mBottomSheetDialog.setContentView(sheetView);
@@ -264,11 +294,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 setLocale("fr");
                 mBottomSheetDialog.dismiss();
             });
-        }
+        }*/
     }
 
     private void setLocale(String lang) {
-        LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
         Locale myLocale = new Locale(lang);
         // Locale.setDefault(myLocale);
         Resources res = getResources();
@@ -526,7 +555,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void call() {
         signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
         signUpBinding.includedLayout.editTextSearchLayout.setEnabled(false);
-        com.app.badoli.config.Configuration.hideKeyboardFrom(SignUpActivity.this);
+        AppUtils.hideKeyboardFrom(SignUpActivity.this);
         signUpViewModel.getCountryList().observe(this, response -> {
             dismissLoading();
             signUpBinding.includedLayout.countryProgress.setVisibility(View.INVISIBLE);
@@ -590,7 +619,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     public void slideClose() {
         try{
-            com.app.badoli.config.Configuration.hideKeyboardFrom(activity);
+            AppUtils.hideKeyboardFrom(activity);
         }catch (Exception e){
             e.printStackTrace();
         }

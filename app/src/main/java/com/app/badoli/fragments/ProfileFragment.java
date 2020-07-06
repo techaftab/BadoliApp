@@ -30,7 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ProfileFragmentBinding;
@@ -162,7 +162,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             }
         }
         if (v==profileFragmentBinding.userCalender){
-            Configuration.showcalendar(profileFragmentBinding.userCalender,getActivity());
+            AppUtils.showcalendar(profileFragmentBinding.userCalender,getActivity());
         }
     }
 

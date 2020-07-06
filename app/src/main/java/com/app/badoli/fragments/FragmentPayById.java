@@ -14,12 +14,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentPayByidBinding;
 import com.app.badoli.model.UserData;
-
-import java.util.Objects;
 
 public class FragmentPayById extends Fragment implements View.OnClickListener {
     FragmentPayByidBinding fragmentBinding;
@@ -41,14 +39,14 @@ public class FragmentPayById extends Fragment implements View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private void listener() {
         fragmentBinding.rlBack.setOnClickListener(this);
-        ((HomePageActivity) Objects.requireNonNull(getContext())).updateHeader();
+        ((HomePageActivity) requireContext()).updateHeader();
     }
 
     @Override
     public void onClick(View v) {
         if (v==fragmentBinding.rlBack){
             if (getActivity()!=null) {
-                Configuration.hideKeyboardFrom(getActivity());
+                AppUtils.hideKeyboardFrom(getActivity());
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
                 currentFragment = new FragmentMerchant();

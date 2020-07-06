@@ -13,7 +13,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.app.badoli.activities.AccountActivities.LoginActivity;
+import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.utilities.LoginPre;

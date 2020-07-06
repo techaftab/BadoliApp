@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:typeface">monospace</item>
+       <!-- <item name="android:typeface">monospace</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -32,9 +32,9 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="Segoe_Print" parent="android:Widget.TextView">
+  <!--  <style name="Segoe_Print" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/segoe_print</item>
-    </style>
+    </style>-->
 
 
     <style name="AppTheme.WithHeadPurple">

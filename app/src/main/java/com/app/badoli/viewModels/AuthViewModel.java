@@ -11,11 +11,11 @@ import com.app.badoli.model.LoginResponse;
 import com.app.badoli.repositories.LoginRepository;
 
 
-public class LoginViewModel extends AndroidViewModel {
+public class AuthViewModel extends AndroidViewModel {
 
     LoginRepository loginRepository;
 
-    public LoginViewModel(@NonNull Application application) {
+    public AuthViewModel(@NonNull Application application) {
         super(application);
         loginRepository = new LoginRepository();
     }

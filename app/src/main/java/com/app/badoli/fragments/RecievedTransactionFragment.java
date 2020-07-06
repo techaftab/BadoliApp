@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.badoli.R;
 import com.app.badoli.adapter.ReceivedListAdapter;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.WalletHistoryBinding;
 import com.app.badoli.model.UserData;
@@ -26,7 +26,6 @@ import com.app.badoli.viewModels.TransactionViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class RecievedTransactionFragment extends Fragment implements ReceivedListAdapter.ReceivedListClickListner {
 
@@ -54,7 +53,7 @@ public class RecievedTransactionFragment extends Fragment implements ReceivedLis
     }
     private void init() {
         receivedListAdapter = new ReceivedListAdapter(getActivity(), receivedList, this);
-        if (Configuration.hasNetworkConnection(Objects.requireNonNull(getActivity()))){
+        if (AppUtils.hasNetworkConnection(requireActivity())){
             getHistory(userData.getId());
         }
 
@@ -65,14 +64,14 @@ public class RecievedTransactionFragment extends Fragment implements ReceivedLis
         receivedListAdapter.notifyDataSetChanged();
     }
     private void showLoading(){
-        Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+        AppUtils.hideKeyboardFrom(requireActivity());
         fragmentBinding.progressbarHistory.setVisibility(View.VISIBLE);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
     private void dismissLoading(){
         fragmentBinding.progressbarHistory.setVisibility(View.INVISIBLE);
-        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
 

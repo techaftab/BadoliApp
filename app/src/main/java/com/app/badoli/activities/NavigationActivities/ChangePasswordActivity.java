@@ -18,8 +18,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.AccountActivities.LoginActivity;
+import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityChangePasswordBinding;
 import com.app.badoli.model.UserData;
@@ -86,7 +87,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     }
 
     void showLoading(){
-        com.app.badoli.config.Configuration.hideKeyboardFrom(ChangePasswordActivity.this);
+        AppUtils.hideKeyboardFrom(ChangePasswordActivity.this);
         changePasswordBinding.progressbarChangepwd.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }

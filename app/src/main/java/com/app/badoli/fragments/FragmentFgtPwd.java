@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.AccountActivities.LoginActivity;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.auth.login.LoginActivity;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.databinding.ActivityForgetPasswordBinding;
-import com.app.badoli.viewModels.LoginViewModel;
+import com.app.badoli.viewModels.AuthViewModel;
 
 import java.util.Objects;
 
@@ -32,7 +32,7 @@ public class FragmentFgtPwd extends Fragment implements View.OnClickListener {
 
     }
 
-    private LoginViewModel loginViewModel;
+    private AuthViewModel authViewModel;
     private ActivityForgetPasswordBinding forgotfragmentBinding;
 
     @Nullable
@@ -40,7 +40,7 @@ public class FragmentFgtPwd extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         forgotfragmentBinding = DataBindingUtil.inflate(inflater, R.layout.activity_forget_password,container,false);
 
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         View view   = forgotfragmentBinding.getRoot();
 
@@ -74,7 +74,7 @@ public class FragmentFgtPwd extends Fragment implements View.OnClickListener {
             }
         }
         if (v==forgotfragmentBinding.imgBackForgotPassword){
-            ((LoginActivity) Objects.requireNonNull(getActivity())).updateView();
+            ((LoginActivity) requireActivity()).updateView();
             Intent intent=new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             if (getActivity()!=null) {
@@ -92,7 +92,7 @@ public class FragmentFgtPwd extends Fragment implements View.OnClickListener {
     }
 
     private void showLoading(){
-        Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+        AppUtils.hideKeyboardFrom(requireActivity());
         forgotfragmentBinding.fgtProgressBar.setVisibility(View.VISIBLE);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -100,7 +100,7 @@ public class FragmentFgtPwd extends Fragment implements View.OnClickListener {
 
     private void dismissLoading(){
         forgotfragmentBinding.fgtProgressBar.setVisibility(View.INVISIBLE);
-        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     private boolean validatedetail(String mobile, String newPassword, String confirmPassword) {
@@ -135,7 +135,7 @@ public class FragmentFgtPwd extends Fragment implements View.OnClickListener {
 
     private void changePassword(String mobile, String confirmPassword, String rolId) {
         showLoading();
-        loginViewModel.changePassword(mobile,confirmPassword,rolId).observe(this, changePasswordModel -> {
+        authViewModel.changePassword(mobile,confirmPassword,rolId).observe(this, changePasswordModel -> {
             dismissLoading();
             if (!changePasswordModel.error) {
                 SweetToast.success(getActivity(),changePasswordModel.getMessage());

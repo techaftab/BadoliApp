@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.app.badoli.R;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.databinding.ActivityPaymentBinding;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
@@ -57,7 +57,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
     private void slideClosePin() {
-        Configuration.hideKeyboardFrom(PaymentActivity.this);
+        AppUtils.hideKeyboardFrom(PaymentActivity.this);
         Animation bottomDown = AnimationUtils.loadAnimation(PaymentActivity.this,
                 R.anim.slide_bottom_dialog);
 

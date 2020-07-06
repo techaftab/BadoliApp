@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RadioGroup;
@@ -15,7 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
@@ -165,7 +164,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     }
 
     void showLoading(){
-        Configuration.hideKeyboardFrom(AddMoney.this);
+        AppUtils.hideKeyboardFrom(AddMoney.this);
         addMoney.progressAddmoney.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);

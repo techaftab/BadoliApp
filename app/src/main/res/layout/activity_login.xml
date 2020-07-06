@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.app.badoli.viewModels.LoginViewModel" />
+            type="com.app.badoli.viewModels.AuthViewModel" />
     </data>
 
     <RelativeLayout
@@ -28,38 +28,47 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:weightSum="1"
                     android:gravity="center_vertical"
                     android:padding="@dimen/_8sdp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txt_change_lang"
-                        android:layout_width="match_parent"
+                    <AutoCompleteTextView
+                        android:id="@+id/autoLang"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.10"
-                        android:text="@string/change_language"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_14ssp"/>
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_6sdp"
+                        android:paddingRight="@dimen/_6sdp"
+                        android:focusable="false"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:inputType="none"
+                        android:lines="1"
+                        android:text="@string/en"
+                        android:dropDownWidth="match_parent"
+                        android:dropDownHeight="wrap_content"
+                        android:drawableEnd="@drawable/ic_arrow_down_black"
+                        android:background="@drawable/box"
+                        android:textColor="@color/dark_gray"
+                        android:textStyle="normal"
+                        android:padding="@dimen/_6sdp"
+                        android:textSize="@dimen/_13ssp"
+                        bind:ignore="LabelFor" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/question"
-                        android:layout_width="match_parent"
-                        android:layout_weight="0.90"
-                        android:layout_height="@dimen/DP25"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
                         android:src="@drawable/question_black" />
 
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/logo"
-                    android:layout_width="@dimen/DP150"
-                    android:layout_height="@dimen/DP150"
+                    android:layout_width="@dimen/_130sdp"
+                    android:layout_height="@dimen/_130sdp"
                     android:layout_below="@+id/ln_login"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/logo" />
@@ -69,183 +78,62 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/logo"
-                    android:layout_margin="@dimen/DP15"
-                    app:cardCornerRadius="@dimen/DP20"
-                    app:cardElevation="@dimen/DP10">
+                    android:layout_margin="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    app:cardElevation="@dimen/_8sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/DP12">
+                        android:layout_margin="@dimen/_10sdp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/txt_login"
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/login_signin"
-                            android:textColor="@color/text_purple"
-                            android:textSize="20sp" />
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/lay_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/DP60"
-                            android:layout_below="@id/txt_login"
-                            android:layout_marginLeft="@dimen/DP15"
-                            android:layout_marginRight="@dimen/DP15"
-                            android:layout_marginTop="@dimen/DP10"
-                            android:layout_marginBottom="@dimen/DP10"
-                            android:background="@drawable/purple_orange"
-                            android:padding="@dimen/DP5">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/DP20"
-                                android:layout_height="@dimen/DP20"
-                                android:layout_gravity="center_vertical"
-                                android:layout_margin="@dimen/DP15"
-                                android:src="@mipmap/call_white" />
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/ed_phone"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:background="@android:color/transparent"
-                                android:hint="@string/edit_login"
-                                android:singleLine="true"
-                                android:paddingLeft="@dimen/DP8"
-                                android:paddingRight="@dimen/DP8"
-                                android:textSize="@dimen/_11ssp"
-                                android:textColor="@android:color/white"
-                                android:textColorHint="@android:color/white" />
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/lay_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/DP60"
-                            android:layout_below="@+id/lay_email"
-                            android:layout_marginLeft="@dimen/DP15"
-                            android:layout_marginRight="@dimen/DP15"
-                            android:layout_marginTop="@dimen/DP10"
-                            android:layout_marginBottom="@dimen/DP10"
-                            android:background="@drawable/purple_orange"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:gravity="center_horizontal"
                             android:orientation="horizontal"
-                            android:padding="@dimen/DP5">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/DP20"
-                                android:layout_height="@dimen/DP20"
-                                android:layout_gravity="center_vertical"
-                                android:layout_margin="@dimen/DP15"
-                                android:src="@mipmap/lock_filled_white" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:gravity="center_vertical"
-                                android:hint="@string/password"
-                                android:textColorHint="@android:color/white"
-                                app:hintEnabled="false"
-                                app:passwordToggleEnabled="true"
-                                app:passwordToggleTint="@android:color/white">
-
-                                <androidx.appcompat.widget.AppCompatEditText
-                                    android:id="@+id/ed_password"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:background="@android:color/transparent"
-                                    android:hint="@string/password"
-                                    android:paddingLeft="@dimen/DP8"
-                                    android:paddingRight="@dimen/DP8"
-                                    android:textSize="@dimen/_11ssp"
-                                    android:inputType="textPassword"
-                                    android:singleLine="true"
-                                    android:textColor="@android:color/white"
-                                    android:textColorHint="@android:color/white" />
-                            </com.google.android.material.textfield.TextInputLayout>
-
-
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-
-                        <!--<androidx.appcompat.widget.LinearLayoutCompat
-                            android:id="@+id/login_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_below="@id/lay_password"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_button_orange">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:onClick="@{()-> viewModel.onLoginClicked()}"
-                                android:text="Login"
-                                android:textColor="@color/white"
-                                android:textSize="20sp"
-                                bind:toastMessage="@{viewModel.toastMessage}" />
-                        </androidx.appcompat.widget.LinearLayoutCompat>-->
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/login_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/DP60"
-                            android:layout_below="@id/lay_password"
-                            android:layout_margin="@dimen/DP15"
-                            android:background="@drawable/rounded_button_orange"
-                            android:text="@string/login"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_14ssp"/>
-
-                        <ProgressBar
-                            android:id="@+id/login_progressBar"
-                            android:visibility="invisible"
-                            style="?android:attr/progressBarStyleLarge"
-                            android:layout_width="@dimen/_45sdp"
-                            android:layout_height="@dimen/_65sdp"
-                            android:padding="@dimen/_10sdp"
-                            android:background="@color/colorLightGray"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center_horizontal" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/login_button"
-                            android:layout_marginTop="@dimen/DP10"
-                            android:orientation="horizontal"
+                            android:background="@drawable/box_round_corner"
                             android:weightSum="1">
 
-                            <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/remember_me"
+                            <RadioButton
+                                android:id="@+id/rbParticular"
                                 android:layout_width="match_parent"
                                 android:layout_weight="0.50"
-                                android:padding="@dimen/DP5"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:gravity="start|center"
-                                android:text="@string/remember_me"
-                                android:textColor="@color/text_purple" />
+                                android:gravity="center"
+                                android:layout_height="match_parent"
+                                android:button="@android:color/transparent"
+                                android:checked="true"
+                                android:textSelectHandle="@drawable/radio_flat_text_selector"
+                                android:background="@drawable/purple_round_left_layout"
+                                android:text="@string/particular"
+                                android:textColor="@color/white" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/forget_password"
+                            <RadioButton
+                                android:id="@+id/rbProfessional"
+                                android:gravity="center"
                                 android:layout_width="match_parent"
                                 android:layout_weight="0.50"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:gravity="right|center"
-                                android:padding="@dimen/DP5"
-                                android:text="@string/fgt_pwd"
-                                android:textColor="@color/text_purple"
-                                android:textSize="14sp"
-                                bind:ignore="RelativeOverlap,RtlHardcoded" />
+                                android:checked="true"
+                                android:layout_height="match_parent"
+                                android:button="@android:color/transparent"
+                                android:text="@string/professional"
+                                android:textSelectHandle="@drawable/radio_flat_text_selector"
+                                android:textColor="@color/text_orange" />
 
-                        </LinearLayout>
+                        </RadioGroup>
+
+                        <FrameLayout
+                            android:id="@+id/framelayout"
+                            android:layout_width="match_parent"
+                            android:padding="@dimen/_8sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/radioGroup"/>
+
 
                     </RelativeLayout>
 
@@ -257,8 +145,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cardView"
                     android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/DP30"
-                    android:padding="@dimen/DP8"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:padding="@dimen/_6sdp"
                     android:gravity="center">
 
                     <TextView
@@ -268,7 +156,7 @@
                         android:text="@string/dont_have_account"
                         android:gravity="center"
                         android:textColor="@color/text_orange"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_13ssp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_sign_up"
@@ -287,14 +175,10 @@
 
         </ScrollView>
 
-        <FrameLayout
-            android:id="@+id/framelayout_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:visibility="gone"/>
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress"/>
 
     </RelativeLayout>
-
 
 </layout>

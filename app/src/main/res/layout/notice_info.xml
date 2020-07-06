@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    card_view:cardCornerRadius="3dp"
-    card_view:cardElevation="@dimen/DP4"
-    card_view:contentPadding="@dimen/DP4"
-    android:padding="@dimen/DP3"
-    card_view:cardBackgroundColor="@color/white">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        card_view:cardCornerRadius="@dimen/_10sdp"
+        card_view:cardElevation="@dimen/_4sdp"
+        android:layout_margin="@dimen/_25sdp"
+        card_view:cardBackgroundColor="@color/white">
 
-        <ImageView
-            android:id="@+id/img_notice_info"
-            android:layout_width="@dimen/DP60"
-            android:layout_height="@dimen/DP60"
-            android:padding="@dimen/DP5"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/txt_notice_info"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="@dimen/SP16"
-            android:padding="@dimen/DP4"
-            android:text=""/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DP1"
-            android:layout_margin="@dimen/DP8"
-            android:background="@color/gray"/>
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_notice_info"
-            android:layout_width="match_parent"
-            android:background="@drawable/rl_back"
-            android:text="@android:string/ok"
-            android:textStyle="bold"
-            android:textSize="@dimen/SP18"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/imgStatus"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_success"
+                android:layout_gravity="center"
+                tools:ignore="ContentDescription" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/bla_trans"
+                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_4sdp"
+                android:textStyle="bold"
+                android:text="@string/app_name"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/bg_gray"/>
 
-</androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/btnOkay"
+                android:layout_width="match_parent"
+                android:background="@drawable/rl_back"
+                android:text="@android:string/ok"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

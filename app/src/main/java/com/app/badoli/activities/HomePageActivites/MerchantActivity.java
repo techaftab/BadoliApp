@@ -23,7 +23,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.app.badoli.R;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
@@ -74,13 +74,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         PrefManager.getInstance(MerchantActivity.this).setWalletBalance(balance);
         merchantBinding.txtWalletBalancetMerchant.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
-        if (merchantBinding.progressbarRequest!=null&&merchantBinding.progressbarRequest.isShown()){
+        if (merchantBinding.progressbarRequest.isShown()){
             dismissLoading();
         }
     }
 
     void showLoading(){
-        Configuration.hideKeyboardFrom(MerchantActivity.this);
+        AppUtils.hideKeyboardFrom(MerchantActivity.this);
         merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
@@ -150,7 +150,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         if (v==merchantBinding.btnGenCode) {
             String amount=merchantBinding.edittextAmtFcfa.getText().toString();
             if(isValidated(amount)) {
-                Configuration.hideKeyboardFrom(MerchantActivity.this);
+                AppUtils.hideKeyboardFrom(MerchantActivity.this);
                 showLoading();
                 genrateQrCode(amount);
             }
@@ -248,7 +248,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
                     if (airtelResponse.response_code==1000) {
                         dismissLoading();
                         SweetToast.error(MerchantActivity.this,airtelResponse.getMessage());
-                        Configuration.openPopupUpDown(MerchantActivity.this,R.style.Dialod_UpDown,
+                        AppUtils.openPopupUpDown(MerchantActivity.this,R.style.Dialod_UpDown,
                                 "",airtelResponse.getMessage());
                         updateValue();
                     } else {
@@ -272,7 +272,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     public void slideUpDown(String amount) {
         if (!isPanelShown()) {
-            Configuration.hideKeyboardFrom(MerchantActivity.this);
+            AppUtils.hideKeyboardFrom(MerchantActivity.this);
             // Show the panel
             Animation bottomUp = AnimationUtils.loadAnimation(MerchantActivity.this,
                     R.anim.slide_up_dialog);
@@ -289,7 +289,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @SuppressLint("SetTextI18n")
     private void slideClose() {
-        Configuration.hideKeyboardFrom(MerchantActivity.this);
+        AppUtils.hideKeyboardFrom(MerchantActivity.this);
         Animation bottomDown = AnimationUtils.loadAnimation(MerchantActivity.this,
                 R.anim.slide_bottom_dialog);
         merchantBinding.hiddenLayout.rlHiddenLayout.startAnimation(bottomDown);

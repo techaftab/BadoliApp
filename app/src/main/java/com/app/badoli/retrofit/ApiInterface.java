@@ -88,7 +88,6 @@ public interface ApiInterface {
     Call<WalletTransfer> transferMobile(@Field("amount") String amount,@Field("receiver_id") String receiver_id,
                                         @Field("sender_id") String senderId);
 
-
     @FormUrlEncoded
     @POST("api_forgot_password")
     Call<ChangePasswordModel> changePassword(@Field("mobile") String mobile,@Field("new_password") String newPassword,

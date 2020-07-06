@@ -24,7 +24,7 @@ import com.google.zxing.Result;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.SplashActivity;
-import com.app.badoli.config.Configuration;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentQrPayBinding;
@@ -34,8 +34,6 @@ import com.app.badoli.viewModels.TranferViewModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import xyz.hasnat.sweettoast.SweetToast;
@@ -67,7 +65,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
         return  view;
     }
     private void listener() {
-        ((HomePageActivity) Objects.requireNonNull(getContext())).updateToolbar();
+        ((HomePageActivity) requireContext()).updateToolbar();
         zXingScannerView=new ZXingScannerView(getActivity());
         //zXingScannerView.setFlash(true);
         fragmentBinding.imgFlash.setOnClickListener(this);
@@ -149,7 +147,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     }
 
     private void Scanqr() {
-        zXingScannerView=new ZXingScannerView(Objects.requireNonNull(getActivity()).getApplicationContext());
+        zXingScannerView=new ZXingScannerView(requireActivity().getApplicationContext());
         fragmentBinding.frameZxingCamera.addView(zXingScannerView);
         zXingScannerView.setResultHandler(this);
         zXingScannerView.startCamera();
@@ -224,7 +222,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             Log.e(TAG,"MOBILE--->"+mobile);
             Log.e(TAG,"AMOUNT--->"+amount);
             if (setValidation(amount,mobile)) {
-                Configuration.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
+                AppUtils.hideKeyboardFrom(requireActivity());
                 transferMobile(amount,mobile,userData.getId());
             }
         } catch (JSONException e) {
@@ -253,11 +251,11 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             if (!walletTransfer.error) {
                // Scanqr();
                 SweetToast.success(getActivity(),walletTransfer.getMessage());
-                Configuration.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,recieverId);
+                AppUtils.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,recieverId);
                 onResume();
             } else {
                 SweetToast.error(getActivity(),walletTransfer.getMessage());
-                Configuration.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,recieverId);
+                AppUtils.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,recieverId);
                 onResume();
             }
         });
@@ -278,20 +276,20 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     }
 
     private boolean setValidation(String amount, String phone) {
-        Float balance=Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""));
+        float balance= Float.parseFloat(SplashActivity.getPreferences(Constant.BALANCE, ""));
         if (TextUtils.isEmpty(amount)) {
             SweetToast.error(getActivity(),getResources().getString(R.string.enter_amount));
             return false;
         }
-        if (Float.valueOf(amount)<=0){
+        if (Float.parseFloat(amount)<=0){
             SweetToast.error(getActivity(),getResources().getString(R.string.invalid_amount));
             return false;
         }
-        if (Float.valueOf(amount)>49900){
+        if (Float.parseFloat(amount)>49900){
             SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_499));
             return false;
         }
-        if (Float.valueOf(amount)>balance){
+        if (Float.parseFloat(amount)>balance){
             SweetToast.error(getActivity(),getResources().getString(R.string.wallet_balance_low));
             return false;
         }

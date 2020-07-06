@@ -182,14 +182,20 @@
     <string name="english">English(en)</string>
     <string name="french">French(fr)</string>
     <string name="select_language">Select Language</string>
-    <string name="en">English</string>
     <string name="enable_perm">Please enable permission!</string>
     <string name="select_activity_sector">Select your activity sector</string>
     <string name="paypal">PayPal</string>
+    <string name="fr">Fr (French)</string>
+    <string name="en">En (English)</string>
+    <string name="particular">Particular</string>
+    <string name="professional">Professional</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="Phone_no_length">Phone number should be 07–15 digits long.</string>
+    <string name="password_empty">Password can\'t be empty.</string>
+    <string name="password_length"><![CDATA[>Password length should be 6–16 characters long.]]></string>
 
     <string-array name="select_lang">
-        <item>@string/select_language</item>
-        <item>@string/english</item>
-        <item>@string/french</item>
+        <item>@string/en</item>
+        <item>@string/fr</item>
     </string-array>
 </resources>

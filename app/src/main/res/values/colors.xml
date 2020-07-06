@@ -23,6 +23,7 @@
     <color name="yellow">#FFEB3B</color>
     <color name="header_text">#5369d8</color>
     <color name="backgroun_orange_light">#FCF2E6</color>
+    <color name="trans_back">#37000000</color>
 
     <!--<color name="viewfinder_mask">@color/dark_gray</color>
     <color name="viewfinder_laser">@color/dark_gray</color>

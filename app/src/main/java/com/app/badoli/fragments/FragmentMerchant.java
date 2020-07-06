@@ -63,7 +63,7 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
         if (v==fragmentBinding.requestPay){
             Intent intent=new Intent(getActivity(), MerchantActivity.class);
             startActivity(intent);
-            Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
+            requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
 
         if (v==fragmentBinding.payByQr){

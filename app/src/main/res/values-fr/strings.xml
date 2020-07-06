@@ -182,16 +182,17 @@
     <string name="change_language">Changer de langue</string>
     <string name="french">Française(fr)</string>
     <string name="english">Anglaise(en)</string>
-    <string name="en">Anglaise</string>
+
     <string name="select_language">Choisir la langue</string>
     <string name="enable_perm">Veuillez activer la permission!</string>
     <string name="select_activity_sector">Sélectionnez votre secteur d\'activité</string>
     <string name="paypal">PayPal</string>
+    <string name="fr">Fr (French)</string>
+    <string name="en">En (English)</string>
 
     <string-array name="select_lang">
-        <item>@string/select_language</item>
-        <item>@string/english</item>
-        <item>@string/french</item>
+        <item>@string/en</item>
+        <item>@string/fr</item>
     </string-array>
 
 
