@@ -22,7 +22,7 @@
     <string name="remember_me">Souviens-toi de moi</string>
     <string name="fgt_pwd">Mot de passe oublié ?</string>
     <string name="sign_up">S\'inscrire</string>
-    <string name="login_signin">Se connecter / se connecter</string>
+    <string name="login_signin">Se connecter</string>
     <string name="login">S\'identifier</string>
     <string name="conf_pwd">Confirmez le mot de passe</string>
     <string name="country_code">91</string>
@@ -146,7 +146,6 @@
     <string name="enter_company_number">Numéro d\'entreprise</string>
     <string name="enter_new_password">Entrez un nouveau mot de passe</string>
     <string name="forgot_password">Mot de passe oublié?</string>
-    <string name="password_does_not_match">Le mot de passe ne correspond pas</string>
     <string name="login_now">Revenir pour la connexion</string>
     <string name="really_exit">Vraiment quitter?</string>
     <string name="are_sure_exit">Êtes-vous sûr de vouloir quitter?</string>

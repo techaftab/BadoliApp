@@ -18,12 +18,13 @@
 
     <color name="gray">#bebaba</color>
     <color name="rl_back">#B4F8F8F8</color>
-    <color name="dark_gray">#353333</color>
+    <color name="dark_gray">#3E3D3D</color>
     <color name="bla_trans">#C0000000</color>
     <color name="yellow">#FFEB3B</color>
     <color name="header_text">#5369d8</color>
     <color name="backgroun_orange_light">#FCF2E6</color>
     <color name="trans_back">#37000000</color>
+    <color name="app_red">#E6151A</color>
 
     <!--<color name="viewfinder_mask">@color/dark_gray</color>
     <color name="viewfinder_laser">@color/dark_gray</color>

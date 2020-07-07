@@ -1,4 +1,4 @@
-package com.app.badoli.auth.signup;
+package com.app.badoli.auth.signup.user;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -60,6 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -72,8 +72,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Country_Adapter.DMTPayHistoryAdapterListener{
     private static final String TAG = SignUpActivity.class.getSimpleName();
     @SuppressLint("StaticFieldLeak")
-    ActivitySignUpBinding signUpBinding;
-    String name, phone, password, confirm_password, email,companyName,companyAddress, activitySector;
+    ActivitySignUpBinding binding;
+    String name, phone, password, confirm_password, email;
     SignUpViewModel signUpViewModel;
     String otp;
     boolean checked;
@@ -84,64 +84,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
    // private List<CountryResult> country;
     int userId=-1;
     String  access_token, device_token;
-    private String roleId="";
-
-    ArrayList<String> typeListBuss = new ArrayList<>();
-    ArrayList<Integer> idListBuss = new ArrayList<>();
-    private Integer bussinessCode;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
 
         viewUpdate();
         init();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     private void viewUpdate() {
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
 
         if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {
             Log.e("ksjd", "-" + SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""));
-            signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
+            binding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        getBussinessList();
 
-        signUpBinding.radiogroupUsertype.setOnCheckedChangeListener((group, checkedId) -> {
-            if (signUpBinding.rbUser.isChecked()){
-                roleId="3";
-                signUpBinding.lnMerchantDetails.setVisibility(View.GONE);
-            }
-            if (signUpBinding.rbMerchant.isChecked()){
-                signUpBinding.lnMerchantDetails.setVisibility(View.VISIBLE);
-                roleId="4";
-            }
-        });
-
-        signUpBinding.autocompActivitySctor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String bussType =parent.getItemAtPosition(position).toString();
-                for (int i = 0; i < typeListBuss.size(); i++) {
-                    if (typeListBuss.get(i).equals(bussType)) {
-                        bussinessCode = idListBuss.get(i);
-                        // signUpBinding.autocompActivitySctor.setText(typeListBuss.get(i));
-                    }
-                }
-                System.out.println("bussType code-->" + bussType+"  code buss-->"+bussinessCode);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
@@ -150,45 +115,45 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             device_token= LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
         });
 
-        signUpBinding.tvCountryCode.setOnClickListener(this);
-        signUpBinding.signupButton.setOnClickListener(this);
-        signUpBinding.rlLogin.setOnClickListener(this);
-        signUpBinding.nextButton.setOnClickListener(this);
-        signUpBinding.txtResendOtp.setOnClickListener(this);
+        binding.tvCountryCode.setOnClickListener(this);
+        binding.signupButton.setOnClickListener(this);
+        binding.txtLogin.setOnClickListener(this);
+        binding.nextButton.setOnClickListener(this);
+        binding.txtResendOtp.setOnClickListener(this);
         //signUpBinding.txtChangeLang.setOnClickListener(this);
-        signUpBinding.includedLayout.imgCloseHidden.setOnClickListener(this);
-        signUpBinding.ed1.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed1));
-        signUpBinding.ed2.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed2));
-        signUpBinding.ed3.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed3));
-        signUpBinding.ed4.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed4));
-        signUpBinding.ed5.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed5));
-        signUpBinding.ed6.addTextChangedListener(new GenericTextWatcher(signUpBinding.ed6));
+        binding.includedLayout.imgCloseHidden.setOnClickListener(this);
+        binding.ed1.addTextChangedListener(new GenericTextWatcher(binding.ed1));
+        binding.ed2.addTextChangedListener(new GenericTextWatcher(binding.ed2));
+        binding.ed3.addTextChangedListener(new GenericTextWatcher(binding.ed3));
+        binding.ed4.addTextChangedListener(new GenericTextWatcher(binding.ed4));
+        binding.ed5.addTextChangedListener(new GenericTextWatcher(binding.ed5));
+        binding.ed6.addTextChangedListener(new GenericTextWatcher(binding.ed6));
         countryResults=new ArrayList<>();
        // country=new ArrayList<>();
         adapter = new Country_Adapter(this, countryResults, this,SignUpActivity.this);
 
         String selectedLan = LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua();
         if (selectedLan.equalsIgnoreCase("Fr (French)")) {
-            signUpBinding.autoLang.setText("Fr");
+            binding.autoLang.setText("Fr");
         } else {
-            signUpBinding.autoLang.setText("En");
+            binding.autoLang.setText("En");
         }
         String[] height=getResources().getStringArray(R.array.select_lang);
         ArrayAdapter<String> adapter=new ArrayAdapter<>(SignUpActivity.this,R.layout.spinner_layout,R.id.spinner_text, height);
-        signUpBinding.autoLang.setAdapter(adapter);
-        signUpBinding.autoLang.setThreshold(1);
-        signUpBinding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
+        binding.autoLang.setAdapter(adapter);
+        binding.autoLang.setThreshold(1);
+        binding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
             if (hasFocus) {
-                signUpBinding.autoLang.showDropDown();
+                binding.autoLang.showDropDown();
             }
         });
-        signUpBinding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
+        binding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
             // TODO Auto-generated method stub
-            signUpBinding.autoLang.showDropDown();
-            signUpBinding.autoLang.requestFocus();
+            binding.autoLang.showDropDown();
+            binding.autoLang.requestFocus();
             return false;
         });
-        signUpBinding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
+        binding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
             String lang =parent.getItemAtPosition(position).toString();
             LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
             if (lang.equalsIgnoreCase("Fr (French)")){
@@ -199,19 +164,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    void showLoading(){
+    public void showLoading(String message){
         AppUtils.hideKeyboardFrom(SignUpActivity.this);
-        signUpBinding.signupProgressBar.setVisibility(View.VISIBLE);
+        binding.layoutProgress.txtMessage.setText(message);
+        binding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
-    void dismissLoading(){
-        signUpBinding.signupProgressBar.setVisibility(View.INVISIBLE);
+
+    public void dismissLoading(){
+        binding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
     @Override
     public void onClick(View v) {
-        if (v==signUpBinding.txtResendOtp){
+        if (v==binding.txtResendOtp){
             userId = LoginPre.getActiveInstance(SignUpActivity.this).getSignup_id();
             access_token = LoginPre.getActiveInstance(SignUpActivity.this).getAccess_token();
             if (userId==-1||TextUtils.isEmpty(access_token)){
@@ -220,81 +187,52 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 resendOtp(userId,access_token);
             }
         }
-        if (v==signUpBinding.nextButton){
+        if (v==binding.nextButton){
             userId = LoginPre.getActiveInstance(SignUpActivity.this).getSignup_id();
             access_token = LoginPre.getActiveInstance(SignUpActivity.this).getAccess_token();
-            String otp=signUpBinding.ed1.getText().toString()
-                    +signUpBinding.ed2.getText().toString()
-                    +signUpBinding.ed3.getText().toString()
-                    +signUpBinding.ed4.getText().toString()
-                    +signUpBinding.ed5.getText().toString()
-                    +signUpBinding.ed6.getText().toString();
+            String otp=binding.ed1.getText().toString()
+                    +binding.ed2.getText().toString()
+                    +binding.ed3.getText().toString()
+                    +binding.ed4.getText().toString()
+                    +binding.ed5.getText().toString()
+                    +binding.ed6.getText().toString();
             if (validateOtp()){
                 AppUtils.hideKeyboardFrom(SignUpActivity.this);
                 verifyOtp(otp,userId,access_token);
             }
         }
-        if (v==signUpBinding.includedLayout.imgCloseHidden){
+        if (v==binding.includedLayout.imgCloseHidden){
             slideClose();
-            signUpBinding.includedLayout.editTextSearchLayout.setText("");
+            binding.includedLayout.editTextSearchLayout.setText("");
         }
-        if (v==signUpBinding.tvCountryCode){
+        if (v==binding.tvCountryCode){
             if (AppUtils.hasNetworkConnection(SignUpActivity.this)){
                 slideUpCountry();
             }else {
-                AppUtils.openPopupUpDown(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
+                AppUtils.openPopup(SignUpActivity.this, R.style.Dialod_UpDown, "internetError",
                         getResources().getString(R.string.no_internet));
             }
         }
-        if (v==signUpBinding.signupButton){
-            name = signUpBinding.edFullName.getText().toString();
-            phone = signUpBinding.edPhoneNo.getText().toString();
-            email = signUpBinding.edEmailId.getText().toString();
-            password = signUpBinding.edPassword.getText().toString();
-            companyName = signUpBinding.edittextCompanyName.getText().toString();
-            companyAddress = signUpBinding.edittextCompanyAddress.getText().toString();
-            activitySector = signUpBinding.autocompActivitySctor.getSelectedItem().toString();
-            confirm_password = signUpBinding.edConfirmPassword.getText().toString();
-            checked = signUpBinding.checReadAgreements.isChecked();
+        if (v==binding.signupButton){
+            name = binding.edFullName.getText().toString();
+            phone = binding.edPhoneNo.getText().toString();
+            email = binding.edEmailId.getText().toString();
+            password = binding.edPassword.getText().toString();
+            confirm_password = binding.edConfirmPassword.getText().toString();
+            checked = binding.checReadAgreements.isChecked();
 
-            if (setValidation(name, phone, email, password, confirm_password, checked,companyName,companyAddress, activitySector)) {
+            if (setValidation(name, phone, email, password, confirm_password)) {
                 AppUtils.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
 
         }
-        if (v==signUpBinding.rlLogin){
+        if (v==binding.txtLogin){
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.right_out);
             finish();
         }
-        /*if (v==signUpBinding.txtChangeLang){
-            final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(SignUpActivity.this);
-            @SuppressLint("InflateParams") View sheetView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.language_row, null);
-            mBottomSheetDialog.setContentView(sheetView);
-            mBottomSheetDialog.show();
-
-            TextView txtEnglish = sheetView.findViewById(R.id.text);
-            TextView txtFrench = sheetView.findViewById(R.id.text1);
-
-            String selectedLan = LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua();
-            if (selectedLan.equals("fr")) {
-                txtFrench.setTextColor(Color.GREEN);
-            } else {
-                txtEnglish.setTextColor(Color.GREEN);
-            }
-
-            txtEnglish.setOnClickListener(v1 -> {
-                setLocale("en");
-                mBottomSheetDialog.dismiss();
-            });
-
-            txtFrench.setOnClickListener(v12 -> {
-                setLocale("fr");
-                mBottomSheetDialog.dismiss();
-            });
-        }*/
     }
 
     private void setLocale(String lang) {
@@ -312,21 +250,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
-        signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
         viewUpdate();
         super.onConfigurationChanged(newConfig);
-      /*  if (newConfig.locale == Locale.ENGLISH) {
-            Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.locale == Locale.FRENCH){
-            Toast.makeText(this, "French", Toast.LENGTH_SHORT).show();
-        }*/
+
     }
 
-  /*  private void restartActivity() {
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
@@ -362,89 +291,67 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             switch (view.getId()) {
                 case R.id.ed_1:
                     if (text.length() == 1)
-                        signUpBinding.ed2.requestFocus();
+                        binding.ed2.requestFocus();
                     break;
 
                 case R.id.ed_2:
                     if (text.length() == 1)
-                        signUpBinding.ed3.requestFocus();
+                        binding.ed3.requestFocus();
                     else if (text.length() == 0)
-                        signUpBinding.ed1.requestFocus();
+                        binding.ed1.requestFocus();
                     break;
 
                 case R.id.ed_3:
                     if (text.length() == 1)
-                        signUpBinding.ed4.requestFocus();
+                        binding.ed4.requestFocus();
                     else if (text.length() == 0)
-                        signUpBinding.ed2.requestFocus();
+                        binding.ed2.requestFocus();
                     break;
 
                 case R.id.ed_4:
                     if (text.length() == 1)
-                        signUpBinding.ed5.requestFocus();
+                        binding.ed5.requestFocus();
                     else if (text.length() == 0)
-                        signUpBinding.ed3.requestFocus();
+                        binding.ed3.requestFocus();
                     break;
 
                 case R.id.ed_5:
                     if (text.length() == 1)
-                        signUpBinding.ed6.requestFocus();
+                        binding.ed6.requestFocus();
                     else if (text.length() == 0)
-                        signUpBinding.ed4.requestFocus();
+                        binding.ed4.requestFocus();
                     break;
 
                 case R.id.ed_6:
                     if (text.length() == 0)
-                        signUpBinding.ed5.requestFocus();
+                        binding.ed5.requestFocus();
                     break;
             }
         }
     }
 
     private void resendOtp(int userId, String access_token) {
-        showLoading();
+        showLoading(getResources().getString(R.string.resending_otp));
         signUpViewModel.resendOtp(userId,access_token).observe(this,
                 resendOtpResponse -> {
                     Log.e("responsee", new Gson().toJson(resendOtpResponse.message));
                     dismissLoading();
                     if (!resendOtpResponse.error) {
-                        Toast.makeText(SignUpActivity.this, resendOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        AppUtils.openPopup(SignUpActivity.this,R.style.Dialod_UpDown,"",resendOtpResponse.getMessage());
                     } else {
-                        Toast.makeText(SignUpActivity.this, resendOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void getBussinessList() {
-        showLoading();
-        signUpViewModel.getBussinessList().observe(this,
-                bussinessList -> {
-                    dismissLoading();
-                    if (!bussinessList.error) {
-                        Log.e(TAG,"BussinessList--->"+ new Gson().toJson(bussinessList.getResult()));
-                        typeListBuss.add(0,getResources().getString(R.string.select_activity_sector));
-                        idListBuss.add(0,0);
-                        for (int i =0;i<bussinessList.getResult().size();i++) {
-                            typeListBuss.add(bussinessList.getResult().get(i).getName());
-                            idListBuss.add(bussinessList.getResult().get(i).getId());
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_text, typeListBuss);
-                        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                        signUpBinding.autocompActivitySctor.setAdapter(adapter);
-                    } else {
-                        Toast.makeText(SignUpActivity.this, bussinessList.getMessage(), Toast.LENGTH_SHORT).show();
+                        AppUtils.openPopup(SignUpActivity.this,R.style.Dialod_UpDown,"error",resendOtpResponse.getMessage());
                     }
                 });
     }
 
     private void getSignupResponse() {
-        Log.e("Signup", "onclickdata" + name + "\n " + email + "\n " + phone + "\n" + password + "\n" + confirm_password);
 
         device_token=LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
-        showLoading();
+        showLoading(getResources().getString(R.string.signing_in));
 
+        String roleId = "3";
         signUpViewModel.getSignUp(name, email, phone, password, 1, device_token, confirm_password,
-                Integer.parseInt(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")), 1,roleId).observe(this,
+                Integer.parseInt(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")), 1, roleId).observe(this,
                 signupResult -> {
                     Log.e("responsee", new Gson().toJson(signupResult.message));
                     dismissLoading();
@@ -456,9 +363,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         otp = signupResult.result.getOtp();
 
                         String token = signupResult.result.getToken();
-                        Log.e("id", "" + signupResult.result.id);
-                        Log.e("otp", "" + signupResult.result.otp);
-                        Log.e("token", "" + signupResult.result.token);
 
                         LoginPre.getActiveInstance(SignUpActivity.this).setSignup_id(id);
                         LoginPre.getActiveInstance(SignUpActivity.this).setAccess_token(token);
@@ -470,9 +374,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void fillOtp(String otp) {
-        signUpBinding.cardViewSignup.setVisibility(View.GONE);
-        signUpBinding.cardViewOtp.setVisibility(View.VISIBLE);
-        signUpBinding.rlLogin.setVisibility(View.GONE);
+        binding.cardViewSignup.setVisibility(View.GONE);
+        binding.cardViewOtp.setVisibility(View.VISIBLE);
+        binding.rlLogin.setVisibility(View.GONE);
         List<String> strings = new ArrayList<>();
         int index = 0;
         while (index < otp.length()) {
@@ -480,20 +384,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             index += 1;
         }
 
-        signUpBinding.ed1.setText(strings.get(0));
-        signUpBinding.ed2.setText(strings.get(1));
-        signUpBinding.ed3.setText(strings.get(2));
-        signUpBinding.ed4.setText(strings.get(3));
-        signUpBinding.ed5.setText(strings.get(4));
-        signUpBinding.ed6.setText(strings.get(5));
+        binding.ed1.setText(strings.get(0));
+        binding.ed2.setText(strings.get(1));
+        binding.ed3.setText(strings.get(2));
+        binding.ed4.setText(strings.get(3));
+        binding.ed5.setText(strings.get(4));
+        binding.ed6.setText(strings.get(5));
     }
     private void verifyOtp(String otp, int userId, String access_token) {
-        signUpBinding.otpProgressBar.setVisibility(View.VISIBLE);
+        showLoading(getResources().getString(R.string.verifying_otp));
         signUpViewModel.getOTP(userId, otp, access_token).observe(this, verifyOtpResponse -> {
+            dismissLoading();
             if (!verifyOtpResponse.error) {
-                signUpBinding.otpProgressBar.setVisibility(View.GONE);
-                Toast.makeText(SignUpActivity.this, verifyOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
-
                 String id=String.valueOf(verifyOtpResponse.result.getId());
                 String countryCode=String.valueOf(verifyOtpResponse.result.getCountryCode());
                 String countryId=String.valueOf(verifyOtpResponse.result.getCountryId());
@@ -511,21 +413,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         verifyOtpResponse.result.getUser_image(),
                         verifyOtpResponse.result.getQrcode_image());
                 PrefManager.getInstance(SignUpActivity.this).userLogin(userData);
-              //  generateQrCode(verifyOtpResponse.result.getMobile(),userId);
-           //     new Thread(() ->generateQrCode(verifyOtpResponse.result.getMobile(),userId, this)).start();
                 Thread mThread =  new Thread(){
                     @Override
                     public void run(){
-                        // Perform thread commands...
                         generateQrCode(verifyOtpResponse.result.getMobile(),userId,this);
-
                     }
                 };
                 mThread.start();
 
             }else {
-                Toast.makeText(SignUpActivity.this, verifyOtpResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                signUpBinding.otpProgressBar.setVisibility(View.GONE);
+                if (verifyOtpResponse.getMessage()!=null) {
+                    AppUtils.openPopup(SignUpActivity.this, R.style.Dialod_UpDown, "error", verifyOtpResponse.getMessage());
+                }else {
+                    AppUtils.openPopup(SignUpActivity.this, R.style.Dialod_UpDown, "error", getResources().getString(R.string.something_wrong));
+                }
             }
         });
     }
@@ -534,18 +435,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,""))) {
-            signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
+            binding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         }
     }
 
 
     private boolean validateOtp() {
-        if (TextUtils.isEmpty(signUpBinding.ed1.getText().toString())
-        ||TextUtils.isEmpty(signUpBinding.ed2.getText().toString())
-        ||TextUtils.isEmpty(signUpBinding.ed3.getText().toString())
-        ||TextUtils.isEmpty(signUpBinding.ed4.getText().toString())
-        ||TextUtils.isEmpty(signUpBinding.ed4.getText().toString())
-        ||TextUtils.isEmpty(signUpBinding.ed6.getText().toString())){
+        if (TextUtils.isEmpty(binding.ed1.getText().toString())
+        ||TextUtils.isEmpty(binding.ed2.getText().toString())
+        ||TextUtils.isEmpty(binding.ed3.getText().toString())
+        ||TextUtils.isEmpty(binding.ed4.getText().toString())
+        ||TextUtils.isEmpty(binding.ed4.getText().toString())
+        ||TextUtils.isEmpty(binding.ed6.getText().toString())){
             Toast.makeText(activity, getResources().getString(R.string.enter_otp_sent_mobile), Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -553,24 +454,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void call() {
-        signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
-        signUpBinding.includedLayout.editTextSearchLayout.setEnabled(false);
+        binding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
+        binding.includedLayout.editTextSearchLayout.setEnabled(false);
         AppUtils.hideKeyboardFrom(SignUpActivity.this);
         signUpViewModel.getCountryList().observe(this, response -> {
             dismissLoading();
-            signUpBinding.includedLayout.countryProgress.setVisibility(View.INVISIBLE);
+            binding.includedLayout.countryProgress.setVisibility(View.INVISIBLE);
             if (response!=null&&!response.error) {
-                signUpBinding.includedLayout.editTextSearchLayout.setEnabled(true);
-                signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
+                binding.includedLayout.editTextSearchLayout.setEnabled(true);
+                binding.includedLayout.countryProgress.setVisibility(View.GONE);
                 countryResults.addAll(response.result);
                 Log.e("countryResults", "" + countryResults.size());
                 setAdapter();
                 if (!isPanelShown()) {
                     Animation bottomUp = AnimationUtils.loadAnimation(SignUpActivity.this,
                             R.anim.slide_up_dialog);
-                    signUpBinding.includedLayout.hiddenLayoutCountry.startAnimation(bottomUp);
-                    signUpBinding.includedLayout.hiddenLayoutCountry.setVisibility(View.VISIBLE);
-                    signUpBinding.scrollviewSignup.setVisibility(View.GONE);
+                    binding.includedLayout.hiddenLayoutCountry.startAnimation(bottomUp);
+                    binding.includedLayout.hiddenLayoutCountry.setVisibility(View.VISIBLE);
+                    binding.scrollviewSignup.setVisibility(View.GONE);
                 }
             } else {
                 SweetToast.error(SignUpActivity.this,getResources().getString(R.string.something_wrong));
@@ -579,18 +480,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setAdapter() {
-
-     /*   country.clear();
-        country.addAll(countryResults);*/
         adapter.notifyDataSetChanged();
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
-        signUpBinding.includedLayout.countryRecyclerview.setLayoutManager(mLayoutManager);
-        signUpBinding.includedLayout.countryRecyclerview.setItemAnimator(new DefaultItemAnimator());
-        signUpBinding.includedLayout.countryRecyclerview.setAdapter(adapter);
+        binding.includedLayout.countryRecyclerview.setLayoutManager(mLayoutManager);
+        binding.includedLayout.countryRecyclerview.setItemAnimator(new DefaultItemAnimator());
+        binding.includedLayout.countryRecyclerview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        signUpBinding.includedLayout.editTextSearchLayout.addTextChangedListener(new TextWatcher() {
+        binding.includedLayout.editTextSearchLayout.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -609,12 +506,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
     private void slideUpCountry() {
-        showLoading();
+        showLoading(getResources().getString(R.string.please_wait));
         call();
     }
 
     private boolean isPanelShown() {
-        return signUpBinding.includedLayout.hiddenLayoutCountry.getVisibility() == View.VISIBLE;
+        return binding.includedLayout.hiddenLayoutCountry.getVisibility() == View.VISIBLE;
     }
 
     public void slideClose() {
@@ -626,57 +523,57 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Animation bottomDown = AnimationUtils.loadAnimation(activity,
                 R.anim.slide_bottom_dialog);
 
-        signUpBinding.includedLayout.hiddenLayoutCountry.startAnimation(bottomDown);
-        signUpBinding.includedLayout.hiddenLayoutCountry.setVisibility(View.GONE);
-        signUpBinding.scrollviewSignup.setVisibility(View.VISIBLE);
+        binding.includedLayout.hiddenLayoutCountry.startAnimation(bottomDown);
+        binding.includedLayout.hiddenLayoutCountry.setVisibility(View.GONE);
+        binding.scrollviewSignup.setVisibility(View.VISIBLE);
     }
 
-    private boolean setValidation(String name, String phone, String email, String password, String confirm_password, boolean checked,
-                                  String companyName, String companyAddress, String companyNumber) {
+    private boolean setValidation(String name, String phone, String email, String password, String confirm_password) {
         if (name.isEmpty()) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.ed_fullName), Toast.LENGTH_LONG).show();
+            binding.edFullName.requestFocus();
+            binding.edFullName.setError(getResources().getString(R.string.ed_fullName));
+            AppUtils.showSnackbar(getString(R.string.name_field_empty), binding.parentLayout);
             return false;
         } else if (phone.isEmpty()) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.ed_phone), Toast.LENGTH_LONG).show();
+            binding.edPhoneNo.requestFocus();
+            binding.edPhoneNo.setError(getResources().getString(R.string.ed_phone));
+            AppUtils.showSnackbar(getString(R.string.phone_no_empty), binding.parentLayout);
             return false;
         } else if (phone.length() < 7 || phone.length() > 15) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.phone_lenght), Toast.LENGTH_LONG).show();
+            binding.edPhoneNo.requestFocus();
+            binding.edPhoneNo.setError(getResources().getString(R.string.phone_lenght));
+            AppUtils.showSnackbar(getString(R.string.Phone_no_length), binding.parentLayout);
             return false;
         } else if (email.isEmpty()) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.ed_email), Toast.LENGTH_LONG).show();
+            binding.edEmailId.requestFocus();
+            binding.edEmailId.setError(getResources().getString(R.string.ed_email));
+            AppUtils.showSnackbar(getString(R.string.email_empty), binding.parentLayout);
             return false;
         } else if (!Validation.isValidEmaillId(email)) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.invalid_email), Toast.LENGTH_LONG).show();
+            binding.edEmailId.requestFocus();
+            binding.edEmailId.setError(getResources().getString(R.string.invalid_email));
+            AppUtils.showSnackbar(getString(R.string.enter_valid_email), binding.parentLayout);
             return false;
         } else if (password.isEmpty()) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.ed_password), Toast.LENGTH_LONG).show();
+            binding.edPassword.requestFocus();
+            binding.edPassword.setError(getResources().getString(R.string.enter_new_password));
+            AppUtils.showSnackbar(getString(R.string.new_password_empty), binding.parentLayout);
             return false;
         } else if (password.length() < 8) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.invalid_password), Toast.LENGTH_LONG).show();
+            binding.edPassword.requestFocus();
+            binding.edPassword.setError(getResources().getString(R.string.password_length));
+            AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
             return false;
         } else if (confirm_password.isEmpty()) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.ed_confirm_password), Toast.LENGTH_LONG).show();
+            binding.edConfirmPassword.requestFocus();
+            binding.edConfirmPassword.setError(getResources().getString(R.string.ed_confirm_password));
+            AppUtils.showSnackbar(getString(R.string.confirm_password_empty), binding.parentLayout);
             return false;
         } else if (!password.equals(confirm_password)) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.not_match), Toast.LENGTH_LONG).show();
+            AppUtils.showSnackbar(getString(R.string.password_does_not_match), binding.parentLayout);
             return false;
-        } else if (signUpBinding.radiogroupUsertype.getCheckedRadioButtonId()==-1){
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.select_usertype), Toast.LENGTH_LONG).show();
-            return false;
-        } else if (signUpBinding.lnMerchantDetails.isShown()&&TextUtils.isEmpty(companyName)) {
-                Toast.makeText(this, getResources().getString(R.string.enter_company_name), Toast.LENGTH_SHORT).show();
-                return false;
-        } else if (signUpBinding.lnMerchantDetails.isShown()&&TextUtils.isEmpty(companyAddress)){
-                Toast.makeText(this, getResources().getString(R.string.enter_company_address), Toast.LENGTH_SHORT).show();
-                return false;
-        } else if (signUpBinding.lnMerchantDetails.isShown()&&TextUtils.isEmpty(companyNumber)){
-                Toast.makeText(this, getResources().getString(R.string.select_your_sector), Toast.LENGTH_SHORT).show();
-                return false;
-        } else if (signUpBinding.lnMerchantDetails.isShown()&&companyNumber.equals("Select your activity sector")){
-            Toast.makeText(this, getResources().getString(R.string.select_your_sector), Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!signUpBinding.checReadAgreements.isChecked()) {
-            Toast.makeText(SignUpActivity.this, getResources().getString(R.string.check_term), Toast.LENGTH_LONG).show();
+        } else if (!binding.checReadAgreements.isChecked()) {
+            AppUtils.showSnackbar(getString(R.string.check_term), binding.parentLayout);
             return false;
         }
         return true;
@@ -691,7 +588,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         SplashActivity.savePreferences(Constant.REMEMER_COUNTRY_ID, String.valueOf(id));
        // LoginPre.getActiveInstance(SignUpActivity.this).setCountry_code(code);
        // LoginPre.getActiveInstance(SignUpActivity.this).setCountry_id(id);
-        signUpBinding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
+        binding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.REMEMER_COUNTRY_CODE,"")));
         slideClose();
     }
 
@@ -709,10 +606,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onBackPressed() {
         if (isPanelShown()){
             slideClose();
-        }else if (signUpBinding.cardViewOtp.isShown()){
-            signUpBinding.cardViewSignup.setVisibility(View.VISIBLE);
-            signUpBinding.cardViewOtp.setVisibility(View.GONE);
-            signUpBinding.rlLogin.setVisibility(View.VISIBLE);
+        }else if (binding.cardViewOtp.isShown()){
+            binding.cardViewSignup.setVisibility(View.VISIBLE);
+            binding.cardViewOtp.setVisibility(View.GONE);
+            binding.rlLogin.setVisibility(View.VISIBLE);
         }else {
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -789,21 +686,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void sendImage(File file, int id) {
         Log.e(TAG,"USER ID--->"+id);
-        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+        RequestBody fileReqBody = RequestBody.create(file, Objects.requireNonNull(MediaType.parse("image/*")));
         //RequestBody fileReq = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(id));
 
         MultipartBody.Part part = MultipartBody.Part.createFormData("qrcode_image", file.getName(), fileReqBody);
 
-        signUpBinding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
+        binding.includedLayout.countryProgress.setVisibility(View.VISIBLE);
         signUpViewModel.sendQrcode(part,id).observe(this, verifyOtpResponse -> {
             if (!verifyOtpResponse.error) {
-                signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
+                binding.includedLayout.countryProgress.setVisibility(View.GONE);
                 Intent intent = new Intent(SignUpActivity.this,HomePageActivity.class);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.right_in,R.anim.left_out);
             } else {
-                signUpBinding.includedLayout.countryProgress.setVisibility(View.GONE);
+                binding.includedLayout.countryProgress.setVisibility(View.GONE);
             }
         });
     }

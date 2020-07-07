@@ -13,4 +13,5 @@ public interface Constant {
     String REMEMBER_PHONE = "remember_phone";
     String REMEMER_COUNTRY_CODE = "remember_countrycode";
     String REMEMER_COUNTRY_ID = "remember_countryid";
+    String ROLE_ID = "role_id";
 }

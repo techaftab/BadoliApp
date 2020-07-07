@@ -36,15 +36,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/bla_trans"
-                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/_12ssp"
+                android:layout_margin="@dimen/_8sdp"
                 android:padding="@dimen/_4sdp"
                 android:textStyle="bold"
                 android:text="@string/app_name"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/bg_gray"/>
+                android:background="@color/light_grey"/>
 
             <Button
                 android:id="@+id/btnOkay"

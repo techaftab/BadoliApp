@@ -17,31 +17,25 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.app.badoli.R;
-import com.app.badoli.auth.signup.SignUpActivity;
+import com.app.badoli.auth.signup.professional.ProfessionalSignup;
+import com.app.badoli.auth.signup.user.SignUpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.databinding.ActivityLoginBinding;
 import com.app.badoli.utilities.LoginPre;
-import com.app.badoli.viewModels.AuthViewModel;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-  //  private static final String TAG = LoginActivity.class.getSimpleName();
-    AuthViewModel authViewModel;
-    ActivityLoginBinding loginBinding;
-    String phone, password,device_token;
-    Fragment currentFragment;
-    FragmentTransaction ft;
+    ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         viewUpdate();
         init();
@@ -49,43 +43,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     private void viewUpdate() {
-
-
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-
-        loginBinding.txtSignUp.setOnClickListener(this);
-      //  loginBinding.txtChangeLang.setOnClickListener(this);
-        loginBinding.lnSignup.setOnClickListener(this);
-        loginBinding.radioGroup.setOnCheckedChangeListener(this);
+        binding.txtSignUp.setOnClickListener(this);
+        binding.radioGroup.setOnCheckedChangeListener(this);
+        loadFragment(new UserLoginFragment(),R.anim.left_in,R.anim.right_out);
+        binding.rbParticular.setChecked(true);
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
             String deviceToken = instanceIdResult.getToken();
             LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
-            device_token= LoginPre.getActiveInstance(LoginActivity.this).getDevice_token();
         });
         String selectedLan = LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua();
         if (selectedLan.equalsIgnoreCase("Fr (French)")) {
-            loginBinding.autoLang.setText("Fr");
+            binding.autoLang.setText("Fr");
         } else {
-            loginBinding.autoLang.setText("En");
+            binding.autoLang.setText("En");
         }
         String[] height=getResources().getStringArray(R.array.select_lang);
         ArrayAdapter<String> adapter=new ArrayAdapter<>(LoginActivity.this,R.layout.spinner_layout,R.id.spinner_text, height);
-        loginBinding.autoLang.setAdapter(adapter);
-        loginBinding.autoLang.setThreshold(1);
-        loginBinding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
+        binding.autoLang.setAdapter(adapter);
+        binding.autoLang.setThreshold(1);
+        binding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
             if (hasFocus) {
-                loginBinding.autoLang.showDropDown();
+                binding.autoLang.showDropDown();
             }
         });
-        loginBinding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
+        binding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
             // TODO Auto-generated method stub
-            loginBinding.autoLang.showDropDown();
-            loginBinding.autoLang.requestFocus();
+            binding.autoLang.showDropDown();
+            binding.autoLang.requestFocus();
             return false;
         });
-        loginBinding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
+        binding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
             String lang =parent.getItemAtPosition(position).toString();
             LoginPre.getActiveInstance(LoginActivity.this).setLocaleLangua(lang);
             if (lang.equalsIgnoreCase("Fr (French)")){
@@ -99,18 +88,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (loginBinding.rbParticular.isChecked()){
-            loginBinding.rbParticular.setBackground(getResources().getDrawable(R.drawable.purple_round_left_layout));
-            loginBinding.rbProfessional.setBackground(null);
-            loginBinding.rbProfessional.setTextColor(getResources().getColor(R.color.text_orange));
-            loginBinding.rbParticular.setTextColor(getResources().getColor(R.color.white));
+        if (binding.rbParticular.isChecked()){
+            binding.rbParticular.setBackground(getResources().getDrawable(R.drawable.purple_round_left_layout));
+            binding.rbProfessional.setBackground(null);
+            binding.rbProfessional.setTextColor(getResources().getColor(R.color.text_orange));
+            binding.rbParticular.setTextColor(getResources().getColor(R.color.white));
             loadFragment(new UserLoginFragment(),R.anim.left_in,R.anim.right_out);
         }
-        if (loginBinding.rbProfessional.isChecked()){
-            loginBinding.rbProfessional.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
-            loginBinding.rbParticular.setBackground(null);
-            loginBinding.rbParticular.setTextColor(getResources().getColor(R.color.text_orange));
-            loginBinding.rbProfessional.setTextColor(getResources().getColor(R.color.white));
+        if (binding.rbProfessional.isChecked()){
+            binding.rbProfessional.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
+            binding.rbParticular.setBackground(null);
+            binding.rbParticular.setTextColor(getResources().getColor(R.color.text_orange));
+            binding.rbProfessional.setTextColor(getResources().getColor(R.color.white));
             loadFragment(new ProfressionalLoginFragment(),R.anim.right_in,R.anim.left_out);
         }
     }
@@ -126,15 +115,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void showLoading(){
+    public void showLoading(String message){
         AppUtils.hideKeyboardFrom(LoginActivity.this);
-        loginBinding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
+        binding.layoutProgress.txtMessage.setText(message);
+        binding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     public void dismissLoading(){
-        loginBinding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
+        binding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
@@ -165,19 +155,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
-        loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         viewUpdate();
         super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onClick(View v) {
-        if (v==loginBinding.lnSignup) {
-            Context context = getApplicationContext();
-            Intent intent = new Intent(context, SignUpActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-            finish();
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+        if (v==binding.txtSignUp) {
+            if (f instanceof UserLoginFragment) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }else {
+                Intent intent = new Intent(LoginActivity.this, ProfessionalSignup.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            }
         }
     }
 
@@ -196,8 +191,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }).create().show();
     }
 
-    public void updateView() {
-        loginBinding.framelayoutLogin.setVisibility(View.GONE);
-        loginBinding.scrollviewLogin.setVisibility(View.VISIBLE);
-    }
 }

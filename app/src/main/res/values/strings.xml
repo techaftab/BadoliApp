@@ -21,7 +21,7 @@
     <string name="remember_me">Remember Me</string>
     <string name="fgt_pwd">Forget Password ?</string>
     <string name="sign_up">Sign Up</string>
-    <string name="login_signin">Log In / Sign In</string>
+    <string name="login_signin">Sign In</string>
     <string name="login">Login</string>
     <string name="conf_pwd">Confirm Password</string>
     <string name="country_code">+91</string>
@@ -145,7 +145,6 @@
     <string name="enter_company_number">Company Registration Number</string>
     <string name="enter_new_password">Enter New Password</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="password_does_not_match">Password does not match</string>
     <string name="login_now">Go Back for Login</string>
     <string name="really_exit">Really Exit?</string>
     <string name="are_sure_exit">Are you sure you want to exit?</string>
@@ -189,10 +188,30 @@
     <string name="en">En (English)</string>
     <string name="particular">Particular</string>
     <string name="professional">Professional</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
     <string name="Phone_no_length">Phone number should be 07–15 digits long.</string>
     <string name="password_empty">Password can\'t be empty.</string>
-    <string name="password_length"><![CDATA[>Password length should be 6–16 characters long.]]></string>
+    <string name="password_length"><![CDATA[>Password length should be 8–16 characters long.]]></string>
+    <string name="phone_no_empty">Phone Number can\'t be empty.</string>
+    <string name="new_password_empty">New password field cant\'t be empty.</string>
+    <string name="confirm_password_empty">Confirm Password field cant\'t be empty.</string>
+    <string name="password_does_not_match">New Password and confirm password are different.</string>
+    <string name="logging_in">Logging in…</string>
+    <string name="name_field_empty">Name Field can\'t be empty.</string>
+    <string name="email_empty">Email field can\'t be empty.</string>
+    <string name="enter_valid_email">Please enter valid email id.</string>
+    <string name="resending_otp">Resending OTP…</string>
+    <string name="signing_in">Signing in…</string>
+    <string name="verifying_otp">Verifying OTP…</string>
+    <string name="fetching_code">Fetching Code…</string>
+    <string name="validating">Validating…</string>
+    <string name="sending_request">Sending Request…</string>
+    <string name="i_staff">I\'m a staff</string>
+    <string name="monitor_transaction">Monitor transaction and orders.</string>
+    <string name="i_manager">I\'m a manager</string>
+    <string name="manage_acc_buss">Manage account and business(es)</string>
+    <string name="choose_login_mode">Choose your login mode</string>
+    <string name="name_director">Name of Director</string>
 
     <string-array name="select_lang">
         <item>@string/en</item>

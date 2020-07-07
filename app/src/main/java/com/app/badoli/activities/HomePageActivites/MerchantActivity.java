@@ -74,19 +74,20 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         PrefManager.getInstance(MerchantActivity.this).setWalletBalance(balance);
         merchantBinding.txtWalletBalancetMerchant.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
-        if (merchantBinding.progressbarRequest.isShown()){
+        if (merchantBinding.layoutProgress.lnProgress.isShown()){
             dismissLoading();
         }
     }
 
-    void showLoading(){
+    void showLoading(String message){
         AppUtils.hideKeyboardFrom(MerchantActivity.this);
-        merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
+        merchantBinding.layoutProgress.txtMessage.setText(message);
+        merchantBinding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     void dismissLoading(){
-        merchantBinding.progressbarRequest.setVisibility(View.INVISIBLE);
+        merchantBinding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
@@ -151,12 +152,12 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             String amount=merchantBinding.edittextAmtFcfa.getText().toString();
             if(isValidated(amount)) {
                 AppUtils.hideKeyboardFrom(MerchantActivity.this);
-                showLoading();
+                showLoading(getResources().getString(R.string.fetching_code));
                 genrateQrCode(amount);
             }
         }
         if (v==merchantBinding.txtWalletBalancetMerchant){
-            showLoading();
+            showLoading(getResources().getString(R.string.please_wait));
             webService.updateBalance(userData.getId());
         }
         if (v==merchantBinding.btnProgress){
@@ -228,7 +229,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     }
 
     private void getReference(String mobile, String amount, String id, String auth_token) {
-        showLoading();
+        showLoading(getResources().getString(R.string.validating));
         addMoneyViewModel.getReference(id, mobile, amount, auth_token).observe(this, referenceResponse -> {
             if (!referenceResponse.error) {
                 dismissLoading();
@@ -242,13 +243,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     }
 
     private void goAirtel(String mobile, String amount,String reference) {
-        showLoading();
+        showLoading(getResources().getString(R.string.sending_request));
         addMoneyViewModel.goAirtel(mobile,amount,reference, Constant.TEL_MERCHAND,Constant.TOKEN)
                 .observe(this, airtelResponse -> {
                     if (airtelResponse.response_code==1000) {
                         dismissLoading();
                         SweetToast.error(MerchantActivity.this,airtelResponse.getMessage());
-                        AppUtils.openPopupUpDown(MerchantActivity.this,R.style.Dialod_UpDown,
+                        AppUtils.openPopup(MerchantActivity.this,R.style.Dialod_UpDown,
                                 "",airtelResponse.getMessage());
                         updateValue();
                     } else {

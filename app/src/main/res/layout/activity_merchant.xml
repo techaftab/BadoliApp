@@ -490,15 +490,6 @@
 
                     </LinearLayout>
 
-                    <ProgressBar
-                        android:id="@+id/progressbar_request"
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:background="@color/colorLightGray"
-                        android:padding="@dimen/_12sdp"
-                        android:visibility="gone"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"/>
 
                 </RelativeLayout>
 
@@ -508,6 +499,10 @@
 
         <include android:id="@+id/hidden_layout"
             layout="@layout/qrcode_layout"/>
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress"/>
 
     </RelativeLayout>
 

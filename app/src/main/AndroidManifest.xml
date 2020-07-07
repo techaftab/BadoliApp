@@ -29,7 +29,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator"
         tools:targetApi="m">
-        <activity android:name=".auth.login.ForgotPasswordActivity"></activity>
+        <activity android:name=".auth.signup.professional.ProfessionalSignup"></activity>
+        <activity android:name=".auth.forget.ForgotPasswordActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -95,7 +96,7 @@
             android:theme="@style/AppTheme.WithHead"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".auth.signup.SignUpActivity"
+            android:name=".auth.signup.user.SignUpActivity"
             android:configChanges="locale"
             android:launchMode="singleTop" />
         <activity

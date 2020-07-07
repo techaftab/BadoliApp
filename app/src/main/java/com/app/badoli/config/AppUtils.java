@@ -217,7 +217,7 @@ public class AppUtils {
         }else if (error.equalsIgnoreCase("underdevelop")){
             imageView.setImageResource(R.drawable.maintenance);
         }else {
-            imageView.setImageResource(R.drawable.ic_success);
+            imageView.setImageResource(R.drawable.success);
         }
 
         btnOk.setOnClickListener(v ->{
@@ -268,13 +268,14 @@ public class AppUtils {
     public static void showSnackbar(String message, View v) {
         Snackbar mSnackBar = Snackbar.make(v, message, Snackbar.LENGTH_LONG);
         View view = mSnackBar.getView();
-        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)view.getLayoutParams();
-        params.gravity = Gravity.TOP;
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        params.gravity = Gravity.BOTTOM;
         view.setLayoutParams(params);
-        view.setBackgroundColor(Color.RED);
-        TextView mainTextView =  (view).findViewById(com.google.android.material.R.id.snackbar_text);
+        //view.setBackgroundColor(Color.RED);
+        view.setBackgroundColor(Color.parseColor("#006E2C"));
+        TextView mainTextView = (view).findViewById(com.google.android.material.R.id.snackbar_text);
         mainTextView.setTextColor(Color.WHITE);
-        mainTextView.setPadding(0,20,0,20);
+        mainTextView.setPadding(0, 20, 0, 20);
         mSnackBar.show();
     }
 

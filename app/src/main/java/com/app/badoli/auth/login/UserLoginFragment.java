@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.SplashActivity;
+import com.app.badoli.auth.forget.ForgotPasswordActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
@@ -81,7 +82,8 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if (v==binding.forgetPassword){
-            startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
+            startActivity(new Intent(getActivity(), ForgotPasswordActivity.class)
+            .putExtra(Constant.ROLE_ID,"3"));
         }
     }
 
@@ -105,7 +107,7 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
 
 
     private void getLoginResponse(String phone, String password) {
-        ((LoginActivity)requireActivity()).showLoading();
+        ((LoginActivity)requireActivity()).showLoading(getResources().getString(R.string.logging_in));
         authViewModel.getLogin(phone,password,1,deviceToken).observe(getViewLifecycleOwner(), loginResponse -> {
             ((LoginActivity)requireActivity()).dismissLoading();
             if (!loginResponse.error) {
