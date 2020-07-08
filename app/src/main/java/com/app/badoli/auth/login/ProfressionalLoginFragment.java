@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
@@ -35,6 +36,8 @@ public class ProfressionalLoginFragment extends Fragment implements View.OnClick
 
     private void init() {
         binding.forgetPassword.setOnClickListener(this);
+        binding.cardviewStaff.setOnClickListener(this);
+        binding.cardViewManager.setOnClickListener(this);
     }
 
     @Override
@@ -43,5 +46,23 @@ public class ProfressionalLoginFragment extends Fragment implements View.OnClick
             startActivity(new Intent(getActivity(), ForgotPasswordActivity.class)
                     .putExtra(Constant.ROLE_ID,"4"));
         }
+        if (v==binding.cardviewStaff){
+            startActivity(new Intent(getActivity(),LoginManagerActivity.class).putExtra(Constant.TYPE_LOGIN,"staff"));
+        }
+        if (v==binding.cardViewManager){
+            startActivity(new Intent(getActivity(),LoginManagerActivity.class).putExtra(Constant.TYPE_LOGIN,"manager"));
+         //   loadFragment(new LoginManager(),"manager");
+        }
+    }
+
+    private void loadFragment(Fragment fragment, String type) {
+        Bundle bundle=new Bundle();
+        bundle.putString(Constant.TYPE_LOGIN,type);
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
+        ft.replace(R.id.framelayout, fragment);
+        fragment.setArguments(bundle);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

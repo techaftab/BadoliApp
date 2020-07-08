@@ -13,8 +13,6 @@ public class CountryResponse {
 
     public List<CountryResult> result;
 
-
-
     public class CountryResult {
 
         public int id;
@@ -24,7 +22,6 @@ public class CountryResponse {
         public String name;
 
         public int phonecode;
-
 
         public int status;
 

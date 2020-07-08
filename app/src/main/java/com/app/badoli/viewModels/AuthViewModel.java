@@ -7,8 +7,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.app.badoli.model.ChangePasswordModel;
+import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.LoginResponse;
+import com.app.badoli.model.QRResponse;
+import com.app.badoli.model.ResendOtpResponse;
+import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.repositories.LoginRepository;
+
+import okhttp3.MultipartBody;
 
 
 public class AuthViewModel extends AndroidViewModel {
@@ -28,5 +34,21 @@ public class AuthViewModel extends AndroidViewModel {
 
     public LiveData<ChangePasswordModel> changePassword(String mobile, String confirmPassword, String roleId) {
         return loginRepository.changePassword(mobile, confirmPassword, roleId);
+    }
+
+    public LiveData<CountryResponse> getCountryList() {
+        return loginRepository.getCountryList();
+    }
+
+    public LiveData<VerifyOtpResponse> verifyOtp(String userId, String otp, String access_token) {
+        return loginRepository.verifyOtp(userId, otp, access_token);
+    }
+
+    public LiveData<QRResponse> sendQrcode(MultipartBody.Part file, String id) {
+        return loginRepository.sendQrCode(file,id);
+    }
+
+    public LiveData<ResendOtpResponse> resendOtp(String userId, String access_token) {
+        return loginRepository.resendOtp(userId, access_token);
     }
 }

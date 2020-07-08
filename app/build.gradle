@@ -81,5 +81,15 @@ dependencies {
 
     implementation 'com.github.TheHasnatBD:SweetToast:1.0.2'
 
+    //countryCode
+    implementation 'com.hbb20:ccp:2.4.0'
+
+    //PinOtp
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
+
+    //autoViewPager, dot indicator
+    implementation 'com.github.pzienowicz:androidx-auto-scroll-view-pager:1.1.0'
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
 }
 apply plugin: 'com.google.gms.google-services'

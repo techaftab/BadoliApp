@@ -1,25 +1,35 @@
 package com.app.badoli.auth.signup.professional;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.app.badoli.R;
+import com.app.badoli.activities.SplashActivity;
+import com.app.badoli.auth.country.CountryListActivity;
+import com.app.badoli.config.Constant;
 import com.app.badoli.databinding.ActivityProfessionalSignupBinding;
 import com.app.badoli.utilities.LoginPre;
 
 import java.util.Locale;
 
-public class ProfessionalSignup extends AppCompatActivity {
+public class ProfessionalSignup extends AppCompatActivity implements View.OnClickListener {
 
+    private static final int COUNTRY_CODE = 123;
     ActivityProfessionalSignupBinding binding;
+    private String countryId;
+    private String phoneCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,8 @@ public class ProfessionalSignup extends AppCompatActivity {
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     private void viewUpdate() {
+        binding.tvCountryCode.setOnClickListener(this);
+        binding.txtLogin.setOnClickListener(this);
         String selectedLan = LoginPre.getActiveInstance(ProfessionalSignup.this).getLocaleLangua();
         if (selectedLan.equalsIgnoreCase("Fr (French)")) {
             binding.autoLang.setText("Fr");
@@ -93,5 +105,38 @@ public class ProfessionalSignup extends AppCompatActivity {
         viewUpdate();
         super.onConfigurationChanged(newConfig);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v==binding.tvCountryCode){
+            Intent intent = new Intent(ProfessionalSignup.this, CountryListActivity.class);
+            startActivityForResult(intent,COUNTRY_CODE);
+        }
+        if (v==binding.txtLogin){
+            finish();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COUNTRY_CODE) {
+            if(resultCode == Activity.RESULT_OK){
+                if (data != null) {
+                    String id=data.getStringExtra(Constant.COUNTRY_ID);
+                    String code=data.getStringExtra(Constant.PHONE_CODE);
+                    countryId=id;
+                    phoneCode=code;
+                    SplashActivity.savePreferences(Constant.PHONE_CODE,code);
+                    SplashActivity.savePreferences(Constant.COUNTRY_ID,id);
+                    binding.tvCountryCode.setText("+"+phoneCode);
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 }

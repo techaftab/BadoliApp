@@ -29,7 +29,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator"
         tools:targetApi="m">
-        <activity android:name=".auth.signup.professional.ProfessionalSignup"></activity>
+        <activity android:name=".auth.login.LoginManagerActivity"></activity>
+        <activity android:name=".auth.otp.VerifyOtpActivity" />
+        <activity android:name=".auth.country.CountryListActivity" />
+        <activity android:name=".auth.signup.professional.ProfessionalSignup" />
         <activity android:name=".auth.forget.ForgotPasswordActivity" />
 
         <uses-library

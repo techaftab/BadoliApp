@@ -212,6 +212,14 @@
     <string name="manage_acc_buss">Manage account and business(es)</string>
     <string name="choose_login_mode">Choose your login mode</string>
     <string name="name_director">Name of Director</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="an_otp_sent_to_mobile">An OTP Sent to mobile no.</string>
+    <string name="did_not_recieve_otp">Didn\'t recieve OTP?</string>
+    <string name="verify">Verify</string>
+    <string name="enter_valid_otp">Please enter valid OTP.</string>
+    <string name="user_id_empty">"User Id not available.\nPlease re-try login again. "</string>
+    <string name="plz_enter_otp_continue">Please enter the OTP to continue.</string>
+    <string name="sign_up_as_manager">Sign Up as Manager</string>
 
     <string-array name="select_lang">
         <item>@string/en</item>

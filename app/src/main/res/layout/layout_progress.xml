@@ -20,8 +20,8 @@
             android:gravity="center"
             android:textStyle="italic|bold"
             android:text="@string/please_wait"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/_18ssp"/>
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20ssp"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

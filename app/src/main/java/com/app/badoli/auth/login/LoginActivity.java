@@ -93,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             binding.rbProfessional.setBackground(null);
             binding.rbProfessional.setTextColor(getResources().getColor(R.color.text_orange));
             binding.rbParticular.setTextColor(getResources().getColor(R.color.white));
+            binding.lnSignup.setVisibility(View.VISIBLE);
+            binding.txtSignUp.setText(getResources().getString(R.string.sign_up));
             loadFragment(new UserLoginFragment(),R.anim.left_in,R.anim.right_out);
         }
         if (binding.rbProfessional.isChecked()){
@@ -100,6 +102,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             binding.rbParticular.setBackground(null);
             binding.rbParticular.setTextColor(getResources().getColor(R.color.text_orange));
             binding.rbProfessional.setTextColor(getResources().getColor(R.color.white));
+            binding.lnSignup.setVisibility(View.GONE);
+           // binding.txtSignUp.setText(getResources().getString(R.string.sign_up_as_manager));
             loadFragment(new ProfressionalLoginFragment(),R.anim.right_in,R.anim.left_out);
         }
     }
@@ -162,33 +166,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+       // Fragment f = getSupportFragmentManager().findFragmentById(R.id.framelayout);
         if (v==binding.txtSignUp) {
-            if (f instanceof UserLoginFragment) {
+          //  if (f instanceof UserLoginFragment) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
-            }else {
+          /*  }else {
                 Intent intent = new Intent(LoginActivity.this, ProfessionalSignup.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
-            }
+            }*/
         }
     }
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(getResources().getString(R.string.really_exit))
-                .setMessage(getResources().getString(R.string.are_sure_exit))
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
-                    Intent launchNextActivity = new Intent(Intent.ACTION_MAIN);
-                    launchNextActivity.addCategory(Intent.CATEGORY_HOME);
-                    launchNextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(launchNextActivity);
-                    finish();
-                }).create().show();
+      //  Fragment f = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+       /* if (f instanceof LoginManager){
+            loadFragment(new ProfressionalLoginFragment(),R.anim.left_in,R.anim.right_out);
+        }else {*/
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle(getResources().getString(R.string.really_exit))
+                    .setMessage(getResources().getString(R.string.are_sure_exit))
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                        Intent launchNextActivity = new Intent(Intent.ACTION_MAIN);
+                        launchNextActivity.addCategory(Intent.CATEGORY_HOME);
+                        launchNextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(launchNextActivity);
+                        finish();
+                    }).create().show();
+    //    }
     }
 
 }

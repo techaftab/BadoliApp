@@ -39,14 +39,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         binding.btnFgtPassword.setOnClickListener(this);
         binding.imgBackForgotPassword.setOnClickListener(this);
         binding.txtBackFgt.setOnClickListener(this);
-        binding.radiogroupUsertypeFgtpassword.setOnCheckedChangeListener((group, checkedId) -> {
-            if (binding.rbUserFgtpassword.isChecked()){
-                roleId="3";
-            }
-            if (binding.rbMerchantFgtpassword.isChecked()){
-                roleId="4";
-            }
-        });
     }
 
     public void showLoading(String message){
@@ -82,10 +74,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             binding.edittextMobileFgt.requestFocus();
             binding.edittextMobileFgt.setError(getResources().getString(R.string.enter_mobile));
             AppUtils.showSnackbar(getString(R.string.phone_no_empty), binding.parentLayout);
-            return false;
-        }
-        if (TextUtils.isEmpty(roleId)||binding.radiogroupUsertypeFgtpassword.getCheckedRadioButtonId()==-1){
-            AppUtils.showSnackbar(getString(R.string.select_usertype), binding.parentLayout);
             return false;
         }
         if (TextUtils.isEmpty(newPassword)){

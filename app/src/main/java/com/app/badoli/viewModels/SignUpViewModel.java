@@ -33,23 +33,6 @@ public class SignUpViewModel extends AndroidViewModel {
                 confirm_password, country_id, agreeterms,roleId);
     }
 
-    public LiveData<CountryResponse> getCountryList() {
-        return signupRepository.getCountryList();
-    }
-
-    public LiveData<VerifyOtpResponse> getOTP(int userid, String otp, String access_token) {
-
-        return signupRepository.getOtpLiveData(userid, otp, access_token);
-    }
-
-    public LiveData<QRResponse> sendQrcode(MultipartBody.Part file, int id) {
-        return signupRepository.sendQrCode(file,id);
-    }
-
-    public LiveData<ResendOtpResponse> resendOtp(int userId, String access_token) {
-        return signupRepository.resendOtp(userId, access_token);
-    }
-
     public LiveData<BussinessList> getBussinessList() {
         return signupRepository.getBussinessList();
     }

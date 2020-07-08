@@ -25,7 +25,7 @@
     <string name="login_signin">Se connecter</string>
     <string name="login">S\'identifier</string>
     <string name="conf_pwd">Confirmez le mot de passe</string>
-    <string name="country_code">91</string>
+    <string name="country_code">+91</string>
     <string name="free_to_contact">En cas de problème, n\'hésitez pas à nous contacter</string>
     <string name="close">Fermer</string>
     <string name="enter_otp">Entrez le numéro OTP</string>

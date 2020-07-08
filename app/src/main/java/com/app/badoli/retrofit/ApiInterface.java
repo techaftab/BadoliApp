@@ -43,7 +43,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("verifyMobileOtp")
-    Call<VerifyOtpResponse> verifyOtp(@Field("userid") int userid,
+    Call<VerifyOtpResponse> verifyOtp(@Field("userid") String userid,
                                       @Field("otp") String otp,
                                       @Field("access_token") String access_token);
 
@@ -56,7 +56,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("resendMobileOtp")
-    Call<ResendOtpResponse> resendMobileOtp(@Field("userid") int userid,
+    Call<ResendOtpResponse> resendMobileOtp(@Field("userid") String userid,
                                             @Field("access_token") String access_token);
 
     @GET("countryList")
@@ -67,7 +67,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("saveQrcode")
-    Call<QRResponse> sendQrCode(@Part MultipartBody.Part file, @Part("userid") int id);
+    Call<QRResponse> sendQrCode(@Part MultipartBody.Part file, @Part("userid") String id);
 
     @Multipart
     @POST("updateProfileImage")

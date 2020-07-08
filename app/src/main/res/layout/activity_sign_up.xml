@@ -137,12 +137,23 @@
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/_12ssp" />
+                            <!--<com.hbb20.CountryCodePicker
+                                android:id="@+id/ccp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:layout_gravity="center_vertical"
+                                android:layout_margin="@dimen/_2sdp"
+                                app:ccp_textColor="@color/white"
+                                app:ccp_hideNameCode="true"/>-->
 
                             <EditText
                                 android:id="@+id/ed_phone_no"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:paddingLeft="@dimen/_6sdp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
                                 android:paddingRight="@dimen/_6sdp"
                                 android:background="@android:color/transparent"
                                 android:hint="@string/user_phone_no"
@@ -341,163 +352,10 @@
 
                 </LinearLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView_otp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/logo"
-                    android:layout_margin="@dimen/DP15"
-                    android:visibility="gone"
-                    app:cardCornerRadius="@dimen/DP20"
-                    app:cardElevation="@dimen/DP10">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/DP15">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/txt_login"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/enter_otp"
-                            android:textColor="@color/text_purple"
-                            android:textSize="@dimen/SP20" />
-
-                        <LinearLayout
-                            android:id="@+id/ed_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txt_login"
-                            android:layout_marginTop="20dp"
-                            android:weightSum="6">
-
-                            <EditText
-                                android:id="@+id/ed_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/DP5"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@android:color/black"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:singleLine="true"
-                                bind:ignore="Autofill,LabelFor" />
-
-                            <EditText
-                                android:id="@+id/ed_2"
-                                android:layout_width="wrap_content"
-                                android:textColor="@android:color/black"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/DP5"
-                                android:layout_marginRight="@dimen/DP5"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:singleLine="true"
-                                bind:ignore="Autofill,LabelFor"/>
-
-                            <EditText
-                                android:id="@+id/ed_3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/DP5"
-                                android:layout_marginRight="@dimen/DP5"
-                                android:textColor="@android:color/black"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:singleLine="true"
-                                bind:ignore="Autofill,LabelFor"/>
-
-                            <EditText
-                                android:id="@+id/ed_4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/DP5"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:textColor="@android:color/black"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:singleLine="true"
-                                bind:ignore="Autofill,LabelFor"/>
-
-                            <EditText
-                                android:id="@+id/ed_5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/black"
-                                android:layout_marginStart="@dimen/DP5"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:singleLine="true"
-                                bind:ignore="Autofill,LabelFor"/>
-
-                            <EditText
-                                android:id="@+id/ed_6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/black"
-                                android:layout_marginStart="@dimen/DP5"
-                                android:layout_weight="1"
-                                android:enabled="false"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="1"
-                                android:singleLine="true"
-                                bind:ignore="Autofill,LabelFor"/>
-                        </LinearLayout>
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/next_button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/ed_layout"
-                            android:layout_marginTop="@dimen/DP50"
-                            android:background="@drawable/rounded_button_orange"
-                            android:padding="@dimen/DP15"
-                            android:text="@string/next"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/SP20" />
-
-                        <TextView
-                            android:id="@+id/txt_resend_otp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_8sdp"
-                            android:layout_below="@+id/next_button"
-                            android:text="@string/resend_otp"
-                            android:textSize="@dimen/_16ssp"
-                            android:textColor="@color/text_purple"
-                            android:gravity="center"
-                            android:layout_margin="@dimen/_8sdp"
-                            android:background="@drawable/rl_back"
-                            android:layout_centerHorizontal="true"/>
-
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
         </ScrollView>
-
-        <include
-            android:id="@+id/included_layout"
-            layout="@layout/layout_hidden_country"/>
 
         <include
             android:id="@+id/layoutProgress"

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +32,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/_6sdp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_6sdp"
                     android:paddingRight="@dimen/_6sdp"
                     android:drawablePadding="@dimen/_8sdp"
                     android:focusable="false"
@@ -50,10 +51,10 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/logo"
                     android:layout_below="@+id/autoLang"
-                    android:layout_width="@dimen/_100sdp"
+                    android:layout_width="@dimen/_130sdp"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/DP15"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:src="@drawable/logo" />
 
                 <androidx.cardview.widget.CardView
@@ -109,8 +110,6 @@
                                 android:singleLine="true"
                                 android:textColor="@color/white"
                                 android:textColorHint="@android:color/white"/>
-
-                            <requestFocus />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -397,7 +396,7 @@
                     android:layout_below="@+id/cardView_signup"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:padding="@dimen/_6sdp"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:gravity="center">
 
                     <TextView
