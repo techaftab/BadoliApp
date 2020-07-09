@@ -11,11 +11,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +36,8 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 
 import com.app.badoli.utilities.LoginPre;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.app.badoli.R;
@@ -40,7 +47,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -48,6 +57,9 @@ import java.util.regex.Pattern;
 
 /**
  * Created by aftab on 1/10/2018.
+ * account: badoliplay@gmail.com
+ *
+ * password: b@doli2020
  */
 
 public class AppUtils {
@@ -69,6 +81,74 @@ public class AppUtils {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
+    public static boolean isGooglePlayServicesAvailable(Context context) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(context);
+        if (ConnectionResult.SUCCESS == status)
+            return true;
+        else {
+            if (googleApiAvailability.isUserResolvableError(status))
+                Toast.makeText(context, "Please Install google play services to use this application", Toast.LENGTH_LONG).show();
+        }
+        return false;
+    }
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+        } else {
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+    }
+    public static String getCompleteAddressString(Context context, double LATITUDE, double LONGITUDE) {
+        String addressLine = "";
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses.size() != 0) {
+                String address = addresses.get(0).getAddressLine(0);
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+                if(!address.isEmpty()){
+                    addressLine = address;
+                }else addressLine = knownName;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("Complete", "Address is : " + addressLine);
+        return addressLine;
+    }
+
+    public static void showAlert(String message, Context context) {
+
+        final androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+        builder.setMessage(message).setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> {
+
+                });
+        try {
+            builder.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void showcalendar(final TextView edtDob, Context context)
     {

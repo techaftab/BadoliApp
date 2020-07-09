@@ -84,7 +84,8 @@
             <LinearLayout
                 android:id="@+id/otpTextInput"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -98,11 +99,15 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:inputType="number"
-                    android:itemBackground="@color/colorPrimary"
+                    app:itemSpacing="@dimen/_8sdp"
+                    app:itemHeight="@dimen/_25sdp"
+                    app:itemWidth="@dimen/_25sdp"
+                    android:textSize="@dimen/_10ssp"
+                    android:itemBackground="@drawable/circle"
                     android:textColor="@android:color/white"
                     app:itemCount="6"
-                    app:lineColor="@color/colorPrimary"
-                    app:viewType="line"/>
+                    app:lineWidth="@dimen/_2sdp"
+                    app:viewType="none"/>
 
             </LinearLayout>
 
@@ -136,6 +141,18 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:text="@string/did_not_recieve_otp"
+                app:layout_constraintTop_toBottomOf="@+id/resendCodeLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnVerify"
                 android:layout_width="match_parent"
@@ -150,7 +167,7 @@
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resendCodeLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTime" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

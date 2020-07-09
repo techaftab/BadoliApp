@@ -257,7 +257,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             binding.edPassword.setError(getResources().getString(R.string.enter_new_password));
             AppUtils.showSnackbar(getString(R.string.new_password_empty), binding.parentLayout);
             return false;
-        } else if (password.length() < 8) {
+        } else if (password.length() < 8||password.length()>16) {
             binding.edPassword.requestFocus();
             binding.edPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);

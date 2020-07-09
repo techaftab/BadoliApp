@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">BaDoli</string>
+    <string name="google_maps_key">AIzaSyBZ3O59KED5Kl--znKyOHMuhkdLvMJwc6Y</string>
     <string name="edit_login">Phone No / Email Id</string>
     <string name="password">Password</string>
     <string name="dont_have_account">Don\'t have an account?</string>
@@ -220,6 +221,27 @@
     <string name="user_id_empty">"User Id not available.\nPlease re-try login again. "</string>
     <string name="plz_enter_otp_continue">Please enter the OTP to continue.</string>
     <string name="sign_up_as_manager">Sign Up as Manager</string>
+    <string name="set_up_your_bussiness">Set up your business on Badoli Pay in easy steps.</string>
+    <string name="company_field_empty">Company Fiels can\'t be empty.</string>
+    <string name="plz_enter_company">Please enter company name.</string>
+    <string name="company_add_field_empty">Company address field can\'t be empty.</string>
+    <string name="plz_enter_company_address">Please enter company address</string>
+    <string name="activity_field_empty">Select activity sector.</string>
+    <string name="plz_select_activity_sector">Please select your activity sector.</string>
+    <string name="director_name_empty">Director name field can\'t be empty.</string>
+    <string name="please_enter_director_name_company">Please enter director name of company.</string>
+    <string name="select_location">Select Location</string>
+    <string name="click_current_location">Get Current Location</string>
+    <string name="search_address">Search Address</string>
+    <string name="set_location">Set your location</string>
+    <string name="gps_on_msg">Please Turn On your Phone GPS for Accurate Location.</string>
+    <string name="loading">Loading...</string>
+    <string name="okay">OK</string>
+    <string name="enable_permission">Go to settings and enable permissions</string>
+    <string name="permission_req">Permisions Required For This App</string>
+    <string name="gps_disable_on">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="plz_enable_location">Please enabe location!</string>
+
 
     <string-array name="select_lang">
         <item>@string/en</item>

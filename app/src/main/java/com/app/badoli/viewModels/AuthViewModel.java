@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.ChangePasswordModel;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.LoginResponse;
@@ -50,5 +51,9 @@ public class AuthViewModel extends AndroidViewModel {
 
     public LiveData<ResendOtpResponse> resendOtp(String userId, String access_token) {
         return loginRepository.resendOtp(userId, access_token);
+    }
+
+    public LiveData<BussinessList> getBussinessList() {
+        return loginRepository.getBussinessList();
     }
 }

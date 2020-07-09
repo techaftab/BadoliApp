@@ -6,35 +6,55 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.LocationActivity;
 import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.auth.country.CountryListActivity;
+import com.app.badoli.auth.forget.ForgotPasswordActivity;
+import com.app.badoli.auth.login.LoginActivity;
+import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.databinding.ActivityProfessionalSignupBinding;
 import com.app.badoli.utilities.LoginPre;
+import com.app.badoli.viewModels.AuthViewModel;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProfessionalSignup extends AppCompatActivity implements View.OnClickListener {
 
     private static final int COUNTRY_CODE = 123;
+    private static final int GET_LOCATION = 258;
+    private static final String TAG = ProfessionalSignup.class.getSimpleName();
     ActivityProfessionalSignupBinding binding;
     private String countryId;
     private String phoneCode;
+    private AuthViewModel authViewModel;
+
+    ArrayList<String> activityName=new ArrayList<>();
+    ArrayList<String> activityId=new ArrayList<>();
+    String businessId="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_professional_signup);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         viewUpdate();
         init();
     }
@@ -43,14 +63,17 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
     private void viewUpdate() {
         binding.tvCountryCode.setOnClickListener(this);
         binding.txtLogin.setOnClickListener(this);
+        binding.imgBack.setOnClickListener(this);
+        binding.btnSignup.setOnClickListener(this);
+        binding.imgLocation.setOnClickListener(this);
         String selectedLan = LoginPre.getActiveInstance(ProfessionalSignup.this).getLocaleLangua();
         if (selectedLan.equalsIgnoreCase("Fr (French)")) {
             binding.autoLang.setText("Fr");
         } else {
             binding.autoLang.setText("En");
         }
-        String[] height=getResources().getStringArray(R.array.select_lang);
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(ProfessionalSignup.this,R.layout.spinner_layout,R.id.spinner_text, height);
+        String[] height = getResources().getStringArray(R.array.select_lang);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ProfessionalSignup.this, R.layout.spinner_layout, R.id.spinner_text, height);
         binding.autoLang.setAdapter(adapter);
         binding.autoLang.setThreshold(1);
         binding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
@@ -65,16 +88,41 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             return false;
         });
         binding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
-            String lang =parent.getItemAtPosition(position).toString();
+            String lang = parent.getItemAtPosition(position).toString();
             LoginPre.getActiveInstance(ProfessionalSignup.this).setLocaleLangua(lang);
-            if (lang.equalsIgnoreCase("Fr (French)")){
+            if (lang.equalsIgnoreCase("Fr (French)")) {
                 setLocale("fr");
-            }else {
+            } else {
                 setLocale("en");
             }
         });
-    }
+        if (AppUtils.hasNetworkConnection(ProfessionalSignup.this)){
+            getBussinessList();
+        }else {
+            AppUtils.openPopup(ProfessionalSignup.this,R.style.Dialod_UpDown,"internetError",getResources().getString(R.string.no_internet));
+        }
 
+        ArrayAdapter<String> activityAdapter=new ArrayAdapter<>(ProfessionalSignup.this,R.layout.spinner_layout,R.id.spinner_text,
+                activityName);
+        binding.autoCompleteText.setAdapter(activityAdapter);
+        binding.autoCompleteText.setOnFocusChangeListener((v15, hasFocus) -> {
+            if (hasFocus) {
+                binding.autoCompleteText.showDropDown();
+            }
+        });
+        binding.autoCompleteText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String activity=parent.getItemAtPosition(position).toString();
+                for (int i=0;i<activityName.size();i++){
+                    if (activity.equalsIgnoreCase(activityName.get(i))) {
+                        businessId=activityId.get(i);
+                    }
+                }
+                Log.e(TAG,"ACTIVITY Name-->"+activity+", Id-->"+businessId);
+            }
+        });
+    }
     private void init() {
         switch (LoginPre.getActiveInstance(ProfessionalSignup.this).getLocaleLangua()) {
             case "en":
@@ -107,21 +155,162 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
 
     }
 
+    public void showLoading(String message){
+        AppUtils.hideKeyboardFrom(ProfessionalSignup.this);
+        binding.layoutProgress.txtMessage.setText(message);
+        binding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    public void dismissLoading(){
+        binding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
     @Override
     public void onClick(View v) {
         if (v==binding.tvCountryCode){
             Intent intent = new Intent(ProfessionalSignup.this, CountryListActivity.class);
             startActivityForResult(intent,COUNTRY_CODE);
         }
-        if (v==binding.txtLogin){
+        if (v==binding.txtLogin||v==binding.imgBack){
             finish();
         }
+        if (v==binding.imgLocation){
+            Intent intent = new Intent(ProfessionalSignup.this, LocationActivity.class);
+            startActivityForResult(intent, GET_LOCATION);
+        }
+        if (v==binding.btnSignup){
+            String companyName = binding.edittextCompanyName.getText().toString();
+            String companyAddress = binding.edittextCompanyAddress.getText().toString();
+            String activitySector = binding.autoCompleteText.getText().toString();
+            String phone = binding.edPhoneNo.getText().toString();
+            String email = binding.edEmailId.getText().toString();
+            String password = binding.edPassword.getText().toString();
+            String confirm_password = binding.edConfirmPassword.getText().toString();
+            String nameDirector = binding.edittextDirectorName.getText().toString();
+            if (isValid(companyName,companyAddress,businessId,phone,email,password,confirm_password,nameDirector)){
+
+            }
+        }
     }
+
+    private boolean isValid(String companyName, String companyAddress, String businessId, String phone, String email,
+                            String password, String confirm_password, String nameDirector) {
+        if (TextUtils.isEmpty(companyName)){
+            binding.edittextCompanyName.requestFocus();
+            binding.edittextCompanyName.setError(getResources().getString(R.string.company_field_empty));
+            AppUtils.showSnackbar(getString(R.string.plz_enter_company), binding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(companyAddress)){
+            binding.edittextCompanyAddress.requestFocus();
+            binding.edittextCompanyAddress.setError(getResources().getString(R.string.company_add_field_empty));
+            AppUtils.showSnackbar(getString(R.string.plz_enter_company_address), binding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(businessId)||binding.autoCompleteText.getText().toString().equalsIgnoreCase(getResources().getString(R.string.select_your_sector))){
+            binding.autoCompleteText.requestFocus();
+            binding.autoCompleteText.setError(getResources().getString(R.string.select_activity_sector));
+            AppUtils.showSnackbar(getString(R.string.plz_select_activity_sector), binding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(phone)){
+            binding.edPhoneNo.requestFocus();
+            binding.edPhoneNo.setError(getResources().getString(R.string.phone_no_empty));
+            AppUtils.showSnackbar(getString(R.string.phone_no_empty), binding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(email)){
+            binding.edEmailId.requestFocus();
+            binding.edEmailId.setError(getResources().getString(R.string.email_empty));
+            AppUtils.showSnackbar(getString(R.string.email_empty), binding.parentLayout);
+            return false;
+        }
+        if (!AppUtils.isEmailValid(email)){
+            binding.edEmailId.requestFocus();
+            binding.edEmailId.setError(getResources().getString(R.string.invalid_email));
+            AppUtils.showSnackbar(getString(R.string.enter_valid_email), binding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(password)){
+            binding.edPassword.requestFocus();
+            binding.edPassword.setError(getResources().getString(R.string.password_empty));
+            AppUtils.showSnackbar(getString(R.string.password_empty), binding.parentLayout);
+            return false;
+        }
+        if (password.length() < 8||password.length()>16) {
+            binding.edPassword.requestFocus();
+            binding.edPassword.setError(getResources().getString(R.string.password_length));
+            AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
+            return false;
+        }
+        if (confirm_password.isEmpty()) {
+            binding.edConfirmPassword.requestFocus();
+            binding.edConfirmPassword.setError(getResources().getString(R.string.ed_confirm_password));
+            AppUtils.showSnackbar(getString(R.string.confirm_password_empty), binding.parentLayout);
+            return false;
+        }
+        if (confirm_password.length() < 8||confirm_password.length()>16) {
+            binding.edConfirmPassword.requestFocus();
+            binding.edConfirmPassword.setError(getResources().getString(R.string.password_length));
+            AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
+            return false;
+        }
+        if (!TextUtils.equals(password,confirm_password)) {
+            AppUtils.showSnackbar(getString(R.string.password_does_not_match), binding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(nameDirector)){
+            binding.edittextDirectorName.requestFocus();
+            binding.edittextDirectorName.setError(getResources().getString(R.string.director_name_empty));
+            AppUtils.showSnackbar(getString(R.string.please_enter_director_name_company), binding.parentLayout);
+            return false;
+        }
+        return true;
+    }
+
+    private void getBussinessList() {
+        showLoading(getResources().getString(R.string.please_wait));
+        authViewModel.getBussinessList().observe(this, bussinessList -> {
+            dismissLoading();
+            if (!bussinessList.error) {
+                activityName.clear();
+                activityId.clear();
+                activityName.add(0,getResources().getString(R.string.select_activity_sector));
+                activityId.add(0,"0");
+                for (int i=0;i<bussinessList.getResult().size();i++) {
+                    activityName.add(bussinessList.getResult().get(i).getName());
+                    activityId.add(String.valueOf(bussinessList.getResult().get(i).getId()));
+                }
+            } else {
+                if (bussinessList.getMessage()!=null) {
+                    AppUtils.openPopup(ProfessionalSignup.this, R.style.Dialod_UpDown, "error", bussinessList.getMessage());
+                }else {
+                    AppUtils.openPopup(ProfessionalSignup.this, R.style.Dialod_UpDown, "error",
+                            getResources().getString(R.string.something_wrong));
+                }
+            }
+        });
+    }
+
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GET_LOCATION && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+               // latitude = extras.getString(Constant.LATTITUDE);
+               // longitude=extras.getString(Constant.LONGITUDE);
+               String address=extras.getString(Constant.ADDRESS_USER);
+                if (address!=null&&!TextUtils.isEmpty(address)){
+                    binding.edittextCompanyAddress.setText(address);
+                }
+            }
+        }
         if (requestCode == COUNTRY_CODE) {
             if(resultCode == Activity.RESULT_OK){
                 if (data != null) {

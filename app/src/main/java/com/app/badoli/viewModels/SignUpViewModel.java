@@ -32,8 +32,4 @@ public class SignUpViewModel extends AndroidViewModel {
         return signupRepository.getMutableLiveData(name, email, phone, password, device_type, deviceToken,
                 confirm_password, country_id, agreeterms,roleId);
     }
-
-    public LiveData<BussinessList> getBussinessList() {
-        return signupRepository.getBussinessList();
-    }
 }

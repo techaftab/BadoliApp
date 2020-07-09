@@ -19,4 +19,7 @@ public interface Constant {
     String VERIFY_OTP = "verify_otp";
     String MOBILE = "mobile_user";
     String TYPE_LOGIN = "type_login";
+    String ADDRESS_USER = "address_user";
+    String LONGITUDE = "address_user";
+    String LATTITUDE = "address_user";
 }

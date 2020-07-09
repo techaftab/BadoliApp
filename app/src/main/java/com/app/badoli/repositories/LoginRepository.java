@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.QRResponse;
 import com.app.badoli.model.ResendOtpResponse;
@@ -184,4 +185,32 @@ public class LoginRepository {
         });
         return mutableLiveData;
     }
+
+    public LiveData<BussinessList> getBussinessList() {
+        MutableLiveData<BussinessList> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<BussinessList> call = apiService.getBussinessList();
+        call.enqueue(new Callback<BussinessList>() {
+            @Override
+            public void onResponse(@NonNull Call<BussinessList> call,@NonNull Response<BussinessList> response) {
+                Log.e("profile_image", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    BussinessList verifyOtpResponse=new BussinessList();
+                    verifyOtpResponse.error=true;
+                    mutableLiveData.setValue(verifyOtpResponse);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<BussinessList> call, @NonNull Throwable t) {
+                Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
+                BussinessList verifyOtpResponse=new BussinessList();
+                verifyOtpResponse.error=true;
+                mutableLiveData.setValue(verifyOtpResponse);
+            }
+        });
+        return mutableLiveData;
+    }
+
 }

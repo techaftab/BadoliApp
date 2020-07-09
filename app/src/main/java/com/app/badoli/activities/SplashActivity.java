@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -16,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.databinding.ActivitySplashBinding;
 import com.app.badoli.utilities.LoginPre;
 
 import java.util.Locale;
@@ -26,12 +30,13 @@ public class SplashActivity extends AppCompatActivity {
     Thread thread;
     static SharedPreferences sharedPreferences;
     Locale myLocale;
+    private ActivitySplashBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_splash);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
         if (!TextUtils.isEmpty(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua())) {
             setLocale(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());

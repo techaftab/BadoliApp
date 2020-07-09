@@ -93,18 +93,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             binding.rbProfessional.setBackground(null);
             binding.rbProfessional.setTextColor(getResources().getColor(R.color.text_orange));
             binding.rbParticular.setTextColor(getResources().getColor(R.color.white));
+            loadFragment(new UserLoginFragment(),R.anim.left_in,R.anim.right_out);
             binding.lnSignup.setVisibility(View.VISIBLE);
             binding.txtSignUp.setText(getResources().getString(R.string.sign_up));
-            loadFragment(new UserLoginFragment(),R.anim.left_in,R.anim.right_out);
         }
         if (binding.rbProfessional.isChecked()){
             binding.rbProfessional.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
             binding.rbParticular.setBackground(null);
             binding.rbParticular.setTextColor(getResources().getColor(R.color.text_orange));
             binding.rbProfessional.setTextColor(getResources().getColor(R.color.white));
+            loadFragment(new ProfressionalLoginFragment(),R.anim.right_in,R.anim.left_out);
             binding.lnSignup.setVisibility(View.GONE);
            // binding.txtSignUp.setText(getResources().getString(R.string.sign_up_as_manager));
-            loadFragment(new ProfressionalLoginFragment(),R.anim.right_in,R.anim.left_out);
+
         }
     }
 
