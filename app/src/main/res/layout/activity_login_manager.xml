@@ -28,20 +28,13 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_weight="0.40"
                     android:layout_height="@dimen/_320sdp">
 
                     <pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_320sdp"/>
-
-                    <ImageView
-                        android:id="@+id/imgBack"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_margin="@dimen/_8sdp"
-                        android:src="@drawable/back"
-                        android:padding="@dimen/_6sdp"/>
 
                     <TextView
                         android:id="@+id/txtDesc"
@@ -122,6 +115,15 @@
 
         </ScrollView>
 
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_margin="@dimen/_8sdp"
+            android:src="@drawable/back"
+            android:padding="@dimen/_6sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

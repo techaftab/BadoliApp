@@ -31,7 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator"
+        tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator,UnusedAttribute"
         tools:targetApi="m">
         <activity android:name=".auth.login.LoginManagerActivity" />
         <activity android:name=".auth.otp.VerifyOtpActivity" />
