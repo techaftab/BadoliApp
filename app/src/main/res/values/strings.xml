@@ -241,6 +241,9 @@
     <string name="permission_req">Permisions Required For This App</string>
     <string name="gps_disable_on">Your GPS seems to be disabled, do you want to enable it?</string>
     <string name="plz_enable_location">Please enabe location!</string>
+    <string name="enter_connection_code">Enter your connection code</string>
+    <string name="hint_code">ABCD1234</string>
+    <string name="continu">Continue</string>
 
 
     <string-array name="select_lang">

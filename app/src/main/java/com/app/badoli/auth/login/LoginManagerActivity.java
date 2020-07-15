@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.app.badoli.R;
 import com.app.badoli.auth.signup.professional.ProfessionalSignup;
+import com.app.badoli.config.Constant;
 import com.app.badoli.databinding.ActivityLoginManagerBinding;
 
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager;
@@ -16,9 +17,9 @@ import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager;
 public class LoginManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityLoginManagerBinding binding;
-    private ImageSlideAdapter imageSlideAdapter;
     private Integer[] images={R.drawable.img_one,R.drawable.img_two,R.drawable.img_three,R.drawable.img_four};
 
+    String type="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +28,18 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void init() {
+        type=getIntent().getStringExtra(Constant.TYPE_LOGIN);
+        if (type.equals("staff")){
+            binding.lnStaff.setVisibility(View.VISIBLE);
+            binding.lnMerchant.setVisibility(View.GONE);
+        }else {
+            binding.lnStaff.setVisibility(View.GONE);
+            binding.lnMerchant.setVisibility(View.VISIBLE);
+        }
         binding.txtSignUp.setOnClickListener(this);
         binding.imgBack.setOnClickListener(this);
 
-        imageSlideAdapter = new ImageSlideAdapter(LoginManagerActivity.this, images);
+        ImageSlideAdapter imageSlideAdapter = new ImageSlideAdapter(LoginManagerActivity.this, images);
         binding.viewPager.setAdapter(imageSlideAdapter);
         imageSlideAdapter.notifyDataSetChanged();
         binding.viewPager.setInterval(3000);
