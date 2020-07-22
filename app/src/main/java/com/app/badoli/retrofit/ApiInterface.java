@@ -2,6 +2,7 @@ package com.app.badoli.retrofit;
 
 import com.app.badoli.model.AirtelResponse;
 import com.app.badoli.model.BalanceResponse;
+import com.app.badoli.model.BannerModel;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.LoginResponse;
 import com.app.badoli.model.ProfileImageResponse;
@@ -103,4 +104,7 @@ public interface ApiInterface {
 
     @GET("transactionHistory")
     Call<TransactionHistory> getHistory(@Query("userid") String id);
+
+    @GET("getBanner")
+    Call<BannerModel> getBanner();
 }

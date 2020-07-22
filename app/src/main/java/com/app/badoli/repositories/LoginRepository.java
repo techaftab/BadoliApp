@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.app.badoli.model.BannerModel;
 import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.QRResponse;
@@ -213,4 +214,30 @@ public class LoginRepository {
         return mutableLiveData;
     }
 
+    public LiveData<BannerModel> getBanner() {
+        MutableLiveData<BannerModel> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<BannerModel> call = apiService.getBanner();
+        call.enqueue(new Callback<BannerModel>() {
+            @Override
+            public void onResponse(@NonNull Call<BannerModel> call,@NonNull Response<BannerModel> response) {
+                Log.e("profile_image", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    BannerModel verifyOtpResponse=new BannerModel();
+                    verifyOtpResponse.setError(true);
+                    mutableLiveData.setValue(verifyOtpResponse);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<BannerModel> call, @NonNull Throwable t) {
+                Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
+                BannerModel verifyOtpResponse=new BannerModel();
+                verifyOtpResponse.setError(true);
+                mutableLiveData.setValue(verifyOtpResponse);
+            }
+        });
+        return mutableLiveData;
+    }
 }

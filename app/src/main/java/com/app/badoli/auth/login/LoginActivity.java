@@ -1,7 +1,6 @@
 package com.app.badoli.auth.login;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -19,7 +18,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.app.badoli.R;
-import com.app.badoli.auth.signup.professional.ProfessionalSignup;
 import com.app.badoli.auth.signup.user.SignUpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.databinding.ActivityLoginBinding;

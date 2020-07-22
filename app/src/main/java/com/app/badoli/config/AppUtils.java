@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by aftab on 1/10/2018.
- * account: badoliplay@gmail.com
+ * account: badolipay@gmail.com
  *
  * password: b@doli2020
  */

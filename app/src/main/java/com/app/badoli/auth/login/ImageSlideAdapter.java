@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.app.badoli.R;
+import com.app.badoli.config.Constant;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -18,18 +19,18 @@ import java.util.List;
 public class ImageSlideAdapter extends PagerAdapter {
 
     private Context mCtx;
-    private Integer[] images;
+    private List<String> images;
     private String TAG=ImageSlideAdapter.class.getSimpleName();
 
 
-    public ImageSlideAdapter(Context context, Integer[] images) {
+    public ImageSlideAdapter(Context context, List<String> images) {
         this.mCtx = context;
         this.images = images;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return images.size();
     }
 
     @Override
@@ -61,13 +62,13 @@ public class ImageSlideAdapter extends PagerAdapter {
             imageView = view.findViewById(R.id.iv_slidingImages);
         }
 
-       /* if (imageView != null) {
-            Glide.with(mCtx).load(images.get(position)).placeholder(R.drawable.placeholder_image).into(imageView);
-        }*/
-        // Log.e(TAG,"IMAGES BANNER--->"+images.get(position));
         if (imageView != null) {
-            imageView.setImageResource(images[position]);
+            Glide.with(mCtx).load(Constant.IMAGE_URL+images.get(position)).placeholder(R.drawable.placeholder_image).into(imageView);
         }
+        // Log.e(TAG,"IMAGES BANNER--->"+images.get(position));
+       /* if (imageView != null) {
+            imageView.setImageResource(images.get(position));
+        }*/
         container.addView(view);
         return view;
 

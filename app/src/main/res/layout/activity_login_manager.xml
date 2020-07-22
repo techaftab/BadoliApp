@@ -158,6 +158,18 @@
                                 android:layout_margin="@dimen/_15sdp"
                                 android:textColor="@color/colorPrimaryDark"/>
 
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/box_orange_border"
+                                android:padding="@dimen/_8sdp"
+                                android:hint="@string/enter_pin"
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold"
+                                android:layout_marginLeft="@dimen/_15sdp"
+                                android:layout_marginRight="@dimen/_15sdp"
+                                android:textColor="@color/colorPrimaryDark"/>
+
                             <Button
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -194,6 +206,10 @@
             android:padding="@dimen/_6sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

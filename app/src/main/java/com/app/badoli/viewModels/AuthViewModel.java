@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.app.badoli.model.BannerModel;
 import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.ChangePasswordModel;
 import com.app.badoli.model.CountryResponse;
@@ -55,5 +56,9 @@ public class AuthViewModel extends AndroidViewModel {
 
     public LiveData<BussinessList> getBussinessList() {
         return loginRepository.getBussinessList();
+    }
+
+    public LiveData<BannerModel> getBanner() {
+        return loginRepository.getBanner();
     }
 }
