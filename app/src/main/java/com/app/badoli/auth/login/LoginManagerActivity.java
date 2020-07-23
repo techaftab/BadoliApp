@@ -109,7 +109,7 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
             if (!bannerModel.getError()) {
                 images.clear();
                 for (int b=0;b<bannerModel.getLoginBanner().size();b++) {
-                    images.add(Constant.BASE_URL + bannerModel.getLoginBanner().get(b).getImage());
+                    images.add(Constant.IMAGE_URL + bannerModel.getLoginBanner().get(b).getImage());
                 }
                 imageSlideAdapter.notifyDataSetChanged();
             } else {

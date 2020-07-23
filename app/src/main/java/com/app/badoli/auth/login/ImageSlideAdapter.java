@@ -63,7 +63,7 @@ public class ImageSlideAdapter extends PagerAdapter {
         }
 
         if (imageView != null) {
-            Glide.with(mCtx).load(Constant.IMAGE_URL+images.get(position)).placeholder(R.drawable.placeholder_image).into(imageView);
+            Glide.with(mCtx).load(images.get(position)).placeholder(R.drawable.placeholder_image).into(imageView);
         }
         // Log.e(TAG,"IMAGES BANNER--->"+images.get(position));
        /* if (imageView != null) {

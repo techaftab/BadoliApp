@@ -19,8 +19,6 @@ import com.app.badoli.activities.HomePageActivites.AgentActivity;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.databinding.HomeFragmentBinding;
 
-import java.util.Objects;
-
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public HomeFragment() {
@@ -37,7 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View view = homeFragmentBinding.getRoot();
         //((HomePageActivity) Objects.requireNonNull(getActivity())).headerHome();
         try {
-            Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }catch (Exception e){e.printStackTrace();}
         setUpListener();
@@ -45,7 +43,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setUpListener() {
-        ((HomePageActivity) Objects.requireNonNull(getContext())).homeData();
+        ((HomePageActivity) requireActivity()).homeData();
         homeFragmentBinding.payuMerchant.setOnClickListener(this);
         homeFragmentBinding.transferAgent.setOnClickListener(this);
         homeFragmentBinding.rechargeComte.setOnClickListener(this);
@@ -69,13 +67,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.transfer_agent:
                 Intent intent = new Intent(getActivity(), AgentActivity.class);
                 startActivity(intent);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
+                requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
                 break;
 
             case R.id.recharge_comte:
                 Intent wallet = new Intent(getActivity(), AddMoney.class);
                 startActivity(wallet);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.right_in,R.anim.left_out);
+                requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
                 break;
 
             case R.id.ln_corporate:

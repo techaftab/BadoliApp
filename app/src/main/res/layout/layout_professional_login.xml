@@ -54,7 +54,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_toStartOf="@+id/imgForward"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/_8sdp"
+                        android:padding="@dimen/_5sdp"
                         android:orientation="vertical">
 
                         <TextView
@@ -66,10 +66,11 @@
                             android:textSize="@dimen/_12ssp"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/monitor_transaction"
                             android:textStyle="normal"
+                            android:lines="2"
                             android:textColor="@color/dark_gray"
                             android:textSize="@dimen/_10ssp"/>
 
@@ -127,7 +128,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_toStartOf="@+id/imgManagerForward"
                         android:layout_centerVertical="true"
-                        android:padding="@dimen/_8sdp"
+                        android:padding="@dimen/_5sdp"
                         android:orientation="vertical">
 
                         <TextView
@@ -139,10 +140,11 @@
                             android:textSize="@dimen/_12ssp"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/manage_acc_buss"
                             android:textStyle="normal"
+                            android:lines="2"
                             android:textColor="@color/dark_gray"
                             android:textSize="@dimen/_10ssp"/>
 

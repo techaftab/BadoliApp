@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">BaDoli</string>
     <string name="edit_login">Numéro de téléphone / identifiant de messagerie</string>
     <string name="password">Mot de passe</string>
@@ -188,6 +188,65 @@
     <string name="paypal">PayPal</string>
     <string name="fr">Fr (French)</string>
     <string name="en">En (English)</string>
+
+    <string name="particular">Particulier</string>
+    <string name="professional">Professionnel</string>
+    <string name="please_wait">Veuillez patienter…</string>
+    <string name="Phone_no_length">Le numéro de téléphone doit comporter entre 7 et 15 chiffres.</string>
+    <string name="password_empty">Le mot de passe ne peut pas être vide.</string>
+    <string name="password_length"><![CDATA[>La longueur du mot de passe doit être de 8 à 16 caractères.]]></string>
+    <string name="phone_no_empty">Le numéro de téléphone ne peut pas être vide.</string>
+    <string name="new_password_empty">Le nouveau champ de mot de passe ne peut pas être vide.</string>
+    <string name="confirm_password_empty">Le champ Confirmer le mot de passe ne peut pas être vide.</string>
+    <string name="password_does_not_match">Le nouveau mot de passe et la confirmation du mot de passe sont différents.</string>
+    <string name="logging_in">Connexion…</string>
+    <string name="name_field_empty">Le champ Nom ne peut pas être vide.</string>
+    <string name="email_empty">Le champ Email ne peut pas être vide.</string>
+    <string name="enter_valid_email">Veuillez saisir une adresse e-mail valide.</string>
+    <string name="resending_otp">Renvoi d\'OTP…</string>
+    <string name="signing_in">Connexion…</string>
+    <string name="verifying_otp">Vérification de l\'OTP…</string>
+    <string name="fetching_code">Récupération du code…</string>
+    <string name="validating">Validation…</string>
+    <string name="sending_request">Envoi de la demande…</string>
+    <string name="i_staff">Je suis un employé</string>
+    <string name="monitor_transaction">Surveiller les transactions et les commandes.</string>
+    <string name="i_manager">Je suis un manager</string>
+    <string name="manage_acc_buss">Gérer le compte et les entreprises</string>
+    <string name="choose_login_mode">Choisissez votre mode de connexion</string>
+    <string name="name_director">Nom du directeur</string>
+    <string name="verify_otp">Vérifier OTP</string>
+    <string name="an_otp_sent_to_mobile">Un OTP envoyé au numéro de mobile.</string>
+    <string name="did_not_recieve_otp" >Vous n\'avez pas reçu d\'OTP?</string>
+    <string name="verify">Vérifier</string>
+    <string name="enter_valid_otp">Veuillez saisir un OTP valide.</string>
+    <string name="user_id_empty">ID utilisateur non disponible.\nVeuillez réessayer de vous connecter."</string>
+    <string name="plz_enter_otp_continue">Veuillez entrer le bureau du Procureur pour continuer.</string>
+    <string name="sign_up_as_manager">S\'inscrire en tant que Manager</string>
+    <string name="set_up_your_bussiness">Créez votre entreprise sur Badoli Pay en quelques étapes simples.</string>
+    <string name="company_field_empty">Company Fiels can\'t be empty.</string>
+    <string name="plz_enter_company">Les fiels d\'entreprise ne peuvent pas être vides.</string>
+    <string name="company_add_field_empty">Veuillez saisir le nom de l\'entreprise.</string>
+    <string name="plz_enter_company_address">Le champ d\'adresse de la société ne peut pas être vide.</string>
+    <string name="activity_field_empty">Veuillez saisir l\'adresse de l\'entreprise</string>
+    <string name="plz_select_activity_sector">Sélectionnez le secteur d\'activité.</string>
+    <string name="director_name_empty">Le champ du nom du directeur ne peut pas être vide.</string>
+    <string name="please_enter_director_name_company">Veuillez saisir le nom du directeur de la société.</string>
+    <string name="select_location">Sélectionnez l\'emplacement</string>
+    <string name="click_current_location">Obtenir l\'emplacement actuel</string>
+    <string name="search_address">Adresse de recherche</string>
+    <string name="set_location">Définissez votre emplacement</string>
+    <string name="gps_on_msg">Veuillez activer le GPS de votre téléphone pour une localisation précise.</string>
+    <string name="loading">Chargement…</string>
+    <string name="okay">OK</string>
+    <string name="enable_permission">Accédez aux paramètres et activez les autorisations</string>
+    <string name="permission_req">Autorisations requises pour cette application</string>
+    <string name="gps_disable_on">Votre GPS semble être désactivé, voulez-vous l\'activer?</string>
+    <string name="plz_enable_location">Veuillez enabe l\'emplacement!</string>
+    <string name="enter_connection_code">Entrez votre code de connexion</string>
+    <string name="hint_code">ABCD1234</string>
+    <string name="continu">Continuer</string>
+    <string name="enter_your_pin">Entrez votre code PIN</string>
 
     <string-array name="select_lang">
         <item>@string/en</item>

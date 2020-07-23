@@ -215,14 +215,14 @@
     <string name="name_director">Name of Director</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="an_otp_sent_to_mobile">An OTP Sent to mobile no.</string>
-    <string name="did_not_recieve_otp">Didn\'t recieve OTP?</string>
+    <string name="did_not_recieve_otp">Didn\'t receive OTP?</string>
     <string name="verify">Verify</string>
     <string name="enter_valid_otp">Please enter valid OTP.</string>
     <string name="user_id_empty">"User Id not available.\nPlease re-try login again. "</string>
     <string name="plz_enter_otp_continue">Please enter the OTP to continue.</string>
     <string name="sign_up_as_manager">Sign Up as Manager</string>
     <string name="set_up_your_bussiness">Set up your business on Badoli Pay in easy steps.</string>
-    <string name="company_field_empty">Company Fiels can\'t be empty.</string>
+    <string name="company_field_empty">Company Field can\'t be empty.</string>
     <string name="plz_enter_company">Please enter company name.</string>
     <string name="company_add_field_empty">Company address field can\'t be empty.</string>
     <string name="plz_enter_company_address">Please enter company address</string>
@@ -235,7 +235,7 @@
     <string name="search_address">Search Address</string>
     <string name="set_location">Set your location</string>
     <string name="gps_on_msg">Please Turn On your Phone GPS for Accurate Location.</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="okay">OK</string>
     <string name="enable_permission">Go to settings and enable permissions</string>
     <string name="permission_req">Permisions Required For This App</string>
@@ -244,6 +244,7 @@
     <string name="enter_connection_code">Enter your connection code</string>
     <string name="hint_code">ABCD1234</string>
     <string name="continu">Continue</string>
+    <string name="enter_your_pin">Enter Your Pin Code</string>
 
 
     <string-array name="select_lang">
