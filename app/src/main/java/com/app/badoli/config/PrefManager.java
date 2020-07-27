@@ -26,6 +26,10 @@ public class PrefManager {
     private static final String KEY_USER_IMAGE = "keyuserimage";
     private static final String KEY_QRCODE_IMAGE = "keyqrcodeimage";
     private static final String TAG_TOKEN = Constant.TAG_TOKEN;
+    private static final String PHONE_CODE = "keyphonecode";
+    private static final String COUNTRY_CODE = "keycountrycode";
+    private static final String PHONE = "keyphone";
+    private static final String PASSWORD = "keypassword";
 
     @SuppressLint("StaticFieldLeak")
     private static PrefManager mInstance;
@@ -42,15 +46,13 @@ public class PrefManager {
 
     public PrefManager(Context context) {
         mCtx = context;
-      //  prefs = context.getSharedPreferences(FIREBASE_CLOUD_MESSAGING, Context.MODE_PRIVATE);
+        pref = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public void setLogin(boolean isLoggedIn) {
-
+        editor=pref.edit();
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
-
-        // commit changes
-        editor.commit();
+        editor.apply();
     }
 
     public boolean isLoggedIn(){
@@ -66,8 +68,7 @@ public class PrefManager {
     }
 
     public void userLogin(UserData userData) {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor=pref.edit();
         editor.putString(KEY_USERID,userData.getId());
         editor.putString(KEY_TOKEN, userData.getAuth_token());
         editor.putString(KEY_COUNTRY_CODE, userData.getCountry_code());
@@ -83,41 +84,79 @@ public class PrefManager {
     }
 
     public void setWalletBalance(String balance){
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor=pref.edit();
         editor.putString(KEY_WALLET_BALANCE,balance);
         editor.apply();
     }
 
+    public String getWalletBalance() {
+        return pref.getString(KEY_WALLET_BALANCE,"");
+    }
 
     public UserData getUserData() {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new UserData(
-                sharedPreferences.getString(KEY_USERID, null),
-                sharedPreferences.getString(KEY_TOKEN,null),
-                sharedPreferences.getString(KEY_COUNTRY_CODE,null),
-                sharedPreferences.getString(KEY_COUNTRY_ID,null),
-                sharedPreferences.getString(KEY_DEVICE_TOKEN,null),
-                sharedPreferences.getString(KEY_EMAIL,null),
-                sharedPreferences.getString(KEY_MOBILE,null),
-                sharedPreferences.getString(KEY_NAME,null),
-                sharedPreferences.getString(KEY_WALLET_BALANCE,null),
-                sharedPreferences.getString(KEY_USER_IMAGE,null),
-                sharedPreferences.getString(KEY_QRCODE_IMAGE,null));
+                pref.getString(KEY_USERID, null),
+                pref.getString(KEY_TOKEN,null),
+                pref.getString(KEY_COUNTRY_CODE,null),
+                pref.getString(KEY_COUNTRY_ID,null),
+                pref.getString(KEY_DEVICE_TOKEN,null),
+                pref.getString(KEY_EMAIL,null),
+                pref.getString(KEY_MOBILE,null),
+                pref.getString(KEY_NAME,null),
+                pref.getString(KEY_WALLET_BALANCE,null),
+                pref.getString(KEY_USER_IMAGE,null),
+                pref.getString(KEY_QRCODE_IMAGE,null));
+    }
+    public void setPhoneCode(String phoneCode) {
+        editor=pref.edit();
+        editor.putString(this.PHONE_CODE,phoneCode);
+        editor.apply();
+    }
+    public String getPhoneCode() {
+        return pref.getString(PHONE_CODE,"");
     }
 
 
+    public void setCountryCode(String countryCode) {
+        editor=pref.edit();
+        editor.putString(this.COUNTRY_CODE,countryCode);
+        editor.apply();
+    }
+
+    public void setPhoneNumber(String phone) {
+        editor=pref.edit();
+        editor.putString(this.PHONE,phone);
+        editor.apply();
+    }
+
+    public String getPHONE() {
+        return pref.getString(PHONE,"");
+    }
+
+    public void setPassword(String password) {
+        editor=pref.edit();
+        editor.putString(this.PASSWORD,password);
+        editor.apply();
+    }
+
+    public String getPassword() {
+        return pref.getString(PASSWORD,"");
+    }
+
+    public String getCountryCode() {
+        return pref.getString(COUNTRY_CODE,"");
+    }
+
     public void logout() {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor=pref.edit();
         editor.clear();
         editor.apply();
         //mCtx.startActivity(new Intent(mCtx, SplashMainActivity.class));
     }
     public void saveNotificationSubscription(boolean value){
-        SharedPreferences.Editor edits = prefs.edit();
-        edits.putBoolean(SET_NOTIFY, value);
-        edits.apply();
+        editor=pref.edit();
+        editor.putBoolean(SET_NOTIFY, value);
+        editor.apply();
     }
     public boolean hasUserSubscribeToNotification(){
         return prefs.getBoolean(SET_NOTIFY, false);
@@ -127,8 +166,7 @@ public class PrefManager {
     }
 
     public boolean saveDeviceToken(String token){
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor=pref.edit();
         editor.putString(TAG_TOKEN, token);
         editor.apply();
         return true;
@@ -136,8 +174,7 @@ public class PrefManager {
 
     //this method will fetch the device token from shared preferences
     public String getDeviceToken(){
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(TAG_TOKEN, null);
+        return  pref.getString(TAG_TOKEN, null);
     }
 
     public boolean isFirstTimeLaunch() {
@@ -145,8 +182,8 @@ public class PrefManager {
     }
 
     public void setFirstTimeLaunch(boolean isFirstTime) {
+        editor=pref.edit();
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
-        editor.commit();
+        editor.apply();
     }
-
 }

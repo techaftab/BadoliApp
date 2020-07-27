@@ -47,10 +47,14 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
     private void init() {
         binding.forgetPassword.setOnClickListener(this);
         deviceToken= LoginPre.getActiveInstance(getActivity()).getDevice_token();
-        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""))) {
-            binding.edPhone.setText(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""));
-            binding.edPassword.setText(SplashActivity.getPreferences(Constant.REMEMBER_PASSWORD,""));
-            binding.rememberMe.setChecked(true);
+        try {
+            if (!TextUtils.isEmpty(PrefManager.getInstance(getActivity()).getPHONE())) {
+                binding.edPhone.setText(PrefManager.getInstance(getActivity()).getPHONE());
+                binding.edPassword.setText(PrefManager.getInstance(getActivity()).getPassword());
+                binding.rememberMe.setChecked(true);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
         binding.loginButton.setOnClickListener(v -> {
@@ -60,11 +64,11 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
                 getLoginResponse(phone, password);
             }
             if (binding.rememberMe.isChecked()) {
-                SplashActivity.savePreferences(Constant.REMEMBER_PHONE,phone);
-                SplashActivity.savePreferences(Constant.REMEMBER_PASSWORD,password);
+                PrefManager.getInstance(getActivity()).setPhoneNumber(phone);
+                PrefManager.getInstance(getActivity()).setPassword(password);
             } else {
-                SplashActivity.savePreferences(Constant.REMEMBER_PHONE,"");
-                SplashActivity.savePreferences(Constant.REMEMBER_PASSWORD,"");
+                PrefManager.getInstance(getActivity()).setPhoneNumber("");
+                PrefManager.getInstance(getActivity()).setPassword("");
             }
         });
     }
@@ -72,9 +76,9 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""))) {
-            binding.edPhone.setText(SplashActivity.getPreferences(Constant.REMEMBER_PHONE,""));
-            binding.edPassword.setText(SplashActivity.getPreferences(Constant.REMEMBER_PASSWORD,""));
+        if (!TextUtils.isEmpty(PrefManager.getInstance(getActivity()).getPHONE())) {
+            binding.edPhone.setText(PrefManager.getInstance(getActivity()).getPHONE());
+            binding.edPassword.setText(PrefManager.getInstance(getActivity()).getPassword());
             binding.rememberMe.setChecked(true);
         }
     }

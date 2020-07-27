@@ -125,15 +125,20 @@
                             android:layout_marginBottom="@dimen/_6sdp"
                             android:background="@drawable/purple_orange">
 
-                            <TextView
+                            <AutoCompleteTextView
                                 android:id="@+id/tvCountryCode"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:focusable="false"
+                                android:inputType="none"
+                                android:lines="1"
+                                android:editable="false"
                                 android:layout_margin="@dimen/_10sdp"
                                 android:background="@drawable/rl_back"
-                                android:text="@string/country_code"
+                                android:hint="@string/country_code_hint"
+                                android:textColorHint="@color/quantum_white_100"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/_12ssp" />

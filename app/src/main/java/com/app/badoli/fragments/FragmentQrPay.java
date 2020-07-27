@@ -276,7 +276,7 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
     }
 
     private boolean setValidation(String amount, String phone) {
-        float balance= Float.parseFloat(SplashActivity.getPreferences(Constant.BALANCE, ""));
+        float balance= Float.parseFloat(PrefManager.getInstance(getActivity()).getWalletBalance());
         if (TextUtils.isEmpty(amount)) {
             SweetToast.error(getActivity(),getResources().getString(R.string.enter_amount));
             return false;

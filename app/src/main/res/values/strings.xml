@@ -245,6 +245,8 @@
     <string name="hint_code">ABCD1234</string>
     <string name="continu">Continue</string>
     <string name="enter_your_pin">Enter Your Pin Code</string>
+    <string name="country_code_hint">+0</string>
+    <string name="country_no_empty">Country code cant\'t be empty.</string>
 
 
     <string-array name="select_lang">

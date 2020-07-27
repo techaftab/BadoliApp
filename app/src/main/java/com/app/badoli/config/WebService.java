@@ -35,7 +35,6 @@ public class WebService {
                 Log.e(TAG, new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     Balance.onUpdateBalance(response.body().getResult().replace(",",""));
-                    SplashActivity.savePreferences(Constant.BALANCE,response.body().getResult().replace(",",""));
                 }
             }
             @Override

@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
+import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityCountryListBinding;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.viewModels.AuthViewModel;
@@ -103,10 +105,12 @@ public class CountryListActivity extends AppCompatActivity implements CountryLis
 
     @Override
     public void onCountryClick(int phonecode, String name, int id) {
+        PrefManager.getInstance(CountryListActivity.this).setPhoneCode(String.valueOf(phonecode));
+        PrefManager.getInstance(CountryListActivity.this).setCountryCode(String.valueOf(id));
         Intent returnIntent = new Intent();
         returnIntent.putExtra(Constant.PHONE_CODE,String.valueOf(phonecode));
         returnIntent.putExtra(Constant.COUNTRY_NAME,name);
-        returnIntent.putExtra(Constant.COUNTRY_ID,id);
+        returnIntent.putExtra(Constant.COUNTRY_ID,String.valueOf(id));
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }

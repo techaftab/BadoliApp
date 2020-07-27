@@ -27,6 +27,7 @@ import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
+import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivitySignUpBinding;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.utilities.Validation;
@@ -66,9 +67,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
 
-        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.PHONE_CODE,""))) {
-            Log.e("ksjd", "-" + SplashActivity.getPreferences(Constant.PHONE_CODE,""));
-            binding.tvCountryCode.setText("+"+SplashActivity.getPreferences(Constant.PHONE_CODE,""));
+        if (!TextUtils.isEmpty(PrefManager.getInstance(SignUpActivity.this).getPhoneCode())) {
+            Log.e("ksjd", "-" + PrefManager.getInstance(SignUpActivity.this).getPhoneCode());
+            binding.tvCountryCode.setText("+"+PrefManager.getInstance(SignUpActivity.this).getPhoneCode());
+            countryId=PrefManager.getInstance(SignUpActivity.this).getCountryCode();
         }
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -142,7 +144,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             confirm_password = binding.edConfirmPassword.getText().toString();
             checked = binding.checReadAgreements.isChecked();
 
-            if (setValidation(name, phone, email, password, confirm_password)) {
+            if (setValidation(name, phone, email, password, confirm_password,countryId)) {
                 AppUtils.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
@@ -221,18 +223,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(SplashActivity.getPreferences(Constant.PHONE_CODE,""))) {
-            binding.tvCountryCode.setText("+".concat(SplashActivity.getPreferences(Constant.PHONE_CODE,"")));
+        if (!TextUtils.isEmpty(PrefManager.getInstance(SignUpActivity.this).getPhoneCode())) {
+            binding.tvCountryCode.setText("+".concat(PrefManager.getInstance(SignUpActivity.this).getPhoneCode()));
         }
     }
 
-    private boolean setValidation(String name, String phone, String email, String password, String confirm_password) {
+    private boolean setValidation(String name, String phone, String email, String password, String confirm_password, String countryId) {
         if (name.isEmpty()) {
             binding.edFullName.requestFocus();
             binding.edFullName.setError(getResources().getString(R.string.ed_fullName));
             AppUtils.showSnackbar(getString(R.string.name_field_empty), binding.parentLayout);
             return false;
-        } else if (phone.isEmpty()) {
+        }
+        if (TextUtils.isEmpty(countryId)){
+            binding.edPhoneNo.requestFocus();
+            binding.edPhoneNo.setError(getResources().getString(R.string.country_no_empty));
+            AppUtils.showSnackbar(getString(R.string.country_no_empty), binding.parentLayout);
+            return false;
+        }
+        if (phone.isEmpty()) {
             binding.edPhoneNo.requestFocus();
             binding.edPhoneNo.setError(getResources().getString(R.string.ed_phone));
             AppUtils.showSnackbar(getString(R.string.phone_no_empty), binding.parentLayout);
@@ -296,8 +305,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     String code=data.getStringExtra(Constant.PHONE_CODE);
                     countryId=id;
                     phoneCode=code;
-                    SplashActivity.savePreferences(Constant.PHONE_CODE,code);
-                    SplashActivity.savePreferences(Constant.COUNTRY_ID,id);
                     binding.tvCountryCode.setText("+"+phoneCode);
                 }
             }

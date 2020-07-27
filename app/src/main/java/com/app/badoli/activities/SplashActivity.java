@@ -1,24 +1,21 @@
 package com.app.badoli.activities;
 
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.preference.PreferenceManager;
 
-import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.databinding.ActivitySplashBinding;
 import com.app.badoli.utilities.LoginPre;
 
@@ -28,7 +25,6 @@ public class SplashActivity extends AppCompatActivity {
 
     int SPLASH_SCREEN_TIME_IN_MILLIS = 3000;
     Thread thread;
-    static SharedPreferences sharedPreferences;
     Locale myLocale;
     private ActivitySplashBinding binding;
 
@@ -37,7 +33,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
         if (!TextUtils.isEmpty(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua())) {
             setLocale(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());
             Log.e("language11", LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());
@@ -82,15 +77,5 @@ public class SplashActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
-    }
-
-    public static void savePreferences(String key, String value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    public static String getPreferences(String key, String val) {
-        return sharedPreferences.getString(key, val);
     }
 }

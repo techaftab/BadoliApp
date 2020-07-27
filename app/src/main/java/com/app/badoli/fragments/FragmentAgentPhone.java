@@ -14,9 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.config.AppUtils;
-import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
 import com.app.badoli.config.updateBalance;
@@ -133,23 +131,23 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
     }*/
 
     private boolean setValidation(String amount, String phone) {
-        Float balance=Float.valueOf(SplashActivity.getPreferences(Constant.BALANCE,""));
+        float balance= Float.parseFloat(PrefManager.getInstance(getActivity()).getWalletBalance());
         if (TextUtils.isEmpty(amount)) {
             fragmentAgentPhoneBinding.edittextAmount.requestFocus();
             SweetToast.error(getActivity(),getResources().getString(R.string.enter_amount));
             fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.enter_amount));
             return false;
-        }else if (Float.valueOf(amount)<=0){
+        }else if (Float.parseFloat(amount)<=0){
             fragmentAgentPhoneBinding.edittextAmount.requestFocus();
             SweetToast.error(getActivity(),getResources().getString(R.string.enter_valid_amount));
             fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.enter_valid_amount));
             return false;
-        }else if (Float.valueOf(amount)<10){
+        }else if (Float.parseFloat(amount)<10){
             fragmentAgentPhoneBinding.edittextAmount.requestFocus();
             SweetToast.error(getActivity(),getResources().getString(R.string.amount_should_10));
             fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.amount_should_10));
             return false;
-        }else if (Float.valueOf(amount)>balance){
+        }else if (Float.parseFloat(amount)>balance){
             fragmentAgentPhoneBinding.edittextAmount.requestFocus();
             SweetToast.error(getActivity(),getResources().getString(R.string.wallet_balance_low));
             fragmentAgentPhoneBinding.edittextAmount.setError(getResources().getString(R.string.wallet_balance_low));

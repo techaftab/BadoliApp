@@ -26,8 +26,10 @@ import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.auth.country.CountryListActivity;
 import com.app.badoli.auth.forget.ForgotPasswordActivity;
 import com.app.badoli.auth.login.LoginActivity;
+import com.app.badoli.auth.signup.user.SignUpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
+import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityProfessionalSignupBinding;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.AuthViewModel;
@@ -61,6 +63,12 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     private void viewUpdate() {
+        if (!TextUtils.isEmpty(PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode())) {
+            Log.e("ksjd", "-" + PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode());
+            binding.tvCountryCode.setText("+"+PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode());
+            countryId=PrefManager.getInstance(ProfessionalSignup.this).getCountryCode();
+            phoneCode=PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode();
+        }
         binding.tvCountryCode.setOnClickListener(this);
         binding.txtLogin.setOnClickListener(this);
         binding.imgBack.setOnClickListener(this);
@@ -318,8 +326,6 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                     String code=data.getStringExtra(Constant.PHONE_CODE);
                     countryId=id;
                     phoneCode=code;
-                    SplashActivity.savePreferences(Constant.PHONE_CODE,code);
-                    SplashActivity.savePreferences(Constant.COUNTRY_ID,id);
                     binding.tvCountryCode.setText("+"+phoneCode);
                 }
             }
