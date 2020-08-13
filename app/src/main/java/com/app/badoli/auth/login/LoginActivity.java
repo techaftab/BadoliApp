@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-
         viewUpdate();
         init();
     }
@@ -51,12 +50,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String deviceToken = instanceIdResult.getToken();
             LoginPre.getActiveInstance(LoginActivity.this).setDevice_token(deviceToken);
         });
+
         String selectedLan = LoginPre.getActiveInstance(LoginActivity.this).getLocaleLangua();
         if (selectedLan.equalsIgnoreCase("Fr (French)")) {
             binding.autoLang.setText("Fr");
         } else {
             binding.autoLang.setText("En");
         }
+
         String[] height=getResources().getStringArray(R.array.select_lang);
         ArrayAdapter<String> adapter=new ArrayAdapter<>(LoginActivity.this,R.layout.spinner_layout,R.id.spinner_text, height);
         binding.autoLang.setAdapter(adapter);
@@ -67,7 +68,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
         binding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
-            // TODO Auto-generated method stub
             binding.autoLang.showDropDown();
             binding.autoLang.requestFocus();
             return false;

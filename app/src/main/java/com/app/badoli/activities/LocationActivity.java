@@ -27,13 +27,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.databinding.ActivityLocationBinding;
-import com.app.badoli.viewModels.AuthViewModel;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -50,11 +48,9 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,13 +95,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         binding.imgBack.setOnClickListener(this);
         binding.btnSelect.setOnClickListener(this);
         mGeocoder = new Geocoder(LocationActivity.this);
-        binding.rlLocation.setOnClickListener(v -> {
+      /*  binding.rlLocation.setOnClickListener(v -> {
             List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
             Intent intent = new Autocomplete
                     .IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                     .build(LocationActivity.this);
             startActivityForResult(intent, 1);
-        });
+        });*/
 
 
 
@@ -266,8 +262,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         alert.show();
     }
 
-
-
     @Override
     public void onClick(View v) {
         if (v==binding.imgBack){
@@ -380,8 +374,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             current_address = AppUtils.getCompleteAddressString(LocationActivity.this, latLng.latitude, latLng.longitude);
         }
         address=current_address;
+        binding.txtAddress.setText(current_address);
         binding.locationMarkertext.setText(current_address);
-
     }
 
     @Override
@@ -402,7 +396,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 // retrive the data by using getPlace() method.
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Log.e(TAG, "Place: " + place.getAddress() + place.getPhoneNumber());
-
                 LatLng latLng = place.getLatLng();
                 if (latLng != null) {
                     Log.e(TAG, "PLACES--->" + place.getName() + ",\n" +
@@ -420,12 +413,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     Log.e(TAG, "PLACES--->" + place.getName() + ",\n" +
                             place.getAddress() + "\n" + place.getPhoneNumber());
                 }
-
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 Status status = Autocomplete.getStatusFromIntent(data);
                 // TODO: Handle the error.
                 Log.e(TAG, "--->" + status.getStatusMessage());
-
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
                 Log.e(TAG, "--->CANCELED");
@@ -443,11 +434,11 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         longitude= String.valueOf(lon);
         List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
         if (addresses != null && addresses.size() > 0&&addresses.get(0).getAddressLine(0)!=null){
-
             String addressLine1=addresses.get(0).getAddressLine(0);
             Log.d("ADDRESS LINE 1", "getPlaceInfo: "+addressLine1);
             address=addressLine1;
             binding.locationMarkertext.setText(addressLine1);
+            binding.txtAddress.setText(addressLine1);
         }
     }
 }

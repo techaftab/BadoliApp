@@ -10,6 +10,7 @@ import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.ProfileImageResponse;
 import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;
+import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.retrofit.ApiInterface;
 import com.app.badoli.retrofit.RetrofitConnection;
 import com.google.gson.Gson;
@@ -25,36 +26,39 @@ public class AccountRepositories {
 
     private String TAG=AccountRepositories.class.getSimpleName();
 
-    private MutableLiveData<SignupResponse> mutableLiveData = new MutableLiveData<>();
+
     private MutableLiveData<ProfileImageResponse> mutableLiveDataProfile = new MutableLiveData<>();
 
 
     public AccountRepositories() {
     }
 
-    public LiveData<SignupResponse> getMutableLiveData(String name, String email, String mobile, String password, int deviceType,
-                                                       String deviceToken, String confirmPassword, int countryId, int agreeterms, String roleId) {
-
+    public LiveData<UserSignUpResponse> getMutableLiveData(String name, String email, String mobile, String password, int deviceType,
+                                                           String deviceToken, String confirmPassword, int countryId, int agreeterms, String roleId) {
+        final MutableLiveData<UserSignUpResponse> mutableLiveData = new MutableLiveData<>();
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
-
-        Call<SignupResponse> call = apiService.getSignup(name, email, mobile, password, deviceType,
-                deviceToken, confirmPassword, countryId, agreeterms,roleId);
-
-        call.enqueue(new Callback<SignupResponse>() {
+        Call<UserSignUpResponse> call = apiService.getSignup(name, email, mobile, password, deviceType, deviceToken,
+                confirmPassword, countryId, agreeterms,roleId);
+        call.enqueue(new Callback<UserSignUpResponse>() {
             @Override
-            public void onResponse(@NonNull Call<SignupResponse> call,@NonNull Response<SignupResponse> response) {
-                Log.e(TAG, new Gson().toJson(response.message()));
-                mutableLiveData.setValue(response.body());
-                /*if (!response.body().error) {
-
-                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+            public void onResponse(@NonNull Call<UserSignUpResponse> call, @NonNull Response<UserSignUpResponse> response) {
+                Log.e("responsee", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
                 } else {
-                    Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
-                }*/
+                    UserSignUpResponse signInResponse = new UserSignUpResponse();
+                    signInResponse.setError(true);
+                    signInResponse.setMessage(signInResponse.getMessage());
+                    mutableLiveData.setValue(signInResponse);
+                }
             }
+
             @Override
-            public void onFailure(@NonNull Call<SignupResponse> call,@NonNull Throwable t) {
-                Log.e("error", Objects.requireNonNull(t.getMessage()));
+            public void onFailure(@NonNull Call<UserSignUpResponse> call, @NonNull Throwable t) {
+                UserSignUpResponse signInResponse = new UserSignUpResponse();
+                signInResponse.setError(true);
+                signInResponse.setMessage("");
+                mutableLiveData.setValue(signInResponse);
             }
         });
         return mutableLiveData;
@@ -98,5 +102,37 @@ public class AccountRepositories {
             }
         });
         return mutableLiveDataProfile;
+    }
+
+    public LiveData<SignupResponse> signUpProfessional(int deviceType, String device_token, String companyName, String companyAddress,
+                                                       String businessId, String countryId, String phone, String email, String password,
+                                                       String confirm_password, String nameDirector, int agreeTerms, String roleId) {
+        final MutableLiveData<SignupResponse> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<SignupResponse> call = apiService.signUpProfessional(deviceType, device_token,companyName,companyAddress,businessId,
+                countryId,phone,email,password,confirm_password,nameDirector,agreeTerms,roleId);
+        call.enqueue(new Callback<SignupResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SignupResponse> call, @NonNull Response<SignupResponse> response) {
+                Log.e("responsee", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                } else {
+                    SignupResponse signInResponse = new SignupResponse();
+                    signInResponse.setError(true);
+                    signInResponse.setMessage(signInResponse.message);
+                    mutableLiveData.setValue(signInResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SignupResponse> call, @NonNull Throwable t) {
+                SignupResponse signInResponse = new SignupResponse();
+                signInResponse.setError(true);
+                signInResponse.setMessage(signInResponse.message);
+                mutableLiveData.setValue(signInResponse);
+            }
+        });
+        return mutableLiveData;
     }
 }

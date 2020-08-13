@@ -13,10 +13,21 @@ public class LoginResponse {
     @Expose
     public String message;
 
+    @SerializedName("mobile_verify")
+    @Expose
+    public int mobile_verify;
+
+    @SerializedName("id")
+    @Expose
+    public int id;
+
+    @SerializedName("otp")
+    @Expose
+    public String otp;
+
     @SerializedName("result")
     @Expose
     public LoginResult result;
-
 
 
     public Boolean getError() {
@@ -33,6 +44,30 @@ public class LoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getMobile_verify() {
+        return mobile_verify;
+    }
+
+    public void setMobile_verify(int mobile_verify) {
+        this.mobile_verify = mobile_verify;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 
     public LoginResult getResult() {

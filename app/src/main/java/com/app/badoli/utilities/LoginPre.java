@@ -15,7 +15,7 @@ public class LoginPre {
  //   private Context context;
     private String isLoggedIn = "isLoggedIn";
     private String otp = "otp";
-    private String signup_id = "id";
+    private String signup_id = "badoli_user_id";
     private String access_token = "access_token";
     private String device_token= "device_token_firebase";
     private String mobile= "mobile";
@@ -131,13 +131,13 @@ public class LoginPre {
         editor.apply();
     }
 
-    public int getSignup_id() {
-        return mPreferences.getInt(this.signup_id, 1);
+    public String getSignup_id() {
+        return mPreferences.getString(this.signup_id, "");
     }
 
-    public void setSignup_id(int signup_id) {
+    public void setSignup_id(String signup_id) {
         editor = mPreferences.edit();
-        editor.putInt(this.signup_id, signup_id);
+        editor.putString(this.signup_id, signup_id);
         editor.apply();
     }
 

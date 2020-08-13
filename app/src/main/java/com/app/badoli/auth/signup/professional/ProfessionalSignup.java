@@ -11,7 +11,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -22,19 +21,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.LocationActivity;
-import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.auth.country.CountryListActivity;
-import com.app.badoli.auth.forget.ForgotPasswordActivity;
-import com.app.badoli.auth.login.LoginActivity;
-import com.app.badoli.auth.signup.user.SignUpActivity;
+import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityProfessionalSignupBinding;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.AuthViewModel;
+import com.app.badoli.viewModels.SignUpViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -51,6 +48,8 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
     ArrayList<String> activityName=new ArrayList<>();
     ArrayList<String> activityId=new ArrayList<>();
     String businessId="";
+    private String device_token;
+    private SignUpViewModel signUpViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +62,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     private void viewUpdate() {
+        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         if (!TextUtils.isEmpty(PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode())) {
             Log.e("ksjd", "-" + PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode());
             binding.tvCountryCode.setText("+"+PrefManager.getInstance(ProfessionalSignup.this).getPhoneCode());
@@ -80,6 +80,11 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
         } else {
             binding.autoLang.setText("En");
         }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String deviceToken = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(ProfessionalSignup.this).setDevice_token(deviceToken);
+            device_token= LoginPre.getActiveInstance(ProfessionalSignup.this).getDevice_token();
+        });
         String[] height = getResources().getStringArray(R.array.select_lang);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(ProfessionalSignup.this, R.layout.spinner_layout, R.id.spinner_text, height);
         binding.autoLang.setAdapter(adapter);
@@ -118,17 +123,14 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                 binding.autoCompleteText.showDropDown();
             }
         });
-        binding.autoCompleteText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String activity=parent.getItemAtPosition(position).toString();
-                for (int i=0;i<activityName.size();i++){
-                    if (activity.equalsIgnoreCase(activityName.get(i))) {
-                        businessId=activityId.get(i);
-                    }
+        binding.autoCompleteText.setOnItemClickListener((parent, view, position, id) -> {
+            String activity=parent.getItemAtPosition(position).toString();
+            for (int i=0;i<activityName.size();i++){
+                if (activity.equalsIgnoreCase(activityName.get(i))) {
+                    businessId=activityId.get(i);
                 }
-                Log.e(TAG,"ACTIVITY Name-->"+activity+", Id-->"+businessId);
             }
+            Log.e(TAG,"ACTIVITY Name-->"+activity+", Id-->"+businessId);
         });
     }
     private void init() {
@@ -182,13 +184,16 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             Intent intent = new Intent(ProfessionalSignup.this, CountryListActivity.class);
             startActivityForResult(intent,COUNTRY_CODE);
         }
+
         if (v==binding.txtLogin||v==binding.imgBack){
             finish();
         }
+
         if (v==binding.imgLocation){
             Intent intent = new Intent(ProfessionalSignup.this, LocationActivity.class);
             startActivityForResult(intent, GET_LOCATION);
         }
+
         if (v==binding.btnSignup){
             String companyName = binding.edittextCompanyName.getText().toString();
             String companyAddress = binding.edittextCompanyAddress.getText().toString();
@@ -199,9 +204,38 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             String confirm_password = binding.edConfirmPassword.getText().toString();
             String nameDirector = binding.edittextDirectorName.getText().toString();
             if (isValid(companyName,companyAddress,businessId,phone,email,password,confirm_password,nameDirector)){
-
+                signUp(companyName,companyAddress,businessId,phone,email,password,confirm_password,nameDirector);
             }
         }
+    }
+
+    private void signUp(String companyName, String companyAddress, String businessId, String phone,
+                        String email, String password, String confirm_password, String nameDirector) {
+        device_token=LoginPre.getActiveInstance(ProfessionalSignup.this).getDevice_token();
+        showLoading(getResources().getString(R.string.signing_in));
+        signUpViewModel.signUpProfessional(Constant.DEVICE_TYPE, device_token,companyName,companyAddress,businessId,
+                countryId,phone,email,password,confirm_password,nameDirector,1,"4")
+                .observe(this,
+                        signupResult -> {
+                            dismissLoading();
+                            if (signupResult!=null&&!signupResult.error) {
+                                int id = signupResult.result.getId();
+                                String otp = signupResult.result.getOtp();
+                                String token = signupResult.result.getToken();
+                                LoginPre.getActiveInstance(ProfessionalSignup.this).setSignup_id(String.valueOf(id));
+                                Intent intent = new Intent(ProfessionalSignup.this, VerifyOtpActivity.class);
+                                intent.putExtra(Constant.VERIFY_OTP,otp);
+                                intent.putExtra(Constant.MOBILE,phone);
+                                intent.putExtra(Constant.ROLES_ID,"4");
+                                startActivity(intent);
+                            } else {
+                                if (signupResult!=null&&signupResult.getMessage() != null){
+                                    AppUtils.openPopup(ProfessionalSignup.this,R.style.Dialod_UpDown,"error",signupResult.getMessage());
+                                }else {
+                                    AppUtils.openPopup(ProfessionalSignup.this,R.style.Dialod_UpDown,"error",getResources().getString(R.string.something_wrong));
+                                }
+                            }
+                        });
     }
 
     private boolean isValid(String companyName, String companyAddress, String businessId, String phone, String email,
@@ -248,7 +282,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             AppUtils.showSnackbar(getString(R.string.password_empty), binding.parentLayout);
             return false;
         }
-        if (password.length() < 8||password.length()>16) {
+        if (password.length() !=4) {
             binding.edPassword.requestFocus();
             binding.edPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
@@ -260,7 +294,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             AppUtils.showSnackbar(getString(R.string.confirm_password_empty), binding.parentLayout);
             return false;
         }
-        if (confirm_password.length() < 8||confirm_password.length()>16) {
+        if (confirm_password.length() !=4) {
             binding.edConfirmPassword.requestFocus();
             binding.edConfirmPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
@@ -274,6 +308,10 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             binding.edittextDirectorName.requestFocus();
             binding.edittextDirectorName.setError(getResources().getString(R.string.director_name_empty));
             AppUtils.showSnackbar(getString(R.string.please_enter_director_name_company), binding.parentLayout);
+            return false;
+        }
+        if (!binding.checkTerms.isChecked()){
+            AppUtils.showSnackbar(getString(R.string.check_term), binding.parentLayout);
             return false;
         }
         return true;
@@ -294,10 +332,11 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                 }
             } else {
                 if (bussinessList.getMessage()!=null) {
-                    AppUtils.openPopup(ProfessionalSignup.this, R.style.Dialod_UpDown, "error", bussinessList.getMessage());
-                }else {
-                    AppUtils.openPopup(ProfessionalSignup.this, R.style.Dialod_UpDown, "error",
-                            getResources().getString(R.string.something_wrong));
+                    AppUtils.openPopup(ProfessionalSignup.this, R.style.Dialod_UpDown,
+                            "error", bussinessList.getMessage());
+                } else {
+                    AppUtils.openPopup(ProfessionalSignup.this, R.style.Dialod_UpDown,
+                            "error",getResources().getString(R.string.something_wrong));
                 }
             }
         });
@@ -308,12 +347,12 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GET_LOCATION && resultCode == Activity.RESULT_OK) {
+        if(requestCode == GET_LOCATION && resultCode == Activity.RESULT_OK&&data!=null) {
             Bundle extras = data.getExtras();
             if (extras != null) {
                // latitude = extras.getString(Constant.LATTITUDE);
                // longitude=extras.getString(Constant.LONGITUDE);
-               String address=extras.getString(Constant.ADDRESS_USER);
+                String address=extras.getString(Constant.ADDRESS_USER);
                 if (address!=null&&!TextUtils.isEmpty(address)){
                     binding.edittextCompanyAddress.setText(address);
                 }
@@ -330,7 +369,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                 }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
+                // Write your code if there's no result
             }
         }
     }

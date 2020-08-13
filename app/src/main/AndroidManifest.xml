@@ -33,11 +33,17 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator,UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".auth.login.LoginManagerActivity" />
-        <activity android:name=".auth.otp.VerifyOtpActivity" />
-        <activity android:name=".auth.country.CountryListActivity" />
-        <activity android:name=".auth.signup.professional.ProfessionalSignup" />
-        <activity android:name=".auth.forget.ForgotPasswordActivity" />
+        <activity android:name=".auth.login.LoginManagerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".auth.otp.VerifyOtpActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".auth.country.CountryListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".auth.signup.professional.ProfessionalSignup"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".auth.forget.ForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBZ3O59KED5Kl--znKyOHMuhkdLvMJwc6Y"/>
@@ -58,7 +64,8 @@
 
         <activity
             android:name=".activities.LocationActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activities.HomePageActivites.AddMoney"
@@ -111,19 +118,23 @@
         <activity
             android:name=".auth.signup.user.SignUpActivity"
             android:configChanges="locale"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".auth.login.LoginActivity"
             android:configChanges="locale"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.HomePageActivites.HomePageActivity"
             android:configChanges="locale"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

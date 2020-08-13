@@ -17,6 +17,7 @@ import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.repositories.LoginRepository;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 
 public class AuthViewModel extends AndroidViewModel {
@@ -29,9 +30,9 @@ public class AuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<LoginResponse> getLogin(String mobile, String password, int device_type,
-                                            String devicetoken) {
+                                            String devicetoken, String roleId) {
 
-        return loginRepository.getMutableLiveData(mobile, password, device_type, devicetoken);
+        return loginRepository.getMutableLiveData(mobile, password, device_type, devicetoken,roleId);
     }
 
     public LiveData<ChangePasswordModel> changePassword(String mobile, String confirmPassword, String roleId) {
@@ -42,16 +43,16 @@ public class AuthViewModel extends AndroidViewModel {
         return loginRepository.getCountryList();
     }
 
-    public LiveData<VerifyOtpResponse> verifyOtp(String userId, String otp, String access_token) {
-        return loginRepository.verifyOtp(userId, otp, access_token);
+    public LiveData<VerifyOtpResponse> verifyOtp(String userId, String otp) {
+        return loginRepository.verifyOtp(userId, otp);
     }
 
-    public LiveData<QRResponse> sendQrcode(MultipartBody.Part file, String id) {
+    public LiveData<QRResponse> sendQrcode(MultipartBody.Part file, RequestBody id) {
         return loginRepository.sendQrCode(file,id);
     }
 
-    public LiveData<ResendOtpResponse> resendOtp(String userId, String access_token) {
-        return loginRepository.resendOtp(userId, access_token);
+    public LiveData<ResendOtpResponse> resendOtp(String userId) {
+        return loginRepository.resendOtp(userId);
     }
 
     public LiveData<BussinessList> getBussinessList() {

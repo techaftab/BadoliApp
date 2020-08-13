@@ -17,7 +17,9 @@ import com.app.badoli.R;
 import com.app.badoli.auth.forget.ForgotPasswordActivity;
 import com.app.badoli.config.Constant;
 import com.app.badoli.databinding.LayoutProfessionalLoginBinding;
+import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.AuthViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class ProfressionalLoginFragment extends Fragment implements View.OnClickListener {
 
@@ -38,6 +40,11 @@ public class ProfressionalLoginFragment extends Fragment implements View.OnClick
         binding.forgetPassword.setOnClickListener(this);
         binding.cardviewStaff.setOnClickListener(this);
         binding.cardViewManager.setOnClickListener(this);
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String token = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(getActivity()).setDevice_token(token);
+        });
     }
 
     @Override

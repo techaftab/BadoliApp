@@ -11,6 +11,7 @@ import com.app.badoli.model.ReferenceResponse;
 import com.app.badoli.model.ResendOtpResponse;
 import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;
+import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.model.WalletTransfer;
 import com.app.badoli.model.ChangePasswordModel;
@@ -18,6 +19,7 @@ import com.app.badoli.model.BussinessList;
 import com.app.badoli.repositories.TransactionHistory;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,34 +33,42 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("signup")
-    Call<SignupResponse> getSignup(@Field("name") String name,
-                                   @Field("email") String email,
-                                   @Field("mobile") String mobile,
-                                   @Field("password") String password,
-                                   @Field("device_type") int device_type,
-                                   @Field("device_token") String device_token,
-                                   @Field("confirm_password") String confirm_password,
-                                   @Field("country_id") int country_id,
-                                   @Field("agree_terms") int agree_terms,
-                                   @Field("roles_id") String roleId);
+    Call<UserSignUpResponse> getSignup(@Field("name") String name,
+                                       @Field("email") String email,
+                                       @Field("mobile") String mobile,
+                                       @Field("password") String password,
+                                       @Field("device_type") int device_type,
+                                       @Field("device_token") String device_token,
+                                       @Field("confirm_password") String confirm_password,
+                                       @Field("country_id") int country_id,
+                                       @Field("agree_terms") int agree_terms,
+                                       @Field("roles_id") String roleId);
+
+    @FormUrlEncoded
+    @POST("signup")
+    Call<SignupResponse> signUpProfessional(@Field("device_type") int deviceType, @Field("device_token") String device_token,
+                                            @Field("company_name") String companyName, @Field("company_address") String companyAddress,
+                                            @Field("merchant_activity_id") String businessId, @Field("country_id") String countryId,
+                                            @Field("mobile") String phone, @Field("email") String email, @Field("password") String password,
+                                            @Field("confirm_password") String confirm_password, @Field("name") String nameDirector,
+                                            @Field("agree_terms") int agreeTerms,@Field("roles_id") String roleId);
 
     @FormUrlEncoded
     @POST("verifyMobileOtp")
     Call<VerifyOtpResponse> verifyOtp(@Field("userid") String userid,
-                                      @Field("otp") String otp,
-                                      @Field("access_token") String access_token);
+                                      @Field("otp") String otp);
 
     @FormUrlEncoded
     @POST("login")
     Call<LoginResponse> getlogin(@Field("username") String username,
                                  @Field("password") String password,
                                  @Field("device_type") int device_type,
-                                 @Field("device_token") String device_token);
+                                 @Field("device_token") String device_token,
+                                 @Field("roles_id") String roleId);
 
     @FormUrlEncoded
     @POST("resendMobileOtp")
-    Call<ResendOtpResponse> resendMobileOtp(@Field("userid") String userid,
-                                            @Field("access_token") String access_token);
+    Call<ResendOtpResponse> resendMobileOtp(@Field("userid") String userid);
 
     @GET("countryList")
     Call<CountryResponse> getCountryList();
@@ -68,7 +78,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("saveQrcode")
-    Call<QRResponse> sendQrCode(@Part MultipartBody.Part file, @Part("userid") String id);
+    Call<QRResponse> sendQrCode(@Part MultipartBody.Part file, @Part("userid") RequestBody id);
 
     @Multipart
     @POST("updateProfileImage")
@@ -107,4 +117,6 @@ public interface ApiInterface {
 
     @GET("getBanner")
     Call<BannerModel> getBanner();
+
+
 }

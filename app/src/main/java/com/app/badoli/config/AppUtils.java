@@ -332,8 +332,8 @@ public class AppUtils {
         TextView txtTitle=dialg.findViewById(R.id.txt_title_popup);
       //  Button btnReciept=dialg.findViewById(R.id.btn_recipt);
         Button btnOk= dialg.findViewById(R.id.btn_okay);
-        txtTitle.setVisibility(View.GONE);
-      //  txtStatus.setText("Service Under Maintenance!!!\nComing Soon...");
+        //txtTitle.setVisibility(View.GONE);
+        txtTitle.setText("Service Under Maintenance!!!\nComing Soon...");
         imageView.setImageResource(R.drawable.maintenance);
        // btnReciept.setVisibility(View.GONE);
 

@@ -16,7 +16,7 @@
     <string name="invalid_email">Invalid Email</string>
     <string name="ed_password">Enter Password</string>
     <string name="ed_confirm_password">Enter Confirm Password</string>
-    <string name="invalid_password">Password Should have minimum 8 Characters</string>
+    <string name="invalid_password">Password Should have minimum 4 Characters</string>
     <string name="not_match">Password and Confirm Password not match.</string>
     <string name="check_term">Please Agree Terms and Conditions</string>
     <string name="remember_me">Remember Me</string>
@@ -28,7 +28,7 @@
     <string name="country_code">+91</string>
     <string name="free_to_contact">If facing any problem, feel free to contact us</string>
     <string name="close">Close</string>
-    <string name="enter_otp">Enter OTP Number</string>
+    <string name="enter_otp">Enter OTP sent to your mobile number</string>
     <string name="next">Next</string>
     <string name="payez_merchant">Payment</string>
     <string name="transfer_agent">Transfer Agent</string>
@@ -192,7 +192,7 @@
     <string name="please_wait">Please wait…</string>
     <string name="Phone_no_length">Phone number should be 07–15 digits long.</string>
     <string name="password_empty">Password can\'t be empty.</string>
-    <string name="password_length"><![CDATA[>Password length should be 8–16 characters long.]]></string>
+    <string name="password_length"><![CDATA[Password length should be 4 characters long.]]></string>
     <string name="phone_no_empty">Phone Number can\'t be empty.</string>
     <string name="new_password_empty">New password field cant\'t be empty.</string>
     <string name="confirm_password_empty">Confirm Password field cant\'t be empty.</string>
@@ -247,6 +247,9 @@
     <string name="enter_your_pin">Enter Your Pin Code</string>
     <string name="country_code_hint">+0</string>
     <string name="country_no_empty">Country code cant\'t be empty.</string>
+    <string name="resend_otp_in">"Resend OTP in"</string>
+    <string name="staff_code_empty">Staff code can\'t be empty.</string>
+    <string name="staff_pin_empty">Staff pin can\'t be empty.</string>
 
 
     <string-array name="select_lang">

@@ -15,8 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
-import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.auth.forget.ForgotPasswordActivity;
+import com.app.badoli.auth.otp.VerifyOtpActivity;
+import com.app.badoli.auth.signup.user.SignUpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
@@ -24,6 +25,7 @@ import com.app.badoli.databinding.LayoutLoginUserBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.AuthViewModel;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Objects;
 
@@ -56,6 +58,11 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
         }catch (Exception e){
             e.printStackTrace();
         }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String token = instanceIdResult.getToken();
+            LoginPre.getActiveInstance(getActivity()).setDevice_token(token);
+            deviceToken= LoginPre.getActiveInstance(getActivity()).getDevice_token();
+        });
 
         binding.loginButton.setOnClickListener(v -> {
            String phone = Objects.requireNonNull(binding.edPhone.getText()).toString();
@@ -102,19 +109,18 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
         if (password.isEmpty()) {
             AppUtils.showSnackbar(getString(R.string.password_empty), binding.parentLayout);
             return false;
-        } else if (password.length() < 6 || password.length() > 16) {
+        } else if (password.length() !=4) {
             AppUtils.showSnackbar(getString(R.string.password_length), binding.parentLayout);
             return false;
         }
         return true;
     }
 
-
     private void getLoginResponse(String phone, String password) {
         ((LoginActivity)requireActivity()).showLoading(getResources().getString(R.string.logging_in));
-        authViewModel.getLogin(phone,password,1,deviceToken).observe(getViewLifecycleOwner(), loginResponse -> {
+        authViewModel.getLogin(phone,password,1,deviceToken,"3").observe(getViewLifecycleOwner(), loginResponse -> {
             ((LoginActivity)requireActivity()).dismissLoading();
-            if (!loginResponse.error) {
+            if (loginResponse!=null&&!loginResponse.error) {
                 UserData userData = new UserData(
                         loginResponse.result.user.getId(),
                         loginResponse.result.user.getAuth_token(),
@@ -131,8 +137,19 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
                 LoginPre.getActiveInstance(getActivity()).setIsLoggedIn(true);
                 StartActivity();
             } else {
-                if (loginResponse.getMessage()!=null) {
-                    AppUtils.openPopup(getActivity(), R.style.Dialod_UpDown, "error", loginResponse.getMessage());
+                if (loginResponse!=null&&loginResponse.getMessage()!=null) {
+                    if (loginResponse.getMobile_verify()==2){
+                        String otp=loginResponse.getOtp();
+                        String id = String.valueOf(loginResponse.getId());
+                        LoginPre.getActiveInstance(getActivity()).setSignup_id(id);
+                        Intent intent = new Intent(getActivity(), VerifyOtpActivity.class);
+                        intent.putExtra(Constant.VERIFY_OTP,otp);
+                        intent.putExtra(Constant.MOBILE,phone);
+                        intent.putExtra(Constant.ROLES_ID,"3");
+                        startActivity(intent);
+                    }else {
+                        AppUtils.openPopup(getActivity(), R.style.Dialod_UpDown, "error", loginResponse.getMessage());
+                    }
                 }else {
                     AppUtils.openPopup(getActivity(), R.style.Dialod_UpDown, "error", getResources().getString(R.string.something_wrong));
                 }

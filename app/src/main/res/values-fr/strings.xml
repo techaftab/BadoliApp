@@ -16,7 +16,7 @@
     <string name="invalid_email">Email invalide</string>
     <string name="ed_password">Entrer le mot de passe</string>
     <string name="ed_confirm_password">Entrez Confirmer le mot de passe</string>
-    <string name="invalid_password">Le mot de passe doit contenir au moins 8 caractères</string>
+    <string name="invalid_password">Le mot de passe doit contenir au moins 4 caractères</string>
     <string name="not_match">Le mot de passe et la confirmation du mot de passe ne correspondent pas.</string>
     <string name="check_term">Veuillez accepter les termes et conditions</string>
     <string name="remember_me">Souviens-toi de moi</string>
@@ -28,7 +28,6 @@
     <string name="country_code">+91</string>
     <string name="free_to_contact">En cas de problème, n\'hésitez pas à nous contacter</string>
     <string name="close">Fermer</string>
-    <string name="enter_otp">Entrez le numéro OTP</string>
     <string name="next">Prochain</string>
     <string name="payez_merchant">Paiement</string>
     <string name="transfer_agent">Transfert d\'argent</string>
@@ -194,7 +193,7 @@
     <string name="please_wait">Veuillez patienter…</string>
     <string name="Phone_no_length">Le numéro de téléphone doit comporter entre 7 et 15 chiffres.</string>
     <string name="password_empty">Le mot de passe ne peut pas être vide.</string>
-    <string name="password_length"><![CDATA[>La longueur du mot de passe doit être de 8 à 16 caractères.]]></string>
+    <string name="password_length"><![CDATA[La longueur du mot de passe doit être de 4 caractères.]]></string>
     <string name="phone_no_empty">Le numéro de téléphone ne peut pas être vide.</string>
     <string name="new_password_empty">Le nouveau champ de mot de passe ne peut pas être vide.</string>
     <string name="confirm_password_empty">Le champ Confirmer le mot de passe ne peut pas être vide.</string>

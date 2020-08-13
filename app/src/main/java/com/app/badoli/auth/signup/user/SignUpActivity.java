@@ -21,7 +21,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.auth.country.CountryListActivity;
 import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
@@ -33,7 +32,6 @@ import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.utilities.Validation;
 import com.app.badoli.viewModels.SignUpViewModel;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
 
 import java.util.Locale;
 
@@ -174,7 +172,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
         viewUpdate();
         super.onConfigurationChanged(newConfig);
-
     }
 
 
@@ -196,26 +193,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void getSignupResponse() {
         device_token=LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();
         showLoading(getResources().getString(R.string.signing_in));
-        String roleId = "3";
         signUpViewModel.getSignUp(name, email, phone, password, Constant.DEVICE_TYPE, device_token, confirm_password,
-                Integer.parseInt(countryId), 1, roleId)
+                Integer.parseInt(countryId), 1, "3")
                 .observe(this,
                 signupResult -> {
-                    Log.e("responsee", new Gson().toJson(signupResult.message));
                     dismissLoading();
-                    if (!signupResult.error) {
-                        Toast.makeText(SignUpActivity.this, signupResult.getMessage(), Toast.LENGTH_SHORT).show();
-                        int id = signupResult.result.getId();
-                        otp = signupResult.result.getOtp();
-                        String token = signupResult.result.getToken();
-                        LoginPre.getActiveInstance(SignUpActivity.this).setSignup_id(id);
-                        LoginPre.getActiveInstance(SignUpActivity.this).setAccess_token(token);
+                    if (signupResult!=null&&!signupResult.getError()) {
+                       //     Toast.makeText(SignUpActivity.this, signupResult.getMessage(), Toast.LENGTH_SHORT).show();
+                        int id = signupResult.getResult().getId();
+                        otp = signupResult.getResult().getOtp();
+                      //  String token = signupResult.result.getToken();
+                        LoginPre.getActiveInstance(SignUpActivity.this).setSignup_id(String.valueOf(id));
+                       // LoginPre.getActiveInstance(SignUpActivity.this).setAccess_token(token);
                         Intent intent = new Intent(SignUpActivity.this, VerifyOtpActivity.class);
                         intent.putExtra(Constant.VERIFY_OTP,otp);
                         intent.putExtra(Constant.MOBILE,phone);
+                        intent.putExtra(Constant.ROLES_ID,"3");
                         startActivity(intent);
                     } else {
-                        Toast.makeText(SignUpActivity.this, signupResult.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (signupResult!=null&&signupResult.getMessage() != null){
+                            AppUtils.openPopup(SignUpActivity.this,R.style.Dialod_UpDown,"error",signupResult.getMessage());
+                        }else {
+                            AppUtils.openPopup(SignUpActivity.this,R.style.Dialod_UpDown,"error",getResources().getString(R.string.something_wrong));
+                        }
                     }
                 });
     }
@@ -266,7 +266,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             binding.edPassword.setError(getResources().getString(R.string.enter_new_password));
             AppUtils.showSnackbar(getString(R.string.new_password_empty), binding.parentLayout);
             return false;
-        } else if (password.length() < 8||password.length()>16) {
+        } else if (password.length() != 4) {
             binding.edPassword.requestFocus();
             binding.edPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);

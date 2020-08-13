@@ -92,9 +92,11 @@
                     android:paddingRight="@dimen/_6sdp"
                     android:textSize="@dimen/_11ssp"
                     android:inputType="textPassword"
+                    android:maxLength="4"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@android:color/white"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
 

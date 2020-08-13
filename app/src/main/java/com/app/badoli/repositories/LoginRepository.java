@@ -11,6 +11,7 @@ import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.QRResponse;
 import com.app.badoli.model.ResendOtpResponse;
+import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.google.gson.Gson;
 import com.app.badoli.model.LoginResponse;
@@ -21,6 +22,7 @@ import com.app.badoli.model.ChangePasswordModel;
 import java.util.Objects;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,22 +36,30 @@ public class LoginRepository {
     }
 
     public LiveData<LoginResponse> getMutableLiveData(String mobile, String password, int device_type,
-                                                      String devicetoken) {
-
+                                                      String devicetoken, String roleId) {
+        final MutableLiveData<LoginResponse> mutableLiveData = new MutableLiveData<>();
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
-
-        Call<LoginResponse> call = apiService.getlogin(mobile, password, device_type, devicetoken);
-
+        Call<LoginResponse> call = apiService.getlogin(mobile, password, device_type, devicetoken,roleId);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(@NonNull Call<LoginResponse> call,@NonNull Response<LoginResponse> response) {
-               // Log.e(TAG, new Gson().toJson(response.body()));
-                mutableLiveData.setValue(response.body());
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+                Log.e("responsee", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                } else {
+                    LoginResponse signInResponse = new LoginResponse();
+                    signInResponse.setError(true);
+                    signInResponse.setMessage(signInResponse.getMessage());
+                    mutableLiveData.setValue(signInResponse);
+                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<LoginResponse> call,@NonNull Throwable t) {
-
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                LoginResponse signInResponse = new LoginResponse();
+                signInResponse.setError(true);
+                signInResponse.setMessage("");
+                mutableLiveData.setValue(signInResponse);
             }
         });
         return mutableLiveData;
@@ -102,10 +112,10 @@ public class LoginRepository {
         return mutableLiveData;
     }
 
-    public LiveData<VerifyOtpResponse> verifyOtp(String userId, String otp, String access_token) {
+    public LiveData<VerifyOtpResponse> verifyOtp(String userId, String otp) {
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
         MutableLiveData<VerifyOtpResponse> mutableLiveData = new MutableLiveData<>();
-        Call<VerifyOtpResponse> call = apiService.verifyOtp(userId, otp, access_token);
+        Call<VerifyOtpResponse> call = apiService.verifyOtp(userId, otp);
         call.enqueue(new Callback<VerifyOtpResponse>() {
             @Override
             public void onResponse(@NonNull Call<VerifyOtpResponse> call,@NonNull Response<VerifyOtpResponse> response) {
@@ -129,7 +139,7 @@ public class LoginRepository {
         return mutableLiveData;
     }
 
-    public LiveData<QRResponse> sendQrCode(MultipartBody.Part file, String id) {
+    public LiveData<QRResponse> sendQrCode(MultipartBody.Part file, RequestBody id) {
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
         MutableLiveData<QRResponse> mutableLiveData = new MutableLiveData<>();
         Call<QRResponse> call = apiService.sendQrCode(file, id);
@@ -158,10 +168,10 @@ public class LoginRepository {
         return mutableLiveData;
     }
 
-    public LiveData<ResendOtpResponse> resendOtp(String userId, String access_token) {
+    public LiveData<ResendOtpResponse> resendOtp(String userId) {
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
         MutableLiveData<ResendOtpResponse> mutableLiveData = new MutableLiveData<>();
-        Call<ResendOtpResponse> call = apiService.resendMobileOtp(userId, access_token);
+        Call<ResendOtpResponse> call = apiService.resendMobileOtp(userId);
 
         call.enqueue(new Callback<ResendOtpResponse>() {
             @Override
