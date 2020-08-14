@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_toStartOf="@+id/img_r"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/user_request_ic"
                     android:layout_centerVertical="true">
@@ -53,17 +53,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/request"
-                        android:paddingLeft="@dimen/_8sdp"
-                        android:paddingRight="@dimen/_8sdp"
                         android:textColor="@color/header_text"
                         android:textSize="@dimen/SP18" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_8sdp"
                         android:textStyle="normal"
-                        android:paddingRight="@dimen/_8sdp"
                         android:text="@string/by_qr" />
 
                 </LinearLayout>
@@ -107,7 +103,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_toStartOf="@+id/img_pay"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingRight="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_8sdp"
@@ -117,6 +114,7 @@
                     android:textSize="@dimen/SP18" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_pay"
                     android:layout_width="@dimen/DP35"
                     android:layout_height="@dimen/DP35"
                     android:padding="@dimen/DP8"
@@ -153,8 +151,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_toStartOf="@+id/img_qr"
                     android:layout_toEndOf="@+id/pay_by_qr_ic"
                     android:text="@string/pay_qr"
                     android:paddingLeft="@dimen/_8sdp"
@@ -163,6 +162,7 @@
                     android:textSize="@dimen/SP18" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_qr"
                     android:layout_width="@dimen/DP35"
                     android:layout_height="@dimen/DP35"
                     android:padding="@dimen/DP8"
@@ -199,7 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/DP8"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_toStartOf="@+id/img_payment"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/payment_services"
                     android:text="@string/pay_service"
@@ -208,6 +209,7 @@
                     tools:ignore="RelativeOverlap" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_payment"
                     android:layout_width="@dimen/DP35"
                     android:layout_height="@dimen/DP35"
                     android:padding="@dimen/DP8"

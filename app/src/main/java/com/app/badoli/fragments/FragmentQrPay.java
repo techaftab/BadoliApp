@@ -20,16 +20,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.zxing.Result;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
-import com.app.badoli.activities.SplashActivity;
 import com.app.badoli.config.AppUtils;
-import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentQrPayBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.viewModels.TranferViewModel;
+import com.google.zxing.Result;
 
 import org.json.JSONArray;
 import org.json.JSONException;

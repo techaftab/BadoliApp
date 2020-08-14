@@ -38,7 +38,7 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     private void listener() {
-        ((HomePageActivity) Objects.requireNonNull(getContext())).updateHeader();
+        ((HomePageActivity) requireContext()).updateHeader();
         fragmentBinding.payById.setOnClickListener(this);
         fragmentBinding.requestPay.setOnClickListener(this);
         fragmentBinding.payByQr.setOnClickListener(this);

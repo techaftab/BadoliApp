@@ -44,7 +44,7 @@
     <string name="transaction">Transactions</string>
     <string name="help">Help</string>
     <string name="request">Request</string>
-    <string name="by_qr">By QR Code, ID and Phone Number</string>
+    <string name="by_qr">By QR Code,Phone Number</string>
     <string name="pay_phone">Pay by Phone , ID</string>
     <string name="pay_qr">Pay By QR Code</string>
     <string name="pay_service">Payment Services</string>

@@ -43,7 +43,7 @@
     <string name="transaction">Transactions</string>
     <string name="help">Aidez-moi</string>
     <string name="request">Demander de l\'argent</string>
-    <string name="by_qr">Par QR Code, ID et numéro de téléphone</string>
+    <string name="by_qr">Par QR Code, numéro de téléphone</string>
     <string name="pay_phone">Payer par téléphone, pièce d\'identité</string>
     <string name="pay_qr">Payer par QR Codet</string>
     <string name="pay_service">Payer un Service</string>
