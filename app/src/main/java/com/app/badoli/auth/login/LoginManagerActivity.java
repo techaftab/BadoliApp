@@ -32,7 +32,6 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
 
     ActivityLoginManagerBinding binding;
    // private Integer[] images={R.drawable.img_one,R.drawable.img_two,R.drawable.img_three,R.drawable.img_four};
-
     String type="";
     private AuthViewModel authViewModel;
     ImageSlideAdapter imageSlideAdapter;
@@ -208,7 +207,8 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
                         loginResponse.result.user.getName(),
                         loginResponse.result.user.getWallet_balance(),
                         loginResponse.result.user.getUser_image(),
-                        loginResponse.result.user.getQrcode_image());
+                        loginResponse.result.user.getQrcode_image(),
+                        "4");
                 PrefManager.getInstance(LoginManagerActivity.this).userLogin(userData);
                 LoginPre.getActiveInstance(LoginManagerActivity.this).setIsLoggedIn(true);
                 StartActivity();

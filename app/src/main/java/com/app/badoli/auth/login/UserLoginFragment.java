@@ -132,7 +132,8 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
                         loginResponse.result.user.getName(),
                         loginResponse.result.user.getWallet_balance(),
                         loginResponse.result.user.getUser_image(),
-                        loginResponse.result.user.getQrcode_image());
+                        loginResponse.result.user.getQrcode_image(),
+                        "3");
                 PrefManager.getInstance(getActivity()).userLogin(userData);
                 LoginPre.getActiveInstance(getActivity()).setIsLoggedIn(true);
                 StartActivity();

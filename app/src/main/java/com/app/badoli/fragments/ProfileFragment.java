@@ -76,13 +76,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         View view = profileFragmentBinding.getRoot();
         profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
         userData= PrefManager.getInstance(getActivity()).getUserData();
-        ((HomePageActivity)Objects.requireNonNull(getActivity())).hideHeader();
+        ((HomePageActivity)requireActivity()).hideHeader();
         try {
             if (getActivity()!=null) {
                 getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             }
-            Objects.requireNonNull(getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+            requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -93,8 +93,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void loadData() {
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(profileFragmentBinding.toolbarProfile);
-        Objects.requireNonNull(Objects.requireNonNull((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle(null);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(profileFragmentBinding.toolbarProfile);
+        Objects.requireNonNull(Objects.requireNonNull((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(null);
         //Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setHomeButtonEnabled(true);
         //Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         //Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setDisplayShowHomeEnabled(true);
@@ -127,7 +127,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     .placeholder(R.drawable.logo)
                     .error(R.drawable.logo);
 
-            Glide.with(Objects.requireNonNull(getActivity()))
+            Glide.with(requireActivity())
                     .load(Constant.IMAGE_URL+userData.getUser_image())
                     .apply(options)
                     .fitCenter()
@@ -167,7 +167,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private boolean checkAndRequestPermissions() {
-        int WRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int WRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int READ_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
         int CAMERA = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -190,7 +190,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void EnableRuntimePermissionToAccessCamera(){
-        if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()),
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
                 Manifest.permission.CAMERA)) {
             // Printing toast message after enabling runtime permission.
             Toast.makeText(getActivity(),getResources().getString(R.string.camera_perm_allow),
@@ -215,7 +215,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private void selectImage() {
         try {
-            PackageManager pm = Objects.requireNonNull(getActivity()).getPackageManager();
+            PackageManager pm = requireActivity().getPackageManager();
             int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, getActivity().getPackageName());
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
                 String take_photo=getResources().getString(R.string.take_photo);
@@ -265,7 +265,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 Log.e("Activity", "Pick from Camera::>>> ");
 
                // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                destination = new File(Objects.requireNonNull(getActivity()).getCacheDir(), "profile_image.jpg");
+                destination = new File(requireActivity().getCacheDir(), "profile_image.jpg");
                 FileOutputStream fo;
                 try {
                     fo = new FileOutputStream(destination);
@@ -277,7 +277,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 profileFragmentBinding.profileImage.setImageBitmap(bitmap);
                 imgPath = destination.getAbsolutePath();
                 destination =new File(imgPath);
-                sendImage(Integer.valueOf(userData.getId()), destination);
+                sendImage(Integer.parseInt(userData.getId()), destination);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -285,7 +285,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         } else if (requestCode == PICK_IMAGE_GALLERY && resultCode == RESULT_OK && data!=null) {
             Uri selectedImage = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(), selectedImage);
+                bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImage);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
                 Log.e("Activity", "Pick from Gallery::>>> ");
@@ -305,7 +305,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         Log.e(TAG,"USER ID--->"+id);
         File compressedImgFile=null;
         try {
-            compressedImgFile = new Compressor(Objects.requireNonNull(getActivity())).compressToFile(file);
+            compressedImgFile = new Compressor(requireActivity()).compressToFile(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -341,7 +341,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                         profileImageResponse.result.getName(),
                         profileImageResponse.result.getWalletBalance(),
                         profileImageResponse.result.getUser_image(),
-                        profileImageResponse.result.getQrcode_image());
+                        profileImageResponse.result.getQrcode_image(),
+                        "3");
                 PrefManager.getInstance(getActivity()).userLogin(userData);
             } else {
                 profileFragmentBinding.progreebarProfile.setVisibility(View.GONE);
@@ -351,7 +352,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Audio.Media.DATA};
-        @SuppressLint("Recycle") Cursor cursor = Objects.requireNonNull(getActivity()).getContentResolver().query(contentUri, proj, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = requireActivity().getContentResolver().query(contentUri, proj, null, null, null);
         int column_index = 0;
         if (cursor != null) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);

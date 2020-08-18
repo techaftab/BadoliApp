@@ -34,7 +34,9 @@ public class WebService {
             public void onResponse(@NonNull Call<BalanceResponse> call, @NonNull Response<BalanceResponse> response) {
                 Log.e(TAG, new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    Balance.onUpdateBalance(response.body().getResult().replace(",",""));
+                    if (!response.body().error) {
+                        Balance.onUpdateBalance(response.body().getResult().replace(",", ""));
+                    }
                 }
             }
             @Override

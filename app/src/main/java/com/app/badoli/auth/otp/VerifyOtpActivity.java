@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
+import com.app.badoli.auth.signup.professional.ProfessionalSignup;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
@@ -205,7 +207,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         verifyOtpResponse.result.getName(),
                         verifyOtpResponse.result.getWalletBalance(),
                         verifyOtpResponse.result.getUser_image(),
-                        verifyOtpResponse.result.getQrcode_image());
+                        verifyOtpResponse.result.getQrcode_image(),
+                        roleId);
                 PrefManager.getInstance(VerifyOtpActivity.this).userLogin(userData);
                 if (roleId.equalsIgnoreCase("3")) {
                     Thread mThread = new Thread() {
@@ -218,7 +221,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                 }else {
                     dismissLoading();
                     LoginPre.getActiveInstance(VerifyOtpActivity.this).setIsLoggedIn(true);
-                    Intent intent = new Intent(VerifyOtpActivity.this, HomePageActivity.class);
+                    Intent intent = new Intent(VerifyOtpActivity.this, ProfessionalActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();

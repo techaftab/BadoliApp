@@ -65,6 +65,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
 
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+
         viewUpdate();
 
         updateLanguage();
@@ -74,7 +75,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private void viewUpdate() {
         homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
         homePageBinding.setHandler(homeViewModel);
-        // activity=HomePageActivity.this;
+        //activity=HomePageActivity.this;
         //setupBottomNavigationListener();
         userData= PrefManager.getInstance(HomePageActivity.this).getUserData();
         handler=new Handler();
@@ -167,7 +168,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         homePageBinding.progressbarMain.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
-
 
     @SuppressLint("SetTextI18n")
     public void loadData() {
@@ -305,7 +305,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         //BottomNavigationItemView itemView = bottomNavigationView.findViewById(R.id.bottom_navigation);
         View v = bottomNavigationView.findViewById(itemId);
         BottomNavigationItemView itemView = (BottomNavigationItemView) v;
-        View badge = LayoutInflater.from(HomePageActivity.this).inflate(R.layout.layout_bottom_badge, bottomNavigationView, false);
+        View badge = LayoutInflater.from(HomePageActivity.this).inflate(R.layout.layout_bottom_badge,
+                bottomNavigationView, false);
         TextView text = badge.findViewById(R.id.badge_text_view);
         text.setText(Html.fromHtml("<font color='#FFFFFF'>"+getResources().getString(R.string.new_request)+"["+"</font>"
                 +"<font color='#FF6700'>"+value+"</font>"

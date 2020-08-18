@@ -65,6 +65,16 @@ public class UserData {
     @Expose
     public String qrcode_image;
 
+    public String userType;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     public String getUser_image() {
         return user_image;
     }
@@ -138,7 +148,8 @@ public class UserData {
     }
 
     public UserData(String id, String auth_token, String country_code, String country_id,
-                    String device_token, String email, String mobile,String name,String wallet_balance,String user_image,String qrcode_image) {
+                    String device_token, String email, String mobile,String name,String wallet_balance,String user_image,
+                    String qrcode_image,String userType) {
         this.id = id;
         this.auth_token = auth_token;
         this.country_code = country_code;
@@ -150,5 +161,6 @@ public class UserData {
         this.wallet_balance=wallet_balance;
         this.user_image=user_image;
         this.qrcode_image=qrcode_image;
+        this.userType=userType;
     }
 }

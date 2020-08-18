@@ -250,6 +250,10 @@
     <string name="resend_otp_in">"Resend OTP in"</string>
     <string name="staff_code_empty">Staff code can\'t be empty.</string>
     <string name="staff_pin_empty">Staff pin can\'t be empty.</string>
+    <string name="staff_team">Staff Team</string>
+    <string name="switch_staff">Switch to Staff Mode</string>
+    <string name="plz_wait">Please wait…</string>
+    <string name="logging_out">Logging out...</string>
 
 
     <string-array name="select_lang">

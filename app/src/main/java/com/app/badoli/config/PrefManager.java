@@ -30,6 +30,7 @@ public class PrefManager {
     private static final String COUNTRY_CODE = "keycountrycode";
     private static final String PHONE = "keyphone";
     private static final String PASSWORD = "keypassword";
+    private static final String KEY_USER_TYPE = "keyusertype";
 
     @SuppressLint("StaticFieldLeak")
     private static PrefManager mInstance;
@@ -80,6 +81,7 @@ public class PrefManager {
         editor.putString(KEY_WALLET_BALANCE,userData.getWallet_balance());
         editor.putString(KEY_USER_IMAGE,userData.getUser_image());
         editor.putString(KEY_QRCODE_IMAGE,userData.getQrcode_image());
+        editor.putString(KEY_USER_TYPE,userData.getUserType());
         editor.apply();
     }
 
@@ -105,7 +107,8 @@ public class PrefManager {
                 pref.getString(KEY_NAME,null),
                 pref.getString(KEY_WALLET_BALANCE,null),
                 pref.getString(KEY_USER_IMAGE,null),
-                pref.getString(KEY_QRCODE_IMAGE,null));
+                pref.getString(KEY_QRCODE_IMAGE,null),
+                pref.getString(KEY_USER_TYPE,null));
     }
     public void setPhoneCode(String phoneCode) {
         editor=pref.edit();
