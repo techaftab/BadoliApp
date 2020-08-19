@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -91,6 +92,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
         binding.autoLang.setThreshold(1);
         binding.autoLang.setOnFocusChangeListener((v15, hasFocus) -> {
             if (hasFocus) {
+                binding.autoLang.requestFocus();
                 binding.autoLang.showDropDown();
             }
         });
@@ -121,6 +123,14 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
         binding.autoCompleteText.setOnFocusChangeListener((v15, hasFocus) -> {
             if (hasFocus) {
                 binding.autoCompleteText.showDropDown();
+            }
+        });
+        binding.autoCompleteText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                binding.autoCompleteText.showDropDown();
+                binding.autoCompleteText.requestFocus();
+                return false;
             }
         });
         binding.autoCompleteText.setOnItemClickListener((parent, view, position, id) -> {
@@ -253,8 +263,8 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             return false;
         }
         if (TextUtils.isEmpty(businessId)||binding.autoCompleteText.getText().toString().equalsIgnoreCase(getResources().getString(R.string.select_your_sector))){
-            binding.autoCompleteText.requestFocus();
-            binding.autoCompleteText.setError(getResources().getString(R.string.select_activity_sector));
+          //  binding.autoCompleteText.requestFocus();
+            //binding.autoCompleteText.setError(getResources().getString(R.string.select_activity_sector));
             AppUtils.showSnackbar(getString(R.string.plz_select_activity_sector), binding.parentLayout);
             return false;
         }

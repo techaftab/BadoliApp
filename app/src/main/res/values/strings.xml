@@ -254,6 +254,18 @@
     <string name="switch_staff">Switch to Staff Mode</string>
     <string name="plz_wait">Please wait…</string>
     <string name="logging_out">Logging out...</string>
+    <string name="list_availble">List of availble agents</string>
+    <string name="new_agent">New Agent</string>
+    <string name="no_agent_added">No agent added yet!</string>
+    <string name="add_new_agent">Add a new agent</string>
+    <string name="enter_name_agent">Enter Name of Agent</string>
+    <string name="creating_staff">Creating Staff...</string>
+    <string name="todays_revenue_fcfa">Today\'s Revenue\n(FCFA)</string>
+    <string name="yesterday_fcfa">Yesterday\n(FCFA)</string>
+    <string name="view_transaction">View Transactions</string>
+    <string name="count_refill">Count Refill</string>
+    <string name="reports">Reports</string>
+    <string name="cash_in">Cash in</string>
 
 
     <string-array name="select_lang">

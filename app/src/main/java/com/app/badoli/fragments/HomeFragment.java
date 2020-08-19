@@ -17,7 +17,10 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.AddMoney;
 import com.app.badoli.activities.HomePageActivites.AgentActivity;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
+import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.HomeFragmentBinding;
+import com.app.badoli.model.UserData;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -28,11 +31,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FragmentTransaction ft;
     private HomeFragmentBinding homeFragmentBinding;
 
+    UserData userData;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
         View view = homeFragmentBinding.getRoot();
+        userData = PrefManager.getInstance(requireActivity()).getUserData();
         //((HomePageActivity) Objects.requireNonNull(getActivity())).headerHome();
         try {
             requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -43,7 +49,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setUpListener() {
-        ((HomePageActivity) requireActivity()).homeData();
+        if (userData.getUserType().equalsIgnoreCase("4")) {
+            ((ProfessionalActivity)requireActivity()).homeData();
+        } else {
+            ((HomePageActivity) requireActivity()).homeData();
+        }
         homeFragmentBinding.payuMerchant.setOnClickListener(this);
         homeFragmentBinding.transferAgent.setOnClickListener(this);
         homeFragmentBinding.rechargeComte.setOnClickListener(this);

@@ -40,6 +40,7 @@ import com.app.badoli.fragments.HomeFragment;
 import com.app.badoli.fragments.ProfileFragment;
 import com.app.badoli.fragments.TransactionFragment;
 import com.app.badoli.model.UserData;
+import com.app.badoli.professionalFragment.ProfessionalHomeFragment;
 import com.app.badoli.utilities.LoginPre;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -143,7 +144,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
 
     public void loadFragment(String anim) {
         ft = getSupportFragmentManager().beginTransaction();
-        currentFragment = new HomeFragment();
+        currentFragment = new ProfessionalHomeFragment();
         if (anim.equals("1")){
             ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
         }
@@ -271,9 +272,15 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             logout();
         }
-        if (v==binding.drawerMenuItems.rlStaff){}
 
-        if (v==binding.drawerMenuItems.rlSwitch){}
+        if (v==binding.drawerMenuItems.rlStaff){
+            Intent intent = new Intent(ProfessionalActivity.this,StaffListActivity.class);
+            startActivity(intent);
+        }
+
+        if (v==binding.drawerMenuItems.rlSwitch){
+
+        }
 
         if (v.getId() == R.id.hamburger) {
             if (!openDrawer) {

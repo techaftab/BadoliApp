@@ -16,7 +16,9 @@ import androidx.preference.PreferenceManager;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.auth.login.LoginActivity;
+import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivitySplashBinding;
+import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.LoginPre;
 
 import java.util.Locale;
@@ -27,12 +29,14 @@ public class SplashActivity extends AppCompatActivity {
     Thread thread;
     Locale myLocale;
     private ActivitySplashBinding binding;
+    UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        userData = PrefManager.getInstance(SplashActivity.this).getUserData();
         if (!TextUtils.isEmpty(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua())) {
             setLocale(LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());
             Log.e("language11", LoginPre.getActiveInstance(SplashActivity.this).getLocaleLangua());
@@ -61,8 +65,15 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     if (LoginPre.getActiveInstance(SplashActivity.this).getIsLoggedIn()) {
-                        Intent i = new Intent(SplashActivity.this, HomePageActivity.class);
-                        startActivity(i);
+                        if (userData.getUserType().equalsIgnoreCase("3")) {
+                            Intent i = new Intent(SplashActivity.this, HomePageActivity.class);
+                            startActivity(i);
+                            finish();
+                        }else {
+                            Intent i = new Intent(SplashActivity.this, ProfessionalActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
                     } else {
                         Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(i);

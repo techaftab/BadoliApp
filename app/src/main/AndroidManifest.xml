@@ -37,7 +37,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator,UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".activities.ProfessionalActivity"></activity>
+        <activity
+            android:name=".activities.StaffListActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.ProfessionalActivity" />
         <activity
             android:name=".auth.login.LoginManagerActivity"
             android:screenOrientation="portrait" />
@@ -50,6 +53,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".auth.signup.professional.ProfessionalSignup"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".auth.forget.ForgotPasswordActivity"
