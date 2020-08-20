@@ -1,7 +1,6 @@
 package com.app.badoli.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -15,11 +14,9 @@ import com.app.badoli.R;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityStaffListBinding;
-import com.app.badoli.fragments.HomeFragment;
 import com.app.badoli.model.UserData;
 import com.app.badoli.professionalFragment.StaffListFragment;
 import com.app.badoli.viewModels.ProfessionalViewModel;
-import com.google.gson.Gson;
 
 public class StaffListActivity extends AppCompatActivity {
 
@@ -31,6 +28,7 @@ public class StaffListActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private Fragment currentFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +38,22 @@ public class StaffListActivity extends AppCompatActivity {
     }
 
     private void init() {
+        binding.layoutToolbar.imgBack.setOnClickListener(this::onBackPressed);
         userData = PrefManager.getInstance(StaffListActivity.this).getUserData();
         loadFragment("0");
+    }
+
+    private void onBackPressed(View view) {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }else {
+            finish();
+        }
     }
 
     public void loadFragment(String anim) {

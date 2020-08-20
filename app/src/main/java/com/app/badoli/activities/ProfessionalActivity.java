@@ -37,10 +37,10 @@ import com.app.badoli.fragments.FragmentMerchant;
 import com.app.badoli.fragments.FragmentPayById;
 import com.app.badoli.fragments.HelpFragment;
 import com.app.badoli.fragments.HomeFragment;
-import com.app.badoli.fragments.ProfileFragment;
 import com.app.badoli.fragments.TransactionFragment;
 import com.app.badoli.model.UserData;
 import com.app.badoli.professionalFragment.ProfessionalHomeFragment;
+import com.app.badoli.professionalFragment.ProfessionalProfileFragment;
 import com.app.badoli.utilities.LoginPre;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,8 +65,6 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         viewUpdate();
         updateLanguage();
     }
-
-
 
     private void viewUpdate() {
         userData= PrefManager.getInstance(ProfessionalActivity.this).getUserData();
@@ -134,6 +132,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         binding.drawerMenuItems.layoutLogout.setOnClickListener(this);
         binding.drawerMenuItems.rlStaff.setOnClickListener(this);
         binding.drawerMenuItems.rlSwitch.setOnClickListener(this);
+        binding.drawerMenuItems.rlBussinessInfo.setOnClickListener(this);
     }
 
     @Override
@@ -197,24 +196,28 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 ft = getSupportFragmentManager().beginTransaction();
-                currentFragment = new HomeFragment();
+                ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
+                currentFragment = new ProfessionalHomeFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
                 return true;
             case R.id.navigation_profile:
                 ft = getSupportFragmentManager().beginTransaction();
-                currentFragment = new ProfileFragment();
+                ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
+                currentFragment = new ProfessionalProfileFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
                 return true;
             case R.id.navigation_transaction:
                 ft = getSupportFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
                 currentFragment = new TransactionFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
                 return true;
             case R.id.navigation_help:
                 ft = getSupportFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
                 currentFragment = new HelpFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();
@@ -226,10 +229,10 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
 
     @Override
     public void onClick(View v) {
+        openDrawer = false;
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         if (v==binding.drawerMenuItems.openWallet){
-            openDrawer = false;
-            binding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent wallet = new Intent(ProfessionalActivity.this, AddMoney.class);
             startActivity(wallet);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
@@ -274,12 +277,18 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         }
 
         if (v==binding.drawerMenuItems.rlStaff){
+            openDrawer = false;
             Intent intent = new Intent(ProfessionalActivity.this,StaffListActivity.class);
             startActivity(intent);
         }
 
         if (v==binding.drawerMenuItems.rlSwitch){
 
+        }
+
+        if (v==binding.drawerMenuItems.rlBussinessInfo){
+            binding.bottomNavigation.getMenu().getItem(1).setChecked(true);
+            goToFragment(new ProfessionalProfileFragment());
         }
 
         if (v.getId() == R.id.hamburger) {
@@ -291,6 +300,14 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             }
         }
+    }
+
+    private void goToFragment(Fragment fragment) {
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
+        ft.replace(R.id.rootLayout, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     public void logout() {
@@ -315,5 +332,39 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         });
         builder.create();
         builder.show();
+    }
+
+    public void hideHeader(){
+        binding.commonHeader.mainLayout.setVisibility(View.GONE);
+    }
+    @SuppressLint("SetTextI18n")
+    public void transactionHeader() {
+        binding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
+        binding.bottomNavigation.setVisibility(View.VISIBLE);
+        binding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
+        binding.commonHeader.hamburger.setVisibility(View.GONE);
+        binding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
+        binding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        binding.commonHeader.badoliPhoneText.setVisibility(View.GONE);
+        binding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }else {
+            new AlertDialog.Builder(ProfessionalActivity.this)
+                    .setTitle(getResources().getString(R.string.really_exit))
+                    .setMessage(getResources().getString(R.string.are_sure_exit))
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                        Intent launchNextActivity = new Intent(Intent.ACTION_MAIN);
+                        launchNextActivity.addCategory(Intent.CATEGORY_HOME);
+                        launchNextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(launchNextActivity);
+                        finish();
+                    }).create().show();
+        }
     }
 }

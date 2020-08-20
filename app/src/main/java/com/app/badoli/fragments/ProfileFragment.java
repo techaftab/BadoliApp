@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
@@ -72,11 +73,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        profileFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment,container,false);
-        View view = profileFragmentBinding.getRoot();
-        profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
-        userData= PrefManager.getInstance(getActivity()).getUserData();
-        ((HomePageActivity)requireActivity()).hideHeader();
         try {
             if (getActivity()!=null) {
                 getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -86,6 +82,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }catch (Exception e){
             e.printStackTrace();
         }
+        profileFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment,container,false);
+        View view = profileFragmentBinding.getRoot();
+        try {
+            if (getActivity()!=null) {
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+            }
+            requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
+        userData= PrefManager.getInstance(getActivity()).getUserData();
+        if (userData.getUserType().equalsIgnoreCase("3")) {
+            ((HomePageActivity) requireActivity()).hideHeader();
+        }else {
+            ((ProfessionalActivity) requireActivity()).hideHeader();
+        }
+
 
         loadData();
 
@@ -293,7 +308,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 profileFragmentBinding.profileImage.setImageBitmap(bitmap);
 
                 destination = new File(imgPath);
-                sendImage(Integer.valueOf(userData.getId()), destination);
+                sendImage(Integer.parseInt(userData.getId()), destination);
 
             } catch (Exception e) {
                 e.printStackTrace();

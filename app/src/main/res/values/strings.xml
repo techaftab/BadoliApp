@@ -266,6 +266,13 @@
     <string name="count_refill">Count Refill</string>
     <string name="reports">Reports</string>
     <string name="cash_in">Cash in</string>
+    <string name="bussiness_info">Business info</string>
+    <string name="my_profile">My Profile</string>
+    <string name="bussiness_shop_name">Business Shop Name</string>
+    <string name="code_commerce">Code Commerce</string>
+    <string name="business_category">Business Category</string>
+    <string name="address">Address</string>
+    <string name="view_qr_code">View QR Code</string>
 
 
     <string-array name="select_lang">

@@ -1,6 +1,7 @@
 package com.app.badoli.professionalFragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.app.badoli.model.UserData;
 import com.app.badoli.viewModels.ProfessionalViewModel;
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
 import static android.content.ContentValues.TAG;
 
 public class StaffListFragment extends Fragment {
@@ -29,6 +32,9 @@ public class StaffListFragment extends Fragment {
     private FragmentStaffListBinding binding;
     private UserData userData;
     private ProfessionalViewModel professionalViewModel;
+
+    boolean status=false;
+    String message="";
 
     @Nullable
     @Override
@@ -52,12 +58,22 @@ public class StaffListFragment extends Fragment {
         }
     }
     private void addNewAgent(View view) {
-        Fragment currentFragment = new AddNewFragment();
-        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
-        ft.replace(R.id.frameLayout, currentFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        if (!status){
+            if (!TextUtils.isEmpty(message)) {
+                AppUtils.openPopup(requireActivity(), R.style.Dialod_UpDown, "error",
+                        message);
+            }else {
+                AppUtils.openPopup(requireActivity(), R.style.Dialod_UpDown, "error",
+                        getResources().getString(R.string.something_wrong));
+            }
+        }else {
+            Fragment currentFragment = new AddNewFragment();
+            FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
+            ft.replace(R.id.frameLayout, currentFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
     }
 
     private void getStaffList(String id) {
@@ -67,13 +83,16 @@ public class StaffListFragment extends Fragment {
                     Log.e(TAG,"CUSTOMER"+ new Gson().toJson(staffList));
                     ((StaffListActivity)requireActivity()).dismissLoading();
                     if (staffList!=null&&!staffList.getError()) {
+                        status = true;
                         binding.rlNoItem.setVisibility(View.GONE);
                         binding.recyclerview.setVisibility(View.VISIBLE);
 
                     } else {
+                        status = false;
                         binding.rlNoItem.setVisibility(View.VISIBLE);
                         binding.recyclerview.setVisibility(View.GONE);
                         if (staffList!=null&&staffList.getMessage() != null) {
+                            message=staffList.getMessage();
                             AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
                                     staffList.getMessage());
                         } else {

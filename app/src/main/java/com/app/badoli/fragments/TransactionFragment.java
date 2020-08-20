@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.adapter.TransactionPagerAdapter;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.TransactionFragmentBinding;
@@ -32,20 +33,26 @@ public class TransactionFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {   try {
+        if (getActivity()!=null) {
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
         fragmentBinding = DataBindingUtil.inflate(inflater, R.layout.transaction_fragment,container,false);
         View view = fragmentBinding.getRoot();
 
         userData= PrefManager.getInstance(getActivity()).getUserData();
-        ((HomePageActivity) Objects.requireNonNull(getActivity())).transactionHeader();
-        try {
-          if (getActivity()!=null) {
-              getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-              getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-          }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (userData.getUserType().equalsIgnoreCase("3")) {
+            ((HomePageActivity) requireActivity()).transactionHeader();
+        }else {
+            ((ProfessionalActivity) requireActivity()).transactionHeader();
         }
+
         init();
         return  view;
     }

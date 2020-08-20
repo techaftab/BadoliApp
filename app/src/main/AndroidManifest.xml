@@ -39,8 +39,10 @@
         tools:targetApi="m">
         <activity
             android:name=".activities.StaffListActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".activities.ProfessionalActivity" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ProfessionalActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".auth.login.LoginManagerActivity"
             android:screenOrientation="portrait" />
