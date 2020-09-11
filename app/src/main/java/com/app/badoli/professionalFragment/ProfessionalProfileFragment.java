@@ -50,11 +50,7 @@ public class ProfessionalProfileFragment extends Fragment {
         }else {
             ((ProfessionalActivity) requireActivity()).hideHeader();
         }
-
         init();
-
-
-
         return  view;
     }
 

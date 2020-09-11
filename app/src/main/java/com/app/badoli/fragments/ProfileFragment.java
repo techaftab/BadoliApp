@@ -183,8 +183,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private boolean checkAndRequestPermissions() {
         int WRITE_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int READ_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
-        int CAMERA = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        int READ_EXTERNAL_STORAGE = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int CAMERA = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA);
         List<String> listPermissionsNeeded = new ArrayList<>();
 
         if (WRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
@@ -324,23 +324,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-        //RequestBody fileReq = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(id));
-
-      //  MultipartBody.Part part = MultipartBody.Part.createFormData("profile_image", file.getName(), fileReqBody);
-
+        RequestBody fileReqBody = RequestBody.create(file,MediaType.parse("image/*"));
         profileFragmentBinding.progreebarProfile.setVisibility(View.VISIBLE);
-
-//        long length = file.length();
-//        length = length/1024;
-//        System.out.println("File Path : " + file.getPath() + ", File size : " + length +" KB"+"\n"+compressedImgFile.length()/1024);
         MultipartBody.Part partCompress = null;
-
-
         if (compressedImgFile != null) {
             partCompress = MultipartBody.Part.createFormData("profile_image", compressedImgFile.getName(), fileReqBody);
         }
-
         profileViewModel.saveProfileImage(partCompress,id).observe(this, profileImageResponse -> {
             if (!profileImageResponse.error) {
                 Log.e("Profile Image--->", new Gson().toJson(profileImageResponse.message));

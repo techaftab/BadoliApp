@@ -17,6 +17,7 @@
             android:textColor="@color/black"
             android:textStyle="normal"
             android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_25sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toEndOf="parent"/>
@@ -26,13 +27,12 @@
             android:hint="@string/enter_name_agent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:textStyle="bold"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
+            android:padding="@dimen/_8sdp"
             android:inputType="textPersonName"
             android:textSize="@dimen/_14ssp"
             tools:ignore="Autofill"/>

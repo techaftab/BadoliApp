@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.config.AppUtils;
@@ -106,8 +107,14 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(ChangePasswordActivity.this, HomePageActivity.class);
-        startActivity(refresh);
+        if (userData.getUserType().equalsIgnoreCase("4")) {
+            Intent refresh = new Intent(ChangePasswordActivity.this, ProfessionalActivity.class);
+            startActivity(refresh);
+        } else {
+            Intent refresh = new Intent(ChangePasswordActivity.this, HomePageActivity.class);
+            startActivity(refresh);
+        }
+
     }
 
     private boolean validatepassword(String oldPwd, String newPwd, String confirmPwd) {

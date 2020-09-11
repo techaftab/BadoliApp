@@ -81,7 +81,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 setLocale("en");
             }
         });
-
     }
 
     @Override
@@ -95,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             binding.lnSignup.setVisibility(View.VISIBLE);
             binding.txtSignUp.setText(getResources().getString(R.string.sign_up));
         }
+
         if (binding.rbProfessional.isChecked()){
             binding.rbProfessional.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
             binding.rbParticular.setBackground(null);

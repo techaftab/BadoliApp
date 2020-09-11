@@ -49,14 +49,14 @@ import java.util.Locale;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
 
-    public  ActivityHomePageBinding homePageBinding;
+    public ActivityHomePageBinding homePageBinding;
     boolean openDrawer = false;
     static UserData userData;
     HomeViewModel homeViewModel;
     Fragment currentFragment;
     FragmentTransaction ft;
     Handler handler;
-   // @SuppressLint("StaticFieldLeak")
+    //@SuppressLint("StaticFieldLeak")
     //Activity activity;
     WebService webService;
 

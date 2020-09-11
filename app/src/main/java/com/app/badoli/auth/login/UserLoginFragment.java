@@ -17,7 +17,6 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.auth.forget.ForgotPasswordActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
-import com.app.badoli.auth.signup.user.SignUpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;

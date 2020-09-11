@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.ProfileImageResponse;
 import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;

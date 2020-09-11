@@ -26,9 +26,7 @@ public class WebService {
 
     public void updateBalance(String id) {
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
-
         Call<BalanceResponse> call = apiService.getCurrentBalance(id);
-
         call.enqueue(new Callback<BalanceResponse>() {
             @Override
             public void onResponse(@NonNull Call<BalanceResponse> call, @NonNull Response<BalanceResponse> response) {
