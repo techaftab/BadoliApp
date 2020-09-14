@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
@@ -200,14 +201,26 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
                         addMoney.edittextPhoneMobileAddmoney.setText("");
                         addMoney.edittextAmountAddMoneyAddmoney.setText("");
                         referenceNo="";
-                        Intent intent = new Intent(AddMoney.this, HomePageActivity.class);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                        goActivity();
+
                     } else {
                         SweetToast.error(AddMoney.this,airtelResponse.getMessage());
                     }
                 });
+    }
+
+    private void goActivity() {
+        if (userData.getUserType().equalsIgnoreCase("3")){
+            Intent intent = new Intent(AddMoney.this, ProfessionalActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        }else {
+            Intent intent = new Intent(AddMoney.this, HomePageActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        }
     }
 
 }

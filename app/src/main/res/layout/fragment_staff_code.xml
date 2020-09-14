@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/conneection_code"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:textSize="@dimen/_16ssp"/>
+
+                <TextView
+                    android:id="@+id/txtCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/conneection_code"
+                    android:background="@drawable/box_gray_border"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/badoli_qr"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:textSize="@dimen/_16ssp"/>
+
+                <ImageView
+                    android:id="@+id/imgQrCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_220sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/white"
+                    android:src="@drawable/logo"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

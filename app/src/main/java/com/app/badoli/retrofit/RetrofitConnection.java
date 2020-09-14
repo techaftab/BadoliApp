@@ -53,8 +53,8 @@ public class RetrofitConnection {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
-
         }
+
         return retrofit.create(ApiInterface.class);
        /* if (clientService == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();//    logs HTTP request and response data.

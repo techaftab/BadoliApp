@@ -23,4 +23,6 @@ public interface Constant {
     String LONGITUDE = "address_user";
     String LATTITUDE = "address_user";
     String ROLES_ID = "user_role_id";
+    String AGENT_NAME = "agent_name";
+    String AGENT_CODE = "agent_code";
 }

@@ -35,7 +35,9 @@ import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ProfileFragmentBinding;
+import com.app.badoli.model.CustomerUserProfile;
 import com.app.badoli.model.UserData;
+import com.app.badoli.model.UserProfile;
 import com.app.badoli.viewModels.ProfileViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -100,10 +102,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }else {
             ((ProfessionalActivity) requireActivity()).hideHeader();
         }
-
-
         loadData();
 
+        if (AppUtils.hasNetworkConnection(requireActivity())){
+            getProfile(userData.getId(),userData.getUserType());
+        }else {
+            AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"internetError",getResources().getString(R.string.no_internet));
+        }
         return  view;
     }
 
@@ -366,4 +371,48 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         assert cursor != null;
         return cursor.getString(column_index);
     }
+
+    private void getProfile(String id, String userType) {
+        ((ProfessionalActivity)requireActivity()).showLoading(getResources().getString(R.string.plz_wait));
+        profileViewModel.getUserProfile(id,userType)
+                .observe(requireActivity(), loginResponse -> {
+                    ((ProfessionalActivity)requireActivity()).dismissLoading();
+                    if (loginResponse!=null&&loginResponse.getError()) {
+                       /* UserData userData = new UserData(
+                                id,
+                                loginResponse.getResult().getai(),
+                                countryCode,
+                                countryId,
+                                verifyOtpResponse.result.getDeviceToken(),
+                                verifyOtpResponse.result.getEmail(),
+                                verifyOtpResponse.result.getMobile(),
+                                verifyOtpResponse.result.getName(),
+                                verifyOtpResponse.result.getWalletBalance(),
+                                verifyOtpResponse.result.getUser_image(),
+                                verifyOtpResponse.result.getQrcode_image(),
+                                roleId);
+                        PrefManager.getInstance(requireActivity()).userLogin(userData);*/
+                        setDetails(loginResponse.getResult());
+                    } else {
+                        if (loginResponse!=null&&!TextUtils.isEmpty(loginResponse.getMessage())) {
+                            AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",loginResponse.getMessage());
+                        }else {
+                            AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",getResources().getString(R.string.something_went_wrong));
+                        }
+                    }
+                });
+    }
+
+    private void setDetails(CustomerUserProfile.Result result) {
+        profileFragmentBinding.userName.setText(result.getName());
+        profileFragmentBinding.userEmail.setText(result.getEmail());
+        profileFragmentBinding.userMobile.setText(result.getMobile());
+        Glide.with(this).load(result.getUser_image())
+                .placeholder(R.drawable.ic_user)
+                .error(R.drawable.ic_user)
+                .thumbnail(0.06f)
+                .into(profileFragmentBinding.profileImage);
+
+    }
+
 }

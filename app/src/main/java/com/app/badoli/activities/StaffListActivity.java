@@ -15,6 +15,7 @@ import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityStaffListBinding;
 import com.app.badoli.model.UserData;
+import com.app.badoli.professionalFragment.StaffCodeFragment;
 import com.app.badoli.professionalFragment.StaffListFragment;
 import com.app.badoli.viewModels.ProfessionalViewModel;
 
@@ -49,11 +50,19 @@ public class StaffListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
+        if (f instanceof StaffCodeFragment){
+           loadFragment("0");
+        }else
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         }else {
             finish();
         }
+    }
+
+    private void goActivity(Class<StaffListActivity> staffListActivityClass) {
+
     }
 
     public void loadFragment(String anim) {

@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.StaffListActivity;
 import com.app.badoli.config.AppUtils;
+import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentAddStaffBinding;
 import com.app.badoli.model.UserData;
@@ -63,7 +65,7 @@ public class AddNewFragment extends Fragment {
                     Log.e(TAG,"CUSTOMER"+ new Gson().toJson(createStaff));
                     ((StaffListActivity)requireActivity()).dismissLoading();
                     if (createStaff!=null&&!createStaff.getError()) {
-
+                        loadFragment(new StaffCodeFragment(),createStaff.getResult().getAgent_code(),createStaff.getResult().getStaff_name());
                     } else {
                         if (createStaff!=null&&createStaff.getMessage() != null) {
                             AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
@@ -74,5 +76,16 @@ public class AddNewFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void loadFragment(Fragment fragment, String agent_code, String staff_name) {
+        Bundle bundle=new Bundle();
+        bundle.putString(Constant.AGENT_NAME,staff_name);
+        bundle.putString(Constant.AGENT_CODE,agent_code);
+        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
+        ft.replace(R.id.frameLayout, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

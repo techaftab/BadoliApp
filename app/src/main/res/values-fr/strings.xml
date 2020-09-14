@@ -251,7 +251,34 @@
         <item>@string/en</item>
         <item>@string/fr</item>
     </string-array>
-
+    <string name="enter_otp">Entrez OTP envoyé à votre numéro de mobile</string>
+    <string name="country_no_empty">Le code de pays ne peut pas être vide.</string>
+    <string name="resend_otp_in">Renvoyer OTP dans</string>
+    <string name="staff_code_empty">Le code du personnel ne peut pas être vide.</string>
+    <string name="staff_pin_empty">L\'épingle du personnel ne peut pas être vide.</string>
+    <string name="staff_team">Équipe du personnel</string>
+    <string name="switch_staff">Passer en mode Personnel</string>
+    <string name="plz_wait">S\'il vous plaît, attendez…</string>
+    <string name="logging_out">Déconnecter...</string>
+    <string name="list_availble">Liste des agents disponibles</string>
+    <string name="new_agent">Nouvel agent</string>
+    <string name="no_agent_added">Aucun agent ajouté pour le moment!</string>
+    <string name="add_new_agent">Ajouter un nouvel agent</string>
+    <string name="enter_name_agent">Entrez le nom de l\'agent</string>
+    <string name="creating_staff">Création du personnel ...</string>
+    <string name="todays_revenue_fcfa">Revenus d\'aujourd\'hui (FCFA)</string>
+    <string name="yesterday_fcfa">Hier (FCFA)</string>
+    <string name="view_transaction">Voir les transactions</string>
+    <string name="count_refill">Recharge de compte</string>
+    <string name="reports">Rapports</string>
+    <string name="cash_in">Encaisser</string>
+    <string name="bussiness_info">Informations commerciales</string>
+    <string name="my_profile">Mon profil</string>
+    <string name="bussiness_shop_name">Nom de la boutique commerciale</string>
+    <string name="code_commerce">Code Commerce</string>
+    <string name="business_category">Catégorie Business</string>
+    <string name="address">Adresse</string>
+    <string name="view_qr_code">Afficher le code QR</string>
 
 
 </resources>

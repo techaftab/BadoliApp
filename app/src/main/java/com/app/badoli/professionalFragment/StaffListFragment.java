@@ -58,7 +58,7 @@ public class StaffListFragment extends Fragment {
         }
     }
     private void addNewAgent(View view) {
-        if (!status){
+    /*    if (!status){
             if (!TextUtils.isEmpty(message)) {
                 AppUtils.openPopup(requireActivity(), R.style.Dialod_UpDown, "error",
                         message);
@@ -66,14 +66,14 @@ public class StaffListFragment extends Fragment {
                 AppUtils.openPopup(requireActivity(), R.style.Dialod_UpDown, "error",
                         getResources().getString(R.string.something_wrong));
             }
-        }else {
+        }else {*/
             Fragment currentFragment = new AddNewFragment();
             FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
             ft.replace(R.id.frameLayout, currentFragment);
             ft.addToBackStack(null);
             ft.commit();
-        }
+      //  }
     }
 
     private void getStaffList(String id) {

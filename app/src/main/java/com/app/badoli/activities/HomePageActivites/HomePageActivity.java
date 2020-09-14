@@ -63,13 +63,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
-
         viewUpdate();
-
         updateLanguage();
-
     }
 
     private void viewUpdate() {

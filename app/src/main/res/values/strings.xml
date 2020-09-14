@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">BaDoli</string>
-    <string name="google_maps_key">AIzaSyBZ3O59KED5Kl--znKyOHMuhkdLvMJwc6Y</string>
+    <string name="google_maps_key" translatable="false">AIzaSyBZ3O59KED5Kl--znKyOHMuhkdLvMJwc6Y</string>
     <string name="edit_login">Phone No / Email Id</string>
     <string name="password">Password</string>
     <string name="dont_have_account">Don\'t have an account?</string>
@@ -245,7 +245,7 @@
     <string name="hint_code">ABCD1234</string>
     <string name="continu">Continue</string>
     <string name="enter_your_pin">Enter Your Pin Code</string>
-    <string name="country_code_hint">+0</string>
+    <string name="country_code_hint" translatable="false">+0</string>
     <string name="country_no_empty">Country code cant\'t be empty.</string>
     <string name="resend_otp_in">"Resend OTP in"</string>
     <string name="staff_code_empty">Staff code can\'t be empty.</string>
@@ -253,13 +253,13 @@
     <string name="staff_team">Staff Team</string>
     <string name="switch_staff">Switch to Staff Mode</string>
     <string name="plz_wait">Please wait…</string>
-    <string name="logging_out">Logging out...</string>
-    <string name="list_availble">List of availble agents</string>
+    <string name="logging_out">Logging out…</string>
+    <string name="list_availble">List of available agents</string>
     <string name="new_agent">New Agent</string>
     <string name="no_agent_added">No agent added yet!</string>
     <string name="add_new_agent">Add a new agent</string>
     <string name="enter_name_agent">Enter Name of Agent</string>
-    <string name="creating_staff">Creating Staff...</string>
+    <string name="creating_staff">Creating Staff…</string>
     <string name="todays_revenue_fcfa">Today\'s Revenue\n(FCFA)</string>
     <string name="yesterday_fcfa">Yesterday\n(FCFA)</string>
     <string name="view_transaction">View Transactions</string>
@@ -273,6 +273,10 @@
     <string name="business_category">Business Category</string>
     <string name="address">Address</string>
     <string name="view_qr_code">View QR Code</string>
+    <string name="updating_image">Updating Image...</string>
+    <string name="something_went_wrong">Something went wrong!\nTry after sometime.</string>
+    <string name="conneection_code">Connection Code</string>
+    <string name="badoli_qr">Badoli QR</string>
 
 
     <string-array name="select_lang">

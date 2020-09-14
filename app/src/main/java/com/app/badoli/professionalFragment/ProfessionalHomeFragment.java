@@ -1,5 +1,6 @@
 package com.app.badoli.professionalFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.HomePageActivites.AddMoney;
+import com.app.badoli.activities.HomePageActivites.AgentActivity;
 import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentProfHomeBinding;
@@ -42,5 +45,20 @@ public class ProfessionalHomeFragment extends Fragment {
 
     private void init() {
         ((ProfessionalActivity)requireActivity()).homeData();
+
+        binding.lnCountRefill.setOnClickListener(this::goCountRefill);
+        binding.lnTransferAgent.setOnClickListener(this::goTransferAgent);
+    }
+
+    private void goTransferAgent(View view) {
+        Intent intent = new Intent(getActivity(), AgentActivity.class);
+        startActivity(intent);
+        requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
+    }
+
+    private void goCountRefill(View view) {
+        Intent wallet = new Intent(getActivity(), AddMoney.class);
+        startActivity(wallet);
+        requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
     }
 }

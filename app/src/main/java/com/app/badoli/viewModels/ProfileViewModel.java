@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.app.badoli.model.CustomerUserProfile;
 import com.app.badoli.model.ProfileImageResponse;
 import com.app.badoli.model.ResetPassword;
+import com.app.badoli.model.UserProfile;
 import com.app.badoli.repositories.AccountRepositories;
 
 import okhttp3.MultipartBody;
@@ -27,5 +29,13 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public LiveData<ResetPassword> resetPassword(String userId,String oldPwd, String newPassword, String confirmPwd) {
         return accountRepositories.resetPassword(userId,oldPwd,newPassword,confirmPwd);
+    }
+
+    public LiveData<UserProfile> getProfile(String id, String userType) {
+        return accountRepositories.getProfile(id,userType);
+    }
+
+    public LiveData<CustomerUserProfile> getUserProfile(String id, String userType) {
+        return accountRepositories.getUserProfile(id,userType);
     }
 }

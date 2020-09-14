@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.app.badoli.model.CustomerUserProfile;
 import com.app.badoli.model.ProfileImageResponse;
 import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;
+import com.app.badoli.model.UserProfile;
 import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.retrofit.ApiInterface;
 import com.app.badoli.retrofit.RetrofitConnection;
@@ -134,4 +136,62 @@ public class AccountRepositories {
         });
         return mutableLiveData;
     }
+
+    public LiveData<UserProfile> getProfile(String id, String userType) {
+        final MutableLiveData<UserProfile> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<UserProfile> call = apiService.getProfile(id,userType);
+        call.enqueue(new Callback<UserProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+                Log.e("responsee", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                } else {
+                    UserProfile signInResponse = new UserProfile();
+                    signInResponse.setError(true);
+                    signInResponse.setMessage("");
+                    mutableLiveData.setValue(signInResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+                UserProfile signInResponse = new UserProfile();
+                signInResponse.setError(true);
+                signInResponse.setMessage("");
+                mutableLiveData.setValue(signInResponse);
+            }
+        });
+        return mutableLiveData;
+
+    }
+
+    public LiveData<CustomerUserProfile> getUserProfile(String id, String userType) {
+        final MutableLiveData<CustomerUserProfile> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<CustomerUserProfile> call = apiService.getUserProfile(id,userType);
+        call.enqueue(new Callback<CustomerUserProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<CustomerUserProfile> call, @NonNull Response<CustomerUserProfile> response) {
+                Log.e("responsee", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                } else {
+                    CustomerUserProfile signInResponse = new CustomerUserProfile();
+                    signInResponse.setError(true);
+                    signInResponse.setMessage("");
+                    mutableLiveData.setValue(signInResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CustomerUserProfile> call, @NonNull Throwable t) {
+                CustomerUserProfile signInResponse = new CustomerUserProfile();
+                signInResponse.setError(true);
+                signInResponse.setMessage("");
+                mutableLiveData.setValue(signInResponse);
+            }
+        });
+        return mutableLiveData;    }
 }

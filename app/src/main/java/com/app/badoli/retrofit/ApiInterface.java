@@ -5,6 +5,7 @@ import com.app.badoli.model.BalanceResponse;
 import com.app.badoli.model.BannerModel;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.CreateStaff;
+import com.app.badoli.model.CustomerUserProfile;
 import com.app.badoli.model.LoginResponse;
 import com.app.badoli.model.ProfileImageResponse;
 import com.app.badoli.model.QRResponse;
@@ -13,6 +14,7 @@ import com.app.badoli.model.ResendOtpResponse;
 import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.StaffList;
+import com.app.badoli.model.UserProfile;
 import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.model.WalletTransfer;
@@ -127,4 +129,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("createStaff")
     Call<CreateStaff> createStaff(@Field("user_id") String id,@Field("staff_name") String name);
+
+    @GET("getProfile")
+    Call<UserProfile> getProfile(@Query("user_id") String id,@Query("roles_id") String userType);
+
+    @GET("getProfile")
+    Call<CustomerUserProfile> getUserProfile(@Query("user_id") String id,@Query("roles_id") String userType);
 }

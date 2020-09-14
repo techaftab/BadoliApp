@@ -229,8 +229,6 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
 
     @Override
     public void onClick(View v) {
-        openDrawer = false;
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         if (v==binding.drawerMenuItems.openWallet){
             Intent wallet = new Intent(ProfessionalActivity.this, AddMoney.class);
@@ -300,6 +298,9 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             }
         }
+
+        openDrawer = false;
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     private void goToFragment(Fragment fragment) {

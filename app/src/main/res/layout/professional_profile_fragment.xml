@@ -149,7 +149,7 @@
                                 android:layout_marginEnd="@dimen/DP20"
                                 android:background="@android:color/transparent"
                                 android:gravity="start"
-                                android:hint="@string/enter_username"
+                                android:hint="@string/bussiness_shop_name"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
 
@@ -186,7 +186,7 @@
                                 android:layout_marginEnd="@dimen/DP20"
                                 android:background="@android:color/transparent"
                                 android:gravity="start"
-                                android:hint="@string/enter_email"
+                                android:hint="@string/code_commerce"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
 
@@ -216,7 +216,7 @@
                                 android:src="@mipmap/user_mobile_pink" />
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/user_mobile"
+                                android:id="@+id/edittextMobile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -225,7 +225,7 @@
                                 android:editable="false"
                                 android:focusable="false"
                                 android:gravity="start"
-                                android:hint="@string/enter_digit_mobile"
+                                android:hint="@string/mob_number"
                                 android:inputType="none"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
