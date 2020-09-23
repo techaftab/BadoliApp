@@ -169,6 +169,7 @@
                                 android:textSize="@dimen/_14ssp"
                                 android:textStyle="bold"
                                 android:lines="1"
+                                android:maxLength="4"
                                 android:inputType="number"
                                 android:digits="0123456789"
                                 android:imeOptions="actionDone"

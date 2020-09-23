@@ -50,7 +50,7 @@ import java.util.Locale;
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
 
     public ActivityHomePageBinding homePageBinding;
-    boolean openDrawer = false;
+   // boolean openDrawer = false;
     static UserData userData;
     HomeViewModel homeViewModel;
     Fragment currentFragment;
@@ -210,7 +210,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         if (v==homePageBinding.drawerMenuItems.openWallet){
-            openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent wallet = new Intent(HomePageActivity.this, AddMoney.class);
             startActivity(wallet);
@@ -229,39 +228,31 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             }
         }
         if (v==homePageBinding.drawerMenuItems.about){
-            openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent about = new Intent(HomePageActivity.this, AboutUsActivity.class);
             startActivity(about);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.drawerMenuItems.support){
-            openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent support = new Intent(HomePageActivity.this, Support_Activity.class);
             startActivity(support);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.drawerMenuItems.changePassword){
-            openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent change = new Intent(HomePageActivity.this, ChangePasswordActivity.class);
             startActivity(change);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==homePageBinding.drawerMenuItems.layoutLogout){
-            openDrawer = false;
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
             logout();
         }
         if (v.getId() == R.id.hamburger) {
-            if (!openDrawer) {
+            if(!homePageBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
                 homePageBinding.drawerLayout.openDrawer(GravityCompat.START);
-                openDrawer = true;
-            } else {
-                openDrawer = false;
-                homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            }
+            else homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 
@@ -278,8 +269,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             ft.commit();
         } else if (!(f instanceof HomeFragment)) {
             loadFragment("1");
-        } else if (openDrawer) {
-            openDrawer = false;
+        } else if (homePageBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             new AlertDialog.Builder(HomePageActivity.this)

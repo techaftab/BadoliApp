@@ -203,8 +203,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 } else {
                     Log.e("msg", "Some permissions are not granted ask again ");
                     if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                            && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    ) {
+                            && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                         showDialogOK(getResources().getString(R.string.permission_req),
                                 (dialog, which) -> {
                                     switch (which) {
@@ -236,6 +235,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 .create()
                 .show();
     }
+
     private void checkGPS() {
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (manager != null) {
@@ -293,6 +293,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             if (locationResult.getLastLocation() == null)
                 return;
             Location currentLocation = locationResult.getLastLocation();
+
             setSelectedLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
             fusedLocationProviderClient.removeLocationUpdates(mLocationCallback);
         }

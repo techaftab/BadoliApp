@@ -56,7 +56,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
     private FragmentTransaction ft;
     private Fragment currentFragment;
 
-    boolean openDrawer = false;
+   // boolean openDrawer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,6 +231,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
     public void onClick(View v) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         if (v==binding.drawerMenuItems.openWallet){
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent wallet = new Intent(ProfessionalActivity.this, AddMoney.class);
             startActivity(wallet);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
@@ -248,59 +249,60 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
             }
         }
         if (v==binding.drawerMenuItems.about){
-            openDrawer = false;
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent about = new Intent(ProfessionalActivity.this, AboutUsActivity.class);
             startActivity(about);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==binding.drawerMenuItems.support){
-            openDrawer = false;
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent support = new Intent(ProfessionalActivity.this, Support_Activity.class);
             startActivity(support);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==binding.drawerMenuItems.changePassword){
-            openDrawer = false;
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent change = new Intent(ProfessionalActivity.this, ChangePasswordActivity.class);
             startActivity(change);
             overridePendingTransition(R.anim.right_in,R.anim.left_out);
         }
         if (v==binding.drawerMenuItems.layoutLogout){
-            openDrawer = false;
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             logout();
         }
 
         if (v==binding.drawerMenuItems.rlStaff){
-            openDrawer = false;
+           // openDrawer = false;
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
             Intent intent = new Intent(ProfessionalActivity.this,StaffListActivity.class);
             startActivity(intent);
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         }
 
         if (v==binding.drawerMenuItems.rlSwitch){
-
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         }
 
         if (v==binding.drawerMenuItems.rlBussinessInfo){
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
             binding.bottomNavigation.getMenu().getItem(1).setChecked(true);
             goToFragment(new ProfessionalProfileFragment());
         }
 
-        if (v.getId() == R.id.hamburger) {
-            if (!openDrawer) {
+        if (v==binding.commonHeader.hamburger) {
+            if(!binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+                binding.drawerLayout.openDrawer(GravityCompat.START);
+            else binding.drawerLayout.closeDrawer(GravityCompat.START);
+           /* if (!openDrawer) {
                 binding.drawerLayout.openDrawer(GravityCompat.START);
                 openDrawer = true;
             } else {
                 openDrawer = false;
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-            }
+
+            }*/
         }
 
-        openDrawer = false;
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        //
     }
 
     private void goToFragment(Fragment fragment) {
@@ -354,7 +356,9 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
-        }else {
+        }else if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
             new AlertDialog.Builder(ProfessionalActivity.this)
                     .setTitle(getResources().getString(R.string.really_exit))
                     .setMessage(getResources().getString(R.string.are_sure_exit))

@@ -65,7 +65,8 @@ public class AddNewFragment extends Fragment {
                     Log.e(TAG,"CUSTOMER"+ new Gson().toJson(createStaff));
                     ((StaffListActivity)requireActivity()).dismissLoading();
                     if (createStaff!=null&&!createStaff.getError()) {
-                        loadFragment(new StaffCodeFragment(),createStaff.getResult().getAgent_code(),createStaff.getResult().getStaff_name());
+                        loadFragment(new StaffCodeFragment(),createStaff.getResult().getAgent_code(),
+                                createStaff.getResult().getStaff_name());
                     } else {
                         if (createStaff!=null&&createStaff.getMessage() != null) {
                             AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
@@ -85,6 +86,7 @@ public class AddNewFragment extends Fragment {
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
         ft.replace(R.id.frameLayout, fragment);
+        fragment.setArguments(bundle);
         ft.addToBackStack(null);
         ft.commit();
     }

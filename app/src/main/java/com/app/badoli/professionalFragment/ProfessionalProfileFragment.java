@@ -3,7 +3,6 @@ package com.app.badoli.professionalFragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -29,10 +28,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.app.badoli.activities.QrViewActivity;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.ProfessionalActivity;
-import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ProfessionalProfileFragmentBinding;
@@ -130,12 +129,19 @@ public class ProfessionalProfileFragment extends Fragment {
     }
 
     private void viewQr(View view) {
-        Fragment currentFragment = new ProfQrViewFragment();
+        goActivity(QrViewActivity.class);
+       /* Fragment currentFragment = new ProfQrViewFragment();
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
         ft.replace(R.id.frameLayout, currentFragment);
         ft.addToBackStack(null);
-        ft.commit();
+        ft.commit();*/
+    }
+
+    private void goActivity(Class<?> activity) {
+        Intent intent = new Intent(requireActivity(),activity);
+        startActivity(intent);
+        requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
     }
 
     private boolean checkAndRequestPermissions() {
@@ -188,14 +194,14 @@ public class ProfessionalProfileFragment extends Fragment {
     private void selectImage() {
         try {
             PackageManager pm = requireActivity().getPackageManager();
-            int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, getActivity().getPackageName());
+            int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, requireActivity().getPackageName());
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
                 String take_photo=getResources().getString(R.string.take_photo);
                 String select_gallery=getResources().getString(R.string.select_gallery);
                 String cancel=getResources().getString(R.string.cancel);
 
                 final CharSequence[] options = {take_photo,select_gallery, cancel};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
                 builder.setTitle(getResources().getString(R.string.select_option));
                 builder.setItems(options, (dialog, item) -> {
                     if (options[item].equals(getResources().getString(R.string.take_photo))) {
@@ -328,7 +334,7 @@ public class ProfessionalProfileFragment extends Fragment {
         profileViewModel.getProfile(id,userType)
                 .observe(requireActivity(), loginResponse -> {
                     ((ProfessionalActivity)requireActivity()).dismissLoading();
-                    if (loginResponse!=null&&loginResponse.getError()) {
+                    if (loginResponse!=null&&!loginResponse.getError()) {
                        /* UserData userData = new UserData(
                                 id,
                                 loginResponse.getResult().getai(),
@@ -359,12 +365,10 @@ public class ProfessionalProfileFragment extends Fragment {
         binding.edittextCode.setText(result.getAirtel_merchant_id());
         binding.edittextMobile.setText(result.getMobile());
         binding.edittextAddress.setText(result.getCompany_address());
-
         Glide.with(this).load(result.getUser_image())
-                .placeholder(R.drawable.ic_user)
-                .error(R.drawable.ic_user)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
                 .thumbnail(0.06f)
                 .into(binding.profileImage);
     }
-
 }

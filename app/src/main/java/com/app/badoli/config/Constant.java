@@ -25,4 +25,6 @@ public interface Constant {
     String ROLES_ID = "user_role_id";
     String AGENT_NAME = "agent_name";
     String AGENT_CODE = "agent_code";
+    String AGENT_PIN = "agent_pin";
+    String MERCHANT_ID = "merchant_id";
 }

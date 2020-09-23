@@ -143,6 +143,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             Log.e(TAG,"ACTIVITY Name-->"+activity+", Id-->"+businessId);
         });
     }
+
     private void init() {
         switch (LoginPre.getActiveInstance(ProfessionalSignup.this).getLocaleLangua()) {
             case "en":

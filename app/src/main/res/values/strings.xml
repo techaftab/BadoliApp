@@ -277,6 +277,9 @@
     <string name="something_went_wrong">Something went wrong!\nTry after sometime.</string>
     <string name="conneection_code">Connection Code</string>
     <string name="badoli_qr">Badoli QR</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="renew">Renew</string>
+    <string name="delete_code">Delete code</string>
 
 
     <string-array name="select_lang">

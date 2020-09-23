@@ -37,7 +37,6 @@ import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ProfileFragmentBinding;
 import com.app.badoli.model.CustomerUserProfile;
 import com.app.badoli.model.UserData;
-import com.app.badoli.model.UserProfile;
 import com.app.badoli.viewModels.ProfileViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -131,6 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 loadData();
             }
         });
+
         profileFragmentBinding.userCalender.setOnClickListener(this);
        // profileFragmentBinding.imgbackProfile.setOnClickListener(this);
         profileFragmentBinding.imgUploadProfile.setOnClickListener(this);
@@ -408,8 +408,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         profileFragmentBinding.userEmail.setText(result.getEmail());
         profileFragmentBinding.userMobile.setText(result.getMobile());
         Glide.with(this).load(result.getUser_image())
-                .placeholder(R.drawable.ic_user)
-                .error(R.drawable.ic_user)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
                 .thumbnail(0.06f)
                 .into(profileFragmentBinding.profileImage);
 

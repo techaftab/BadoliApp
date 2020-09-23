@@ -294,7 +294,7 @@
                                     android:background="@android:color/transparent"
                                     android:hint="@string/password"
                                     android:textSize="@dimen/_12ssp"
-                                    android:maxLength="4"
+                                    android:maxLength="16"
                                     android:imeOptions="actionDone"
                                     android:inputType="textPassword"
                                     android:singleLine="true"

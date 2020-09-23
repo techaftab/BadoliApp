@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.auth.signup.professional.ProfessionalSignup;
 import com.app.badoli.config.AppUtils;
@@ -234,7 +235,7 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void StartActivity() {
-        Intent intent = new Intent(LoginManagerActivity.this, HomePageActivity.class);
+        Intent intent = new Intent(LoginManagerActivity.this, ProfessionalActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

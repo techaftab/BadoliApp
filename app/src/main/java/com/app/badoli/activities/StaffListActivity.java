@@ -21,7 +21,7 @@ import com.app.badoli.viewModels.ProfessionalViewModel;
 
 public class StaffListActivity extends AppCompatActivity {
 
-    private static final String TAG = StaffListActivity.class.getSimpleName();
+   // private static final String TAG = StaffListActivity.class.getSimpleName();
     private ActivityStaffListBinding binding;
 
     UserData userData;
@@ -53,8 +53,9 @@ public class StaffListActivity extends AppCompatActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
         if (f instanceof StaffCodeFragment){
            loadFragment("0");
-        }else
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        }else if (f instanceof StaffListFragment){
+            finish();
+        }else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         }else {
             finish();

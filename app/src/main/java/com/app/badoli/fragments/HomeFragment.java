@@ -17,7 +17,6 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.AddMoney;
 import com.app.badoli.activities.HomePageActivites.AgentActivity;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
-import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.HomeFragmentBinding;
 import com.app.badoli.model.UserData;
@@ -53,11 +52,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setUpListener() {
-        if (userData.getUserType().equalsIgnoreCase("4")) {
+      /*  if (userData.getUserType().equalsIgnoreCase("4")) {
             ((ProfessionalActivity)requireActivity()).homeData();
-        } else {
+        } else {*/
             ((HomePageActivity) requireActivity()).homeData();
-        }
+       //}
         homeFragmentBinding.payuMerchant.setOnClickListener(this);
         homeFragmentBinding.transferAgent.setOnClickListener(this);
         homeFragmentBinding.rechargeComte.setOnClickListener(this);
