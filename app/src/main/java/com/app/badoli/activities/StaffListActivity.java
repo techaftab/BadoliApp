@@ -89,7 +89,7 @@ public class StaffListActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    public void updateTitle(String title) {
+    public void updateTitle (String title){
         binding.layoutToolbar.txtTitle.setText(title);
     }
 }
