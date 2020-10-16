@@ -8,11 +8,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,7 +53,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
-
         viewUpdate();
         init();
     }
@@ -65,11 +62,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         activity=SignUpActivity.this;
 
-        if (!TextUtils.isEmpty(PrefManager.getInstance(SignUpActivity.this).getPhoneCode())) {
+      /*  if (!TextUtils.isEmpty(PrefManager.getInstance(SignUpActivity.this).getPhoneCode())) {
             Log.e("ksjd", "-" + PrefManager.getInstance(SignUpActivity.this).getPhoneCode());
             binding.tvCountryCode.setText("+"+PrefManager.getInstance(SignUpActivity.this).getPhoneCode());
             countryId=PrefManager.getInstance(SignUpActivity.this).getCountryCode();
-        }
+        }*/
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -266,10 +263,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             binding.edPassword.setError(getResources().getString(R.string.enter_new_password));
             AppUtils.showSnackbar(getString(R.string.new_password_empty), binding.parentLayout);
             return false;
-        } else if (password.length() != 4) {
+        } else if (password.length()<6||password.length()>16) {
             binding.edPassword.requestFocus();
             binding.edPassword.setError(getResources().getString(R.string.password_length));
-            AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
+            AppUtils.showSnackbar(getString(R.string.password_length), binding.parentLayout);
             return false;
         } else if (confirm_password.isEmpty()) {
             binding.edConfirmPassword.requestFocus();

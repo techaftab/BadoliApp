@@ -42,7 +42,8 @@ import java.util.Map;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
-public class MerchantActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, updateBalance {
+public class MerchantActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
+        View.OnClickListener, updateBalance {
     private static final String TAG = MerchantActivity.class.getSimpleName();
     ActivityMerchantBinding merchantBinding;
     UserData userData;
@@ -105,6 +106,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         merchantBinding.rbQrcode.setChecked(true);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         if (merchantBinding.rbQrcode.isChecked()){

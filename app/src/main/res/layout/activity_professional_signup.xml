@@ -205,7 +205,7 @@
                                 android:gravity="center"
                                 android:layout_margin="@dimen/_10sdp"
                                 android:background="@drawable/rl_back"
-                                android:hint="@string/country_code"
+                                android:hint="@string/country_code_hint"
                                 android:textColorHint="@color/white"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
