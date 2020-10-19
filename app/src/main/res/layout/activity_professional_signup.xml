@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -30,7 +31,8 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_margin="@dimen/_8sdp"
                     android:src="@drawable/back"
-                    android:padding="@dimen/_6sdp"/>
+                    android:padding="@dimen/_6sdp"
+                    tools:ignore="ContentDescription" />
 
                 <AutoCompleteTextView
                     android:id="@+id/autoLang"

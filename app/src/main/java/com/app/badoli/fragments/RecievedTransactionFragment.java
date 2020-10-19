@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.adapter.ReceivedListAdapter;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
@@ -63,36 +64,43 @@ public class RecievedTransactionFragment extends Fragment implements ReceivedLis
         fragmentBinding.recyclerviewPaid.setAdapter(receivedListAdapter);
         receivedListAdapter.notifyDataSetChanged();
     }
-    private void showLoading(){
-        AppUtils.hideKeyboardFrom(requireActivity());
-        fragmentBinding.progressbarHistory.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-    private void dismissLoading(){
-        fragmentBinding.progressbarHistory.setVisibility(View.INVISIBLE);
-        requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-
 
     private void getHistory(String id) {
         showLoading();
         transactionViewModel.getHistory(id).observe(getViewLifecycleOwner(), transactionHistory -> {
             dismissLoading();
             if (!transactionHistory.error) {
-               /* for (int j=0;j<transactionHistory.wallethistory.get(i).getWallethistoryinner().size();j++) {
-                       if (transactionHistory.wallethistory.get(i).getWallethistoryinner().get(j).type.equals("Debit")){
-
-                       }
-                   }*/
-                receivedList.clear();
-                receivedList.addAll(transactionHistory.wallethistory);
-                receivedListAdapter.notifyDataSetChanged();
-
+                if (transactionHistory.wallethistory.isEmpty()){
+                    fragmentBinding.layoutNoItem.noItem.setVisibility(View.VISIBLE);
+                    fragmentBinding.recyclerviewPaid.setVisibility(View.GONE);
+                }else {
+                    fragmentBinding.layoutNoItem.noItem.setVisibility(View.GONE);
+                    fragmentBinding.recyclerviewPaid.setVisibility(View.VISIBLE);
+                    receivedList.clear();
+                    receivedList.addAll(transactionHistory.wallethistory);
+                    receivedListAdapter.notifyDataSetChanged();
+                }
             } else {
                 Toast.makeText(getActivity(), transactionHistory.message, Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void dismissLoading() {
+        if (userData.getUserType().equalsIgnoreCase("3")) {
+            ((HomePageActivity) requireActivity()).dismissLoading();
+        }else {
+            ((ProfessionalActivity) requireActivity()).dismissLoading();
+        }
+    }
+
+    private void showLoading() {
+        if (userData.getUserType().equalsIgnoreCase("3")) {
+            ((HomePageActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+        }else {
+            ((ProfessionalActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+        }
+    }
+
 
 }

@@ -52,13 +52,13 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     private void init() {
         webService=new WebService(this);
         webService.updateBalance(userData.getId());
-        showLoading();
+        showLoading(getResources().getString(R.string.please_wait));
         handler.postDelayed(() -> webService.updateBalance(userData.getId()),10000);
         addMoney.radiogrouAddmoney.setOnCheckedChangeListener(this);
     }
 
     public void checkBalanceAdd(View view) {
-        showLoading();
+        showLoading(getResources().getString(R.string.please_wait));
         webService.updateBalance(userData.getId());
     }
 
@@ -67,15 +67,13 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     public void onUpdateBalance(String balance) {
         userData.setWallet_balance(balance);
         PrefManager.getInstance(AddMoney.this).setWalletBalance(balance);
-        if (addMoney.progressAddmoney.isShown()) {
-            dismissLoading();
-        }
+        dismissLoading();
         if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {
             Float bal = Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
                     .replace(getResources().getString(R.string.badoli_balance), "")
                     .replace(" ", "")
                     .replace("FCFA",""));
-           // Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
+           //Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
         } else {
             addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " FCFA");
             userData.setWallet_balance(balance);
@@ -164,21 +162,22 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
         return  true;
     }
 
-    void showLoading(){
+    public void showLoading(String message){
         AppUtils.hideKeyboardFrom(AddMoney.this);
-        addMoney.progressAddmoney.setVisibility(View.VISIBLE);
+        addMoney.layoutProgress.txtMessage.setText(message);
+        addMoney.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    void dismissLoading(){
-        addMoney.progressAddmoney.setVisibility(View.INVISIBLE);
+    public void dismissLoading(){
+        addMoney.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
     //https://mypvit.com/mypvitapi.kk
     private void getReference(String mobile, String amount, String id, String auth_token) {
-        showLoading();
-        addMoneyViewModel.getReference(id, mobile, amount, auth_token).observe(this, referenceResponse -> {
+        showLoading(getResources().getString(R.string.please_wait));
+        addMoneyViewModel.getReference(id, mobile, amount, auth_token,"1").observe(this, referenceResponse -> {
             if (!referenceResponse.error) {
                 dismissLoading();
                 referenceNo=referenceResponse.getRef();
@@ -191,7 +190,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     }
 
     private void goAirtel(String mobile, String amount,String reference) {
-        showLoading();
+        showLoading(getResources().getString(R.string.requesting));
         addMoneyViewModel.goAirtel(mobile,amount,reference,Constant.TEL_MERCHAND,Constant.TOKEN)
                 .observe(this, airtelResponse -> {
                     dismissLoading();

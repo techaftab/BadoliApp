@@ -32,6 +32,14 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+
+    <style name="AppTheme.WithHeadRed">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
+        <item name="colorPrimary">@color/app_red</item>
+        <item name="colorPrimaryDark">@color/app_red</item>
+        <item name="colorAccent">@color/app_red</item>
+    </style>
   <!--  <style name="Segoe_Print" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/segoe_print</item>
     </style>-->

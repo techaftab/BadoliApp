@@ -333,7 +333,11 @@ public class ProfessionalProfileFragment extends Fragment {
         ((ProfessionalActivity)requireActivity()).showLoading(getResources().getString(R.string.plz_wait));
         profileViewModel.getProfile(id,userType)
                 .observe(requireActivity(), loginResponse -> {
-                    ((ProfessionalActivity)requireActivity()).dismissLoading();
+                    try {
+                        ((ProfessionalActivity) requireActivity()).dismissLoading();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     if (loginResponse!=null&&!loginResponse.getError()) {
                        /* UserData userData = new UserData(
                                 id,
@@ -365,10 +369,12 @@ public class ProfessionalProfileFragment extends Fragment {
         binding.edittextCode.setText(result.getAirtel_merchant_id());
         binding.edittextMobile.setText(result.getMobile());
         binding.edittextAddress.setText(result.getCompany_address());
-        Glide.with(this).load(result.getUser_image())
-                .placeholder(R.drawable.logo)
-                .error(R.drawable.logo)
-                .thumbnail(0.06f)
-                .into(binding.profileImage);
+        if (getActivity()!=null) {
+            Glide.with(this).load(result.getUser_image())
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+                    .thumbnail(0.06f)
+                    .into(binding.profileImage);
+        }
     }
 }

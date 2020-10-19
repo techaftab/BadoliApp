@@ -74,6 +74,9 @@
 
         </com.google.android.material.navigation.NavigationView>
 
+        <include layout="@layout/layout_progress"
+            android:id="@+id/layoutProgress"/>
+
     </androidx.drawerlayout.widget.DrawerLayout>
 
 

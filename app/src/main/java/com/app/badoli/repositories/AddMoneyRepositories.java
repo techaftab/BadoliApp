@@ -21,11 +21,11 @@ public class AddMoneyRepositories {
 
     public AddMoneyRepositories() {}
 
-    public LiveData<ReferenceResponse> getReference(String id, String mobile, String amount, String auth_token) {
+    public LiveData<ReferenceResponse> getReference(String id, String mobile, String amount, String auth_token, String request_for) {
         MutableLiveData<ReferenceResponse> mutableLiveData = new MutableLiveData<>();
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
 
-        Call<ReferenceResponse> call = apiService.getReference(id, mobile, amount, auth_token);
+        Call<ReferenceResponse> call = apiService.getReference(id, mobile, amount, auth_token,request_for);
 
         call.enqueue(new Callback<ReferenceResponse>() {
             @Override

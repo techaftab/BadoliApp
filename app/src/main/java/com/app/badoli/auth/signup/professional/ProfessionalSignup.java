@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -96,12 +95,14 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                 binding.autoLang.showDropDown();
             }
         });
+
         binding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
             // TODO Auto-generated method stub
             binding.autoLang.showDropDown();
             binding.autoLang.requestFocus();
             return false;
         });
+
         binding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
             String lang = parent.getItemAtPosition(position).toString();
             LoginPre.getActiveInstance(ProfessionalSignup.this).setLocaleLangua(lang);
@@ -111,6 +112,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                 setLocale("en");
             }
         });
+
         if (AppUtils.hasNetworkConnection(ProfessionalSignup.this)){
             getBussinessList();
         }else {
@@ -125,13 +127,10 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
                 binding.autoCompleteText.showDropDown();
             }
         });
-        binding.autoCompleteText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                binding.autoCompleteText.showDropDown();
-                binding.autoCompleteText.requestFocus();
-                return false;
-            }
+        binding.autoCompleteText.setOnTouchListener((v, event) -> {
+            binding.autoCompleteText.showDropDown();
+            binding.autoCompleteText.requestFocus();
+            return false;
         });
         binding.autoCompleteText.setOnItemClickListener((parent, view, position, id) -> {
             String activity=parent.getItemAtPosition(position).toString();

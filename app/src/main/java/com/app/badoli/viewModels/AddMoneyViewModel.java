@@ -19,8 +19,8 @@ public class AddMoneyViewModel extends AndroidViewModel {
         addMoneyRepositories = new AddMoneyRepositories();
     }
 
-    public LiveData<ReferenceResponse> getReference(String id, String mobile, String amount, String auth_token) {
-        return addMoneyRepositories.getReference(id, mobile, amount, auth_token);
+    public LiveData<ReferenceResponse> getReference(String id, String mobile, String amount, String auth_token, String request_for) {
+        return addMoneyRepositories.getReference(id, mobile, amount, auth_token,request_for);
     }
 
     public LiveData<AirtelResponse> goAirtel(String mobile, String amount,String referenceNo,

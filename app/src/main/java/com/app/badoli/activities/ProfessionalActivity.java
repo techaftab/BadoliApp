@@ -193,6 +193,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
     }
 
     public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
+        dismissLoading();
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 ft = getSupportFragmentManager().beginTransaction();

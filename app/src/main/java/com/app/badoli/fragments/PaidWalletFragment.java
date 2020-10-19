@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.adapter.PaidListAdapter;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
@@ -56,7 +58,7 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
 
     private void init() {
         paidListAdapter = new PaidListAdapter(getActivity(), paidList, this);
-        if (AppUtils.hasNetworkConnection(Objects.requireNonNull(getActivity()))){
+        if (AppUtils.hasNetworkConnection(requireActivity())){
             getHistory(userData.getId());
         }
 
@@ -67,34 +69,41 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
         paidListAdapter.notifyDataSetChanged();
     }
 
-    private void showLoading(){
-        AppUtils.hideKeyboardFrom(Objects.requireNonNull(getActivity()));
-        fragmentBinding.progressbarHistory.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-
-    private void dismissLoading(){
-        fragmentBinding.progressbarHistory.setVisibility(View.INVISIBLE);
-        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-    }
-
     private void getHistory(String id) {
         showLoading();
-        transactionViewModel.getHistory(id).observe(getViewLifecycleOwner(), transactionHistory -> {
+        transactionViewModel.getHistory(id)
+                .observe(getViewLifecycleOwner(), transactionHistory -> {
             dismissLoading();
             if (!transactionHistory.error) {
-               /*for (int j=0;j<transactionHistory.wallethistory.get(i).getWallethistoryinner().size();j++) {
-                       if (transactionHistory.wallethistory.get(i).getWallethistoryinner().get(j).type.equals("Debit")){
-                       }
-                   }*/
-                paidList.clear();
-                paidList.addAll(transactionHistory.wallethistory);
-                paidListAdapter.notifyDataSetChanged();
-
+               if (transactionHistory.wallethistory.isEmpty()){
+                   fragmentBinding.layoutNoItem.noItem.setVisibility(View.VISIBLE);
+                   fragmentBinding.recyclerviewPaid.setVisibility(View.GONE);
+               }else {
+                   fragmentBinding.layoutNoItem.noItem.setVisibility(View.GONE);
+                   fragmentBinding.recyclerviewPaid.setVisibility(View.VISIBLE);
+                   paidList.clear();
+                   paidList.addAll(transactionHistory.wallethistory);
+                   paidListAdapter.notifyDataSetChanged();
+               }
             } else {
                 Toast.makeText(getActivity(), transactionHistory.message, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void dismissLoading() {
+        if (userData.getUserType().equalsIgnoreCase("3")) {
+            ((HomePageActivity) requireActivity()).dismissLoading();
+        }else {
+            ((ProfessionalActivity) requireActivity()).dismissLoading();
+        }
+    }
+
+    private void showLoading() {
+        if (userData.getUserType().equalsIgnoreCase("3")) {
+            ((HomePageActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+        }else {
+            ((ProfessionalActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+        }
     }
 }

@@ -59,7 +59,8 @@
         <activity
             android:name=".auth.signup.professional.ProfessionalSignup"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed"/>
         <activity
             android:name=".auth.forget.ForgotPasswordActivity"
             android:screenOrientation="portrait" />

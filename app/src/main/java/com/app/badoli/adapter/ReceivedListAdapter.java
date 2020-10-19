@@ -34,8 +34,6 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
     private ReceivedListClickListner receivedListCliskListner;
 
     private List<TransactionHistory.WalletHistory.WalletHistoryInner> listItem=new ArrayList<>();
-    private static TransItemAdapter transItemAdapter;
-
 
     public ReceivedListAdapter(Context context, List<TransactionHistory.WalletHistory> receivedList, ReceivedListClickListner receivedListCliskListner) {
         this.loadList = receivedList;
@@ -57,9 +55,8 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ReceivedListAdapterHolder holder, int position) {
-
         final TransactionHistory.WalletHistory receivedList = loadListFiltered.get(position);
-        transItemAdapter = new TransItemAdapter(context, listItem, this);
+
         try {
             holder.bindMessage(receivedList);
         } catch (ParseException e) {
@@ -104,7 +101,7 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
         };
     }
 
-    class ReceivedListAdapterHolder extends RecyclerView.ViewHolder {
+    class ReceivedListAdapterHolder extends RecyclerView.ViewHolder implements TransItemAdapter.TransItemAdapterClickListner {
         TextView txtDate;
         RecyclerView recyclerViewPaidList;
 
@@ -118,20 +115,25 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
             SimpleDateFormat newFormat=new SimpleDateFormat("MMM, yyyy", Locale.getDefault());
             Date previousDate=previousFormat.parse(paidList.transction_date);
             String newDate=newFormat.format(previousDate);
+
+            TransItemAdapter transItemAdapter = new TransItemAdapter(context, listItem, this);;
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            recyclerViewPaidList.setLayoutManager(linearLayoutManager);
+            // request_list.setHasFixedSize(true);
+            recyclerViewPaidList.setAdapter(transItemAdapter);
+            transItemAdapter.notifyDataSetChanged();
             for (int j = 0; j < paidList.wallethistory.size(); j++) {
                 if (paidList.wallethistory.get(j).type.equals("Credit")) {
                     txtDate.setText(newDate);
                     listItem.clear();
                     listItem.add(paidList.wallethistory.get(j));
                     transItemAdapter.notifyDataSetChanged();
-                    Log.e(TAG, "PAID WALLET HISTORY--->" + new Gson().toJson(paidList.wallethistory.get(j)));
+                    Log.e(TAG, "RECIEVED WALLET HISTORY--->" + new Gson().toJson(paidList.wallethistory.get(j)));
+                }else {
+                    txtDate.setVisibility(View.GONE);
                 }
             }
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            recyclerViewPaidList.setLayoutManager(linearLayoutManager);
-            // request_list.setHasFixedSize(true);
-            recyclerViewPaidList.setAdapter(transItemAdapter);
-            transItemAdapter.notifyDataSetChanged();
+
         }
     }
 }

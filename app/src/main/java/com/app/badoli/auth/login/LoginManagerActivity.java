@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.auth.signup.professional.ProfessionalSignup;
@@ -61,6 +60,7 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
                 binding.lnMerchant.setVisibility(View.VISIBLE);
             }
         }
+
         binding.txtSignUp.setOnClickListener(this);
         binding.imgBack.setOnClickListener(this);
         binding.layoutLogin.loginButton.setOnClickListener(this);

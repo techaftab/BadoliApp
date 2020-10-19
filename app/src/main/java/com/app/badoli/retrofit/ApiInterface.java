@@ -90,8 +90,9 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("getPaymentRef")
-    Call<ReferenceResponse> getReference(@Field("user_id") String id,@Field("tel_client") String mobile,
-                                         @Field("amount") String amount,@Field("access_token") String auth_token);
+    Call<ReferenceResponse> getReference(@Field("user_id") String id, @Field("tel_client") String mobile,
+                                         @Field("amount") String amount, @Field("access_token") String auth_token,
+                                         @Field("request_for") String request_for);
 
     @FormUrlEncoded
     @POST("mypvitapi.kk")

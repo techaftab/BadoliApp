@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
+import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
@@ -47,7 +48,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
 
-public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, updateBalance {
+public class HomePageActivity extends AppCompatActivity implements updateBalance {
 
     public ActivityHomePageBinding homePageBinding;
    // boolean openDrawer = false;
@@ -121,17 +122,70 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private void init() {
         webService=new WebService(this);
         webService.updateBalance(userData.getId());
-        homePageBinding.commonHeader.hamburger.setOnClickListener(this);
-        homePageBinding.commonHeader.imgBackMain.setOnClickListener(this);
-        homePageBinding.drawerMenuItems.openWallet.setOnClickListener(this);
-        homePageBinding.drawerMenuItems.about.setOnClickListener(this);
-        homePageBinding.drawerMenuItems.support.setOnClickListener(this);
-        homePageBinding.drawerMenuItems.changePassword.setOnClickListener(this);
-        homePageBinding.drawerMenuItems.layoutLogout.setOnClickListener(this);
+        homePageBinding.commonHeader.hamburger.setOnClickListener(this::openDrawer);
+        homePageBinding.commonHeader.imgBackMain.setOnClickListener(this::back);
+        homePageBinding.drawerMenuItems.openWallet.setOnClickListener(this::goWallet);
+        homePageBinding.drawerMenuItems.about.setOnClickListener(this::goAbout);
+        homePageBinding.drawerMenuItems.support.setOnClickListener(this::openSupport);
+        homePageBinding.drawerMenuItems.changePassword.setOnClickListener(this::goChangePwd);
+        homePageBinding.drawerMenuItems.layoutLogout.setOnClickListener(this::goLogout);
+    }
+
+    private void openDrawer(View view) {
+        if(!homePageBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            homePageBinding.drawerLayout.openDrawer(GravityCompat.START);
+        else homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void back(View view) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
+        if (f instanceof FragmentPayById){
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.anim.left_in,R.anim.right_out);
+            currentFragment = new FragmentMerchant();
+            ft.replace(R.id.rootLayout, currentFragment);
+            ft.addToBackStack("home");
+            ft.commit();
+        }else if (!(f instanceof HomeFragment)) {
+            loadFragment("1");
+        }
+    }
+
+    private void goWallet(View view) {
+        homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        Intent wallet = new Intent(HomePageActivity.this, AddMoney.class);
+        startActivity(wallet);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+    }
+
+    private void goLogout(View view) {
+        homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        logout();
+    }
+
+    private void goChangePwd(View view) {
+        homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        Intent change = new Intent(HomePageActivity.this, ChangePasswordActivity.class);
+        startActivity(change);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+    }
+
+    private void goAbout(View view) {
+        homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        Intent about = new Intent(HomePageActivity.this, AboutUsActivity.class);
+        startActivity(about);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+    }
+
+    private void openSupport(View view) {
+        homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        Intent support = new Intent(HomePageActivity.this, Support_Activity.class);
+        startActivity(support);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
     }
 
     public void checkBalance(View view) {
-        showLoading();
+        showLoading(getResources().getString(R.string.please_wait));
         webService.updateBalance(userData.getId());
     }
 
@@ -153,15 +207,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         loadData();
     }
 
-    void showLoading(){
+    public void showLoading(String message){
         AppUtils.hideKeyboardFrom(HomePageActivity.this);
-        homePageBinding.progressbarMain.setVisibility(View.VISIBLE);
+        homePageBinding.layoutProgress.txtMessage.setText(message);
+        homePageBinding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    void dismissLoading(){
-        homePageBinding.progressbarMain.setVisibility(View.INVISIBLE);
+    public void dismissLoading(){
+        homePageBinding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
@@ -176,6 +231,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
+        dismissLoading();
         switch (item.getItemId()) {
             case R.id.navigation_home:
                 ft = getSupportFragmentManager().beginTransaction();
@@ -204,57 +260,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         return false;
     };
-
-
-    @Override
-    public void onClick(View v) {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
-        if (v==homePageBinding.drawerMenuItems.openWallet){
-            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            Intent wallet = new Intent(HomePageActivity.this, AddMoney.class);
-            startActivity(wallet);
-            overridePendingTransition(R.anim.right_in,R.anim.left_out);
-        }
-        if (v==homePageBinding.commonHeader.imgBackMain){
-            if (f instanceof FragmentPayById){
-                ft = getSupportFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.left_in,R.anim.right_out);
-                currentFragment = new FragmentMerchant();
-                ft.replace(R.id.rootLayout, currentFragment);
-                ft.addToBackStack("home");
-                ft.commit();
-            }else if (!(f instanceof HomeFragment)) {
-                loadFragment("1");
-            }
-        }
-        if (v==homePageBinding.drawerMenuItems.about){
-            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            Intent about = new Intent(HomePageActivity.this, AboutUsActivity.class);
-            startActivity(about);
-            overridePendingTransition(R.anim.right_in,R.anim.left_out);
-        }
-        if (v==homePageBinding.drawerMenuItems.support){
-            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            Intent support = new Intent(HomePageActivity.this, Support_Activity.class);
-            startActivity(support);
-            overridePendingTransition(R.anim.right_in,R.anim.left_out);
-        }
-        if (v==homePageBinding.drawerMenuItems.changePassword){
-            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            Intent change = new Intent(HomePageActivity.this, ChangePasswordActivity.class);
-            startActivity(change);
-            overridePendingTransition(R.anim.right_in,R.anim.left_out);
-        }
-        if (v==homePageBinding.drawerMenuItems.layoutLogout){
-            homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-            logout();
-        }
-        if (v.getId() == R.id.hamburger) {
-            if(!homePageBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
-                homePageBinding.drawerLayout.openDrawer(GravityCompat.START);
-            else homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -313,7 +318,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         builder.setTitle(getResources().getString(R.string.want_logout));
         builder.setPositiveButton(getResources().getString(R.string.no), (dialog, id) ->dialog.cancel());
         builder.setNegativeButton(getResources().getString(R.string.yes), (dialog, which) -> {
-            showLoading();
+            showLoading(getResources().getString(R.string.logging_out));
             handler.postDelayed(() -> {
                 dismissLoading();
                 //PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this).edit().clear().apply();

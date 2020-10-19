@@ -232,7 +232,7 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     private void getReference(String mobile, String amount, String id, String auth_token) {
         showLoading(getResources().getString(R.string.validating));
-        addMoneyViewModel.getReference(id, mobile, amount, auth_token).observe(this, referenceResponse -> {
+        addMoneyViewModel.getReference(id, mobile, amount, auth_token, "1").observe(this, referenceResponse -> {
             if (!referenceResponse.error) {
                 dismissLoading();
                 referenceNo = referenceResponse.getRef();

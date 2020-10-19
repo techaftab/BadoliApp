@@ -280,6 +280,8 @@
     <string name="pin_code">Pin Code</string>
     <string name="renew">Renew</string>
     <string name="delete_code">Delete code</string>
+    <string name="no_transaction_found">No Transaction found.</string>
+    <string name="requesting">Requesting...</string>
 
 
     <string-array name="select_lang">

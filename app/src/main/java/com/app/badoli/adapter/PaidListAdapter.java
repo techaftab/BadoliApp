@@ -35,7 +35,7 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
     private Context context;
     private PaidListClickListner paidListClickListner;
 
-    private static TransItemAdapter transItemAdapter;
+
 
 
     public PaidListAdapter(Context context, List<TransactionHistory.WalletHistory> paidList,PaidListClickListner paidListClickListner) {
@@ -60,7 +60,7 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
     public void onBindViewHolder(@NonNull final PaidListAdapterHolder holder, int position) {
 
         final TransactionHistory.WalletHistory paidList = loadListFiltered.get(position);
-        transItemAdapter = new TransItemAdapter(context, listItem, this);
+
         try {
             holder.bindMessage(paidList);
         } catch (ParseException e) {
@@ -105,7 +105,7 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
         };
     }
 
-    class PaidListAdapterHolder extends RecyclerView.ViewHolder {
+    class PaidListAdapterHolder extends RecyclerView.ViewHolder implements TransItemAdapter.TransItemAdapterClickListner {
         TextView txtDate;
         RecyclerView recyclerViewPaidList;
         PaidListAdapterHolder(View view){
@@ -119,6 +119,12 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
             SimpleDateFormat newFormat=new SimpleDateFormat("MMM, yyyy", Locale.getDefault());
             Date previousDate=previousFormat.parse(paidList.transction_date);
             String newDate=newFormat.format(previousDate);
+            TransItemAdapter transItemAdapter = new TransItemAdapter(context, listItem, this);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            recyclerViewPaidList.setLayoutManager(linearLayoutManager);
+            // request_list.setHasFixedSize(true);
+            recyclerViewPaidList.setAdapter(transItemAdapter);
+            transItemAdapter.notifyDataSetChanged();
             for (int j=0;j<paidList.wallethistory.size();j++) {
                 if (paidList.wallethistory.get(j).type.equals("Debit")) {
                     txtDate.setText(newDate);
@@ -126,14 +132,10 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
                     listItem.add(paidList.wallethistory.get(j));
                     transItemAdapter.notifyDataSetChanged();
                     Log.e(TAG,"PAID WALLET HISTORY--->"+new Gson().toJson(paidList.wallethistory.get(j)));
+                }else {
+                    txtDate.setVisibility(View.GONE);
                 }
             }
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            recyclerViewPaidList.setLayoutManager(linearLayoutManager);
-            // request_list.setHasFixedSize(true);
-            recyclerViewPaidList.setAdapter(transItemAdapter);
-            transItemAdapter.notifyDataSetChanged();
-
         }
     }
 }

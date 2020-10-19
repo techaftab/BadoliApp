@@ -96,11 +96,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 binding.autoLang.showDropDown();
             }
         });
+
         binding.autoLang.setOnTouchListener((paramView, paramMotionEvent) -> {
             binding.autoLang.showDropDown();
             binding.autoLang.requestFocus();
             return false;
         });
+
         binding.autoLang.setOnItemClickListener((parent, view, position, id) -> {
             String lang =parent.getItemAtPosition(position).toString();
             LoginPre.getActiveInstance(SignUpActivity.this).setLocaleLangua(lang);
