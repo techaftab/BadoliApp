@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
@@ -30,23 +30,15 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <ScrollView
+        <WebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar_change_password">
+            android:layout_below="@+id/toolbar_change_password"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/common_header"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
-
-        </ScrollView>
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress"/>
     </RelativeLayout>
 
 </layout>

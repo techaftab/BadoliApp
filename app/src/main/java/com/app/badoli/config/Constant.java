@@ -27,4 +27,5 @@ public interface Constant {
     String AGENT_CODE = "agent_code";
     String AGENT_PIN = "agent_pin";
     String MERCHANT_ID = "merchant_id";
+    String ABOUT_US = "about-us";
 }

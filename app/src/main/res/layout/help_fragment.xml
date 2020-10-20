@@ -1,10 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_change_password"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            app:navigationIcon="@drawable/back_arrow_white"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit_request"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="@dimen/_14ssp"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:id="@+id/parentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_submit_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="18sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subject"
+                        android:textColor="@color/text_orange"
+                        android:textSize="22sp" />
+
+                    <EditText
+                        android:id="@+id/edittextSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/rounded_blank_res"
+                        android:hint="@string/enter_subject"
+                        android:lines="1"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/message"
+                        android:textColor="@color/text_orange"
+                        android:textSize="22sp" />
+
+                    <EditText
+                        android:id="@+id/edittextMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/rounded_blank_res"
+                        android:gravity="top"
+                        android:hint="@string/enter_your_message"
+                        android:padding="12dp"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/plz_verify_your_details"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/submit_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/layout_confirm_password"
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="65dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/rounded_button_orange">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/btnSubmit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/submit"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
+
+
+
 
 </layout>

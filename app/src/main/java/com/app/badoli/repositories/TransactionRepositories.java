@@ -22,10 +22,10 @@ public class TransactionRepositories {
 
     public TransactionRepositories(){}
 
-    public LiveData<TransactionHistory> getHistory(String id) {
+    public LiveData<TransactionHistory> getHistory(String id, String type) {
         MutableLiveData<TransactionHistory> mutableLiveDataProfile = new MutableLiveData<>();
         ApiInterface apiService = RetrofitConnection.getInstance().createService();
-        Call<TransactionHistory> call = apiService.getHistory(id);
+        Call<TransactionHistory> call = apiService.getHistory(id,type);
         call.enqueue(new Callback<TransactionHistory>() {
             @Override
             public void onResponse(@NonNull Call<TransactionHistory> call, @NonNull Response<TransactionHistory> response) {

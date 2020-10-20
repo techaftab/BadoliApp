@@ -282,6 +282,13 @@
     <string name="delete_code">Delete code</string>
     <string name="no_transaction_found">No Transaction found.</string>
     <string name="requesting">Requesting...</string>
+    <string name="enter_subject">Enter the Subject</string>
+    <string name="message">Message</string>
+    <string name="enter_your_message">Enter your Message</string>
+    <string name="plz_verify_your_details">Please verify your entered details before submitting</string>
+    <string name="please_enter_subject">Please enter subject</string>
+    <string name="please_enter_message">Please enter message</string>
+    <string name="sending">Sending...</string>
 
 
     <string-array name="select_lang">

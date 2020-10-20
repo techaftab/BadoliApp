@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.app.badoli.activities.NavigationActivities.ChangePasswordActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
+            android:id="@+id/parentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_change_password"
                 android:layout_height="wrap_content"
@@ -34,87 +33,110 @@
 
             </androidx.appcompat.widget.Toolbar>
 
-
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_submit_detail"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="18sp" />
+                    android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Subject"
-                    android:textColor="@color/text_orange"
-                    android:textSize="22sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/rounded_blank_res"
-                    android:hint="Enter the Subject"
-                    android:padding="10dp"
-                    android:textSize="15sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Message"
-                    android:textColor="@color/text_orange"
-                    android:textSize="22sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/rounded_blank_res"
-                    android:gravity="top"
-                    android:hint="Enter your Message"
-                    android:padding="12dp"
-                    android:textSize="15sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Please verify your entered details before submitting"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/submit_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/layout_confirm_password"
-                    android:layout_marginLeft="65dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginRight="65dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_button_orange">
-
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="Submit"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </LinearLayout>
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_submit_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="18sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Subject"
+                            android:textColor="@color/text_orange"
+                            android:textSize="22sp" />
+
+                        <EditText
+                            android:id="@+id/edittextSubject"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/rounded_blank_res"
+                            android:hint="@string/enter_subject"
+                            android:lines="1"
+                            android:inputType="text"
+                            android:padding="10dp"
+                            android:textSize="15sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="@string/message"
+                            android:textColor="@color/text_orange"
+                            android:textSize="22sp" />
+
+                        <EditText
+                            android:id="@+id/edittextMessage"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/rounded_blank_res"
+                            android:gravity="top"
+                            android:hint="@string/enter_your_message"
+                            android:padding="12dp"
+                            android:textSize="15sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/plz_verify_your_details"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/submit_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/layout_confirm_password"
+                            android:layout_marginLeft="65dp"
+                            android:layout_marginTop="50dp"
+                            android:layout_marginRight="65dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/rounded_button_orange">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/btnSubmit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/submit"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
 
         </LinearLayout>
 
-    </ScrollView>
+
+        <include layout="@layout/layout_progress"
+            android:id="@+id/layoutProgress"/>
+    </RelativeLayout>
+
+
+
 
 </layout>

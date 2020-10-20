@@ -38,4 +38,8 @@ public class ProfileViewModel extends AndroidViewModel {
     public LiveData<CustomerUserProfile> getUserProfile(String id, String userType) {
         return accountRepositories.getUserProfile(id,userType);
     }
+
+    public LiveData<ResetPassword> contactUs(String id, String subject, String message) {
+        return accountRepositories.contactUs(id,subject,message);
+    }
 }

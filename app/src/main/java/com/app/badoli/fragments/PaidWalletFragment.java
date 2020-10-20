@@ -71,7 +71,7 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
 
     private void getHistory(String id) {
         showLoading();
-        transactionViewModel.getHistory(id)
+        transactionViewModel.getHistory(id,"Debit")
                 .observe(getViewLifecycleOwner(), transactionHistory -> {
             dismissLoading();
             if (!transactionHistory.error) {

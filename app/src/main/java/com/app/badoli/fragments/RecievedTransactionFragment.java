@@ -67,7 +67,7 @@ public class RecievedTransactionFragment extends Fragment implements ReceivedLis
 
     private void getHistory(String id) {
         showLoading();
-        transactionViewModel.getHistory(id).observe(getViewLifecycleOwner(), transactionHistory -> {
+        transactionViewModel.getHistory(id,"Credit").observe(getViewLifecycleOwner(), transactionHistory -> {
             dismissLoading();
             if (!transactionHistory.error) {
                 if (transactionHistory.wallethistory.isEmpty()){

@@ -19,7 +19,7 @@ public class TransactionViewModel extends AndroidViewModel {
         transactionRepositories = new TransactionRepositories();
     }
 
-    public LiveData<TransactionHistory> getHistory(String id) {
-        return transactionRepositories.getHistory(id);
+    public LiveData<TransactionHistory> getHistory(String id,String type) {
+        return transactionRepositories.getHistory(id,type);
     }
 }
