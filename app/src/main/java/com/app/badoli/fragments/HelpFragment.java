@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.HelpFragmentBinding;
 import com.app.badoli.model.UserData;
+import com.app.badoli.professionalFragment.ProfessionalHomeFragment;
 import com.app.badoli.viewModels.ProfileViewModel;
 
 import java.util.Objects;
@@ -41,6 +43,15 @@ public class HelpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        try {
+            if (getActivity()!=null) {
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+            }
+            requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         fragmentBinding = DataBindingUtil.inflate(inflater, R.layout.help_fragment,container,false);
         profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
         View view   = fragmentBinding.getRoot();
@@ -70,7 +81,7 @@ public class HelpFragment extends Fragment {
             //finish();
             if (getActivity()!=null) {
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
-                currentFragment = new HomeFragment();
+                currentFragment = new ProfessionalHomeFragment();
                 ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
                 ft.replace(R.id.rootLayout, currentFragment);
                 ft.commit();

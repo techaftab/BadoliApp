@@ -353,6 +353,15 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         binding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }
 
+    public void setBottomBar(int pos){
+        binding.bottomNavigation.getMenu().getItem(pos).setChecked(true);
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
+        currentFragment = new TransactionFragment();
+        ft.replace(R.id.rootLayout, currentFragment);
+        ft.commit();
+    }
+
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {

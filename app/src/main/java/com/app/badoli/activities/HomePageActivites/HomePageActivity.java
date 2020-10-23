@@ -24,7 +24,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
@@ -67,6 +66,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         viewUpdate();
         updateLanguage();
+      //  init();
     }
 
     private void viewUpdate() {
@@ -85,6 +85,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
     public void onConfigurationChanged(@NonNull android.content.res.Configuration newConfig) {
         getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        init();
         super.onConfigurationChanged(newConfig);
     }
 
@@ -129,9 +130,11 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         homePageBinding.drawerMenuItems.support.setOnClickListener(this::openSupport);
         homePageBinding.drawerMenuItems.changePassword.setOnClickListener(this::goChangePwd);
         homePageBinding.drawerMenuItems.layoutLogout.setOnClickListener(this::goLogout);
+
     }
 
     private void openDrawer(View view) {
+        homePageBinding.bottomNavigation.requestLayout();
         if(!homePageBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
             homePageBinding.drawerLayout.openDrawer(GravityCompat.START);
         else homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -203,8 +206,8 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         }
         ft.replace(R.id.rootLayout, currentFragment);
         ft.commit();
-        homeData();
-        loadData();
+      //  homeData();
+       // loadData();
     }
 
     public void showLoading(String message){
@@ -346,6 +349,8 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
+        homePageBinding.drawerLayout.bringToFront();
+        homePageBinding.drawerLayout.requestLayout();
         String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");

@@ -9,7 +9,7 @@
         android:fillViewport="true"
         android:isScrollContainer="true">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="6"
@@ -96,7 +96,6 @@
                     android:layout_toEndOf="@+id/wallet_ic"
                     android:layout_toStartOf="@+id/img_w"
                     android:text="@string/wallet"
-                    android:onClick="onClick"
                     android:id="@+id/wallet_text"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
@@ -148,7 +147,6 @@
                     android:layout_toStartOf="@+id/img_ic"
                     android:text="@string/about"
                     android:id="@+id/about_text"
-                    android:onClick="onClick"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
@@ -199,8 +197,6 @@
                     android:layout_toEndOf="@+id/support_ic"
                     android:layout_toStartOf="@+id/img_s"
                     android:text="@string/support"
-                    android:id="@+id/support_text"
-                    android:onClick="onClick"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
@@ -300,7 +296,6 @@
                     android:paddingRight="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/_logout_ic"
                     android:text="@string/logout"
-                    android:onClick="onClick"
                     android:id="@+id/logout_text"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
@@ -316,9 +311,8 @@
 
             </RelativeLayout>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
 
     </ScrollView>
-
 
 </layout>

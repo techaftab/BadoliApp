@@ -292,7 +292,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             AppUtils.showSnackbar(getString(R.string.password_empty), binding.parentLayout);
             return false;
         }
-        if (password.length() !=4) {
+        if (password.length()<4||password.length()>16) {
             binding.edPassword.requestFocus();
             binding.edPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);
@@ -304,7 +304,7 @@ public class ProfessionalSignup extends AppCompatActivity implements View.OnClic
             AppUtils.showSnackbar(getString(R.string.confirm_password_empty), binding.parentLayout);
             return false;
         }
-        if (confirm_password.length() !=4) {
+        if (confirm_password.length()<4||confirm_password.length()>16) {
             binding.edConfirmPassword.requestFocus();
             binding.edConfirmPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.invalid_password), binding.parentLayout);

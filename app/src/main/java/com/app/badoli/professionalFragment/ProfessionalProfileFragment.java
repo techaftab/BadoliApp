@@ -67,6 +67,7 @@ public class ProfessionalProfileFragment extends Fragment {
     private Fragment currentFragment;
     private int RequestPermissionCode=123;
     private ProfileViewModel profileViewModel;
+    private String merchantId="";
 
     @Nullable
     @Override
@@ -129,7 +130,12 @@ public class ProfessionalProfileFragment extends Fragment {
     }
 
     private void viewQr(View view) {
-        goActivity(QrViewActivity.class);
+        if (TextUtils.isEmpty(merchantId)) {
+            goActivity(QrViewActivity.class);
+        }else {
+            AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
+                    getResources().getString(R.string.your_acc_is_under_inspection));
+        }
        /* Fragment currentFragment = new ProfQrViewFragment();
         FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
@@ -369,6 +375,7 @@ public class ProfessionalProfileFragment extends Fragment {
         binding.edittextCode.setText(result.getAirtel_merchant_id());
         binding.edittextMobile.setText(result.getMobile());
         binding.edittextAddress.setText(result.getCompany_address());
+        merchantId=result.getAirtel_merchant_id();
         if (getActivity()!=null) {
             Glide.with(this).load(result.getUser_image())
                     .placeholder(R.drawable.logo)

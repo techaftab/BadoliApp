@@ -48,6 +48,11 @@ public class ProfessionalHomeFragment extends Fragment {
 
         binding.lnCountRefill.setOnClickListener(this::goCountRefill);
         binding.lnTransferAgent.setOnClickListener(this::goTransferAgent);
+        binding.btnTransactions.setOnClickListener(this::goTransactions);
+    }
+
+    private void goTransactions(View view) {
+        ((ProfessionalActivity)requireActivity()).setBottomBar(2);
     }
 
     private void goTransferAgent(View view) {

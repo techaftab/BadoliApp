@@ -118,7 +118,7 @@ public interface ApiInterface {
                                       @Field("new_password") String newPassword,@Field("confirm_password") String confirmPwd);
 
     @GET("transactionHistory")
-    Call<TransactionHistory> getHistory(@Query("userid") String id,@Query("type ") String type);
+    Call<TransactionHistory> getHistory(@Query("userid") String id,@Query("type") String type);
 
     @GET("getBanner")
     Call<BannerModel> getBanner();
@@ -140,4 +140,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("contact-us")
     Call<ResetPassword> contactUs(@Field("userid") String id,@Field("subject") String subject,@Field("message") String message);
+
+    @FormUrlEncoded
+    @POST("updateProfile")
+    Call<ResetPassword> updateProfile(@Field("userid") String id,@Field("roles_id") String userType,
+                                      @Field("name") String name,@Field("email") String email,
+                                      @Field("dob") String dob,@Field("gender") String gender);
 }

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -70,6 +71,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private FragmentTransaction ft;
     private Fragment currentFragment;
     private int RequestPermissionCode=1;
+    private String gender="";
 
     @Nullable
     @Override
@@ -132,6 +134,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });
 
         profileFragmentBinding.userCalender.setOnClickListener(this);
+        profileFragmentBinding.btnSubmit.setOnClickListener(this::checkDetails);
        // profileFragmentBinding.imgbackProfile.setOnClickListener(this);
         profileFragmentBinding.imgUploadProfile.setOnClickListener(this);
         profileFragmentBinding.userName.setText(userData.getName());
@@ -158,7 +161,66 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }else {
             profileFragmentBinding.profileImage.setImageResource(R.drawable.logo);
         }
+
+        profileFragmentBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (profileFragmentBinding.radioFemale.isChecked()){
+                    gender="Female";
+                }
+                if (profileFragmentBinding.radioMale.isChecked()){
+                    gender="Male";
+                }
+            }
+        });
     }
+
+    private void checkDetails(View view) {
+        String name=profileFragmentBinding.userName.getText().toString().trim();
+        String email=profileFragmentBinding.userEmail.getText().toString().trim();
+        String dob=profileFragmentBinding.userCalender.getText().toString().trim();
+        if (isValid(name,email,dob)){
+            updateProfile(name,email,dob,gender);
+        }
+    }
+
+    private boolean isValid(String name, String email, String dob) {
+        if (TextUtils.isEmpty(name)){
+            AppUtils.showSnackbar(getString(R.string.plz_enter_name), profileFragmentBinding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(email)){
+            AppUtils.showSnackbar(getString(R.string.plz_enter_email), profileFragmentBinding.parentLayout);
+            return false;
+        }
+        if (TextUtils.isEmpty(dob)){
+            AppUtils.showSnackbar(getString(R.string.plz_enter_dob), profileFragmentBinding.parentLayout);
+            return false;
+        }
+        if (profileFragmentBinding.radioGroup.getCheckedRadioButtonId()==-1){
+            AppUtils.showSnackbar(getString(R.string.plz_select_gender), profileFragmentBinding.parentLayout);
+            return false;
+        }
+        return false;
+    }
+
+    private void updateProfile(String name, String email, String dob, String gender) {
+        ((ProfessionalActivity)requireActivity()).showLoading(getResources().getString(R.string.updating));
+        profileViewModel.updateProfile(userData.getId(),userData.getUserType(),name,email,dob,gender).observe(this, resetPassword -> {
+            ((ProfessionalActivity)requireActivity()).dismissLoading();
+            if (resetPassword!=null) {
+                if (!resetPassword.error) {
+                    Log.e(TAG, new Gson().toJson(resetPassword));
+                    AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"",resetPassword.getMessage());
+                } else {
+                    AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",resetPassword.getMessage());
+                }
+            }else {
+                AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",getResources().getString(R.string.something_went_wrong));
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -295,6 +357,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     e.printStackTrace();
                 }
                 profileFragmentBinding.profileImage.setImageBitmap(bitmap);
+                Glide.with(requireActivity())
+                        .load(bitmap)
+                        .fitCenter()
+                        .into(profileFragmentBinding.profileImage);
                 imgPath = destination.getAbsolutePath();
                 destination =new File(imgPath);
                 sendImage(Integer.parseInt(userData.getId()), destination);
@@ -311,7 +377,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 Log.e("Activity", "Pick from Gallery::>>> ");
                 imgPath = getRealPathFromURI(selectedImage);
                 profileFragmentBinding.profileImage.setImageBitmap(bitmap);
-
+                Glide.with(requireActivity())
+                        .load(bitmap)
+                        .fitCenter()
+                        .into(profileFragmentBinding.profileImage);
                 destination = new File(imgPath);
                 sendImage(Integer.parseInt(userData.getId()), destination);
 
@@ -376,7 +445,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         ((HomePageActivity)requireActivity()).showLoading(getResources().getString(R.string.plz_wait));
         profileViewModel.getUserProfile(id,userType)
                 .observe(requireActivity(), loginResponse -> {
-                    ((HomePageActivity)requireActivity()).dismissLoading();
+                    if (getActivity()!=null) {
+                        ((HomePageActivity) requireActivity()).dismissLoading();
+                    }
                     if (loginResponse!=null&&!loginResponse.getError()) {
                        /* UserData userData = new UserData(
                                 id,

@@ -43,10 +43,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View view = homeFragmentBinding.getRoot();
         userData = PrefManager.getInstance(requireActivity()).getUserData();
         //((HomePageActivity) Objects.requireNonNull(getActivity())).headerHome();
-        try {
+       /* try {
             requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }catch (Exception e){e.printStackTrace();}
+        }catch (Exception e){e.printStackTrace();}*/
         setUpListener();
         return view;
     }

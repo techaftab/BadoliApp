@@ -74,7 +74,7 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
         transactionViewModel.getHistory(id,"Debit")
                 .observe(getViewLifecycleOwner(), transactionHistory -> {
             dismissLoading();
-            if (!transactionHistory.error) {
+            if (transactionHistory!=null&&!transactionHistory.error) {
                if (transactionHistory.wallethistory.isEmpty()){
                    fragmentBinding.layoutNoItem.noItem.setVisibility(View.VISIBLE);
                    fragmentBinding.recyclerviewPaid.setVisibility(View.GONE);
@@ -86,7 +86,11 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
                    paidListAdapter.notifyDataSetChanged();
                }
             } else {
-                Toast.makeText(getActivity(), transactionHistory.message, Toast.LENGTH_SHORT).show();
+                if (transactionHistory != null) {
+                    Toast.makeText(getActivity(), transactionHistory.message, Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

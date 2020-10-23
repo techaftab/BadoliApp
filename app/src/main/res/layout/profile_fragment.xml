@@ -6,6 +6,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -326,6 +327,7 @@
                             android:orientation="horizontal">
 
                             <RadioGroup
+                                android:id="@+id/radioGroup"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
@@ -359,6 +361,7 @@
                             android:paddingRight="@dimen/DP50">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/btnSubmit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
