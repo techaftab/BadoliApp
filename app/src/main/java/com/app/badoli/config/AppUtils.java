@@ -287,13 +287,10 @@ public class AppUtils {
             imageView.setImageResource(R.drawable.ic_error);
         }else if (error.equalsIgnoreCase("internetError")){
             imageView.setImageResource(R.drawable.nointernet);
+        }else if (error.equalsIgnoreCase("backActivity")){
+            imageView.setImageResource(R.drawable.success);
         }else if (error.equalsIgnoreCase("back")){
             imageView.setImageResource(R.drawable.ic_success);
-            try {
-                if (((FragmentActivity) context).getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                    ((FragmentActivity) context).getSupportFragmentManager().popBackStack();
-                }
-            }catch (Exception e){e.printStackTrace();}
         }else if (error.equalsIgnoreCase("underdevelop")){
             imageView.setImageResource(R.drawable.maintenance);
         }else {
@@ -301,6 +298,10 @@ public class AppUtils {
         }
 
         btnOk.setOnClickListener(v ->{
+            if (error.equalsIgnoreCase("backActivity")||error.equalsIgnoreCase("backError")){
+                dialg.dismiss();
+                ((Activity)context).finish();
+            }else
             if (error.equalsIgnoreCase("express")){
                 dialg.dismiss();
                 try {

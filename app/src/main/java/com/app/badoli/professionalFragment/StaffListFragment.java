@@ -31,6 +31,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.hasnat.sweettoast.SweetToast;
+
 import static android.content.ContentValues.TAG;
 
 public class StaffListFragment extends Fragment implements StaffListAdapter.StaffListAdapterListner {
@@ -67,6 +69,12 @@ public class StaffListFragment extends Fragment implements StaffListAdapter.Staf
         binding.recyclerview.setAdapter(staffListAdapter);
         staffListAdapter.notifyDataSetChanged();
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (AppUtils.hasNetworkConnection(requireActivity())){
             getStaffList(userData.getId());
         }else {
@@ -84,7 +92,7 @@ public class StaffListFragment extends Fragment implements StaffListAdapter.Staf
                 AppUtils.openPopup(requireActivity(), R.style.Dialod_UpDown, "error",
                         getResources().getString(R.string.something_wrong));
             }
-        }else {*/
+        } else {*/
             Fragment currentFragment = new AddNewFragment();
             FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.anim.right_in, R.anim.left_out, R.anim.left_in, R.anim.right_out);
@@ -115,8 +123,9 @@ public class StaffListFragment extends Fragment implements StaffListAdapter.Staf
                         binding.recyclerview.setVisibility(View.GONE);
                         if (responseList!=null&&responseList.getMessage() != null) {
                             message=responseList.getMessage();
-                            AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
-                                    responseList.getMessage());
+                            SweetToast.error(requireActivity(),message);
+                           /* AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
+                                    responseList.getMessage());*/
                         } else {
                             AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
                                     getResources().getString(R.string.something_wrong));
@@ -126,9 +135,10 @@ public class StaffListFragment extends Fragment implements StaffListAdapter.Staf
     }
 
     @Override
-    public void onStaffClick(String agent_code, int agent_pin, int merchant_id, String staff_name) {
+    public void onStaffClick(String agent_code, int agent_pin, int merchant_id, String staff_name, int id) {
         Intent intent = new Intent(requireActivity(), StaffDetailActivity.class);
         intent.putExtra(Constant.AGENT_CODE,agent_code);
+        intent.putExtra(Constant.STAFF_ID,String.valueOf(id));
         intent.putExtra(Constant.AGENT_PIN,String.valueOf(agent_pin));
         intent.putExtra(Constant.MERCHANT_ID,String.valueOf(merchant_id));
         intent.putExtra(Constant.AGENT_NAME,String.valueOf(staff_name));

@@ -46,4 +46,8 @@ public class ProfileViewModel extends AndroidViewModel {
     public LiveData<ResetPassword> updateProfile(String id, String userType, String name, String email, String dob, String gender) {
         return accountRepositories.updateProfile(id,userType,name,email,dob,gender);
     }
+
+    public LiveData<ResetPassword> updateMerchantProfile(String id, String userType, String name, String address) {
+        return accountRepositories.updateMerchantProfile(id,userType,name,address);
+    }
 }

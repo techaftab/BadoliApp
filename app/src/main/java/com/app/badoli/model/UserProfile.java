@@ -40,6 +40,16 @@ public class UserProfile {
 
         private String airtel_merchant_id;
 
+        public String getActivity_name() {
+            return activity_name;
+        }
+
+        public void setActivity_name(String activity_name) {
+            this.activity_name = activity_name;
+        }
+
+        private String activity_name;
+
         private String company_name;
 
         private String company_address;

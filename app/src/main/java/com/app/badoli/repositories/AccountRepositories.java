@@ -253,4 +253,33 @@ public class AccountRepositories {
         });
         return mutableLiveData;
     }
+
+    public LiveData<ResetPassword> updateMerchantProfile(String id, String userType, String name, String address) {
+        final MutableLiveData<ResetPassword> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<ResetPassword> call = apiService.updateMerchantProfile(id,userType,name,address);
+        call.enqueue(new Callback<ResetPassword>() {
+            @Override
+            public void onResponse(@NonNull Call<ResetPassword> call, @NonNull Response<ResetPassword> response) {
+                Log.e("responsee", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                } else {
+                    ResetPassword signInResponse = new ResetPassword();
+                    signInResponse.setError(true);
+                    signInResponse.setMessage("");
+                    mutableLiveData.setValue(signInResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResetPassword> call, @NonNull Throwable t) {
+                ResetPassword signInResponse = new ResetPassword();
+                signInResponse.setError(true);
+                signInResponse.setMessage("");
+                mutableLiveData.setValue(signInResponse);
+            }
+        });
+        return mutableLiveData;
+    }
 }

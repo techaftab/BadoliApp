@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -58,7 +57,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
-
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
@@ -162,15 +160,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             profileFragmentBinding.profileImage.setImageResource(R.drawable.logo);
         }
 
-        profileFragmentBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (profileFragmentBinding.radioFemale.isChecked()){
-                    gender="Female";
-                }
-                if (profileFragmentBinding.radioMale.isChecked()){
-                    gender="Male";
-                }
+        profileFragmentBinding.radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            if (profileFragmentBinding.radioFemale.isChecked()){
+                gender="Female";
+            }
+            if (profileFragmentBinding.radioMale.isChecked()){
+                gender="Male";
             }
         });
     }
@@ -205,9 +200,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void updateProfile(String name, String email, String dob, String gender) {
-        ((ProfessionalActivity)requireActivity()).showLoading(getResources().getString(R.string.updating));
+        ((HomePageActivity)requireActivity()).showLoading(getResources().getString(R.string.updating));
         profileViewModel.updateProfile(userData.getId(),userData.getUserType(),name,email,dob,gender).observe(this, resetPassword -> {
-            ((ProfessionalActivity)requireActivity()).dismissLoading();
+            ((HomePageActivity)requireActivity()).dismissLoading();
             if (resetPassword!=null) {
                 if (!resetPassword.error) {
                     Log.e(TAG, new Gson().toJson(resetPassword));
@@ -436,7 +431,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
             cursor.moveToFirst();
         }
-      //  assert cursor != null;
+        // assert cursor != null;
         assert cursor != null;
         return cursor.getString(column_index);
     }

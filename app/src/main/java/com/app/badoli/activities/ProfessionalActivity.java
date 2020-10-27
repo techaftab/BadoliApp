@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -167,7 +166,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
     public void homeData() {
         binding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
         binding.bottomNavigation.getMenu().getItem(0).setChecked(true);
-        binding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
+        binding.commonHeader.mainLayout.setBackgroundResource(R.drawable.header_background_red);
         binding.commonHeader.hamburger.setVisibility(View.VISIBLE);
         binding.commonHeader.imgBackMain.setVisibility(View.GONE);
         binding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
@@ -186,9 +185,10 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         View badge = LayoutInflater.from(ProfessionalActivity.this).inflate(R.layout.layout_bottom_badge,
                 bottomNavigationView, false);
         TextView text = badge.findViewById(R.id.badge_text_view);
-        text.setText(Html.fromHtml("<font color='#FFFFFF'>"+getResources().getString(R.string.new_request)+"["+"</font>"
+       /* text.setText(Html.fromHtml("<font color='#FFFFFF'>"+getResources().getString(R.string.new_request)+"["+"</font>"
                 +"<font color='#FF6700'>"+value+"</font>"
-                +"<font color='#FFFFFF'>"+"]"+"</font>"));
+                +"<font color='#FFFFFF'>"+"]"+"</font>"));*/
+       text.setText("");
         itemView.addView(badge);
     }
 
@@ -348,7 +348,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         binding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         binding.commonHeader.hamburger.setVisibility(View.GONE);
         binding.commonHeader.imgBackMain.setVisibility(View.VISIBLE);
-        binding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        binding.commonHeader.mainLayout.setBackgroundColor(getResources().getColor(R.color.app_red));
         binding.commonHeader.badoliPhoneText.setVisibility(View.GONE);
         binding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
     }

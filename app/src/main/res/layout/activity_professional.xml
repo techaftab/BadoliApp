@@ -36,8 +36,8 @@
                 app:labelVisibilityMode="labeled"
                 android:layout_alignParentBottom="true"
                 android:focusableInTouchMode="true"
-                app:itemIconTint="@drawable/bottom_navigation_selector"
-                app:itemTextColor="@drawable/bottom_navigation_selector"
+                app:itemIconTint="@drawable/bottom_navigation_selector_red"
+                app:itemTextColor="@drawable/bottom_navigation_selector_red"
                 app:menu="@menu/navigation"/>
 
         </RelativeLayout>

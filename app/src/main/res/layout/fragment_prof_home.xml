@@ -14,7 +14,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_150sdp"
+                android:layout_height="@dimen/_120sdp"
                 android:src="@drawable/banner"
                 android:scaleType="fitXY"/>
 
@@ -105,9 +105,9 @@
                         android:layout_marginRight="@dimen/_50sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_15sdp"
-                        android:textColor="@color/color_green"
+                        android:textColor="@color/app_red"
                         android:textAllCaps="false"
-                        android:background="@drawable/box_green_border"
+                        android:background="@drawable/box_red_border"
                         android:textStyle="bold"
                         android:textSize="@dimen/_14ssp"
                         android:text="@string/view_transaction"/>

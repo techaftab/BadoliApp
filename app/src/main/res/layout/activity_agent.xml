@@ -65,6 +65,7 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:layout_margin="@dimen/DP20"
+                    android:visibility="gone"
                     android:background="@drawable/box_round_corner"
                     android:weightSum="1">
 

@@ -124,6 +124,13 @@
 
         </ScrollView>
 
+        <include layout="@layout/layout_progress"
+            android:id="@+id/layoutProgress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

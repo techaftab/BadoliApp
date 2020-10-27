@@ -26,4 +26,12 @@ public class ProfessionalViewModel extends AndroidViewModel {
     public LiveData<CreateStaff> createStaff(String id, String name) {
         return professionalRepositories.createStaff(id,name);
     }
+
+    public LiveData<CreateStaff> deleteStaffCode(String staffId) {
+        return professionalRepositories.deleteStaffCode(staffId);
+    }
+
+    public LiveData<CreateStaff> renewCode(String id, String staffId) {
+        return professionalRepositories.renewCode(id,staffId);
+    }
 }

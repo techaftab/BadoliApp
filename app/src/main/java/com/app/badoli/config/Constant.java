@@ -28,4 +28,6 @@ public interface Constant {
     String AGENT_PIN = "agent_pin";
     String MERCHANT_ID = "merchant_id";
     String ABOUT_US = "about-us";
+    String MERCHANT_QRCODE = "merchant_qrcode";
+    String STAFF_ID = "staff_id";
 }

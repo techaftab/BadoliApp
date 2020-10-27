@@ -146,4 +146,17 @@ public interface ApiInterface {
     Call<ResetPassword> updateProfile(@Field("userid") String id,@Field("roles_id") String userType,
                                       @Field("name") String name,@Field("email") String email,
                                       @Field("dob") String dob,@Field("gender") String gender);
+
+    @FormUrlEncoded
+    @POST("deleteStaff")
+    Call<CreateStaff> deleteStaffCode(@Field("staff_id") String staffId);
+
+    @FormUrlEncoded
+    @POST("updateProfile")
+    Call<ResetPassword> updateMerchantProfile(@Field("userid") String id,@Field("roles_id")  String userType,
+                                              @Field("company_name") String name,@Field("company_address") String address);
+
+    @FormUrlEncoded
+    @POST("reGenerateAgentCode")
+    Call<CreateStaff> renewCode(@Field("user_id") String id,@Field("staff_id") String staffId);
 }

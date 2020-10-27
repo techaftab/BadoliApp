@@ -28,7 +28,7 @@ public class StaffCodeFragment extends Fragment {
 
     String name,agentCode;
 
-  /*  webmobril@gmail.com
+      /*webmobril@gmail.com
       !@#$%^&*WebmobrilGmai*/
 
     @Nullable
@@ -48,9 +48,8 @@ public class StaffCodeFragment extends Fragment {
         agentCode=getArguments().getString(Constant.AGENT_CODE);
         ((StaffListActivity)requireActivity()).updateTitle(name);
         binding.txtCode.setText(agentCode);
-
         if (userData.getQrcode_image()!=null){
-            Glide.with(this).load(userData.getQrcode_image())
+            Glide.with(this).load(Constant.IMAGE_URL+userData.getQrcode_image())
                     .placeholder(R.drawable.ic_user)
                     .error(R.drawable.ic_user)
                     .thumbnail(0.06f)

@@ -34,7 +34,7 @@ public class StaffListAdapter extends RecyclerView.Adapter<StaffListAdapter.Staf
     }
 
     public interface StaffListAdapterListner {
-        void onStaffClick(String agent_code, int agent_pin, int merchant_id, String staff_name);
+        void onStaffClick(String agent_code, int agent_pin, int merchant_id, String staff_name, int id);
         //   void onItemClick(int id,String name);
         // void onSearchItemClick(int provider_or_product, int providerId);
     }
@@ -101,7 +101,8 @@ public class StaffListAdapter extends RecyclerView.Adapter<StaffListAdapter.Staf
                 public void onClick(View v) {
                     int pos=getAdapterPosition();
                     staffListAdapterListner.onStaffClick(loadListFiltered.get(pos).getAgent_code(),
-                            loadListFiltered.get(pos).getAgent_pin(),loadListFiltered.get(pos).getMerchant_id(),loadListFiltered.get(pos).getStaff_name());
+                            loadListFiltered.get(pos).getAgent_pin(),loadListFiltered.get(pos).getMerchant_id(),
+                            loadListFiltered.get(pos).getStaff_name(),loadListFiltered.get(pos).getId());
                 }
             });
         }

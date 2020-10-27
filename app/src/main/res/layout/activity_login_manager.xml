@@ -55,7 +55,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
                         android:layout_margin="@dimen/_10sdp"
-                        app:dotsStrokeColor="@color/colorPrimary"
+                        app:dotsStrokeColor="@color/app_red"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="16dp"
                         app:dotsSpacing="4dp"
@@ -81,7 +81,7 @@
 
                         <include
                             android:id="@+id/layoutLogin"
-                            layout="@layout/layout_login_user"
+                            layout="@layout/layout_login_merchant"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"/>
 
@@ -102,7 +102,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/dont_have_account"
                             android:gravity="center"
-                            android:textColor="@color/text_orange"
+                            android:textColor="@color/app_red"
                             android:textSize="@dimen/_13ssp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -151,19 +151,19 @@
                                 android:id="@+id/edittextStaffCode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/box_orange_border"
+                                android:background="@drawable/box_red_border"
                                 android:padding="@dimen/_8sdp"
                                 android:hint="@string/hint_code"
                                 android:textSize="@dimen/_14ssp"
                                 android:textStyle="bold"
                                 android:layout_margin="@dimen/_15sdp"
-                                android:textColor="@color/colorPrimaryDark"/>
+                                android:textColor="@color/app_red"/>
 
                             <EditText
                                 android:id="@+id/edittextPincode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/box_orange_border"
+                                android:background="@drawable/box_red_border"
                                 android:padding="@dimen/_8sdp"
                                 android:hint="@string/enter_your_pin"
                                 android:textSize="@dimen/_14ssp"
@@ -175,7 +175,7 @@
                                 android:imeOptions="actionDone"
                                 android:layout_marginLeft="@dimen/_15sdp"
                                 android:layout_marginRight="@dimen/_15sdp"
-                                android:textColor="@color/colorPrimaryDark"/>
+                                android:textColor="@color/app_red"/>
 
                             <Button
                                 android:id="@+id/btnStaffContinue"
@@ -183,7 +183,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/continu"
                                 android:layout_gravity="center_horizontal"
-                                android:background="@drawable/rounded_button_orange"
+                                android:background="@drawable/rounded_button_red"
                                 android:textColor="@color/white"
                                 android:textAllCaps="false"
                                 android:textStyle="bold"

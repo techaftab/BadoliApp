@@ -33,6 +33,7 @@ import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.ProfessionalActivity;
 import com.app.badoli.config.AppUtils;
+import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ProfessionalProfileFragmentBinding;
 import com.app.badoli.model.UserData;
@@ -68,6 +69,7 @@ public class ProfessionalProfileFragment extends Fragment {
     private int RequestPermissionCode=123;
     private ProfileViewModel profileViewModel;
     private String merchantId="";
+    private String qrCodeImage="";
 
     @Nullable
     @Override
@@ -90,6 +92,9 @@ public class ProfessionalProfileFragment extends Fragment {
         }else {
             ((ProfessionalActivity) requireActivity()).hideHeader();
         }
+
+      /*  binding.edittextCode.setEnabled(false);
+        binding.edittextCode.setFocusable(false);*/
         init();
         return  view;
     }
@@ -112,6 +117,7 @@ public class ProfessionalProfileFragment extends Fragment {
         });
 
         binding.btnView.setOnClickListener(this::viewQr);
+        binding.btnSave.setOnClickListener(this::saveDetails);
         binding.imgUploadProfile.setOnClickListener(this::checkPermission);
 
         if (AppUtils.hasNetworkConnection(requireActivity())){
@@ -130,8 +136,8 @@ public class ProfessionalProfileFragment extends Fragment {
     }
 
     private void viewQr(View view) {
-        if (TextUtils.isEmpty(merchantId)) {
-            goActivity(QrViewActivity.class);
+        if (!TextUtils.isEmpty(merchantId)&&!TextUtils.isEmpty(qrCodeImage)) {
+            goActivity(QrViewActivity.class,merchantId,qrCodeImage);
         }else {
             AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",
                     getResources().getString(R.string.your_acc_is_under_inspection));
@@ -144,8 +150,10 @@ public class ProfessionalProfileFragment extends Fragment {
         ft.commit();*/
     }
 
-    private void goActivity(Class<?> activity) {
+    private void goActivity(Class<?> activity, String merchantId, String qrCodeImage) {
         Intent intent = new Intent(requireActivity(),activity);
+        intent.putExtra(Constant.MERCHANT_ID,merchantId);
+        intent.putExtra(Constant.MERCHANT_QRCODE,qrCodeImage);
         startActivity(intent);
         requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
     }
@@ -247,7 +255,6 @@ public class ProfessionalProfileFragment extends Fragment {
                 }
 
                 Log.e("Activity", "Pick from Camera::>>> ");
-
                 // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                 destination = new File(requireActivity().getCacheDir(), "profile_image.jpg");
                 FileOutputStream fo;
@@ -259,10 +266,13 @@ public class ProfessionalProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
                 binding.profileImage.setImageBitmap(bitmap);
+                Glide.with(requireActivity())
+                        .load(bitmap)
+                        .fitCenter()
+                        .into(binding.profileImage);
                 imgPath = destination.getAbsolutePath();
                 destination =new File(imgPath);
                 sendImage(Integer.parseInt(userData.getId()), destination);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -275,14 +285,35 @@ public class ProfessionalProfileFragment extends Fragment {
                 Log.e("Activity", "Pick from Gallery::>>> ");
                 imgPath = getRealPathFromURI(selectedImage);
                 binding.profileImage.setImageBitmap(bitmap);
-
+                Glide.with(requireActivity())
+                        .load(bitmap)
+                        .fitCenter()
+                        .into(binding.profileImage);
                 destination = new File(imgPath);
                 sendImage(Integer.parseInt(userData.getId()), destination);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void saveDetails(View view) {
+        String name=binding.edittextName.getText().toString();
+        String address=binding.edittextAddress.getText().toString();
+        ((ProfessionalActivity)requireActivity()).showLoading(getResources().getString(R.string.updating));
+        profileViewModel.updateMerchantProfile(userData.getId(),userData.getUserType(),name,address).observe(this, resetPassword -> {
+            ((ProfessionalActivity)requireActivity()).dismissLoading();
+            if (resetPassword!=null) {
+                if (!resetPassword.error) {
+                    Log.e(TAG, new Gson().toJson(resetPassword));
+                    AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"",resetPassword.getMessage());
+                } else {
+                    AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",resetPassword.getMessage());
+                }
+            }else {
+                AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",getResources().getString(R.string.something_went_wrong));
+            }
+        });
     }
 
     private void sendImage(int id, File file) {
@@ -316,7 +347,7 @@ public class ProfessionalProfileFragment extends Fragment {
                         profileImageResponse.result.getWalletBalance(),
                         profileImageResponse.result.getUser_image(),
                         profileImageResponse.result.getQrcode_image(),
-                        "3");
+                        "4");
                 PrefManager.getInstance(getActivity()).userLogin(userData);
             }
         });
@@ -372,12 +403,18 @@ public class ProfessionalProfileFragment extends Fragment {
 
     private void setDetails(UserProfile.Result result) {
         binding.edittextName.setText(result.getCompany_name());
-        binding.edittextCode.setText(result.getAirtel_merchant_id());
+        if (TextUtils.isEmpty(result.getAirtel_merchant_id())){
+            binding.edittextCode.setText(getResources().getString(R.string.not_available));
+        }else {
+            binding.edittextCode.setText(result.getAirtel_merchant_id());
+        }
         binding.edittextMobile.setText(result.getMobile());
         binding.edittextAddress.setText(result.getCompany_address());
+        binding.edittextCategory.setText(result.getActivity_name());
         merchantId=result.getAirtel_merchant_id();
+        qrCodeImage=result.getQrcode_image();
         if (getActivity()!=null) {
-            Glide.with(this).load(result.getUser_image())
+            Glide.with(this).load(Constant.IMAGE_URL+result.getUser_image())
                     .placeholder(R.drawable.logo)
                     .error(R.drawable.logo)
                     .thumbnail(0.06f)

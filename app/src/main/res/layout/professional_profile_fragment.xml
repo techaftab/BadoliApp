@@ -184,6 +184,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="@dimen/DP20"
+                                android:editable="false"
+                                android:focusable="false"
+                                android:inputType="none"
                                 android:background="@android:color/transparent"
                                 android:gravity="start"
                                 android:hint="@string/code_commerce"
@@ -266,7 +269,6 @@
                                 android:gravity="start"
                                 android:focusable="false"
                                 android:inputType="none"
-                                android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                                 android:hint="@string/business_category"
                                 android:singleLine="true"
                                 android:textColorHint="@color/grey" />
@@ -287,6 +289,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_marginTop="@dimen/_4sdp"
+                            android:gravity="center_vertical"
                             android:background="@drawable/rounded_blank_res"
                             android:orientation="horizontal">
 
@@ -306,8 +309,9 @@
                                 android:layout_marginEnd="@dimen/DP20"
                                 android:background="@android:color/transparent"
                                 android:gravity="start"
+                                android:maxLines="3"
+                                android:inputType="textMultiLine"
                                 android:hint="@string/address"
-                                android:singleLine="true"
                                 android:textColorHint="@color/grey" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -329,7 +333,7 @@
                                 android:textAllCaps="false"
                                 android:textSize="@dimen/_13ssp"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:background="@drawable/rounded_button_orange"/>
+                                android:background="@drawable/rounded_button_red"/>
 
                             <Button
                                 android:id="@+id/btnSave"
@@ -341,7 +345,7 @@
                                 android:textAllCaps="false"
                                 android:textSize="@dimen/_13ssp"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:background="@drawable/rounded_button_orange"/>
+                                android:background="@drawable/rounded_button_red"/>
 
                         </LinearLayout>
 

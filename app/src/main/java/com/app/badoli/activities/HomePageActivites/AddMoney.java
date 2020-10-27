@@ -1,10 +1,12 @@
 package com.app.badoli.activities.HomePageActivites;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RadioGroup;
@@ -23,12 +25,29 @@ import com.app.badoli.config.updateBalance;
 import com.app.badoli.databinding.ActivityAddMoneyBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.viewModels.AddMoneyViewModel;
+import com.paypal.android.sdk.payments.PayPalAuthorization;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalProfileSharingActivity;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
 public class AddMoney extends AppCompatActivity implements updateBalance, RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = AddMoney.class.getSimpleName();
+    private static final int PAYPAL_REQUEST_CODE = 123;
     public ActivityAddMoneyBinding addMoney;
     AddMoneyViewModel addMoneyViewModel;
     UserData userData;
@@ -39,6 +58,9 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     String mobile,amount,referenceNo;
 
     WebService webService;
+    private static PayPalConfiguration config;
+    String paypal_token,paypal_payer_id,transactionId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +68,21 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
         addMoney = DataBindingUtil.setContentView(this, R.layout.activity_add_money);
         userData= PrefManager.getInstance(AddMoney.this).getUserData();
         addMoneyViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
+
+       /* config = new PayPalConfiguration()
+                .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+                .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(intent);*/
+
         init();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
     }
 
     private void init() {
@@ -106,9 +142,20 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
             if (addMoney.rbAirtelMoney.isChecked()) {
                 proceedAirtel();
             } else {
+              //  proceedPaypal();
                 SweetToast.error(AddMoney.this,"Available soon");
             }
         }
+    }
+
+    private void proceedPaypal() {
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(amount)),
+                "USD", getResources().getString(R.string.adding_money_to_wallet),
+                PayPalPayment.PAYMENT_INTENT_SALE);
+        Intent intent = new Intent(this, AddMoney.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
     }
 
     public void proceedAirtel() {
@@ -220,6 +267,75 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
             finish();
             overridePendingTransition(R.anim.left_in, R.anim.right_out);
         }
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+            PayPalAuthorization auth =
+                    data.getParcelableExtra(PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION);
+            if (confirm != null) {
+                try {
+                    Log.i("paymentExample", confirm.toJSONObject().toString(4));
+                    String paymentDetails = confirm.toJSONObject().toString(10);
+                    // TODO: send 'confirm' to your server for verification.
+                    // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
+                    // for more details.  PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                    //                PayPalAuthorization auth =
+                    //                        data.getParcelableExtra(PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION);
+                    Log.i("paymentExample", paymentDetails);
+                    Log.e(TAG,"1-->"+ confirm.toJSONObject().toString(4));
+                    Log.e(TAG, "2--->"+confirm.getPayment().toJSONObject().toString(4));
+                    Log.e(TAG, "3--->"+ confirm.getEnvironment());
+                    Log.e(TAG, "4--->"+confirm.getProofOfPayment().toJSONObject().toString(4));
+                    if (auth != null) {
+                        Log.i("ProfileSharingExample", auth.toJSONObject().toString(4));
+                        String authorization_code = auth.getAuthorizationCode();
+                        Log.i("ProfileSharingExample", authorization_code);
+                    }
+                    sendPayment(confirm.toJSONObject());
+                } catch (JSONException e) {
+                    Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                    SweetToast.error(AddMoney.this,getResources().getString(R.string.transaction_failed));
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.i("paymentExample", "The user canceled.");
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.payment_cancelled));
+        } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+            SweetToast.error(AddMoney.this,getResources().getString(R.string.something_went_wrong));
+            Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+        }
+    }
+
+    private void sendPayment(JSONObject jsonObject) throws JSONException {
+        JSONObject response=jsonObject.getJSONObject("response");
+        paypal_token=response.getString("id");
+        String create_time=response.getString("create_time");
+        //paypal_payer_id=getResources().getString(R.string.paypal_client_id);
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat newFormat=new SimpleDateFormat("yyyyMMddTHHmmss", Locale.getDefault());
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String paymentDate="";
+        try {
+            Date date = sdf.parse(create_time);
+          //  Date payDate = sdf.parse(create_time);
+            paymentDate=format.format(date);
+            if (date != null) {
+                transactionId = newFormat.format(date);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        payment(userData.getId(),paypal_token,amount,paymentDate);
+    }
+
+    private void payment(String id, String paypal_token, String amount, String paymentDate) {
+       // /
     }
 
 }

@@ -78,4 +78,60 @@ public class ProfessionalRepositories {
         });
         return mutableLiveData;
     }
+
+    public LiveData<CreateStaff> deleteStaffCode(String staffId) {
+        MutableLiveData<CreateStaff> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<CreateStaff> call = apiService.deleteStaffCode(staffId);
+        call.enqueue(new Callback<CreateStaff>() {
+            @Override
+            public void onResponse(@NonNull Call<CreateStaff> call, @NonNull Response<CreateStaff> response) {
+                Log.e(TAG, new Gson().toJson(response.message()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    CreateStaff statusMessageModel=new CreateStaff();
+                    statusMessageModel.setError(true);
+                    mutableLiveData.setValue(statusMessageModel);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<CreateStaff> call,@NonNull Throwable t) {
+                Log.e("error", Objects.requireNonNull(t.getMessage()));
+                Log.e(TAG, new Gson().toJson(t.getCause()));
+                CreateStaff statusMessageModel=new CreateStaff();
+                statusMessageModel.setError(true);
+                mutableLiveData.setValue(statusMessageModel);
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public LiveData<CreateStaff> renewCode(String id, String staffId) {
+        MutableLiveData<CreateStaff> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<CreateStaff> call = apiService.renewCode(id,staffId);
+        call.enqueue(new Callback<CreateStaff>() {
+            @Override
+            public void onResponse(@NonNull Call<CreateStaff> call, @NonNull Response<CreateStaff> response) {
+                Log.e(TAG, new Gson().toJson(response.message()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    CreateStaff statusMessageModel=new CreateStaff();
+                    statusMessageModel.setError(true);
+                    mutableLiveData.setValue(statusMessageModel);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<CreateStaff> call,@NonNull Throwable t) {
+                Log.e("error", Objects.requireNonNull(t.getMessage()));
+                Log.e(TAG, new Gson().toJson(t.getCause()));
+                CreateStaff statusMessageModel=new CreateStaff();
+                statusMessageModel.setError(true);
+                mutableLiveData.setValue(statusMessageModel);
+            }
+        });
+        return mutableLiveData;
+    }
 }

@@ -28,7 +28,8 @@ public class AgentActivity extends AppCompatActivity implements RadioGroup.OnChe
     private void loadData() {
         activityAgentBinding.radiogroupAgent.setOnCheckedChangeListener(this);
         activityAgentBinding.imgBackAgent.setOnClickListener(this);
-        activityAgentBinding.rbPhone.setChecked(true);
+      //  activityAgentBinding.rbPhone.setChecked(true);
+        loadFragment(new FragmentAgentPhone(),R.anim.left_in,R.anim.right_out);
     }
 
     @Override

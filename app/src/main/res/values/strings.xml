@@ -192,7 +192,7 @@
     <string name="please_wait">Please wait…</string>
     <string name="Phone_no_length">Phone number should be 07–15 digits long.</string>
     <string name="password_empty">Password can\'t be empty.</string>
-    <string name="password_length">Password length should be greater than 4 characters and smaller than 16 character.</string>
+    <string name="password_length">Password length should be 4 character long</string>
     <string name="phone_no_empty">Phone Number can\'t be empty.</string>
     <string name="new_password_empty">New password field cant\'t be empty.</string>
     <string name="confirm_password_empty">Confirm Password field cant\'t be empty.</string>
@@ -295,6 +295,12 @@
     <string name="plz_enter_dob">Please enter Date of birth</string>
     <string name="plz_select_gender">Please select gender</string>
     <string name="updating">Updating...</string>
+    <string name="payment_cancelled">Payment Cancelled!</string>
+    <string name="transaction_failed">Transactio Failed</string>
+    <string name="adding_money_to_wallet">Adding money to wallet.</string>
+    <string name="not_available">Not Available</string>
+    <string name="deleting_code">Deleting Code...</string>
+    <string name="regenerating_code">Regenerating Code...</string>
 
 
     <string-array name="select_lang">

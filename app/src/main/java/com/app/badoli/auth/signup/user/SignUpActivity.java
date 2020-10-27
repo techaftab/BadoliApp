@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,7 +21,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.auth.country.CountryListActivity;
 import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.config.AppUtils;
@@ -79,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         binding.signupButton.setOnClickListener(this);
         binding.txtLogin.setOnClickListener(this);
 
-        binding.tvCountryCode.setOnClickListener(this);
+       // binding.tvCountryCode.setOnClickListener(this);
 
         String selectedLan = LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua();
         if (selectedLan.equalsIgnoreCase("Fr (French)")) {
@@ -87,6 +88,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             binding.autoLang.setText("En");
         }
+        countryId="79";
+        phoneCode="241";
+        binding.tvCountryCode.setText("+"+241);
+
         String[] height=getResources().getStringArray(R.array.select_lang);
         ArrayAdapter<String> adapter=new ArrayAdapter<>(SignUpActivity.this,R.layout.spinner_layout,R.id.spinner_text, height);
         binding.autoLang.setAdapter(adapter);
@@ -112,6 +117,37 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 setLocale("en");
             }
         });
+
+        binding.edPhoneNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length()==1){
+                    if (!editable.toString().equalsIgnoreCase("0")){
+                      //  binding.edPhoneNo.setText("");
+                    }
+                }
+                if (editable.toString().length()==2){
+                    if (!editable.toString().equalsIgnoreCase("07")){
+                       // binding.edPhoneNo.setText("");
+                    }
+                }
+                if (editable.toString().length()==3){
+                    if (!editable.toString().equalsIgnoreCase("074")
+                            ||!editable.toString().equalsIgnoreCase("079")){
+                       // binding.edPhoneNo.setText("");
+                    }
+                }
+            }
+        });
     }
 
     public void showLoading(String message){
@@ -128,10 +164,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
     @Override
     public void onClick(View v) {
-        if (v==binding.tvCountryCode){
+       /* if (v==binding.tvCountryCode){
             Intent intent = new Intent(SignUpActivity.this, CountryListActivity.class);
             startActivityForResult(intent,COUNTRY_CODE);
-        }
+        }*/
 
         if (v==binding.signupButton){
             name = binding.edFullName.getText().toString();
@@ -172,7 +208,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         viewUpdate();
         super.onConfigurationChanged(newConfig);
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
@@ -265,7 +300,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             binding.edPassword.setError(getResources().getString(R.string.enter_new_password));
             AppUtils.showSnackbar(getString(R.string.new_password_empty), binding.parentLayout);
             return false;
-        } else if (password.length()<6||password.length()>16) {
+        } else if (password.length()!=4) {
             binding.edPassword.requestFocus();
             binding.edPassword.setError(getResources().getString(R.string.password_length));
             AppUtils.showSnackbar(getString(R.string.password_length), binding.parentLayout);
