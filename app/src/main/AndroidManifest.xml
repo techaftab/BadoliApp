@@ -37,20 +37,36 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator,UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".activities.QrViewActivity"></activity>
-        <activity android:name=".activities.StaffDetailActivity" />
         <activity
-            android:name=".activities.StaffListActivity"
+            android:name=".switchstaff.StaffSwitchActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed"/>
+        <activity android:name=".staff.StaffHomeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed"/>
+        <activity android:name=".activities.QrViewActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed"/>
+        <activity android:name=".switchstaff.StaffDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed"/>
+        <activity
+            android:name=".switchstaff.StaffListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed"/>
         <activity
             android:name=".activities.ProfessionalActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".auth.login.LoginManagerActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.WithHeadRed"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHeadRed" />
         <activity
             android:name=".auth.otp.VerifyOtpActivity"
             android:launchMode="singleTop"
@@ -62,7 +78,7 @@
             android:name=".auth.signup.professional.ProfessionalSignup"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadRed"/>
+            android:theme="@style/AppTheme.WithHeadRed" />
         <activity
             android:name=".auth.forget.ForgotPasswordActivity"
             android:screenOrientation="portrait" />

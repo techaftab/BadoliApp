@@ -128,22 +128,28 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString().length()==1){
-                    if (!editable.toString().equalsIgnoreCase("0")){
-                      //  binding.edPhoneNo.setText("");
+                if (editable.toString().length() == 1) {
+                    if (!editable.toString().equalsIgnoreCase("0")) {
+                        binding.edPhoneNo.setText("");
                     }
                 }
-                if (editable.toString().length()==2){
-                    if (!editable.toString().equalsIgnoreCase("07")){
-                       // binding.edPhoneNo.setText("");
+                if (editable.toString().length() == 2) {
+                    if (!editable.toString().equalsIgnoreCase("07")) {
+                        String text = binding.edPhoneNo.getText().toString();
+                        binding.edPhoneNo.setText(text.substring(0, text.length() - 1));
+                        binding.edPhoneNo.setSelection(text.substring(0, text.length() - 1).length());
                     }
                 }
-                if (editable.toString().length()==3){
-                    if (!editable.toString().equalsIgnoreCase("074")
-                            ||!editable.toString().equalsIgnoreCase("079")){
-                       // binding.edPhoneNo.setText("");
+                if (editable.toString().length() == 3) {
+                    String text = binding.edPhoneNo.getText().toString();
+                    if (editable.toString().equalsIgnoreCase("074")||editable.toString().equalsIgnoreCase("079")) {
+
+                    } else {
+                        binding.edPhoneNo.setText(text.substring(0, 2));
+                        binding.edPhoneNo.setSelection(text.substring(0, text.length() - 1).length());
                     }
                 }
             }

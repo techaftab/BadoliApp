@@ -23,11 +23,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.LocationActivity;
-import com.app.badoli.auth.country.CountryListActivity;
 import com.app.badoli.auth.otp.VerifyOtpActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
-import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityProfessionalSignupBinding;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.AuthViewModel;

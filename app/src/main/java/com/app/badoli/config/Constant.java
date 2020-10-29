@@ -30,4 +30,8 @@ public interface Constant {
     String ABOUT_US = "about-us";
     String MERCHANT_QRCODE = "merchant_qrcode";
     String STAFF_ID = "staff_id";
+    String TYPE = "type_selection";
+    String STAFF_NAME = "staff_name";
+    String MOBILE_TRANSFER = "mobile_transfer";
+    String TRANSFER_TYPE = "transfer_type";
 }

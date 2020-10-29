@@ -5,11 +5,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.StaffDetailActivity">
+        tools:context=".switchstaff.StaffDetailActivity">
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/layout_toolbar"
+            layout="@layout/layout_toolbar_red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

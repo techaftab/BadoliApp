@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.badoli.R;
+import com.app.badoli.switchstaff.StaffListActivity;
+import com.app.badoli.switchstaff.StaffSwitchActivity;
 import com.app.badoli.activities.HomePageActivites.AddMoney;
 import com.app.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
@@ -275,13 +277,15 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         if (v==binding.drawerMenuItems.rlStaff){
            // openDrawer = false;
             binding.drawerLayout.closeDrawer(GravityCompat.START);
-            Intent intent = new Intent(ProfessionalActivity.this,StaffListActivity.class);
+            Intent intent = new Intent(ProfessionalActivity.this, StaffListActivity.class);
             startActivity(intent);
-            binding.drawerLayout.closeDrawer(GravityCompat.START);
+           // binding.drawerLayout.closeDrawer(GravityCompat.START);
         }
 
         if (v==binding.drawerMenuItems.rlSwitch){
             binding.drawerLayout.closeDrawer(GravityCompat.START);
+            Intent intent = new Intent(ProfessionalActivity.this, StaffSwitchActivity.class);
+            startActivity(intent);
         }
 
         if (v==binding.drawerMenuItems.rlBussinessInfo){

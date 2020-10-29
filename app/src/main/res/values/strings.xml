@@ -301,6 +301,11 @@
     <string name="not_available">Not Available</string>
     <string name="deleting_code">Deleting Code...</string>
     <string name="regenerating_code">Regenerating Code...</string>
+    <string name="today">Today</string>
+    <string name="revenue">Revenue(RM)</string>
+    <string name="plz_enter_mobile_or_merhcnat_id">Please enter mobile number or merchant id</string>
+    <string name="plz_enter_valid_merchant">Please enter valid merchant id</string>
+    <string name="plz_enter_either_merchant_or_mobile">Please enter either merchant id or mobile number.</string>
 
 
     <string-array name="select_lang">

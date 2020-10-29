@@ -29,6 +29,7 @@ public class LoginPre {
     private String remember_passs= "rememberPass";
 
     private String LocaleLangua = "locale_language_badoli";
+    private String loginType="userlogintype";
 
     private LoginPre(Context context) {
       //  this.context = context;
@@ -50,6 +51,16 @@ public class LoginPre {
             preferences = new LoginPre(context);
         }
         return preferences;
+    }
+
+    public void setLoginType(String loginType) {
+        editor = mPreferences.edit();
+        editor.putString(this.loginType, loginType);
+        editor.apply();
+    }
+
+    public String getLoginType() {
+        return mPreferences.getString(this.loginType, "");
     }
 
     public boolean getIsLoggedIn() {

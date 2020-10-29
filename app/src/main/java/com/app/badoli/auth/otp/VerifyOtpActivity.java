@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.ProfessionalActivity;
+import com.app.badoli.auth.login.LoginManagerActivity;
 import com.app.badoli.auth.signup.professional.ProfessionalSignup;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
@@ -221,6 +222,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                 }else {
                     dismissLoading();
                     LoginPre.getActiveInstance(VerifyOtpActivity.this).setIsLoggedIn(true);
+                    LoginPre.getActiveInstance(VerifyOtpActivity.this).setLoginType("4");
                     Intent intent = new Intent(VerifyOtpActivity.this, ProfessionalActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -313,7 +315,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             dismissLoading();
             if (verifyOtpResponse != null && !verifyOtpResponse.error) {
                 LoginPre.getActiveInstance(VerifyOtpActivity.this).setIsLoggedIn(true);
-
+                LoginPre.getActiveInstance(VerifyOtpActivity.this).setLoginType("3");
                 Intent intent = new Intent(VerifyOtpActivity.this, HomePageActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

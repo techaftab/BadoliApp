@@ -21,10 +21,9 @@ import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.HomeFragmentBinding;
 import com.app.badoli.model.UserData;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+import java.util.Objects;
 
-    public HomeFragment() {
-    }
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Fragment currentFragment;
     private FragmentTransaction ft;
@@ -38,15 +37,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         try {
             requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         homeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
         View view = homeFragmentBinding.getRoot();
         userData = PrefManager.getInstance(requireActivity()).getUserData();
-        //((HomePageActivity) Objects.requireNonNull(getActivity())).headerHome();
-       /* try {
-            requireActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }catch (Exception e){e.printStackTrace();}*/
+
         setUpListener();
         return view;
     }

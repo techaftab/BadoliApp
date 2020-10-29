@@ -1,4 +1,4 @@
-package com.app.badoli.activities;
+package com.app.badoli.switchstaff;
 
 import android.os.Bundle;
 import android.util.Log;

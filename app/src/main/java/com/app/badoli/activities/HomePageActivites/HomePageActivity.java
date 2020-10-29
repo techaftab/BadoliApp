@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -21,13 +21,12 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.activities.NavigationActivities.AboutUsActivity;
 import com.app.badoli.activities.NavigationActivities.ChangePasswordActivity;
 import com.app.badoli.activities.NavigationActivities.Support_Activity;
+import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
@@ -41,7 +40,6 @@ import com.app.badoli.fragments.ProfileFragment;
 import com.app.badoli.fragments.TransactionFragment;
 import com.app.badoli.model.UserData;
 import com.app.badoli.utilities.LoginPre;
-import com.app.badoli.viewModels.HomeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -50,9 +48,9 @@ import java.util.Locale;
 public class HomePageActivity extends AppCompatActivity implements updateBalance {
 
     public ActivityHomePageBinding homePageBinding;
-   // boolean openDrawer = false;
+    // boolean openDrawer = false;
     static UserData userData;
-    HomeViewModel homeViewModel;
+    // HomeViewModel homeViewModel;
     Fragment currentFragment;
     FragmentTransaction ft;
     Handler handler;
@@ -70,13 +68,12 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
     }
 
     private void viewUpdate() {
-        homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
-        homePageBinding.setHandler(homeViewModel);
+    //    //homeViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(HomeViewModel.class);
+      //  homePageBinding.setHandler(homeViewModel);
         //activity=HomePageActivity.this;
         //setupBottomNavigationListener();
         userData= PrefManager.getInstance(HomePageActivity.this).getUserData();
         handler=new Handler();
-        loadData();
         loadFragment("0");
         init();
     }
@@ -84,8 +81,8 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
     @Override
     public void onConfigurationChanged(@NonNull android.content.res.Configuration newConfig) {
         getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
-        homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
-        init();
+       // homePageBinding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        //init();
         super.onConfigurationChanged(newConfig);
     }
 
@@ -130,11 +127,10 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         homePageBinding.drawerMenuItems.support.setOnClickListener(this::openSupport);
         homePageBinding.drawerMenuItems.changePassword.setOnClickListener(this::goChangePwd);
         homePageBinding.drawerMenuItems.layoutLogout.setOnClickListener(this::goLogout);
-
     }
 
     private void openDrawer(View view) {
-        homePageBinding.bottomNavigation.requestLayout();
+      //  homePageBinding.bottomNavigation.requestLayout();
         if(!homePageBinding.drawerLayout.isDrawerOpen(GravityCompat.START))
             homePageBinding.drawerLayout.openDrawer(GravityCompat.START);
         else homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -147,7 +143,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
             ft.setCustomAnimations(R.anim.left_in,R.anim.right_out);
             currentFragment = new FragmentMerchant();
             ft.replace(R.id.rootLayout, currentFragment);
-            ft.addToBackStack("home");
+            ft.addToBackStack(null);
             ft.commit();
         }else if (!(f instanceof HomeFragment)) {
             loadFragment("1");
@@ -155,6 +151,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
     }
 
     private void goWallet(View view) {
+        Toast.makeText(this, "gfhdsghf", Toast.LENGTH_SHORT).show();
         homePageBinding.drawerLayout.closeDrawer(GravityCompat.START);
         Intent wallet = new Intent(HomePageActivity.this, AddMoney.class);
         startActivity(wallet);
@@ -196,6 +193,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
     protected void onResume() {
         super.onResume();
         webService.updateBalance(userData.getId());
+
     }
 
     public void loadFragment(String anim) {
@@ -206,8 +204,6 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         }
         ft.replace(R.id.rootLayout, currentFragment);
         ft.commit();
-      //  homeData();
-       // loadData();
     }
 
     public void showLoading(String message){
@@ -231,34 +227,43 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");
         homePageBinding.drawerMenuItems.userName.setText(userData.getName());
+
+    }
+
+    public void loadFrgament(Fragment fragment) {
+        ft = getSupportFragmentManager().beginTransaction();
+        // ft.setCustomAnimations(R.anim.right_in, R.anim.left_out,R.anim.left_in,R.anim.right_out);
+        ft.replace(R.id.rootLayout, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
         dismissLoading();
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                ft = getSupportFragmentManager().beginTransaction();
-                currentFragment = new HomeFragment();
-                ft.replace(R.id.rootLayout, currentFragment);
-                ft.commit();
+              loadFragment("0");
                 return true;
             case R.id.navigation_profile:
-                ft = getSupportFragmentManager().beginTransaction();
+                loadFrgament(new ProfileFragment());
+               /* ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new ProfileFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
-                ft.commit();
+                ft.commit();*/
                 return true;
             case R.id.navigation_transaction:
-                ft = getSupportFragmentManager().beginTransaction();
+                loadFrgament(new TransactionFragment());
+               /* ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new TransactionFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
-                ft.commit();
+                ft.commit();*/
                 return true;
             case R.id.navigation_help:
-                ft = getSupportFragmentManager().beginTransaction();
+                loadFrgament(new HelpFragment());
+               /* ft = getSupportFragmentManager().beginTransaction();
                 currentFragment = new HelpFragment();
                 ft.replace(R.id.rootLayout, currentFragment);
-                ft.commit();
+                ft.commit();*/
                 return true;
         }
         return false;
@@ -273,7 +278,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
             ft.setCustomAnimations(R.anim.left_in,R.anim.right_out);
             currentFragment = new FragmentMerchant();
             ft.replace(R.id.rootLayout, currentFragment);
-            ft.addToBackStack("home");
+            ft.addToBackStack(null);
             ft.commit();
         } else if (!(f instanceof HomeFragment)) {
             loadFragment("1");
@@ -342,6 +347,7 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
 
     @SuppressLint("SetTextI18n")
     public void homeData() {
+        loadData();
         homePageBinding.commonHeader.badoliPhoneText.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
         homePageBinding.commonHeader.mainLayout.setBackgroundResource(R.mipmap.home_header_bgg);
@@ -350,8 +356,8 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
         homePageBinding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         homePageBinding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         homePageBinding.bottomNavigation.setVisibility(View.VISIBLE);
-        homePageBinding.drawerLayout.bringToFront();
-        homePageBinding.drawerLayout.requestLayout();
+       // homePageBinding.drawerLayout.bringToFront();
+       // homePageBinding.drawerLayout.requestLayout();
         String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
         homePageBinding.commonHeader.badoliPhoneText.setText(userData.getName()+" ("+mobile+")");
         homePageBinding.commonHeader.txtWalletBalance.setText(userData.getWallet_balance()+" FCFA");

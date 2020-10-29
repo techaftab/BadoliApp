@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.core.widget.NestedScrollView
         android:orientation="vertical"
@@ -26,88 +25,23 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_22ssp" />
 
-            <!--<LinearLayout
-                android:id="@+id/edtext_layout"
+            <com.app.badoli.config.PinEntryEditText
+                android:id="@+id/edittextOtp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_merchant"
-                android:padding="@dimen/DP15"
-                android:gravity="center">
+                android:cursorVisible="false"
+                android:inputType="textCapCharacters"
+                android:maxLength="5"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/_10sdp"
+                android:textIsSelectable="false"
+                android:layout_below="@+id/txt_merchant"
+                android:textSize="@dimen/_14ssp"/>
+            <requestFocus/>
 
-                <EditText
-                    android:id="@+id/ed1"
-                    android:layout_width="@dimen/DP45"
-                    android:layout_height="@dimen/DP45"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/DP4"
-                    android:background="@drawable/ed_circle"
-                    android:gravity="center"
-                    android:maxLength="1"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789"
-                    tools:ignore="Autofill,LabelFor,TextFields" />
-
-                <EditText
-                    android:id="@+id/ed2"
-                    android:layout_width="@dimen/DP45"
-                    android:layout_height="@dimen/DP45"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/DP4"
-                    android:background="@drawable/ed_circle"
-                    android:gravity="center"
-                    android:maxLength="1"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789"
-                    tools:ignore="Autofill,LabelFor,TextFields"/>
-
-                <EditText
-                    android:id="@+id/ed3"
-                    android:layout_width="@dimen/DP45"
-                    android:layout_height="@dimen/DP45"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/DP4"
-                    android:background="@drawable/ed_circle"
-                    android:gravity="center"
-                    android:maxLength="1"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789"
-                    tools:ignore="Autofill,LabelFor,TextFields"/>
-
-                <EditText
-                    android:id="@+id/ed4"
-                    android:layout_width="@dimen/DP45"
-                    android:layout_height="@dimen/DP45"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/DP4"
-                    android:background="@drawable/ed_circle"
-                    android:gravity="center"
-                    android:maxLength="1"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789"
-                    tools:ignore="Autofill,LabelFor,TextFields"/>
-
-                <EditText
-                    android:id="@+id/ed5"
-                    android:layout_width="@dimen/DP45"
-                    android:layout_height="@dimen/DP45"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/DP4"
-                    android:background="@drawable/ed_circle"
-                    android:gravity="center"
-                    android:maxLength="1"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:digits="0123456789"
-                    tools:ignore="Autofill,LabelFor,TextFields"/>
-
-            </LinearLayout>-->
-
-            <in.aabhasjindal.otptextview.OtpTextView
+           <!-- <in.aabhasjindal.otptextview.OtpTextView
                 android:id="@+id/otp_view"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/txt_merchant"
                 android:layout_width="wrap_content"
@@ -116,18 +50,18 @@
                 app:height="@dimen/_30sdp"
                 app:width="@dimen/_30sdp"
                 app:bar_enabled="false"
-                app:length="6"
+                app:length="5"
                 android:layout_margin="@dimen/_12sdp"
                 app:box_margin="@dimen/_2sdp"
                 app:otp_text_size="@dimen/_18ssp"
                 app:otp_box_background="@drawable/circle"
-                app:otp_box_background_active="@drawable/circle_purple"/>
+                app:otp_box_background_active="@drawable/circle_purple"/>-->
 
             <ImageView
                 android:id="@+id/or"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/otp_view"
+                android:layout_below="@+id/edittextOtp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/or"
                 tools:ignore="ContentDescription" />
@@ -135,7 +69,7 @@
             <LinearLayout
                 android:id="@+id/ln_mobile"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:weightSum="1"
@@ -156,6 +90,7 @@
                     android:id="@+id/ed_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="@dimen/_8sdp"
                     android:layout_weight="0.25"
                     android:background="@null"
                     android:singleLine="true"
@@ -183,9 +118,11 @@
                 <RelativeLayout
                     android:id="@+id/rl_back"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:padding="@dimen/_4sdp"
                     android:background="@drawable/pink_circle_bg"
-                    android:layout_weight="0.33">
+                    android:layout_weight="0.50">
 
                     <ImageView
                         android:id="@+id/arrowback"
@@ -217,6 +154,7 @@
                     android:background="@drawable/pink_circle_bg"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:visibility="gone"
                     android:layout_weight="0.34">
 
                     <TextView
@@ -232,10 +170,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlNext"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:padding="@dimen/_4sdp"
                     android:background="@drawable/pink_circle_bg"
-                    android:layout_weight="0.33">
+                    android:layout_weight="0.50">
 
                     <TextView
                         android:id="@+id/txt_next"
@@ -289,7 +230,6 @@
             </LinearLayout>
 
         </RelativeLayout>
-
 
     </androidx.core.widget.NestedScrollView>
 

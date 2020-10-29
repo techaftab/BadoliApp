@@ -19,6 +19,7 @@ import com.app.badoli.auth.login.LoginActivity;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivitySplashBinding;
 import com.app.badoli.model.UserData;
+import com.app.badoli.staff.StaffHomeActivity;
 import com.app.badoli.utilities.LoginPre;
 
 import java.util.Locale;
@@ -65,8 +66,12 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     if (LoginPre.getActiveInstance(SplashActivity.this).getIsLoggedIn()) {
-                        if (userData.getUserType().equalsIgnoreCase("3")) {
+                        if (LoginPre.getActiveInstance(SplashActivity.this).getLoginType().equalsIgnoreCase("3")) {
                             Intent i = new Intent(SplashActivity.this, HomePageActivity.class);
+                            startActivity(i);
+                            finish();
+                        }else if (LoginPre.getActiveInstance(SplashActivity.this).getLoginType().equals("5")){
+                            Intent i = new Intent(SplashActivity.this, StaffHomeActivity.class);
                             startActivity(i);
                             finish();
                         }else {

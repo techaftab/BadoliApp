@@ -13,6 +13,7 @@ import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.LoginResponse;
 import com.app.badoli.model.QRResponse;
 import com.app.badoli.model.ResendOtpResponse;
+import com.app.badoli.model.StaffLogin;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.app.badoli.repositories.LoginRepository;
 
@@ -33,6 +34,10 @@ public class AuthViewModel extends AndroidViewModel {
                                             String devicetoken, String roleId) {
 
         return loginRepository.getMutableLiveData(mobile, password, device_type, devicetoken,roleId);
+    }
+
+    public LiveData<StaffLogin> loginStaff(String staffCode, String staffPin) {
+        return loginRepository.loginStaff(staffCode,staffPin);
     }
 
     public LiveData<ChangePasswordModel> changePassword(String mobile, String confirmPassword, String roleId) {
@@ -62,4 +67,6 @@ public class AuthViewModel extends AndroidViewModel {
     public LiveData<BannerModel> getBanner() {
         return loginRepository.getBanner();
     }
+
+
 }

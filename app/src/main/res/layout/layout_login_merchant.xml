@@ -91,8 +91,9 @@
                     android:paddingLeft="@dimen/_6sdp"
                     android:paddingRight="@dimen/_6sdp"
                     android:textSize="@dimen/_11ssp"
-                    android:inputType="textPassword"
-                    android:maxLength="16"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:maxLength="4"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"/>

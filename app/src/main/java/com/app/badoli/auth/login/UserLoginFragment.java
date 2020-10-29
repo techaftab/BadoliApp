@@ -135,6 +135,7 @@ public class UserLoginFragment extends Fragment implements View.OnClickListener 
                         "3");
                 PrefManager.getInstance(getActivity()).userLogin(userData);
                 LoginPre.getActiveInstance(getActivity()).setIsLoggedIn(true);
+                LoginPre.getActiveInstance(getActivity()).setLoginType("3");
                 StartActivity();
             } else {
                 if (loginResponse!=null&&loginResponse.getMessage()!=null) {

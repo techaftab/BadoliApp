@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.app.badoli.databinding.ActivityMerchantBinding;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -28,7 +31,6 @@ import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.config.WebService;
 import com.app.badoli.config.updateBalance;
-import com.app.badoli.databinding.ActivityMerchantBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.viewModels.AddMoneyViewModel;
 
@@ -45,7 +47,7 @@ import xyz.hasnat.sweettoast.SweetToast;
 public class MerchantActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         View.OnClickListener, updateBalance {
     private static final String TAG = MerchantActivity.class.getSimpleName();
-    ActivityMerchantBinding merchantBinding;
+    ActivityMerchantBinding binding;
     UserData userData;
     WebService webService;
 
@@ -59,36 +61,76 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // setContentView(R.layout.activity_merchant);
-        merchantBinding = DataBindingUtil.setContentView(MerchantActivity.this, R.layout.activity_merchant);
+        binding = DataBindingUtil.setContentView(MerchantActivity.this, R.layout.activity_merchant);
         userData= PrefManager.getInstance(MerchantActivity.this).getUserData();
 
         addMoneyViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
 
         loadData();
-        merchantBinding.txtWalletBalancetMerchant.setOnClickListener(this);
-        merchantBinding.btnProgress.setOnClickListener(this);
+        binding.txtWalletBalancetMerchant.setOnClickListener(this);
+        binding.btnProgress.setOnClickListener(this);
+
+        binding.edittextPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if (editable.toString().length() == 1) {
+                    if (!editable.toString().equalsIgnoreCase("0")) {
+                        binding.edittextPhone.setText("");
+                    }
+                }
+                if (editable.toString().length() == 2) {
+                    if (!editable.toString().equalsIgnoreCase("07")) {
+                        String text = binding.edittextPhone.getText().toString();
+                        binding.edittextPhone.setText(text.substring(0, text.length() - 1));
+                        binding.edittextPhone.setSelection(text.substring(0, text.length() - 1).length());
+                    }
+                }
+                if (editable.toString().length() == 3) {
+                    String text = binding.edittextPhone.getText().toString();
+                    Log.i(TAG, "afterTextChanged: "+text);
+                    if (editable.toString().equalsIgnoreCase("074")||editable.toString().equalsIgnoreCase("079")) {
+
+                    } else {
+                        binding.edittextPhone.setText(text.substring(0, 2));
+                        binding.edittextPhone.setSelection(text.substring(0, text.length() - 1).length());
+                    }
+                }
+            }
+        });
+
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateBalance(String balance) {
         PrefManager.getInstance(MerchantActivity.this).setWalletBalance(balance);
-        merchantBinding.txtWalletBalancetMerchant.setText(balance+" FCFA");
+        binding.txtWalletBalancetMerchant.setText(balance+" FCFA");
         userData.setWallet_balance(balance);
-        if (merchantBinding.layoutProgress.lnProgress.isShown()){
+        if (binding.layoutProgress.lnProgress.isShown()){
             dismissLoading();
         }
     }
 
     void showLoading(String message){
         AppUtils.hideKeyboardFrom(MerchantActivity.this);
-        merchantBinding.layoutProgress.txtMessage.setText(message);
-        merchantBinding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
+        binding.layoutProgress.txtMessage.setText(message);
+        binding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     void dismissLoading(){
-        merchantBinding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
+        binding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
@@ -96,41 +138,41 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     private void loadData() {
         webService=new WebService(this);
         webService.updateBalance(userData.getId());
-        merchantBinding.btnGenCode.setOnClickListener(this);
-        merchantBinding.hiddenLayout.imgBackMerchant.setOnClickListener(this);
-        merchantBinding.imgBackMaintMerchant.setOnClickListener(this);
+        binding.btnGenCode.setOnClickListener(this);
+        binding.hiddenLayout.imgBackMerchant.setOnClickListener(this);
+        binding.imgBackMaintMerchant.setOnClickListener(this);
         String mobile=userData.getMobile().substring(0,3)+" "+userData.getMobile().substring(3);
-        merchantBinding.badoliPhoneTextMerchant.setText(userData.getName()+" ("+mobile+")");
-        merchantBinding.txtWalletBalancetMerchant.setText(userData.getWallet_balance()+" FCFA");
-        merchantBinding.radiogroupMerchant.setOnCheckedChangeListener(this);
-        merchantBinding.rbQrcode.setChecked(true);
+        binding.badoliPhoneTextMerchant.setText(userData.getName()+" ("+mobile+")");
+        binding.txtWalletBalancetMerchant.setText(userData.getWallet_balance()+" FCFA");
+        binding.radiogroupMerchant.setOnCheckedChangeListener(this);
+        binding.rbQrcode.setChecked(true);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        if (merchantBinding.rbQrcode.isChecked()){
-            merchantBinding.rbQrcode.setBackground(getResources().getDrawable(R.drawable.purple_round_left_layout));
-            merchantBinding.rbMobileId.setBackground(null);
-            //merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
-            merchantBinding.rbMobileId.setTextColor(getResources().getColor(R.color.text_orange));
-            merchantBinding.rbQrcode.setTextColor(getResources().getColor(R.color.white));
+        if (binding.rbQrcode.isChecked()){
+            binding.rbQrcode.setBackground(getResources().getDrawable(R.drawable.purple_round_left_layout));
+            binding.rbMobileId.setBackground(null);
+            //binding.progressbarRequest.setVisibility(View.VISIBLE);
+            binding.rbMobileId.setTextColor(getResources().getColor(R.color.text_orange));
+            binding.rbQrcode.setTextColor(getResources().getColor(R.color.white));
             handler.postDelayed(() -> {
-                merchantBinding.lnQrCode.setVisibility(View.VISIBLE);
-                merchantBinding.rlMobileid.setVisibility(View.GONE);
-                //merchantBinding.progressbarRequest.setVisibility(View.GONE);
+                binding.lnQrCode.setVisibility(View.VISIBLE);
+                binding.rlMobileid.setVisibility(View.GONE);
+                //binding.progressbarRequest.setVisibility(View.GONE);
             },0);
         }
-        if (merchantBinding.rbMobileId.isChecked()){
-            merchantBinding.rbMobileId.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
-            merchantBinding.rbQrcode.setBackground(null);
-            //merchantBinding.progressbarRequest.setVisibility(View.VISIBLE);
-            merchantBinding.rbQrcode.setTextColor(getResources().getColor(R.color.text_orange));
-            merchantBinding.rbMobileId.setTextColor(getResources().getColor(R.color.white));
+        if (binding.rbMobileId.isChecked()){
+            binding.rbMobileId.setBackground(getResources().getDrawable(R.drawable.purple_round_right_layout));
+            binding.rbQrcode.setBackground(null);
+            //binding.progressbarRequest.setVisibility(View.VISIBLE);
+            binding.rbQrcode.setTextColor(getResources().getColor(R.color.text_orange));
+            binding.rbMobileId.setTextColor(getResources().getColor(R.color.white));
             handler.postDelayed(() -> {
-                merchantBinding.lnQrCode.setVisibility(View.GONE);
-                merchantBinding.rlMobileid.setVisibility(View.VISIBLE);
-                //merchantBinding.progressbarRequest.setVisibility(View.GONE);
+                binding.lnQrCode.setVisibility(View.GONE);
+                binding.rlMobileid.setVisibility(View.VISIBLE);
+                //binding.progressbarRequest.setVisibility(View.GONE);
             },0);
         }
     }
@@ -143,28 +185,28 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @Override
     public void onClick(View v) {
-        if (v==merchantBinding.imgBackMaintMerchant) {
+        if (v==binding.imgBackMaintMerchant) {
             finish();
             overridePendingTransition(R.anim.left_in,R.anim.right_out);
         }
-        if (v==merchantBinding.hiddenLayout.imgBackMerchant) {
+        if (v==binding.hiddenLayout.imgBackMerchant) {
             slideClose();
         }
-        if (v==merchantBinding.btnGenCode) {
-            String amount=merchantBinding.edittextAmtFcfa.getText().toString();
+        if (v==binding.btnGenCode) {
+            String amount=binding.edittextAmtFcfa.getText().toString();
             if(isValidated(amount)) {
                 AppUtils.hideKeyboardFrom(MerchantActivity.this);
                 showLoading(getResources().getString(R.string.fetching_code));
                 genrateQrCode(amount);
             }
         }
-        if (v==merchantBinding.txtWalletBalancetMerchant){
+        if (v==binding.txtWalletBalancetMerchant){
             showLoading(getResources().getString(R.string.please_wait));
             webService.updateBalance(userData.getId());
         }
-        if (v==merchantBinding.btnProgress){
-            String mobile=merchantBinding.edittextIdmobileNumber.getText().toString().trim();
-            String amount=merchantBinding.edittextAmtFcfaIdmobile.getText().toString().trim();
+        if (v==binding.btnProgress){
+            String mobile=binding.edittextPhone.getText().toString().trim();
+            String amount=binding.edittextAmtFcfaIdmobile.getText().toString().trim();
             if (isRequestTrue(mobile,amount)){
                 handler.post(() -> getReference(mobile,amount,userData.getId(),userData.getAuth_token()));
             }
@@ -173,60 +215,60 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     private boolean isValidated(String amount) {
         if (TextUtils.isEmpty(amount)){
-            merchantBinding.edittextAmtFcfa.setError(getResources().getString(R.string.enter_amount));
-            merchantBinding.edittextAmtFcfa.requestFocus();
+            binding.edittextAmtFcfa.setError(getResources().getString(R.string.enter_amount));
+            binding.edittextAmtFcfa.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.enter_amount));
             return false;
         }
         if (Float.parseFloat(amount)<100){
-            merchantBinding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_100));
-            merchantBinding.edittextAmtFcfa.requestFocus();
+            binding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_100));
+            binding.edittextAmtFcfa.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
         if (Float.parseFloat(amount)>49900){
-            merchantBinding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_499));
-            merchantBinding.edittextAmtFcfa.requestFocus();
+            binding.edittextAmtFcfa.setError(getResources().getString(R.string.amount_should_499));
+            binding.edittextAmtFcfa.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_499));
             return false;
         }
-        merchantBinding.edittextAmtFcfa.setError(null);
+        binding.edittextAmtFcfa.setError(null);
         return true;
     }
 
     private boolean isRequestTrue(String mobile, String amount) {
         if (TextUtils.isEmpty(mobile)){
-            merchantBinding.edittextIdmobileNumber.setError(getResources().getString(R.string.enter_gabon_mobile));
-            merchantBinding.edittextIdmobileNumber.requestFocus();
+            binding.edittextPhone.setError(getResources().getString(R.string.enter_gabon_mobile));
+            binding.edittextPhone.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.enter_mobile));
             return false;
         }
         if (mobile.length()>15||mobile.length()<7){
-            merchantBinding.edittextIdmobileNumber.setError(getResources().getString(R.string.enter_valide_mobile));
-            merchantBinding.edittextIdmobileNumber.requestFocus();
+            binding.edittextPhone.setError(getResources().getString(R.string.enter_valide_mobile));
+            binding.edittextPhone.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.enter_valide_mobile));
             return false;
         }
         if (TextUtils.isEmpty(amount)){
-            merchantBinding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.enter_amount));
-            merchantBinding.edittextAmtFcfaIdmobile.requestFocus();
+            binding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.enter_amount));
+            binding.edittextAmtFcfaIdmobile.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.enter_amount));
             return false;
         }
         if (Float.parseFloat(amount)<100){
-            merchantBinding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_100));
-            merchantBinding.edittextAmtFcfaIdmobile.requestFocus();
+            binding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_100));
+            binding.edittextAmtFcfaIdmobile.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
         if (Float.parseFloat(amount)>49900){
-            merchantBinding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_499));
-            merchantBinding.edittextAmtFcfaIdmobile.requestFocus();
+            binding.edittextAmtFcfaIdmobile.setError(getResources().getString(R.string.amount_should_499));
+            binding.edittextAmtFcfaIdmobile.requestFocus();
             SweetToast.error(MerchantActivity.this,getResources().getString(R.string.amount_should_499));
             return false;
         }
-        merchantBinding.edittextIdmobileNumber.setError(null);
-        merchantBinding.edittextAmtFcfaIdmobile.setError(null);
+        binding.edittextPhone.setError(null);
+        binding.edittextAmtFcfaIdmobile.setError(null);
         return true;
     }
 
@@ -264,13 +306,13 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
     private void updateValue() {
         webService.updateBalance(userData.getId());
         referenceNo="";
-        merchantBinding.edittextIdmobileNumber.setText("");
-        merchantBinding.edittextAmtFcfaIdmobile.setText("");
-        merchantBinding.edittextRemarksIdmobile.setText("");
+        binding.edittextPhone.setText("");
+        binding.edittextAmtFcfaIdmobile.setText("");
+        binding.edittextRemarksIdmobile.setText("");
     }
 
     private boolean isPanelShown() {
-        return merchantBinding.hiddenLayout.rlHiddenLayout.getVisibility() == View.VISIBLE;
+        return binding.hiddenLayout.rlHiddenLayout.getVisibility() == View.VISIBLE;
     }
 
     public void slideUpDown(String amount) {
@@ -280,9 +322,9 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             Animation bottomUp = AnimationUtils.loadAnimation(MerchantActivity.this,
                     R.anim.slide_up_dialog);
             dismissLoading();
-            merchantBinding.hiddenLayout.rlHiddenLayout.startAnimation(bottomUp);
-            merchantBinding.hiddenLayout.rlHiddenLayout.setVisibility(View.VISIBLE);
-            merchantBinding.rlMainMerchant.setVisibility(View.GONE);
+            binding.hiddenLayout.rlHiddenLayout.startAnimation(bottomUp);
+            binding.hiddenLayout.rlHiddenLayout.setVisibility(View.VISIBLE);
+            binding.rlMainMerchant.setVisibility(View.GONE);
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy'T'hhmmss");
             String format = simpleDateFormat.format(new Date());
             Thread thread=new Thread(() -> getQrCode(amount,format,userData.getMobile(),userData.getName()));
@@ -295,21 +337,21 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
         AppUtils.hideKeyboardFrom(MerchantActivity.this);
         Animation bottomDown = AnimationUtils.loadAnimation(MerchantActivity.this,
                 R.anim.slide_bottom_dialog);
-        merchantBinding.hiddenLayout.rlHiddenLayout.startAnimation(bottomDown);
-        merchantBinding.hiddenLayout.rlHiddenLayout.setVisibility(View.GONE);
-        merchantBinding.rlMainMerchant.setVisibility(View.VISIBLE);
-        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
-        merchantBinding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
-        merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " ");
-        merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(null);
-        merchantBinding.hiddenLayout.imgQrcode.setImageResource(R.drawable.logo);
+        binding.hiddenLayout.rlHiddenLayout.startAnimation(bottomDown);
+        binding.hiddenLayout.rlHiddenLayout.setVisibility(View.GONE);
+        binding.rlMainMerchant.setVisibility(View.VISIBLE);
+        binding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
+        binding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
+        binding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " ");
+        binding.hiddenLayout.imgQrcode.setImageBitmap(null);
+        binding.hiddenLayout.imgQrcode.setImageResource(R.drawable.logo);
     }
 
     @SuppressLint("SetTextI18n")
      private void genrateQrCode(String amount) {
-        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
+        binding.hiddenLayout.progressbarMerchant.setVisibility(View.VISIBLE);
         slideUpDown(amount);
-        merchantBinding.edittextAmtFcfa.setText("");
+        binding.edittextAmtFcfa.setText("");
     }
 
     @SuppressLint("SetTextI18n")
@@ -365,10 +407,10 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
 
     @SuppressLint("SetTextI18n")
     private void showImage(String amount, Bitmap bitmap, BitMatrix bitMatrix) {
-        merchantBinding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
-        merchantBinding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
-        merchantBinding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + amount+" FCFA");
-        merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(bitmap);
+        binding.hiddenLayout.progressbarMerchant.setVisibility(View.INVISIBLE);
+        binding.hiddenLayout.txtNameQrcode.setText(getResources().getString(R.string.to_pay) + " " + userData.getName());
+        binding.hiddenLayout.txtMerchantAmt.setText(getResources().getString(R.string.amt_paid) + " " + amount+" FCFA");
+        binding.hiddenLayout.imgQrcode.setImageBitmap(bitmap);
         startTimer(120,bitMatrix);
     }
 
@@ -378,12 +420,12 @@ public class MerchantActivity extends AppCompatActivity implements RadioGroup.On
             public void onTick(long millisUntilFinished) {
                 @SuppressLint("DefaultLocale") String v = String.format("%02d", millisUntilFinished / 60000);
                 int va = (int) ((millisUntilFinished % 60000) / 1000);
-                merchantBinding.hiddenLayout.txtQrcodeTimer.setText(getResources().getString(R.string.code_expires_in)+" "+v + ":" + String.format("%02d", va)+" "+getResources().getString(R.string.minutes));
+                binding.hiddenLayout.txtQrcodeTimer.setText(getResources().getString(R.string.code_expires_in)+" "+v + ":" + String.format("%02d", va)+" "+getResources().getString(R.string.minutes));
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
-                merchantBinding.hiddenLayout.txtQrcodeTimer.setText(getResources().getString(R.string.code_expired));
-                merchantBinding.hiddenLayout.imgQrcode.setImageBitmap(null);
+                binding.hiddenLayout.txtQrcodeTimer.setText(getResources().getString(R.string.code_expired));
+                binding.hiddenLayout.imgQrcode.setImageBitmap(null);
                 bitMatrix.clear();
                 handler.postDelayed(() -> slideClose(),1000);
             }

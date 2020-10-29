@@ -10,7 +10,7 @@
             android:id="@+id/btnNewAgent"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_35sdp"
-            android:background="@drawable/rounded_button_orange"
+            android:background="@drawable/rounded_button_red"
             android:text="@string/new_agent"
             android:paddingLeft="@dimen/_20sdp"
             android:paddingRight="@dimen/_20sdp"
@@ -53,8 +53,8 @@
 
             <ImageView
                 android:id="@+id/imgNoItem"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_150sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:src="@drawable/ic_agent"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -70,7 +70,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/app_red"
                 android:padding="@dimen/_10sdp"/>
 
         </RelativeLayout>

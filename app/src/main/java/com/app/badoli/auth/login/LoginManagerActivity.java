@@ -18,7 +18,9 @@ import com.app.badoli.config.AppUtils;
 import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.ActivityLoginManagerBinding;
+import com.app.badoli.model.StaffData;
 import com.app.badoli.model.UserData;
+import com.app.badoli.staff.StaffHomeActivity;
 import com.app.badoli.utilities.LoginPre;
 import com.app.badoli.viewModels.AuthViewModel;
 
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager;
+import xyz.hasnat.sweettoast.SweetToast;
 
 public class LoginManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -130,10 +133,6 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void loginStaff(String staffCode, String staffPin) {
-        AppUtils.openPopup(LoginManagerActivity.this,R.style.Dialod_UpDown,"underdevelop","Available Soon");
-    }
-
     private boolean isStaffValid(String staffCode, String staffPin) {
         if (TextUtils.isEmpty(staffCode)){
             AppUtils.showSnackbar(getString(R.string.staff_code_empty), binding.parentLayout);
@@ -191,6 +190,35 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
+    private void loginStaff(String staffCode, String staffPin) {
+        AppUtils.openPopup(LoginManagerActivity.this,R.style.Dialod_UpDown,"underdevelop","Available Soon");
+        showLoading(getResources().getString(R.string.logging_in));
+        authViewModel.loginStaff(staffCode,staffPin)
+                .observe(this, loginResponse -> {
+                    dismissLoading();
+                    if (loginResponse!=null&&!loginResponse.getError()) {
+                        SweetToast.success(LoginManagerActivity.this,loginResponse.getMessage());
+                        StaffData userData = new StaffData(
+                                String.valueOf(loginResponse.getResult().getId()),
+                                loginResponse.getResult().getStaff_name(),
+                                loginResponse.getResult().getAgent_code(),
+                                loginResponse.getResult().getWallet_balance(),
+                                String.valueOf(loginResponse.getResult().getAgent_pin()),
+                                "5");
+                        PrefManager.getInstance(LoginManagerActivity.this).staffLogin(userData);
+                        LoginPre.getActiveInstance(LoginManagerActivity.this).setIsLoggedIn(true);
+                        LoginPre.getActiveInstance(LoginManagerActivity.this).setLoginType("5");
+                        StartActivity();
+                    }else {
+                        if (loginResponse!=null&&!TextUtils.isEmpty(loginResponse.getMessage())){
+                            AppUtils.openPopup(LoginManagerActivity.this,R.style.Dialod_UpDown,"error",loginResponse.getMessage());
+                        }else {
+                            AppUtils.openPopup(LoginManagerActivity.this,R.style.Dialod_UpDown,"error",getResources().getString(R.string.something_went_wrong));
+                        }
+                    }
+                });
+    }
+
     private void loginMerchant(String phone, String password) {
         showLoading(getResources().getString(R.string.logging_in));
         authViewModel.getLogin(phone,password,1,deviceToken,"4")
@@ -212,7 +240,11 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
                         "4");
                 PrefManager.getInstance(LoginManagerActivity.this).userLogin(userData);
                 LoginPre.getActiveInstance(LoginManagerActivity.this).setIsLoggedIn(true);
-                StartActivity();
+                LoginPre.getActiveInstance(LoginManagerActivity.this).setLoginType("4");
+                Intent intent = new Intent(LoginManagerActivity.this, ProfessionalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             } else {
                 if (loginResponse!=null&&loginResponse.getMessage()!=null) {
                     if (loginResponse.getMobile_verify()==2){
@@ -235,7 +267,7 @@ public class LoginManagerActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void StartActivity() {
-        Intent intent = new Intent(LoginManagerActivity.this, ProfessionalActivity.class);
+        Intent intent = new Intent(LoginManagerActivity.this, StaffHomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.app.badoli.model.StaffData;
 import com.app.badoli.model.UserData;
 
 
@@ -31,6 +32,11 @@ public class PrefManager {
     private static final String PHONE = "keyphone";
     private static final String PASSWORD = "keypassword";
     private static final String KEY_USER_TYPE = "keyusertype";
+    private static final String KEY_STAFF_NAME = "keystaffname";
+    private static final String KEY_AGENT_CODE = "keyagentcode";
+    private static final String KEY_AGENT_PIN = "keyagentpin" ;
+    private static final String KEY_STAFFID = "keystaffid";
+    private static final String KEY_STAFF_WALLET_BALANCE = "keystaffwalletbalance";
 
     @SuppressLint("StaticFieldLeak")
     private static PrefManager mInstance;
@@ -67,6 +73,28 @@ public class PrefManager {
         }
         return mInstance;
     }
+
+    public void staffLogin(StaffData userData) {
+        editor=pref.edit();
+        editor.putString(KEY_STAFFID,userData.getId());
+        editor.putString(KEY_STAFF_NAME, userData.getStaffName());
+        editor.putString(KEY_AGENT_CODE, userData.getAgentCode());
+        editor.putString(KEY_STAFF_WALLET_BALANCE, userData.getWalletBalance());
+        editor.putString(KEY_AGENT_PIN,userData.getAgentPin());
+        editor.putString(KEY_USER_TYPE,userData.getUserType());
+        editor.apply();
+    }
+
+    public StaffData getStaffData() {
+        return new StaffData(
+                pref.getString(KEY_USERID, null),
+                pref.getString(KEY_STAFF_NAME,null),
+                pref.getString(KEY_AGENT_CODE,null),
+                pref.getString(KEY_WALLET_BALANCE,null),
+                pref.getString(KEY_AGENT_PIN,null),
+                pref.getString(KEY_USER_TYPE,null));
+    }
+
 
     public void userLogin(UserData userData) {
         editor=pref.edit();

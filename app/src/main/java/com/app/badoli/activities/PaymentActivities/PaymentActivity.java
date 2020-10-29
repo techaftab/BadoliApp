@@ -10,26 +10,31 @@ import androidx.databinding.DataBindingUtil;
 
 import com.app.badoli.R;
 import com.app.badoli.config.AppUtils;
+import com.app.badoli.config.Constant;
 import com.app.badoli.databinding.ActivityPaymentBinding;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
-    ActivityPaymentBinding activityPaymentBinding;
+    ActivityPaymentBinding binding;
+
+    String transferTo,type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityPaymentBinding = DataBindingUtil.setContentView(PaymentActivity.this, R.layout.activity_payment);
+        binding = DataBindingUtil.setContentView(PaymentActivity.this, R.layout.activity_payment);
         initView();
     }
 
     private void initView() {
-        activityPaymentBinding.imgBackPayment.setOnClickListener(this);
-        activityPaymentBinding.btnProceedPayment.setOnClickListener(this);
+        transferTo=getIntent().getStringExtra(Constant.MOBILE_TRANSFER);
+        type=getIntent().getStringExtra(Constant.TRANSFER_TYPE);
+        binding.imgBackPayment.setOnClickListener(this);
+        binding.btnProceedPayment.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v==activityPaymentBinding.imgBackPayment){
+        if (v==binding.imgBackPayment){
             if (isPinPanelShown()){
                 slideClosePin();
             }else {
@@ -37,12 +42,12 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         }
-        if (v==activityPaymentBinding.btnProceedPayment){
+        if (v==binding.btnProceedPayment){
             slideUpPin();
         }
     }
     private boolean isPinPanelShown() {
-        return activityPaymentBinding.rlPinPayment.getVisibility() == View.VISIBLE;
+        return binding.rlPinPayment.getVisibility() == View.VISIBLE;
     }
 
     public void slideUpPin() {
@@ -50,10 +55,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             Animation bottomUp = AnimationUtils.loadAnimation(PaymentActivity.this,
                     R.anim.slide_up_dialog);
 
-            activityPaymentBinding.rlPinPayment.startAnimation(bottomUp);
-            activityPaymentBinding.rlPinPayment.setVisibility(View.VISIBLE);
-            activityPaymentBinding.rlAmountPayment.setVisibility(View.GONE);
-            activityPaymentBinding.lnUserDetails.setVisibility(View.INVISIBLE);
+            binding.rlPinPayment.startAnimation(bottomUp);
+            binding.rlPinPayment.setVisibility(View.VISIBLE);
+            binding.rlAmountPayment.setVisibility(View.GONE);
+            binding.lnUserDetails.setVisibility(View.INVISIBLE);
         }
     }
     private void slideClosePin() {
@@ -61,10 +66,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         Animation bottomDown = AnimationUtils.loadAnimation(PaymentActivity.this,
                 R.anim.slide_bottom_dialog);
 
-        activityPaymentBinding.rlPinPayment.startAnimation(bottomDown);
-        activityPaymentBinding.rlPinPayment.setVisibility(View.GONE);
-        activityPaymentBinding.rlAmountPayment.setVisibility(View.VISIBLE);
-        activityPaymentBinding.lnUserDetails.setVisibility(View.VISIBLE);
+        binding.rlPinPayment.startAnimation(bottomDown);
+        binding.rlPinPayment.setVisibility(View.GONE);
+        binding.rlAmountPayment.setVisibility(View.VISIBLE);
+        binding.lnUserDetails.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.app.badoli.model.ResendOtpResponse;
 import com.app.badoli.model.ResetPassword;
 import com.app.badoli.model.SignupResponse;
 import com.app.badoli.model.StaffList;
+import com.app.badoli.model.StaffLogin;
 import com.app.badoli.model.UserProfile;
 import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.model.VerifyOtpResponse;
@@ -159,4 +160,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("reGenerateAgentCode")
     Call<CreateStaff> renewCode(@Field("user_id") String id,@Field("staff_id") String staffId);
+
+    @FormUrlEncoded
+    @POST("staffLogin")
+    Call<StaffLogin> loginStaff(@Field("staff_code") String staffCode,@Field("pin") String staffPin);
 }

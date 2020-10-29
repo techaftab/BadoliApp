@@ -18,12 +18,13 @@ import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 import com.app.badoli.activities.HomePageActivites.MerchantActivity;
 import com.app.badoli.databinding.FragmentMerchantBinding;
 
-import java.util.Objects;
-
 public class FragmentMerchant extends Fragment implements View.OnClickListener {
 
     private FragmentMerchantBinding fragmentBinding;
     //  UserData userData;
+    FragmentTransaction ft;
+    Fragment currentFragment;
+
 
     @Nullable
     @Override
@@ -46,8 +47,7 @@ public class FragmentMerchant extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragmentTransaction ft;
-        Fragment currentFragment;
+
 
         if (v==fragmentBinding.payById){
             if (getActivity()!=null) {

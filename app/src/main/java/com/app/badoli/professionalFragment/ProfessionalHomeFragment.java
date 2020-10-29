@@ -78,7 +78,7 @@ public class ProfessionalHomeFragment extends Fragment {
     }
 
     private void init() {
-        ((ProfessionalActivity)requireActivity()).homeData();
+        ((ProfessionalActivity)getActivity()).homeData();
 
         binding.lnCountRefill.setOnClickListener(this::goCountRefill);
         binding.lnTransferAgent.setOnClickListener(this::goTransferAgent);

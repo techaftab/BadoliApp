@@ -11,6 +11,7 @@ import com.app.badoli.model.BussinessList;
 import com.app.badoli.model.CountryResponse;
 import com.app.badoli.model.QRResponse;
 import com.app.badoli.model.ResendOtpResponse;
+import com.app.badoli.model.StaffLogin;
 import com.app.badoli.model.UserSignUpResponse;
 import com.app.badoli.model.VerifyOtpResponse;
 import com.google.gson.Gson;
@@ -244,6 +245,33 @@ public class LoginRepository {
             public void onFailure(@NonNull Call<BannerModel> call, @NonNull Throwable t) {
                 Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
                 BannerModel verifyOtpResponse=new BannerModel();
+                verifyOtpResponse.setError(true);
+                mutableLiveData.setValue(verifyOtpResponse);
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public LiveData<StaffLogin> loginStaff(String staffCode, String staffPin) {
+        MutableLiveData<StaffLogin> mutableLiveData = new MutableLiveData<>();
+        ApiInterface apiService = RetrofitConnection.getInstance().createService();
+        Call<StaffLogin> call = apiService.loginStaff(staffCode,staffPin);
+        call.enqueue(new Callback<StaffLogin>() {
+            @Override
+            public void onResponse(@NonNull Call<StaffLogin> call,@NonNull Response<StaffLogin> response) {
+                Log.e("profile_image", new Gson().toJson(response.body()));
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                }else {
+                    StaffLogin verifyOtpResponse=new StaffLogin();
+                    verifyOtpResponse.setError(true);
+                    mutableLiveData.setValue(verifyOtpResponse);
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<StaffLogin> call, @NonNull Throwable t) {
+                Log.e("profile_image error", Objects.requireNonNull(t.getMessage()));
+                StaffLogin verifyOtpResponse=new StaffLogin();
                 verifyOtpResponse.setError(true);
                 mutableLiveData.setValue(verifyOtpResponse);
             }

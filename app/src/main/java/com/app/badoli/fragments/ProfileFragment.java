@@ -66,8 +66,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private UserData userData;
     private ProfileViewModel profileViewModel;
     private ProfileFragmentBinding profileFragmentBinding;
-    private FragmentTransaction ft;
-    private Fragment currentFragment;
+   // private FragmentTransaction ft;
+   // private Fragment currentFragment;
     private int RequestPermissionCode=1;
     private String gender="";
 
@@ -85,15 +85,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }
         profileFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment,container,false);
         View view = profileFragmentBinding.getRoot();
-        try {
-            if (getActivity()!=null) {
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            }
-            requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+
         profileViewModel =new ViewModelProvider(this).get(ProfileViewModel.class);
         userData= PrefManager.getInstance(getActivity()).getUserData();
         if (userData.getUserType().equalsIgnoreCase("3")) {
@@ -122,12 +114,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             Log.d("tag", "onClick : navigating back to back activity ");
             //finish();
             if (getActivity()!=null) {
-                ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+                ((HomePageActivity)requireActivity()).loadFragment("1");
+             /*   ft = getActivity().getSupportFragmentManager().beginTransaction();
                 currentFragment = new HomeFragment();
                 ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
                 ft.replace(R.id.rootLayout, currentFragment);
-                ft.commit();
-                loadData();
+                ft.commit();*/
+                //loadData();
             }
         });
 
@@ -474,7 +468,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         profileFragmentBinding.userEmail.setText(result.getEmail());
         profileFragmentBinding.userMobile.setText(result.getMobile());
         if (getActivity()!=null) {
-            Glide.with(this).load(result.getUser_image())
+            Glide.with(this).load(Constant.IMAGE_URL+result.getUser_image())
                     .placeholder(R.drawable.logo)
                     .error(R.drawable.logo)
                     .thumbnail(0.06f)

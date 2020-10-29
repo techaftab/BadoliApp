@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
-import com.app.badoli.activities.StaffListActivity;
+import com.app.badoli.switchstaff.StaffListActivity;
 import com.app.badoli.databinding.FragmentAgentCodeBinding;
 import com.app.badoli.viewModels.ProfessionalViewModel;
 

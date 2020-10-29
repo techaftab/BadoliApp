@@ -125,7 +125,7 @@
                         <RadioGroup
                             android:id="@+id/radiogroup_merchant"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
+                            android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:orientation="horizontal"
                             android:layout_margin="@dimen/DP20"
@@ -140,6 +140,7 @@
                                 android:layout_height="match_parent"
                                 android:button="@android:color/transparent"
                                 android:checked="true"
+                                android:padding="@dimen/_8sdp"
                                 android:textSelectHandle="@drawable/radio_flat_text_selector"
                                 android:background="@drawable/purple_round_left_layout"
                                 android:text="@string/qr_code"
@@ -151,6 +152,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_weight="0.50"
                                 android:checked="true"
+                                android:padding="@dimen/_8sdp"
                                 android:layout_height="match_parent"
                                 android:button="@android:color/transparent"
                                 android:text="@string/mobile_id"
@@ -201,9 +203,8 @@
                                         android:gravity="center"
                                         android:textStyle="bold"
                                         android:singleLine="true"
-                                        android:maxLength="5"
                                         android:inputType="numberDecimal"
-                                        android:digits="0123456789."
+                                        android:digits="0123456789"
                                         android:textColor="@color/text_orange"
                                         android:textSize="@dimen/SP18"
                                         tools:ignore="Autofill,LabelFor,TextFields,TooDeepLayout"/>
@@ -376,7 +377,7 @@
                                     android:text="@string/hint_country_code"/>
 
                                 <EditText
-                                    android:id="@+id/edittext_idmobile_number"
+                                    android:id="@+id/edittextPhone"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="0.20"
@@ -422,8 +423,7 @@
                                     android:imeOptions="actionDone"
                                     android:singleLine="true"
                                     android:inputType="numberDecimal"
-                                    android:digits=".0123456789"
-                                    android:maxLength="5"
+                                    android:digits="0123456789"
                                     android:textStyle="bold"
                                     android:textColor="@color/text_orange"
                                     android:textSize="@dimen/SP18"

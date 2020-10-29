@@ -80,11 +80,20 @@ public class HelpFragment extends Fragment {
             Log.d("tag", "onClick : navigating back to back activity ");
             //finish();
             if (getActivity()!=null) {
-                ft = getActivity().getSupportFragmentManager().beginTransaction();
-                currentFragment = new ProfessionalHomeFragment();
-                ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-                ft.replace(R.id.rootLayout, currentFragment);
-                ft.commit();
+                if (userData.getUserType().equalsIgnoreCase("3")) {
+                    ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    currentFragment = new HomeFragment();
+                    ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+                    ft.replace(R.id.rootLayout, currentFragment);
+                    ft.commit();
+                }else {
+                    ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    currentFragment = new ProfessionalHomeFragment();
+                    ft.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+                    ft.replace(R.id.rootLayout, currentFragment);
+                    ft.commit();
+                }
+
               //  loadData();
             }
         });
