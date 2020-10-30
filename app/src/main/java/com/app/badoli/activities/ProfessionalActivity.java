@@ -59,6 +59,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
 
    // boolean openDrawer = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,11 +188,11 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         View badge = LayoutInflater.from(ProfessionalActivity.this).inflate(R.layout.layout_bottom_badge,
                 bottomNavigationView, false);
         TextView text = badge.findViewById(R.id.badge_text_view);
-       /* text.setText(Html.fromHtml("<font color='#FFFFFF'>"+getResources().getString(R.string.new_request)+"["+"</font>"
+       /*text.setText(Html.fromHtml("<font color='#FFFFFF'>"+getResources().getString(R.string.new_request)+"["+"</font>"
                 +"<font color='#FF6700'>"+value+"</font>"
                 +"<font color='#FFFFFF'>"+"]"+"</font>"));*/
        text.setText("");
-        itemView.addView(badge);
+       itemView.addView(badge);
     }
 
     public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {

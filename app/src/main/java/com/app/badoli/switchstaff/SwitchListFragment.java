@@ -58,7 +58,6 @@ public class SwitchListFragment extends Fragment implements SwitchStaffListAdapt
         userData = PrefManager.getInstance(requireActivity()).getUserData();
         binding.btnNewAgent.setVisibility(View.GONE);
 
-
         staffListAdapter = new SwitchStaffListAdapter(getActivity(), staffList, this);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity());
         binding.recyclerview.setLayoutManager(linearLayoutManager1);

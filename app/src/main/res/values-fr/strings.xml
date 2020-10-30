@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">BaDoli</string>
     <string name="edit_login">Numéro de téléphone / identifiant de messagerie</string>
     <string name="password">Mot de passe</string>
@@ -257,13 +257,13 @@
     <string name="staff_team">Équipe du personnel</string>
     <string name="switch_staff">Passer en mode Personnel</string>
     <string name="plz_wait">S\'il vous plaît, attendez…</string>
-    <string name="logging_out">Déconnecter...</string>
+    <string name="logging_out">Déconnecter…</string>
     <string name="list_availble">Liste des agents disponibles</string>
     <string name="new_agent">Nouvel agent</string>
     <string name="no_agent_added">Aucun agent ajouté pour le moment!</string>
     <string name="add_new_agent">Ajouter un nouvel agent</string>
     <string name="enter_name_agent">Entrez le nom de l\'agent</string>
-    <string name="creating_staff">Création du personnel ...</string>
+    <string name="creating_staff">Création du personnel…</string>
     <string name="todays_revenue_fcfa">Revenus d\'aujourd\'hui (FCFA)</string>
     <string name="yesterday_fcfa">Hier (FCFA)</string>
     <string name="view_transaction">Voir les transactions</string>
@@ -277,6 +277,40 @@
     <string name="business_category">Catégorie Business</string>
     <string name="address">Adresse</string>
     <string name="view_qr_code">Afficher le code QR</string>
+    <string name="updating_image">Mise à jour de l\'image…</string>
+    <string name="something_went_wrong">Un problème est survenu! Essayez après un certain temps.</string>
+    <string name="conneection_code">Code de connexion</string>
+    <string name="pin_code">Code PIN</string>
+    <string name="renew">Renouveler</string>
+    <string name="delete_code">Supprimer le code</string>
+    <string name="no_transaction_found">Aucune transaction trouvée.</string>
+    <string name="requesting">Demander…</string>
+    <string name="enter_subject">Entrez le sujet</string>
+    <string name="message">Message</string>
+    <string name="enter_your_message">Entrez votre message</string>
+    <string name="plz_verify_your_details">Veuillez vérifier vos informations saisies avant de soumettre</string>
+    <string name="please_enter_subject">Veuillez saisir le sujet</string>
+    <string name="please_enter_message">Veuillez saisir un message</string>
+    <string name="sending">Envoi en cours…</string>
+    <string name="your_acc_is_under_inspection">Votre compte est en cours d\'inspection par Baolipay</string>
+    <string name="plz_enter_name">Veuillez entrer le nom</string>
+    <string name="plz_enter_email">Veuillez saisir votre email</string>
+    <string name="plz_enter_dob">Veuillez saisir la date de naissance</string>
+    <string name="plz_select_gender">Veuillez sélectionner le sexe</string>
+    <string name="updating">Mise à jour…</string>
+    <string name="payment_cancelled">Paiement annulé!</string>
+    <string name="transaction_failed">La transaction a échoué</string>
+    <string name="adding_money_to_wallet">Ajouter de l\'argent au portefeuille.</string>
+    <string name="not_available">Indisponible</string>
+    <string name="deleting_code">Suppression du code…</string>
+    <string name="regenerating_code">Code régénérant…</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="revenue">Revenu (RM)</string>
+    <string name="plz_enter_mobile_or_merhcnat_id">Veuillez saisir le numéro de téléphone mobile ou l\'identifiant du marchand</string>
+    <string name="plz_enter_valid_merchant">Veuillez saisir un identifiant de marchand valide</string>
+    <string name="plz_enter_either_merchant_or_mobile">Veuillez saisir l\'identifiant du marchand ou le numéro de téléphone mobile.</string>
+    <string name="password_length">La longueur du mot de passe doit être de 4 caractères</string>
+    <string name="invalid_password">Le mot de passe doit avoir au moins 4 caractères</string>
 
 
 </resources>

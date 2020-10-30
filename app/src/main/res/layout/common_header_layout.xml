@@ -6,8 +6,8 @@
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
-        android:background="@color/dark_pink"
+        android:layout_height="@dimen/_160sdp"
+        android:background="@drawable/header_background_red"
         android:paddingTop="@dimen/_20sdp"
         android:orientation="vertical">
 
@@ -16,17 +16,17 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_height="@dimen/DP50">
+            android:layout_height="@dimen/_40sdp">
 
             <RelativeLayout
                 android:id="@+id/rl_image_show"
-                android:layout_width="@dimen/_45sdp"
+                android:layout_width="@dimen/_40sdp"
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/hamburger"
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:background="@drawable/rl_back"
                     android:src="@drawable/hamburger"
                     android:layout_centerVertical="true"
@@ -35,8 +35,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_back_main"
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/arrow_back"
                     android:background="@drawable/rl_back"
                     android:layout_centerVertical="true"
@@ -54,7 +54,7 @@
                 android:layout_toEndOf="@+id/rl_image_show"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:layout_marginEnd="@dimen/_45sdp"
+                android:layout_marginEnd="@dimen/_40sdp"
                 android:textStyle="normal"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="visible"
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/DP20"
+            android:paddingBottom="@dimen/_8sdp"
             android:gravity="center_vertical"
             android:visibility="visible">
 
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_gravity="center"
-                android:text=""
+                android:text="@string/amount"
                 android:onClick="checkBalance"
                 android:padding="@dimen/_5sdp"
                 android:includeFontPadding="false"

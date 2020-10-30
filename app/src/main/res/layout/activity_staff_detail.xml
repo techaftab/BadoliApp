@@ -131,6 +131,5 @@
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

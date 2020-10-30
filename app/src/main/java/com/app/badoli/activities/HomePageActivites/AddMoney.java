@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,10 +50,10 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
 
     private static final String TAG = AddMoney.class.getSimpleName();
     private static final int PAYPAL_REQUEST_CODE = 123;
-    public ActivityAddMoneyBinding addMoney;
-    AddMoneyViewModel addMoneyViewModel;
+    public ActivityAddMoneyBinding binding;
+    AddMoneyViewModel bindingViewModel;
     UserData userData;
-    String addMoneyFrom="";
+    String bindingFrom="";
 
     Handler handler=new Handler();
 
@@ -65,9 +67,9 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addMoney = DataBindingUtil.setContentView(this, R.layout.activity_add_money);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_money);
         userData= PrefManager.getInstance(AddMoney.this).getUserData();
-        addMoneyViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
+        bindingViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
 
        /* config = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
@@ -75,6 +77,44 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);*/
+
+        binding.edittextPhoneMobileAddmoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() == 1) {
+                    if (!editable.toString().equalsIgnoreCase("0")) {
+                        binding.edittextPhoneMobileAddmoney.setText("");
+                    }
+                }
+                if (editable.toString().length() == 2) {
+                    if (!editable.toString().equalsIgnoreCase("07")) {
+                        String text = binding.edittextPhoneMobileAddmoney.getText().toString();
+                        binding.edittextPhoneMobileAddmoney.setText(text.substring(0, text.length() - 1));
+                        binding.edittextPhoneMobileAddmoney.setSelection(text.substring(0, text.length() - 1).length());
+                    }
+                }
+                if (editable.toString().length() == 3) {
+                    String text = binding.edittextPhoneMobileAddmoney.getText().toString();
+                    if (editable.toString().equalsIgnoreCase("074")||editable.toString().equalsIgnoreCase("079")) {
+
+                    } else {
+                        binding.edittextPhoneMobileAddmoney.setText(text.substring(0, 2));
+                        binding.edittextPhoneMobileAddmoney.setSelection(text.substring(0, text.length() - 1).length());
+                    }
+                }
+            }
+        });
+
 
         init();
     }
@@ -90,7 +130,7 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
         webService.updateBalance(userData.getId());
         showLoading(getResources().getString(R.string.please_wait));
         handler.postDelayed(() -> webService.updateBalance(userData.getId()),10000);
-        addMoney.radiogrouAddmoney.setOnCheckedChangeListener(this);
+        binding.radiogrouAddmoney.setOnCheckedChangeListener(this);
     }
 
     public void checkBalanceAdd(View view) {
@@ -104,14 +144,14 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
         userData.setWallet_balance(balance);
         PrefManager.getInstance(AddMoney.this).setWalletBalance(balance);
         dismissLoading();
-        if (!TextUtils.isEmpty(addMoney.txtBalanceAddmoney.getText().toString())) {
-            Float bal = Float.valueOf(addMoney.txtBalanceAddmoney.getText().toString()
+        if (!TextUtils.isEmpty(binding.txtBalanceAddmoney.getText().toString())) {
+            Float bal = Float.valueOf(binding.txtBalanceAddmoney.getText().toString()
                     .replace(getResources().getString(R.string.badoli_balance), "")
                     .replace(" ", "")
                     .replace("FCFA",""));
            //Log.e(TAG,"WALLET--->"+bal+"\n"+balance);
         } else {
-            addMoney.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " FCFA");
+            binding.txtBalanceAddmoney.setText(getResources().getString(R.string.badoli_balance) + " " + balance + " FCFA");
             userData.setWallet_balance(balance);
         }
     }
@@ -127,19 +167,19 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (addMoney.rbAirtelMoney.isChecked()) {
-           addMoneyFrom="AIRTEL";
+        if (binding.rbAirtelMoney.isChecked()) {
+           bindingFrom="AIRTEL";
         }
-        if (addMoney.rbPaypal.isChecked()) {
-            addMoneyFrom="PAYPAL";
+        if (binding.rbPaypal.isChecked()) {
+            bindingFrom="PAYPAL";
         }
     }
 
     public void addBalanceMoney(View view) {
-        amount=addMoney.edittextAmountAddMoneyAddmoney.getText().toString();
-        mobile=addMoney.edittextPhoneMobileAddmoney.getText().toString();
+        amount=binding.edittextAmountAddMoneyAddmoney.getText().toString();
+        mobile=binding.edittextPhoneMobileAddmoney.getText().toString();
         if (isValidated(amount,mobile)){
-            if (addMoney.rbAirtelMoney.isChecked()) {
+            if (binding.rbAirtelMoney.isChecked()) {
                 proceedAirtel();
             } else {
               //  proceedPaypal();
@@ -164,67 +204,67 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
 
     private boolean isValidated(String amount,String mobile) {
         if (TextUtils.isEmpty(amount)){
-            addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.enter_amount));
-            addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
+            binding.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.enter_amount));
+            binding.edittextAmountAddMoneyAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_amount));
             return false;
         }
 
         if (Float.parseFloat(amount)<100){
-            addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_100));
-            addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
+            binding.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_100));
+            binding.edittextAmountAddMoneyAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.amount_should_100));
             return false;
         }
 
         if (Float.parseFloat(amount)>49900){
-            addMoney.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_499));
-            addMoney.edittextAmountAddMoneyAddmoney.requestFocus();
+            binding.edittextAmountAddMoneyAddmoney.setError(getResources().getString(R.string.amount_should_499));
+            binding.edittextAmountAddMoneyAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.amount_should_499));
             return false;
         }
 
         if (TextUtils.isEmpty(mobile)){
-            addMoney.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_gabon_mobile));
-            addMoney.edittextPhoneMobileAddmoney.requestFocus();
+            binding.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_gabon_mobile));
+            binding.edittextPhoneMobileAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_mobile));
             return false;
         }
 
         if (mobile.length()<7||mobile.length()>15){
-            addMoney.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_valide_mobile));
-            addMoney.edittextPhoneMobileAddmoney.requestFocus();
+            binding.edittextPhoneMobileAddmoney.setError(getResources().getString(R.string.enter_valide_mobile));
+            binding.edittextPhoneMobileAddmoney.requestFocus();
             SweetToast.error(AddMoney.this,getResources().getString(R.string.enter_valide_mobile));
             return false;
         }
 
-        if (addMoney.radiogrouAddmoney.getCheckedRadioButtonId()==-1){
+        if (binding.radiogrouAddmoney.getCheckedRadioButtonId()==-1){
             SweetToast.error(AddMoney.this,getResources().getString(R.string.select_option_to_add));
             return false;
         }
 
-        addMoney.edittextAmountAddMoneyAddmoney.setError(null);
-        addMoney.edittextPhoneMobileAddmoney.setError(null);
+        binding.edittextAmountAddMoneyAddmoney.setError(null);
+        binding.edittextPhoneMobileAddmoney.setError(null);
 
         return  true;
     }
 
     public void showLoading(String message){
         AppUtils.hideKeyboardFrom(AddMoney.this);
-        addMoney.layoutProgress.txtMessage.setText(message);
-        addMoney.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
+        binding.layoutProgress.txtMessage.setText(message);
+        binding.layoutProgress.lnProgress.setVisibility(View.VISIBLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     public void dismissLoading(){
-        addMoney.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
+        binding.layoutProgress.lnProgress.setVisibility(View.INVISIBLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
     //https://mypvit.com/mypvitapi.kk
     private void getReference(String mobile, String amount, String id, String auth_token) {
         showLoading(getResources().getString(R.string.please_wait));
-        addMoneyViewModel.getReference(id, mobile, amount, auth_token,"1").observe(this, referenceResponse -> {
+        bindingViewModel.getReference(id, mobile, amount, auth_token,"1").observe(this, referenceResponse -> {
             if (!referenceResponse.error) {
                 dismissLoading();
                 referenceNo=referenceResponse.getRef();
@@ -238,14 +278,14 @@ public class AddMoney extends AppCompatActivity implements updateBalance, RadioG
 
     private void goAirtel(String mobile, String amount,String reference) {
         showLoading(getResources().getString(R.string.requesting));
-        addMoneyViewModel.goAirtel(mobile,amount,reference,Constant.TEL_MERCHAND,Constant.TOKEN)
+        bindingViewModel.goAirtel(mobile,amount,reference,Constant.TEL_MERCHAND,Constant.TOKEN)
                 .observe(this, airtelResponse -> {
                     dismissLoading();
                     webService.updateBalance(userData.getId());
                     if (airtelResponse.response_code==1000) {
                         SweetToast.error(AddMoney.this,airtelResponse.getMessage());
-                        addMoney.edittextPhoneMobileAddmoney.setText("");
-                        addMoney.edittextAmountAddMoneyAddmoney.setText("");
+                        binding.edittextPhoneMobileAddmoney.setText("");
+                        binding.edittextAmountAddMoneyAddmoney.setText("");
                         referenceNo="";
                         goActivity();
 
