@@ -206,7 +206,6 @@ public class AppUtils {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         }
-
     }
 
     public static boolean isEmailValid(String email) {

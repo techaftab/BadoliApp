@@ -306,6 +306,7 @@
     <string name="plz_enter_mobile_or_merhcnat_id">Please enter mobile number or merchant id</string>
     <string name="plz_enter_valid_merchant">Please enter valid merchant id</string>
     <string name="plz_enter_either_merchant_or_mobile">Please enter either merchant id or mobile number.</string>
+    <string name="send_email">Send Email</string>
 
 
     <string-array name="select_lang">

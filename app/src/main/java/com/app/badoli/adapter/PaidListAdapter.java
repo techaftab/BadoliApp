@@ -1,7 +1,6 @@
 package com.app.badoli.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.badoli.R;
 import com.app.badoli.repositories.TransactionHistory;
-import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,19 +22,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
 public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidListAdapterHolder> implements Filterable,
         TransItemAdapter.TransItemAdapterClickListner {
-
-    private String TAG=PaidListAdapter.class.getSimpleName();
+    //private String TAG=PaidListAdapter.class.getSimpleName();
     private List<TransactionHistory.WalletHistory> loadList;
     private List<TransactionHistory.WalletHistory> loadListFiltered;
     private List<TransactionHistory.WalletHistory.WalletHistoryInner> listItem=new ArrayList<>();
     private Context context;
     private PaidListClickListner paidListClickListner;
-
-
-
 
     public PaidListAdapter(Context context, List<TransactionHistory.WalletHistory> paidList,PaidListClickListner paidListClickListner) {
         this.loadList = paidList;
@@ -116,15 +109,22 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
 
         void bindMessage(TransactionHistory.WalletHistory paidList) throws ParseException {
             SimpleDateFormat previousFormat=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            SimpleDateFormat newFormat=new SimpleDateFormat("MMM, yyyy", Locale.getDefault());
+            SimpleDateFormat newFormat=new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
             Date previousDate=previousFormat.parse(paidList.transction_date);
-            String newDate=newFormat.format(previousDate);
+            String newDate= null;
+            if (previousDate != null) {
+                newDate = newFormat.format(previousDate);
+            }
             TransItemAdapter transItemAdapter = new TransItemAdapter(context, listItem, this);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerViewPaidList.setLayoutManager(linearLayoutManager);
             // request_list.setHasFixedSize(true);
             recyclerViewPaidList.setAdapter(transItemAdapter);
+            txtDate.setText(newDate);
+            listItem.clear();
+            listItem.addAll(paidList.wallethistory);
             transItemAdapter.notifyDataSetChanged();
+          /*  transItemAdapter.notifyDataSetChanged();
             for (int j=0;j<paidList.wallethistory.size();j++) {
                 if (paidList.wallethistory.get(j).type.equals("Debit")) {
                     txtDate.setText(newDate);
@@ -135,7 +135,7 @@ public class PaidListAdapter extends RecyclerView.Adapter<PaidListAdapter.PaidLi
                 }else {
                     txtDate.setVisibility(View.GONE);
                 }
-            }
+            }*/
         }
     }
 }

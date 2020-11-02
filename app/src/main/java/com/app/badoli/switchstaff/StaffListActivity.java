@@ -29,8 +29,6 @@ public class StaffListActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private Fragment currentFragment;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,4 +88,5 @@ public class StaffListActivity extends AppCompatActivity {
     public void updateTitle (String title){
         binding.layoutToolbar.txtTitle.setText(title);
     }
+
 }

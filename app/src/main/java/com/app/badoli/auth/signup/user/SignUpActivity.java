@@ -49,7 +49,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String device_token;
     String countryId="",phoneCode="";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +144,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 if (editable.toString().length() == 3) {
                     String text = binding.edPhoneNo.getText().toString();
-                    if (editable.toString().equalsIgnoreCase("074")||editable.toString().equalsIgnoreCase("079")) {
+                    if (editable.toString().equalsIgnoreCase("074")
+                            ||editable.toString().equalsIgnoreCase("079")) {
 
                     } else {
                         binding.edPhoneNo.setText(text.substring(0, 2));

@@ -15,7 +15,6 @@ import com.app.badoli.databinding.ActivityPaymentBinding;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
     ActivityPaymentBinding binding;
-
     String transferTo,type;
 
     @Override

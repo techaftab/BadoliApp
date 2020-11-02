@@ -21,8 +21,6 @@ import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.HomeFragmentBinding;
 import com.app.badoli.model.UserData;
 
-import java.util.Objects;
-
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Fragment currentFragment;

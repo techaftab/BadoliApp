@@ -44,6 +44,30 @@
                     android:background="@color/white"
                     android:src="@drawable/logo"/>
 
+
+                <EditText
+                    android:id="@+id/edittextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:hint="@string/enter_email"
+                    android:imeOptions="actionDone"
+                    android:background="@drawable/box_green_border"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:text="@string/send_email"
+                    android:textColor="@color/white"
+                    android:textStyle="normal"
+                    android:textSize="@dimen/_14ssp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/rounded_button_green"/>
+
             </LinearLayout>
 
         </ScrollView>

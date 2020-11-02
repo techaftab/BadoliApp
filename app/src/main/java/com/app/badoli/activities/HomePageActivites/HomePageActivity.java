@@ -138,6 +138,11 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
 
     private void back(View view) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
+        try {
+            AppUtils.hideKeyboardFrom(HomePageActivity.this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         if (f instanceof FragmentPayById){
             ft = getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.anim.left_in,R.anim.right_out);
@@ -271,6 +276,11 @@ public class HomePageActivity extends AppCompatActivity implements updateBalance
 
     @Override
     public void onBackPressed() {
+        try {
+            AppUtils.hideKeyboardFrom(HomePageActivity.this);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.rootLayout);
         homePageBinding.bottomNavigation.getMenu().getItem(0).setChecked(true);
         if (f instanceof FragmentPayById) {

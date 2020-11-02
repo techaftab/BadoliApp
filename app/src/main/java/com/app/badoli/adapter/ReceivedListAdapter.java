@@ -111,8 +111,9 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
             recyclerViewPaidList = view.findViewById(R.id.recycler_paidlist);
         }
 
-        void bindMessage(TransactionHistory.WalletHistory paidList) throws ParseException {  SimpleDateFormat previousFormat=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            SimpleDateFormat newFormat=new SimpleDateFormat("MMM, yyyy", Locale.getDefault());
+        void bindMessage(TransactionHistory.WalletHistory paidList) throws ParseException {
+            SimpleDateFormat previousFormat=new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat newFormat=new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
             Date previousDate=previousFormat.parse(paidList.transction_date);
             String newDate=newFormat.format(previousDate);
 
@@ -121,8 +122,11 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
             recyclerViewPaidList.setLayoutManager(linearLayoutManager);
             // request_list.setHasFixedSize(true);
             recyclerViewPaidList.setAdapter(transItemAdapter);
+            txtDate.setText(newDate);
+            listItem.clear();
+            listItem.addAll(paidList.wallethistory);
             transItemAdapter.notifyDataSetChanged();
-            for (int j = 0; j < paidList.wallethistory.size(); j++) {
+          /*  for (int j = 0; j < paidList.wallethistory.size(); j++) {
                 if (paidList.wallethistory.get(j).type.equals("Credit")) {
                     txtDate.setText(newDate);
                     listItem.clear();
@@ -132,7 +136,7 @@ public class ReceivedListAdapter extends RecyclerView.Adapter<ReceivedListAdapte
                 }else {
                     txtDate.setVisibility(View.GONE);
                 }
-            }
+            }*/
 
         }
     }
