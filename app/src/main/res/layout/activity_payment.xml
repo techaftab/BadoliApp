@@ -71,7 +71,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/txt_name_payment"
+                                android:id="@+id/txtName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
@@ -80,7 +80,7 @@
                                 android:text="@string/app_name"/>
 
                             <TextView
-                                android:id="@+id/txt_mobile_payment"
+                                android:id="@+id/txtMobile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/app_name"
@@ -103,7 +103,7 @@
                     <RelativeLayout
                         android:id="@+id/rl_amount_payment"
                         android:layout_width="match_parent"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:layout_height="match_parent">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -113,7 +113,7 @@
                             android:layout_height="wrap_content">
 
                             <EditText
-                                android:id="@+id/editttext_amount_payment"
+                                android:id="@+id/edittextAmount"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
@@ -131,7 +131,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <Button
-                            android:id="@+id/btn_proceed_payment"
+                            android:id="@+id/btnProceed"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_45sdp"
                             android:layout_alignParentBottom="true"
@@ -161,11 +161,28 @@
                             android:textColor="@color/dark_gray"
                             android:textStyle="normal"/>
 
-                        <LinearLayout
+                        <com.app.badoli.config.PinEntryFourEditText
+                            android:id="@+id/edittextPin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="true"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="5"
+                            android:imeOptions="actionDone"
+                            android:textStyle="bold"
+                            android:layout_margin="@dimen/_15sdp"
+                            android:textIsSelectable="false"
+                            android:layout_below="@+id/txt_enter_pin"
+                            android:textSize="@dimen/_14ssp"/>
+
+                        <requestFocus/>
+
+                     <!--   <LinearLayout
                             android:layout_below="@+id/txt_enter_pin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:layout_centerHorizontal="true"
                             android:weightSum="1">
 
@@ -241,10 +258,10 @@
                                 android:textSize="@dimen/_14ssp"
                                 tools:ignore="Autofill" />
 
-                        </LinearLayout>
+                        </LinearLayout>-->
 
                         <Button
-                            android:id="@+id/btn_confirm_payment"
+                            android:id="@+id/btnConfirm"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_45sdp"
                             android:layout_alignParentBottom="true"
@@ -261,15 +278,10 @@
 
             </ScrollView>
 
-            <include
-                android:id="@+id/layout_detail_payment"
-                layout="@layout/layout_detail_payment"/>
-
         </RelativeLayout>
 
-        <include
-            android:id="@+id/layout_payment_confirmation"
-            layout="@layout/layout_payment_confirmation"/>
+        <include layout="@layout/layout_progress"
+            android:id="@+id/layoutProgress"/>
 
     </RelativeLayout>
 

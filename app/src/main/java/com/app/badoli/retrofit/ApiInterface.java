@@ -164,4 +164,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("staffLogin")
     Call<StaffLogin> loginStaff(@Field("staff_code") String staffCode,@Field("pin") String staffPin);
+
+    @FormUrlEncoded
+    @POST("email_qrcode")
+    Call<CreateStaff> sendQRtoEmail(@Field("user_id") String id,@Field("email_id") String email);
 }

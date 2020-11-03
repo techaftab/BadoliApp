@@ -24,6 +24,7 @@ import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.WalletHistoryBinding;
 import com.app.badoli.model.UserData;
 import com.app.badoli.repositories.TransactionHistory;
+import com.app.badoli.transaction.TransactionHistoryActivity;
 import com.app.badoli.viewModels.TransactionViewModel;
 
 import java.util.ArrayList;
@@ -97,17 +98,17 @@ public class PaidWalletFragment extends Fragment implements PaidListAdapter.Paid
 
     private void dismissLoading() {
         if (userData.getUserType().equalsIgnoreCase("3")) {
-            ((HomePageActivity) requireActivity()).dismissLoading();
+            ((TransactionHistoryActivity) requireActivity()).dismissLoading();
         }else {
-            ((ProfessionalActivity) requireActivity()).dismissLoading();
+            ((TransactionHistoryActivity) requireActivity()).dismissLoading();
         }
     }
 
     private void showLoading() {
         if (userData.getUserType().equalsIgnoreCase("3")) {
-            ((HomePageActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+            ((TransactionHistoryActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
         }else {
-            ((ProfessionalActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+            ((TransactionHistoryActivity) requireActivity()).showLoading(getResources().getString(R.string.please_wait));
         }
     }
 }

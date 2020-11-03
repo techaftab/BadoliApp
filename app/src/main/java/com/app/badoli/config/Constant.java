@@ -34,4 +34,6 @@ public interface Constant {
     String STAFF_NAME = "staff_name";
     String MOBILE_TRANSFER = "mobile_transfer";
     String TRANSFER_TYPE = "transfer_type";
+    String NAME_TRANSFER = "transfer_name";
+    String TRANSFER_AMOUNT = "transfer_amount";
 }

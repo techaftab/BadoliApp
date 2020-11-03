@@ -31,6 +31,7 @@ import com.app.badoli.config.WebService;
 import com.app.badoli.config.updateBalance;
 import com.app.badoli.databinding.ActivityStaffHomeBinding;
 import com.app.badoli.model.StaffData;
+import com.app.badoli.switchstaff.StaffSwitchActivity;
 import com.app.badoli.utilities.LoginPre;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -209,11 +210,10 @@ public class StaffHomeActivity extends AppCompatActivity implements updateBalanc
         binding.commonHeader.mainLayout.setVisibility(View.VISIBLE);
         binding.commonHeader.balanceLayout.setVisibility(View.VISIBLE);
         binding.bottomNavigation.setVisibility(View.GONE);
-      //  String mobile=staffData.getStaffName().substring(0,3)+" "+userData.getMobile().substring(3);
+        //String mobile=staffData.getStaffName().substring(0,3)+" "+userData.getMobile().substring(3);
         binding.commonHeader.badoliPhoneText.setText(staffData.getStaffName()+" ("+")");
         binding.commonHeader.txtWalletBalance.setText(staffData.getWalletBalance()+" FCFA");
     }
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -275,6 +275,9 @@ public class StaffHomeActivity extends AppCompatActivity implements updateBalanc
                             finish();
                         }).create().show();
             } else {
+                Intent intent = new Intent(StaffHomeActivity.this, StaffSwitchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in,R.anim.right_out);
                 finish();
             }
         }

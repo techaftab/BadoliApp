@@ -91,7 +91,7 @@ public class SwitchLoginFragment extends Fragment {
                         Intent intent = new Intent(requireActivity(), StaffHomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                        requireActivity().finish();
+                       // requireActivity().finish();
                     }else {
                         if (loginResponse!=null&&!TextUtils.isEmpty(loginResponse.getMessage())){
                             AppUtils.openPopup(requireActivity(),R.style.Dialod_UpDown,"error",loginResponse.getMessage());

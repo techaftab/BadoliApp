@@ -37,28 +37,32 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator,UnusedAttribute"
         tools:targetApi="m">
+        <activity android:name=".transaction.TransactionHistoryActivity"></activity>
         <activity
             android:name=".switchstaff.StaffSwitchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadRed"/>
-        <activity android:name=".staff.StaffHomeActivity"
+            android:theme="@style/AppTheme.WithHeadRed" />
+        <activity
+            android:name=".staff.StaffHomeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadRed"/>
-        <activity android:name=".activities.QrViewActivity"
+            android:theme="@style/AppTheme.WithHeadRed" />
+        <activity
+            android:name=".activities.QrViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadRed"/>
-        <activity android:name=".switchstaff.StaffDetailActivity"
+            android:theme="@style/AppTheme.WithHeadRed" />
+        <activity
+            android:name=".switchstaff.StaffDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadRed"/>
+            android:theme="@style/AppTheme.WithHeadRed" />
         <activity
             android:name=".switchstaff.StaffListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.WithHeadRed"/>
+            android:theme="@style/AppTheme.WithHeadRed" />
         <activity
             android:name=".activities.ProfessionalActivity"
             android:screenOrientation="portrait" />
@@ -120,6 +124,12 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.PaymentActivities.PaymentActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.WithHead"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activities.PaymentActivities.ConfirmPaymentActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.WithHead"

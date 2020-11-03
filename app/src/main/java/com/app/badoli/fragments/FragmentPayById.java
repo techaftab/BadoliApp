@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.app.badoli.R;
 import com.app.badoli.activities.HomePageActivites.HomePageActivity;
@@ -24,6 +25,7 @@ import com.app.badoli.config.Constant;
 import com.app.badoli.config.PrefManager;
 import com.app.badoli.databinding.FragmentPayByidBinding;
 import com.app.badoli.model.UserData;
+import com.app.badoli.viewModels.AddMoneyViewModel;
 
 import xyz.hasnat.sweettoast.SweetToast;
 
@@ -33,10 +35,13 @@ public class FragmentPayById extends Fragment implements View.OnClickListener {
     FragmentTransaction ft;
     Fragment currentFragment;
 
+    AddMoneyViewModel addMoneyViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pay_byid,container,false);
+        addMoneyViewModel = new ViewModelProvider(this).get(AddMoneyViewModel.class);
         View view   = binding.getRoot();
         userData= PrefManager.getInstance(getActivity()).getUserData();
         listener();
@@ -93,17 +98,38 @@ public class FragmentPayById extends Fragment implements View.OnClickListener {
 
         if (isValid(merchantId,mobile)){
             if (!TextUtils.isEmpty(merchantId)){
-                goActivity(PaymentActivity.class,mobile,"id");
+                getDetails(merchantId,"2");
+              //  goActivity(PaymentActivity.class,mobile,"id");
             }else if (!TextUtils.isEmpty(mobile)){
-                goActivity(PaymentActivity.class,mobile,"mobile");
+                getDetails(mobile,"1");
+              //  goActivity(PaymentActivity.class,mobile,"mobile");
             }
         }
     }
 
-    private void goActivity(Class<?> activity, String mobile, String type) {
+    private void getDetails(String tel_client, String request_for) {
+        ((HomePageActivity)requireActivity()).showLoading(getResources().getString(R.string.please_wait));
+        addMoneyViewModel.getReference(userData.getId(),tel_client , "0.00", userData.getAuth_token(),request_for).observe(this, referenceResponse -> {
+            ((HomePageActivity)requireActivity()).dismissLoading();
+            if (referenceResponse!=null&&!referenceResponse.error) {
+                //referenceNo=referenceResponse.getRef();
+                //goAirtel(mobile,amount,referenceNo);
+                goActivity(PaymentActivity.class,request_for,referenceResponse.getUser().getMobile(),referenceResponse.getUser().getName());
+            } else {
+                if (referenceResponse!=null&&!TextUtils.isEmpty(referenceResponse.message)) {
+                    SweetToast.error(requireActivity(), referenceResponse.getMessage());
+                }else {
+                    SweetToast.error(requireActivity(), getResources().getString(R.string.something_went_wrong));
+                }
+            }
+        });
+    }
+
+    private void goActivity(Class<?> activity, String requestFor, String mobile,String name) {
         Intent intent = new Intent(requireActivity(),activity);
         intent.putExtra(Constant.MOBILE_TRANSFER,mobile);
-        intent.putExtra(Constant.TRANSFER_TYPE,type);
+        intent.putExtra(Constant.NAME_TRANSFER,name);
+        intent.putExtra(Constant.TRANSFER_TYPE,requestFor);
         startActivity(intent);
         requireActivity().overridePendingTransition(R.anim.right_in,R.anim.left_out);
     }

@@ -249,11 +249,11 @@ public class FragmentQrPay extends Fragment implements View.OnClickListener,ZXin
             if (!walletTransfer.error) {
                // Scanqr();
                 SweetToast.success(getActivity(),walletTransfer.getMessage());
-                AppUtils.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,recieverId);
+                AppUtils.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,recieverId, userData.getUserType());
                 onResume();
             } else {
                 SweetToast.error(getActivity(),walletTransfer.getMessage());
-                AppUtils.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,recieverId);
+                AppUtils.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,recieverId, userData.getUserType());
                 onResume();
             }
         });

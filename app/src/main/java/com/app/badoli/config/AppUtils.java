@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -19,10 +18,8 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -35,13 +32,13 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.app.badoli.utilities.LoginPre;
+import com.app.badoli.activities.HomePageActivites.HomePageActivity;
+import com.app.badoli.activities.ProfessionalActivity;
+import com.app.badoli.staff.StaffHomeActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.app.badoli.R;
-import com.app.badoli.activities.HomePageActivites.HomePageActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -242,7 +239,7 @@ public class AppUtils {
     }
 
     @SuppressLint("SetTextI18n")
-    public static void openPopupPaymentStatus(Context context, boolean status, String message, String amount, String phone) {
+    public static void openPopupPaymentStatus(Context context, boolean status, String message, String amount, String phone, String userType) {
 
         final Dialog dialg=new Dialog(context);
         dialg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -263,7 +260,22 @@ public class AppUtils {
         }
         txtTitle.setText(message);
 
-        btnOkay.setOnClickListener(v -> dialg.dismiss());
+        btnOkay.setOnClickListener(v -> {
+            dialg.dismiss();
+            if (userType.equals("3")){
+                Intent intent = new Intent(context, HomePageActivity.class);
+                context.startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.left_in,R.anim.right_out);
+            }else if ( userType.equals("4")){
+                Intent intent = new Intent(context, ProfessionalActivity.class);
+                context.startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.left_in,R.anim.right_out);
+            }else {
+                Intent intent = new Intent(context, StaffHomeActivity.class);
+                context.startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.left_in,R.anim.right_out);
+            }
+        });
 
         dialg.show();
         Window window = dialg.getWindow();

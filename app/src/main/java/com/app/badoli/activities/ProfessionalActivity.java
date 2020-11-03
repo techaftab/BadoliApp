@@ -42,6 +42,7 @@ import com.app.badoli.fragments.TransactionFragment;
 import com.app.badoli.model.UserData;
 import com.app.badoli.professionalFragment.ProfessionalHomeFragment;
 import com.app.badoli.professionalFragment.ProfessionalProfileFragment;
+import com.app.badoli.transaction.TransactionHistoryActivity;
 import com.app.badoli.utilities.LoginPre;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -135,6 +136,7 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         binding.drawerMenuItems.rlStaff.setOnClickListener(this);
         binding.drawerMenuItems.rlSwitch.setOnClickListener(this);
         binding.drawerMenuItems.rlBussinessInfo.setOnClickListener(this);
+        binding.drawerMenuItems.rlTransaction.setOnClickListener(this::goTransactionHistory);
     }
 
     @Override
@@ -230,6 +232,12 @@ public class ProfessionalActivity extends AppCompatActivity implements updateBal
         return false;
     };
 
+    private void goTransactionHistory(View view) {
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        Intent wallet = new Intent(ProfessionalActivity.this, TransactionHistoryActivity.class);
+        startActivity(wallet);
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+    }
 
     @Override
     public void onClick(View v) {

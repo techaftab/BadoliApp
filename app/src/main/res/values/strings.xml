@@ -307,6 +307,10 @@
     <string name="plz_enter_valid_merchant">Please enter valid merchant id</string>
     <string name="plz_enter_either_merchant_or_mobile">Please enter either merchant id or mobile number.</string>
     <string name="send_email">Send Email</string>
+    <string name="enter_valid_pin">Please enter valid PIN.</string>
+    <string name="transferring">Transferring...</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="merchant_id">Merchant ID</string>
 
 
     <string-array name="select_lang">

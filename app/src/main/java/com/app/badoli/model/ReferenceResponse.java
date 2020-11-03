@@ -13,6 +13,17 @@ public class ReferenceResponse {
     @Expose
     public String message;
 
+    @SerializedName("user")
+    public User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @SerializedName("ref")
     @Expose
     public String ref;
@@ -39,5 +50,31 @@ public class ReferenceResponse {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public class User{
+        @SerializedName("name")
+        @Expose
+        public String name;
+
+        @SerializedName("mobile")
+        @Expose
+        public String mobile;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
     }
 }

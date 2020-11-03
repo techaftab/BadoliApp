@@ -187,14 +187,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 AppUtils.hideKeyboardFrom(SignUpActivity.this);
                 getSignupResponse();
             }
-
         }
+
         if (v==binding.txtLogin){
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.right_out);
             finish();
         }
+
     }
 
     private void setLocale(String lang) {
@@ -217,7 +218,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-
         switch (LoginPre.getActiveInstance(SignUpActivity.this).getLocaleLangua()) {
             case "en":
                 setLocale("en");
@@ -227,8 +227,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
-
-
 
     private void getSignupResponse() {
         device_token=LoginPre.getActiveInstance(SignUpActivity.this).getDevice_token();

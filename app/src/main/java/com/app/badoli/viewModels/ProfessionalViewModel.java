@@ -34,4 +34,8 @@ public class ProfessionalViewModel extends AndroidViewModel {
     public LiveData<CreateStaff> renewCode(String id, String staffId) {
         return professionalRepositories.renewCode(id,staffId);
     }
+
+    public LiveData<CreateStaff> sendQRtoEmail(String id, String email) {
+        return professionalRepositories.sendQRtoEmail(id,email);
+    }
 }

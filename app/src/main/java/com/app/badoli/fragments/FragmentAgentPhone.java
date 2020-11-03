@@ -192,10 +192,10 @@ public class FragmentAgentPhone extends Fragment implements View.OnClickListener
                 fragmentAgentPhoneBinding.edittextPhoneMobile.setText("");
                 fragmentAgentPhoneBinding.edittextAmount.setText("");
                 SweetToast.success(getActivity(),walletTransfer.getMessage());
-                AppUtils.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,phone);
+                AppUtils.openPopupPaymentStatus(getActivity(),true,walletTransfer.getMessage(),amount,phone, userData.getUserType());
             } else {
                 SweetToast.error(getActivity(),walletTransfer.getMessage());
-                AppUtils.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,phone);
+                AppUtils.openPopupPaymentStatus(getActivity(),false,walletTransfer.getMessage(),amount,phone, userData.getUserType());
             }
         });
     }
